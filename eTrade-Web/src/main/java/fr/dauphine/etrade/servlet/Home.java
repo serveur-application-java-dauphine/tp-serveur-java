@@ -2,12 +2,15 @@ package fr.dauphine.etrade.servlet;
 
 import java.io.IOException;
 
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-
+import fr.dauphine.services.ServicesUser;
+@WebServlet("/Home")
 public class Home extends HttpServlet {
 
 	private static final long serialVersionUID = 6575782921956558199L;
@@ -16,7 +19,16 @@ public class Home extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
+		try {
+			ServicesUser s = InitialContext.doLookup("ejb:eTrade-webEAR/eTrade-ejb/ServicesUserBean!fr.dauphine.services.ServicesUser");
+			s.rechercheUser();
+			System.out.println("ok");
+		} catch (NamingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		super.doGet(req, resp);
+		
 	}
 
 	

@@ -5,5 +5,9 @@
             <dependent-object/>
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="eTrade-ejb.jar" deploy-path="/" handle="module:/resource/eTrade-ejb/eTrade-ejb">
+            <dependent-object/>
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
     </wb-module>
 </project-modules>
