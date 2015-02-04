@@ -9,7 +9,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import fr.dauphine.services.ServicesUser;
+
+import fr.dauphine.etrade.services.ServicesUser;
 @WebServlet("/Home")
 public class Home extends HttpServlet {
 
