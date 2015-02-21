@@ -6,7 +6,5 @@ import fr.dauphine.etrade.beans.User;
 
 @Remote
 public interface ServicesUser {
-	
 	User rechercheUser();
-
 }

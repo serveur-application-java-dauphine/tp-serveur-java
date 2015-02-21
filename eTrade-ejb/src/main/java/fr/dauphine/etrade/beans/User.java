@@ -10,7 +10,9 @@ public class User {
 	@Id
 	private long id;
 
-	private String name;
+	private String userName;
+	private String mailAddress;
+	private String password;
 
 	/**
 	 * @return the id
@@ -26,17 +28,28 @@ public class User {
 		this.id = id;
 	}
 
-	/**
-	 * @return the name
-	 */
-	public String getName() {
-		return name;
+	public String getUserName() {
+		return userName;
 	}
 
-	/**
-	 * @param name the name to set
-	 */
-	public void setName(String name) {
-		this.name = name;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
+
+	public String getMailAddress() {
+		return mailAddress;
+	}
+
+	public void setMailAddress(String mailAddress) {
+		this.mailAddress = mailAddress;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
 }

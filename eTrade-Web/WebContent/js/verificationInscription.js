@@ -100,6 +100,7 @@ function verifForm(f)
    var mailOk = verifMail(f.mail);
    var passwordOk = verifPassword(f.password);
    var passwordConfirmOk = verifConfirmPassword(f.confirmPassword);
+   
    if(pseudoOk && mailOk && passwordOk && passwordConfirmOk)
       return true;
    else
