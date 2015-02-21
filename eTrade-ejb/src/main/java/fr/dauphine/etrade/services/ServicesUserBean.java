@@ -9,7 +9,6 @@ public class ServicesUserBean implements ServicesUser{
 
 	@Override
 	public User rechercheUser() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

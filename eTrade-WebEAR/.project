@@ -5,6 +5,7 @@
 	<projects>
 		<project>eTrade-Web</project>
 		<project>eTrade-ejb</project>
+		<project>Serveur_Application</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

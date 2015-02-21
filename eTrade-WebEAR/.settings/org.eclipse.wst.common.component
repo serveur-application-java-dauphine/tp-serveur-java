@@ -9,5 +9,9 @@
             <dependent-object/>
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="Serveur_Application.war" deploy-path="/" handle="module:/resource/Serveur_Application/Serveur_Application">
+            <dependent-object/>
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
     </wb-module>
 </project-modules>
