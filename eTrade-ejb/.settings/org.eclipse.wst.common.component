@@ -2,7 +2,6 @@
     <wb-module deploy-name="eTrade-ejb">
         <wb-resource deploy-path="/" source-path="/src/main/java"/>
         <wb-resource deploy-path="/" source-path="/src/main/resources" tag="defaultRootSource"/>
-        <wb-resource deploy-path="/" source-path="/src/test/java"/>
         <property name="java-output-path" value="/eTrade-ejb/build/classes"/>
         <property name="ClientProject" value="eTrade-ejbClient"/>
         <property name="ClientJARURI" value="eTrade-ejbClient.jar"/>

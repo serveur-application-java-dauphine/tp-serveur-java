@@ -16,11 +16,13 @@
       <dependency>
          <groupId>fr.dauphine.etrade</groupId>
          <artifactId>eTrade-Web</artifactId>
+         
          <type>war</type>
       </dependency>
       <dependency>
          <groupId>fr.dauphine.etrade</groupId>
          <artifactId>eTrade-ejb</artifactId>
+         
          <type>ejb</type>
       </dependency>
    </dependencies>
