@@ -6,13 +6,21 @@
   <packaging>ejb</packaging>
   
   <dependencies>
- <!-- Import the CDI API, we use provided scope as the API is included in JBoss AS 7 -->
+ 	 <!-- Import the CDI API, we use provided scope as the API is included in JBoss AS 7 -->
       <dependency>
 		<groupId>javax.enterprise</groupId>
 		<artifactId>cdi-api</artifactId>
 		<version>1.2</version>
 		<scope>provided</scope>
 	  </dependency>
+	  
+	  <!-- Import the EJB API, we use provided scope as the API is included in JBoss AS 7 -->
+	   <dependency>
+         <groupId>javax.ejb</groupId>
+         <artifactId>ejb-api</artifactId>
+         <version>3.0</version>
+         <scope>provided</scope>
+       </dependency>
 
 
       <!-- Import the JPA API, we use provided scope as the API is included in JBoss AS 7 -->
