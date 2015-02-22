@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import fr.dauphine.etrade.services.ServicesUser;
+import fr.dauphine.etrade.api.UserRepository;
 @WebServlet("/Home")
 public class Home extends HttpServlet {
 
@@ -21,7 +21,7 @@ public class Home extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		try {
-			ServicesUser s = InitialContext.doLookup("ejb:eTrade-webEAR/eTrade-ejb/ServicesUserBean!fr.dauphine.services.ServicesUser");
+			UserRepository s = (UserRepository) (new InitialContext()).lookup("ejb:eTrade-webEAR/eTrade-ejb/ServicesUserBean!fr.dauphine.etrade.api.UserRepository");
 			s.rechercheUser();
 			System.out.println("ok");
 		} catch (NamingException e) {

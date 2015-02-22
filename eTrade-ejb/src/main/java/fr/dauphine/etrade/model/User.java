@@ -1,11 +1,18 @@
-package fr.dauphine.etrade.beans;
+package fr.dauphine.etrade.model;
 
+
+import java.io.Serializable;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity
-public class User {
+public class User implements Serializable {
+
+	/**
+	 *  Generated serialVersionUID
+	 */
+	private static final long serialVersionUID = 6173715317291389942L;
 
 	@Id
 	private long id;

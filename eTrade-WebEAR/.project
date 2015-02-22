@@ -3,9 +3,8 @@
 	<name>eTrade-WebEAR</name>
 	<comment></comment>
 	<projects>
-		<project>eTrade-Web</project>
 		<project>eTrade-ejb</project>
-		<project>Serveur_Application</project>
+		<project>eTrade-Web</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
@@ -18,8 +17,14 @@
 			<arguments>
 			</arguments>
 		</buildCommand>
+		<buildCommand>
+			<name>org.eclipse.m2e.core.maven2Builder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
 	</buildSpec>
 	<natures>
+		<nature>org.eclipse.m2e.core.maven2Nature</nature>
 		<nature>org.eclipse.wst.common.project.facet.core.nature</nature>
 		<nature>org.eclipse.wst.common.modulecore.ModuleCoreNature</nature>
 	</natures>
