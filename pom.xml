@@ -87,7 +87,6 @@
                     <configuration>
                         <source>1.6</source>
                         <target>1.6</target>
-                        <encoding>CP1252</encoding>
                     </configuration>
                 </plugin>
                 <!-- The JBoss AS plugin deploys your ear to a local JBoss 
