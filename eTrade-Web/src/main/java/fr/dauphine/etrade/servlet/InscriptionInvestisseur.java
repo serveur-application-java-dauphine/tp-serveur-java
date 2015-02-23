@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import fr.dauphine.etrade.beans.User;
+import fr.dauphine.etrade.model.User;
 import fr.dauphine.etrade.services.ServicesUser;
 
 /**

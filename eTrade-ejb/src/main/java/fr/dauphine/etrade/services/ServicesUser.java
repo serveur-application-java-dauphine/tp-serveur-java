@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import javax.ejb.Remote;
 
-import fr.dauphine.etrade.beans.User;
+import fr.dauphine.etrade.model.User;
 
 @Remote
 public interface ServicesUser {

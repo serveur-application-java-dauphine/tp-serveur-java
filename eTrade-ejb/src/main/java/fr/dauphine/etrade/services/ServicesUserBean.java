@@ -7,7 +7,7 @@ import javax.ejb.Stateless;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 
-import fr.dauphine.etrade.beans.User;
+import fr.dauphine.etrade.model.User;
 
 @Remote(ServicesUser.class)
 @Stateless
