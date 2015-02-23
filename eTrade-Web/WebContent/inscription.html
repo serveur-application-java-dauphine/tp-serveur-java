@@ -7,11 +7,11 @@
 </head>
 <body>
 	<h1>Inscription d'un nouvel investisseur</h1>
-	<form name="inscription" id="form-1" method="post" action="InscriptionInvestisseur" onsubmit="return verifForm(this)">
+	<form name="inscription" id="form-1" method="post" action="InscriptionInvestisseur" ><!--onsubmit="return verifForm(this)"-->
 		<table>
 		<tr>
 			<td>Nom d'utilisateur</td>
-			<td><input type="text" id="username" name="username" onblur="verifPseudo(this)"/></td>
+			<td><input type="text" id="name" name="name" onblur="verifPseudo(this)"/></td>
 		</tr>
 		<tr>
 			<td>Adresse mail</td>
@@ -19,7 +19,7 @@
 		</tr>
 		<tr>
 			<td>Mot de passe</td>
-			<td><input type="password" id="password" name="password" onblur="verifPassword(this)" /></p></td>
+			<td><input type="password" id="password" name="password" onblur="verifPassword(this)" /></td>
 		</tr>
 		<tr>
 			<td>Confirmation du mot de passe</td>

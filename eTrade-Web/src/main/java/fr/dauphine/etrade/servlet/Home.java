@@ -14,15 +14,14 @@ import fr.dauphine.etrade.services.ServicesUser;
 @WebServlet("/Home")
 public class Home extends HttpServlet {
 
-	private static final long serialVersionUID = 6575782921956558199L;
-
+	private static final long serialVersionUID = 1L;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		try {
 			ServicesUser s = InitialContext.doLookup("ejb:eTrade-webEAR/eTrade-ejb/ServicesUserBean!fr.dauphine.services.ServicesUser");
-			s.rechercheUser();
+			
 			System.out.println("ok");
 		} catch (NamingException e) {
 			// TODO Auto-generated catch block
