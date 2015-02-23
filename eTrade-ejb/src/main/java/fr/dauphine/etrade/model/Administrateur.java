@@ -10,20 +10,14 @@ import javax.persistence.*;
  *
  */
 @Entity
-
 public class Administrateur implements Serializable {
-
 	   
 	@Id
 	private Long id;
 	private String name;
 	private String mail;
 	private String password;
-	private static final long serialVersionUID = 1L;
-
-	public Administrateur() {
-		super();
-	}   
+  
 	public Long getId() {
 		return this.id;
 	}

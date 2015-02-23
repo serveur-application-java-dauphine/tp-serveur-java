@@ -26,6 +26,9 @@ public final class Connexion {
 		for (Object object : objects)
 			em.persist(object);
 		et.commit();
+		for (Object object : objects)
+			System.out.println("persist : "+object);
+		
 		return true;
 	}
 	
