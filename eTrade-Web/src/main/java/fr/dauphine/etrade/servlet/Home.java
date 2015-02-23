@@ -10,7 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import fr.dauphine.etrade.services.ServicesUser;
+import fr.dauphine.etrade.api.ServicesUser;
+
 @WebServlet("/Home")
 public class Home extends HttpServlet {
 
@@ -21,10 +22,9 @@ public class Home extends HttpServlet {
 			throws ServletException, IOException {
 		try {
 			ServicesUser s = InitialContext.doLookup("ejb:eTrade-webEAR/eTrade-ejb/ServicesUserBean!fr.dauphine.services.ServicesUser");
-			
+			s.allUsers();
 			System.out.println("ok");
 		} catch (NamingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		super.doGet(req, resp);

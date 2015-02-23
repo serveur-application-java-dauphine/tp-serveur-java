@@ -1,4 +1,4 @@
-package fr.dauphine.etrade.services;
+package fr.dauphine.etrade.api;
 
 import java.util.ArrayList;
 

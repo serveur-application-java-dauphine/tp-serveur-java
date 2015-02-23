@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
-    <wb-module deploy-name="eTrade-WebEAR">
-        <wb-resource deploy-path="/" source-path="/EarContent" tag="defaultRootSource"/>
-        <dependent-module archiveName="eTrade-Web.war" deploy-path="/" handle="module:/resource/eTrade-Web/eTrade-Web">
-            <dependent-object/>
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
+    <wb-module deploy-name="feature-toggles">
+        <wb-resource deploy-path="/" source-path="/target/m2e-wtp/ear-resources"/>
+        <wb-resource deploy-path="/" source-path="/src/main/application" tag="defaultRootSource"/>
         <dependent-module archiveName="eTrade-ejb.jar" deploy-path="/" handle="module:/resource/eTrade-ejb/eTrade-ejb">
-            <dependent-object/>
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="Serveur_Application.war" deploy-path="/" handle="module:/resource/Serveur_Application/Serveur_Application">
-            <dependent-object/>
+        <dependent-module archiveName="eTrade-Web-1.0.0-SNAPSHOT.war" deploy-path="/" handle="module:/resource/eTrade-Web/eTrade-Web">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="junit-4.10.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/junit/junit/4.10/junit-4.10.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="hamcrest-core-1.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/hamcrest/hamcrest-core/1.1/hamcrest-core-1.1.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
     </wb-module>

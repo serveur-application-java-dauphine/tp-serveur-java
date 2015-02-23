@@ -3,9 +3,8 @@
 	<name>eTrade-WebEAR</name>
 	<comment></comment>
 	<projects>
-		<project>eTrade-Web</project>
 		<project>eTrade-ejb</project>
-		<project>Serveur_Application</project>
+		<project>eTrade-Web</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
