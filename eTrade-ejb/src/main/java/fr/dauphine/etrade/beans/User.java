@@ -1,19 +1,22 @@
 package fr.dauphine.etrade.beans;
 
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity
-public class User {
+public class User implements Serializable{
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	private long id;
 
-	private String userName;
-	private String mailAddress;
+	private String name;
+	private String mail;
 	private String password;
-
 	/**
 	 * @return the id
 	 */
@@ -28,20 +31,20 @@ public class User {
 		this.id = id;
 	}
 
-	public String getUserName() {
-		return userName;
+	public String getName() {
+		return name;
 	}
 
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setName(String userName) {
+		this.name = userName;
 	}
 
-	public String getMailAddress() {
-		return mailAddress;
+	public String getMail() {
+		return mail;
 	}
 
-	public void setMailAddress(String mailAddress) {
-		this.mailAddress = mailAddress;
+	public void setMail(String mailAddress) {
+		this.mail = mailAddress;
 	}
 
 	public String getPassword() {
