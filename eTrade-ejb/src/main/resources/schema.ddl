@@ -7,6 +7,18 @@
         primary key (id)
     );
 
+    create table Role (
+        id integer not null,
+        libelle varchar(255),
+        primary key (id)
+    );
+
+    create table TypeOrdre (
+        id integer not null,
+        libelle varchar(255),
+        primary key (id)
+    );
+
     create table User (
         id bigint not null,
         mail varchar(255),
