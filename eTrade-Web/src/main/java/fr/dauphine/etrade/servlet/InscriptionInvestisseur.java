@@ -18,18 +18,11 @@ import fr.dauphine.etrade.Constantes.Constantes;
  */
 @WebServlet(description = "This servlet deals with the inscription of a new investor.", urlPatterns = { "/InscriptionInvestisseur" })
 public class InscriptionInvestisseur extends HttpServlet {
-	private static final long serialVersionUID = 1L;
 	
 	// A voir pour l'ajouter
 	@EJB
 	private ServicesUser ur;
 	
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public InscriptionInvestisseur() {
-        super();
-    }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
