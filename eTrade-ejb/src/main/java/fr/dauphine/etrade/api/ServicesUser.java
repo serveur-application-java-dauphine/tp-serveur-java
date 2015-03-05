@@ -11,5 +11,6 @@ public interface ServicesUser {
 	Boolean addUser(User user);
 	Boolean delUser(User user);
 	ArrayList<User> allUsers();
+	User getUserById(int id);
 	Boolean updateUser(User user);
 }
