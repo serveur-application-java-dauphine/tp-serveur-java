@@ -9,6 +9,11 @@ import javax.persistence.Id;
 @Entity
 public class User implements Serializable {
 
+	/**
+	 * Generated serialVersionUID
+	 */
+	private static final long serialVersionUID = 2140164378061721105L;
+
 	@Id
 	private long id;
 
