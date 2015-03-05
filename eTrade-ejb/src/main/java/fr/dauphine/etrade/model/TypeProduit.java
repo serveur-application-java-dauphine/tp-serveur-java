@@ -51,7 +51,7 @@ public class TypeProduit implements java.io.Serializable {
 
 	@Column(name = "Libelle", unique = true, nullable = false, length = 20)
 	public String getLibelle() {
-		return this.libelle;
+		return this.libelle; 
 	}
 
 	public void setLibelle(String libelle) {
