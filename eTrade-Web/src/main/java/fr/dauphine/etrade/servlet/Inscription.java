@@ -24,8 +24,10 @@ public class Inscription extends HttpServlet {
 	 * Generated serialVersionUID
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	//Usage direct via la no-interface-view
 	@EJB
-	private ServicesUtilisateur ur;
+	private ServicesUtilisateur servicesUtilisateur;
 	
 
 	/**
@@ -35,9 +37,7 @@ public class Inscription extends HttpServlet {
 		super.doGet(request, response);
 	}
 	
-	//Usage direct via la no-interface-view
-	@EJB
-	ServicesUtilisateur servicesUtilisateur;
+
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
@@ -50,7 +50,8 @@ public class Inscription extends HttpServlet {
 			
 	
 			Utilisateur.setMail(request.getParameter(Constantes.I_USER_MAIL));
-			Utilisateur.setName(request.getParameter(Constantes.I_USER_NAME));
+			Utilisateur.setName(request.getParameter(Constantes.I_USER_FIRSTNAME));
+			Utilisateur.setLastname(request.getParameter(Constantes.I_USER_NAME));
 			Utilisateur.setPassword(request.getParameter(Constantes.I_USER_PASSWORD)); 
 			Utilisateur.setAdress(request.getParameter(Constantes.I_USER_ADDRESS));
 			Utilisateur.setZipcode(request.getParameter(Constantes.I_USER_ZIP_CODE));
@@ -58,7 +59,8 @@ public class Inscription extends HttpServlet {
 			Utilisateur.setBirthdate(java.sql.Date.valueOf(request.getParameter(Constantes.I_USER_BIRTH_DATE)));
 			
 			Role role = new Role();
-			role.setIdRole(Long.getLong(request.getParameter(Constantes.I_USER_ASKED_ROLE)));
+			role.setIdRole(Long.parseLong(request.getParameter(Constantes.I_USER_ASKED_ROLE)));
+			
 			
 			Utilisateur.setRole(role);
 			
@@ -75,7 +77,12 @@ public class Inscription extends HttpServlet {
 		}
 
 	}
-
+	
+	/**
+	 * This method tests if all obligatory inputs are completed
+	 * @param request
+	 * @return
+	 */
 	private boolean testRequest(HttpServletRequest request) {
 		boolean result = true;
 		result = request.getParameter(Constantes.I_USER_PASSWORD).equals(request.getParameter(Constantes.I_USER_CONFIRM_PASSWORD));

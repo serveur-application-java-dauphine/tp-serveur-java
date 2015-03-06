@@ -201,7 +201,7 @@ public class Utilisateur implements java.io.Serializable {
 		this.city = city;
 	}
 	
-	@Column(name="valueRole", nullable = false, length=1)
+	@Column(name="validRole", nullable = false, length=1)
 	public boolean getValidRole(){
 		return this.validRole;
 	}
