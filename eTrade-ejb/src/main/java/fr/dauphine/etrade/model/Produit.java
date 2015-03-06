@@ -23,6 +23,11 @@ import javax.persistence.Table;
 @Table(name = "Produit", catalog = "etrade_titres")
 public class Produit implements java.io.Serializable {
 
+	/**
+	 * Default serialVersionUID
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private Long idProduit;
 	private TypeProduit typeProduit;
 	private Societe societe;

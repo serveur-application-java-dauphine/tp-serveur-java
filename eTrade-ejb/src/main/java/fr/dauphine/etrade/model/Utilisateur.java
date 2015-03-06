@@ -27,6 +27,11 @@ import javax.persistence.UniqueConstraint;
 @Table(name = "Utilisateur", catalog = "etrade_titres", uniqueConstraints = @UniqueConstraint(columnNames = "Mail"))
 public class Utilisateur implements java.io.Serializable {
 
+	/**
+	 * Default serialVersionUID
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private Long idUtilisateur;
 	private Societe societe;
 	private Portefeuille portefeuille;
@@ -39,15 +44,17 @@ public class Utilisateur implements java.io.Serializable {
 	private String adress;
 	private String zipcode;
 	private String city;
+	private boolean validRole;	
 	private Set<Portefeuille> portefeuilles = new HashSet<Portefeuille>(0);
 	private Set<Actualite> actualites = new HashSet<Actualite>(0);
 
 	public Utilisateur() {
+		this.validRole = false;
 	}
 
 	public Utilisateur(Role role, String lastname, String name, String mail,
 			String password, Date birthdate, String adress, String zipcode,
-			String city) {
+			String city, boolean validRole) {
 		this.role = role;
 		this.lastname = lastname;
 		this.name = name;
@@ -57,11 +64,12 @@ public class Utilisateur implements java.io.Serializable {
 		this.adress = adress;
 		this.zipcode = zipcode;
 		this.city = city;
+		this.validRole = validRole;
 	}
 
 	public Utilisateur(Societe societe, Portefeuille portefeuille, Role role,
 			String lastname, String name, String mail, String password,
-			Date birthdate, String adress, String zipcode, String city,
+			Date birthdate, String adress, String zipcode, String city, boolean validRole,
 			Set<Portefeuille> portefeuilles, Set<Actualite> actualites) {
 		this.societe = societe;
 		this.portefeuille = portefeuille;
@@ -74,6 +82,7 @@ public class Utilisateur implements java.io.Serializable {
 		this.adress = adress;
 		this.zipcode = zipcode;
 		this.city = city;
+		this.validRole = validRole;
 		this.portefeuilles = portefeuilles;
 		this.actualites = actualites;
 	}
@@ -191,7 +200,16 @@ public class Utilisateur implements java.io.Serializable {
 	public void setCity(String city) {
 		this.city = city;
 	}
-
+	
+	@Column(name="valueRole", nullable = false, length=1)
+	public boolean getValidRole(){
+		return this.validRole;
+	}
+	
+	public void setValidRole(boolean validRole){
+		this.validRole = validRole;
+	}
+	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "utilisateur")
 	public Set<Portefeuille> getPortefeuilles() {
 		return this.portefeuilles;

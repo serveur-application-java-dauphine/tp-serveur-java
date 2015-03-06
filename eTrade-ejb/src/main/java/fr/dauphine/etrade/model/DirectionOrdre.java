@@ -22,6 +22,10 @@ import javax.persistence.UniqueConstraint;
 @Table(name = "Direction_Ordre", catalog = "etrade_titres", uniqueConstraints = @UniqueConstraint(columnNames = "Libelle"))
 public class DirectionOrdre implements java.io.Serializable {
 
+	/**
+	 * Generated serialVersionUID
+	 */
+	private static final long serialVersionUID = 1L;
 	private Long idDirectionOrdre;
 	private String libelle;
 	private Set<Ordre> ordres = new HashSet<Ordre>(0);

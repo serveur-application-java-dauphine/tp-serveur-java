@@ -19,7 +19,11 @@ import javax.persistence.Table;
 public class Administrateur  implements java.io.Serializable {
 
 
-     private long id;
+    /**
+	 * Generated serialVersionUID
+	 */
+	private static final long serialVersionUID = 1L;
+	private long id;
      private String mail;
      private String name;
      private String password;

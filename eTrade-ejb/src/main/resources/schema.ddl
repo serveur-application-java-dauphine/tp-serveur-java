@@ -19,7 +19,7 @@
         primary key (id)
     );
 
-    create table User (
+    create table Utilisateur (
         id bigint not null,
         mail varchar(255),
         name varchar(255),

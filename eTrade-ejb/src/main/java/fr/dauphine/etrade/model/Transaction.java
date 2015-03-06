@@ -24,6 +24,11 @@ import javax.persistence.TemporalType;
 @Table(name = "Transaction", catalog = "etrade_titres")
 public class Transaction implements java.io.Serializable {
 
+	/**
+	 * Default serialVersionUID
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private Long idTransaction;
 	private Ordre ordreByIdOrderAchat;
 	private Ordre ordreByIdOrderVente;

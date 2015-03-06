@@ -21,6 +21,11 @@ import javax.persistence.Table;
 @Table(name = "Portefeuille", catalog = "etrade_titres")
 public class Portefeuille implements java.io.Serializable {
 
+	/**
+	 * Generated serialVersionUID
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private long idPortefeuille;
 	private Utilisateur utilisateur;
 	private String description;

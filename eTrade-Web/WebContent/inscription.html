@@ -7,11 +7,15 @@
 </head>
 <body>
 	<h1>Inscription d'un nouvel investisseur</h1>
-	<form name="inscription" id="form-1" method="post" action="InscriptionInvestisseur" ><!--onsubmit="return verifForm(this)"-->
+	<form name="inscription" id="form-1" method="post" action="Inscription" ><!--onsubmit="return verifForm(this)"-->
 		<table>
 		<tr>
 			<td>Nom d'utilisateur</td>
 			<td><input type="text" id="name" name="name" onblur="verifPseudo(this)"/></td>
+		</tr>
+		<tr>
+			<td>Prénom</td>
+			<td><input type="text" id="firstname" name="firstname" onblur="verifPseudo(thir)"/></td>
 		</tr>
 		<tr>
 			<td>Adresse mail</td>
@@ -24,6 +28,32 @@
 		<tr>
 			<td>Confirmation du mot de passe</td>
 			<td><input type="password" id="confirmPassword" name="confirmPassword" onblur="verifConfirmPassword(this)" /></td>
+		</tr>
+		<tr>
+			<td>Date de naissance</td>
+			<td><input type="date" id="birthDate" name="birthDate" /></td>
+		</tr>
+		<tr>
+			<td>Adresse</td>
+			<td><textarea  id="address" name="address" maxlength="100"></textarea></td>
+		</tr>
+		<tr>
+			<td>Code postal</td>
+			<td><input type="text" id="zipCode" name="ziCode" /></td>
+		</tr>
+		<tr>
+			<td>Ville</td>
+			<td><input type="text" id="city" name="city" /></td>
+		</tr>
+		<tr>
+			<td>Rôle demandé (confirmé ensuite par l'administrateur)</td>
+			<td>
+				<select id="role" name="role">
+					<option value=""></option>
+					<option value="1">Investisseur</option>
+					<option value="2">Membre d'une société</option>
+				</select>
+			</td>
 		</tr>
 		<tr>
 			<td><input type="submit" value="Créez votre compte"/></td>

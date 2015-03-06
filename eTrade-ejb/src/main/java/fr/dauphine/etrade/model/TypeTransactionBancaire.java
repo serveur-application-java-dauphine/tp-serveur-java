@@ -22,6 +22,11 @@ import javax.persistence.UniqueConstraint;
 @Table(name = "Type_Transaction_Bancaire", catalog = "etrade_titres", uniqueConstraints = @UniqueConstraint(columnNames = "Libelle"))
 public class TypeTransactionBancaire implements java.io.Serializable {
 
+	
+	/**
+	 * Default serialVersionUID
+	 */
+	private static final long serialVersionUID = 1L;
 	private Long idTypeTrBancaire;
 	private String libelle;
 	private Set<TransactionBancaire> transactionBancaires = new HashSet<TransactionBancaire>(

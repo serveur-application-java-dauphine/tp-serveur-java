@@ -43,7 +43,7 @@ function verifMail(champ)
  */
 function verifPseudo(champ)
 {
-   if(champ.value.length < 2 || champ.value.length > 15) // In the database, it will be set as a 15 caracters input
+   if(champ.value.length < 2 || champ.value.length > 40) //Corresponding to the 40 caracters in the database
    {
       surligne(champ, true);
       return false;
@@ -96,7 +96,7 @@ function verifConfirmPassword(champ){
  */
 function verifForm(f)
 {
-   var pseudoOk = verifPseudo(f.username);
+   var pseudoOk = verifPseudo(f.Utilisateurname);
    var mailOk = verifMail(f.mail);
    var passwordOk = verifPassword(f.password);
    var passwordConfirmOk = verifConfirmPassword(f.confirmPassword);

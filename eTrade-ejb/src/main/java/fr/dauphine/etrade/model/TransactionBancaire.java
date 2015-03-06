@@ -23,7 +23,11 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "Transaction_bancaire", catalog = "etrade_titres")
 public class TransactionBancaire implements java.io.Serializable {
-
+	
+	/**
+	 * Default serialVersionUID
+	 */
+	private static final long serialVersionUID = 1L;
 	private Long idTrBancaire;
 	private TypeTransactionBancaire typeTransactionBancaire;
 	private Portefeuille portefeuille;
