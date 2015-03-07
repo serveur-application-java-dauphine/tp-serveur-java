@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <faceted-project>
-  <runtime name="JBoss 7.1 Runtime"/>
-  <secondary-runtime name="JBoss 7.1 Runtime eTrade"/>
   <fixed facet="java"/>
   <fixed facet="jst.ejb"/>
   <installed facet="jst.ejb" version="3.1"/>
