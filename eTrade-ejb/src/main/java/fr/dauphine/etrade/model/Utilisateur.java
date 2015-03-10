@@ -44,7 +44,7 @@ public class Utilisateur implements java.io.Serializable {
 	private String adress;
 	private String zipcode;
 	private String city;
-	private boolean validRole;	
+	private boolean validRole;
 	private Set<Portefeuille> portefeuilles = new HashSet<Portefeuille>(0);
 	private Set<Actualite> actualites = new HashSet<Actualite>(0);
 

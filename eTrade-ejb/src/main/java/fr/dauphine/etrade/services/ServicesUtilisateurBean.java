@@ -1,7 +1,6 @@
 package fr.dauphine.etrade.services;
 
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -27,6 +26,8 @@ public class ServicesUtilisateurBean implements ServicesUtilisateur{
 //  Dans un tel cas, supprimer les emf, et, et et.begin/commit().
 //	@PersistenceContext(unitName = "eTrade-MySql")
 //	private EntityManager em;	
+	
+	
 	
 	@PersistenceUnit
 	private EntityManagerFactory emf;
@@ -65,7 +66,8 @@ public class ServicesUtilisateurBean implements ServicesUtilisateur{
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Utilisateur> allUtilisateurs() {
-		Query q = (Query) em.createQuery("SELECT u FROM Utilisateurs u");
+
+		Query q = (Query) em.createQuery("SELECT u FROM Utilisateur u");
 		
 		return (List<Utilisateur>) q.getResultList();		
 	}
@@ -86,11 +88,11 @@ public class ServicesUtilisateurBean implements ServicesUtilisateur{
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Utilisateur> getUnvalidatedUtilisateurs() {
-		Query q = (Query) em.createQuery("SELECT u FROM Utilisateurs u)"
-				+ "WHERE u.ValidRole IS NULL");
+		Query q = (Query) em.createQuery("SELECT u FROM Utilisateur u "
+				/*+ "WHERE u.validRole IS NULL"*/,Utilisateur.class);
+		//TODO 
 		
-		
-		List<Utilisateur> listeUtilisateurs = q.getResultList();
+		/*List<Utilisateur> listeUtilisateurs = q.getResultList();
 		List<Utilisateur> resultat = new ArrayList<Utilisateur>();
 		Utilisateur u = null;
 
@@ -102,9 +104,24 @@ public class ServicesUtilisateurBean implements ServicesUtilisateur{
 			u.setRole(user.getRole());
 			u.setSociete(user.getSociete());
 			resultat.add(u);
-		}	
-		
-		return resultat;
+		}	*/
+		List<Utilisateur> result = q.getResultList();
+
+		return q.getResultList()/*resultat*/;
+	}
+
+	@Override
+	public Utilisateur getUtilisateurLogin(String email, String password) {
+		Utilisateur result = null;
+		Query q = (Query) em.createQuery("SELECT u FROM Utilisateur u WHERE u.mail='"+email+"'",Utilisateur.class);
+		System.out.println(email);
+		//q.setParameter(1, email);
+		//q.setParameter(2, password);
+		try{
+		result = (Utilisateur) q.getSingleResult();
+		}
+		catch(Exception e){e.printStackTrace();}
+		return result;
 	}
 	
 }

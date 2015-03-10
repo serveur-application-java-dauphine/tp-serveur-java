@@ -11,9 +11,7 @@
 <body> 
 
 	<h:form>
-		<h:dataTable value="#{utilisateurManagedBean.response}" var="u"
-    			
-    		>
+		<h:dataTable value="#{utilisateurManagedBean.listNotValided}" var="u">
 		   <h:column>    				
 		      <f:facet name="header">Nom</f:facet>    				
 		      #{u.name}
@@ -22,23 +20,23 @@
 		      <f:facet name="header">Prénom</f:facet>
 		      #{u.lastname}
 		   </h:column>
-		   <h:column>
+		   <!-- <h:column>
 		      <f:facet name="header">Rôle demandé</f:facet>
 		      #{u.role}
-		   </h:column>
-		   <h:column>
+		   </h:column> -->
+		   <!--<h:column>
 		      <f:facet name="header">Société affiliée</f:facet>
 		      #{u.societe}
-		   </h:column>
+		   </h:column> -->
 		   <h:column>
 		 	  <f:facet name="header">Valider</f:facet>
-		   	  <!-- <h:commandButton id="submit" value="Valider"
-				action="#{u.valider}" /> -->
+		   	   <h:commandButton id="submit" value="Valider"
+				action="#{utilisateurManagedBean.valider(u)}" />
   	  	   </h:column>
 		   <h:column>
 		   	<f:facet name="header">Refuser</f:facet>
-		   	 <!--   <h:commandButton id="refuse" value="Refuser"
-				action="#{u.supprimer}" /> -->
+		   	 <h:commandButton id="refuse" value="Refuser"
+				action="#{utilisateurManagedBean.supprimer(u)}" />
 		   </h:column>
 		</h:dataTable>
 	</h:form>

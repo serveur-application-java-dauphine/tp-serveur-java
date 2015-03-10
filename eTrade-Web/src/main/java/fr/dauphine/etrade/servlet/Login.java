@@ -19,8 +19,8 @@ import fr.dauphine.etrade.Constantes.PatternsControl;
 /**
  * Servlet implementation class InscriptionInvestisseur
  */
-@WebServlet(description = "This servlet deals with the inscription of a new investor.", urlPatterns = { "/Inscription" })
-public class Inscription extends HttpServlet {
+@WebServlet(description = "This servlet deals with the registration of a new investor.", urlPatterns = { "/Login" })
+public class Login extends HttpServlet {
 	
 	/**
 	 * Generated serialVersionUID
@@ -48,30 +48,18 @@ public class Inscription extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		if(testRequest(request)){
-			Utilisateur Utilisateur = new Utilisateur();
-			Utilisateur.setMail(request.getParameter(ConstantesForms.I_USER_MAIL));
-			Utilisateur.setName(request.getParameter(ConstantesForms.I_USER_FIRSTNAME));
-			Utilisateur.setLastname(request.getParameter(ConstantesForms.I_USER_NAME));
-			Utilisateur.setPassword(request.getParameter(ConstantesForms.I_USER_PASSWORD)); 
-			Utilisateur.setAdress(request.getParameter(ConstantesForms.I_USER_ADDRESS));
-			Utilisateur.setZipcode(request.getParameter(ConstantesForms.I_USER_ZIP_CODE));
-			Utilisateur.setCity(request.getParameter(ConstantesForms.I_USER_CITY));
-			Utilisateur.setBirthdate(java.sql.Date.valueOf(request.getParameter(ConstantesForms.I_USER_BIRTH_DATE)));
-			
-			Role role = new Role();
-			role.setIdRole(Long.parseLong(request.getParameter(ConstantesForms.I_USER_ASKED_ROLE)));
-			
-			
-			Utilisateur.setRole(role);
-			
-			// L'utilisateur n'a pas encore été validé au moment de son insersion en base
-			Utilisateur.setValidRole(false);
-			
-			servicesUtilisateur.addUtilisateur(Utilisateur);			
+			String email = request.getParameter(ConstantesForms.I_USER_MAIL);
+			String password = request.getParameter(ConstantesForms.I_USER_PASSWORD);
+			System.out.println(email);
+			System.out.println(password);
+			Utilisateur user = servicesUtilisateur.getUtilisateurLogin(email,password);			
 			
 			//Message de confirmation
-			System.out.println("Inscription OK");
-			response.getWriter().append("Inscription OK");
+			if (user==null){
+				response.getWriter().append("Login KO");
+				return;
+			}
+			
 		} else {
 			System.out.println("Test Request KO");
 		}
@@ -84,12 +72,10 @@ public class Inscription extends HttpServlet {
 	 * @return
 	 */
 	private boolean testRequest(HttpServletRequest request) {
-		boolean result = true;
-		if ( request.getParameter(ConstantesForms.I_USER_PASSWORD).length() < ConstantesForms.C_PASSWORD_MIN_SIZE
-				|| !request.getParameter(ConstantesForms.I_USER_PASSWORD).equals(request.getParameter(ConstantesForms.I_USER_CONFIRM_PASSWORD))
+		/*if ( /*request.getParameter(ConstantesForms.I_USER_PASSWORD).length() < ConstantesForms.C_PASSWORD_MIN_SIZE
 				|| !Pattern.matches(PatternsControl.EMAIL_PATTERN, request.getParameter(ConstantesForms.I_USER_MAIL))
 			)
-			return false;
+			return false;*/
 		
 		return true;
 	}

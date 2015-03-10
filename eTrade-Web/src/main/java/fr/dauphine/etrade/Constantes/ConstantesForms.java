@@ -1,6 +1,6 @@
 package fr.dauphine.etrade.Constantes;
 
-public interface Constantes {
+public final class ConstantesForms {
 	
 	
 	/**
