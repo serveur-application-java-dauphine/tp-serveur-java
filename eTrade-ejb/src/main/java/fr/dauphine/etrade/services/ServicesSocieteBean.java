@@ -1,6 +1,5 @@
 package fr.dauphine.etrade.services;
 
-import java.io.Serializable;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -9,7 +8,10 @@ import javax.ejb.Stateless;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
+import javax.persistence.PersistenceUnit;
 import javax.persistence.Query;
 
 import fr.dauphine.etrade.api.ServicesSociete;
@@ -20,8 +22,17 @@ import fr.dauphine.etrade.model.Societe;
 @TransactionManagement(TransactionManagementType.BEAN)
 public class ServicesSocieteBean implements ServicesSociete {
 
-	@PersistenceContext(unitName = "eTrade-MySql")
-	private EntityManager em;	
+	@PersistenceUnit
+	private EntityManagerFactory emf;
+	
+	//@PersistenceContext(unitName = "eTrade-MySql")
+	private EntityManager em;
+	private EntityTransaction et;
+	
+	public ServicesSocieteBean() {
+		em = Persistence.createEntityManagerFactory("eTrade-MySql").createEntityManager();
+		et = em.getTransaction();
+	}
 	
 	private static final Logger LOG = Logger.getLogger(ServicesSocieteBean.class.getName());
 	
@@ -29,14 +40,18 @@ public class ServicesSocieteBean implements ServicesSociete {
 	@Override
 	public Societe addSociete(Societe societe) {
 		LOG.info("Registering : "+societe.getName());
+		et.begin();
 		em.persist(societe);
+		et.commit();
 		return societe;
 	}
 
 	@Override
 	public Societe delSociete(Societe societe) {
 		LOG.info("Deleting : " +societe.getName());
+		et.begin();
 		em.remove(societe);
+		et.commit();
 		return societe;
 	}
 
@@ -55,7 +70,9 @@ public class ServicesSocieteBean implements ServicesSociete {
 	@Override
 	public Societe updateSociete(Societe societe) {
 		LOG.info("Updating " + societe.getName());
+		et.begin();
 		em.merge(societe);
+		et.commit();
 		return societe;
 	}
 

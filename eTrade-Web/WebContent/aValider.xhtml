@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"> 
+
+<h:head>
+
+
+</h:head> 
+<body> 
+
+	<h:form>
+		<h:dataTable value="#{utilisateurManagedBean.response}" var="u"
+    			
+    		>
+		   <h:column>    				
+		      <f:facet name="header">Nom</f:facet>    				
+		      #{u.name}
+		   </h:column>
+		   <h:column>
+		      <f:facet name="header">Prénom</f:facet>
+		      #{u.lastname}
+		   </h:column>
+		   <h:column>
+		      <f:facet name="header">Rôle demandé</f:facet>
+		      #{u.role}
+		   </h:column>
+		   <h:column>
+		      <f:facet name="header">Société affiliée</f:facet>
+		      #{u.societe}
+		   </h:column>
+		   <h:column>
+		 	  <f:facet name="header">Valider</f:facet>
+		   	  <!-- <h:commandButton id="submit" value="Valider"
+				action="#{u.valider}" /> -->
+  	  	   </h:column>
+		   <h:column>
+		   	<f:facet name="header">Refuser</f:facet>
+		   	 <!--   <h:commandButton id="refuse" value="Refuser"
+				action="#{u.supprimer}" /> -->
+		   </h:column>
+		</h:dataTable>
+	</h:form>
+</body> 
+</html>

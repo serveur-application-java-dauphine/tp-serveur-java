@@ -13,4 +13,5 @@ public interface ServicesUtilisateur {
 	List<Utilisateur> allUtilisateurs();
 	Utilisateur getUtilisateurById(int id);
 	Utilisateur updateUtilisateur(Utilisateur Utilisateur);
+	List<Utilisateur> getUnvalidatedUtilisateurs();
 }

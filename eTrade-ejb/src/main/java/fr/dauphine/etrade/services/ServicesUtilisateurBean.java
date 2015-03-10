@@ -1,6 +1,7 @@
 package fr.dauphine.etrade.services;
 
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -11,7 +12,6 @@ import javax.ejb.TransactionManagementType;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
-import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceUnit;
 import javax.persistence.Query;
 import javax.persistence.EntityManager;
@@ -23,6 +23,10 @@ import fr.dauphine.etrade.model.Utilisateur;
 @Stateless
 @TransactionManagement(TransactionManagementType.BEAN)
 public class ServicesUtilisateurBean implements ServicesUtilisateur{
+//	TODO A envisager par rapport à EntityManagerFactory en remplaçant dans persistence.xml le transaction-type par "JTA".
+//  Dans un tel cas, supprimer les emf, et, et et.begin/commit().
+//	@PersistenceContext(unitName = "eTrade-MySql")
+//	private EntityManager em;	
 	
 	@PersistenceUnit
 	private EntityManagerFactory emf;
@@ -77,6 +81,30 @@ public class ServicesUtilisateurBean implements ServicesUtilisateur{
 		em.merge(utilisateur);
 		et.commit();
 		return utilisateur;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Utilisateur> getUnvalidatedUtilisateurs() {
+		Query q = (Query) em.createQuery("SELECT u FROM Utilisateurs u)"
+				+ "WHERE u.ValidRole IS NULL");
+		
+		
+		List<Utilisateur> listeUtilisateurs = q.getResultList();
+		List<Utilisateur> resultat = new ArrayList<Utilisateur>();
+		Utilisateur u = null;
+
+		for (Utilisateur user : listeUtilisateurs) {
+			u = new Utilisateur();
+			u.setIdUtilisateur(user.getIdUtilisateur());
+			u.setName(user.getName());
+			u.setLastname(user.getLastname());
+			u.setRole(user.getRole());
+			u.setSociete(user.getSociete());
+			resultat.add(u);
+		}	
+		
+		return resultat;
 	}
 	
 }
