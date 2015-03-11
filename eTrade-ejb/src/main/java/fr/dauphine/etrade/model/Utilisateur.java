@@ -98,7 +98,7 @@ public class Utilisateur implements java.io.Serializable {
 		this.idUtilisateur = idUtilisateur;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "IdSociete")
 	public Societe getSociete() {
 		return this.societe;
@@ -118,7 +118,7 @@ public class Utilisateur implements java.io.Serializable {
 		this.portefeuille = portefeuille;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "IdRole", nullable = false)
 	public Role getRole() {
 		return this.role;

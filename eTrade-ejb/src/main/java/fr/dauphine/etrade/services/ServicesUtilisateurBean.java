@@ -22,7 +22,7 @@ import fr.dauphine.etrade.model.Utilisateur;
 @Stateless
 @TransactionManagement(TransactionManagementType.BEAN)
 public class ServicesUtilisateurBean implements ServicesUtilisateur{
-//	TODO A envisager par rapport à EntityManagerFactory en remplaçant dans persistence.xml le transaction-type par "JTA".
+//	TODO A envisager par rapport ï¿½ EntityManagerFactory en remplaï¿½ant dans persistence.xml le transaction-type par "JTA".
 //  Dans un tel cas, supprimer les emf, et, et et.begin/commit().
 //	@PersistenceContext(unitName = "eTrade-MySql")
 //	private EntityManager em;	
@@ -88,35 +88,18 @@ public class ServicesUtilisateurBean implements ServicesUtilisateur{
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Utilisateur> getUnvalidatedUtilisateurs() {
-		Query q = (Query) em.createQuery("SELECT u FROM Utilisateur u "
-				/*+ "WHERE u.validRole IS NULL"*/,Utilisateur.class);
-		//TODO 
-		
-		/*List<Utilisateur> listeUtilisateurs = q.getResultList();
-		List<Utilisateur> resultat = new ArrayList<Utilisateur>();
-		Utilisateur u = null;
-
-		for (Utilisateur user : listeUtilisateurs) {
-			u = new Utilisateur();
-			u.setIdUtilisateur(user.getIdUtilisateur());
-			u.setName(user.getName());
-			u.setLastname(user.getLastname());
-			u.setRole(user.getRole());
-			u.setSociete(user.getSociete());
-			resultat.add(u);
-		}	*/
+		Query q = (Query) em.createQuery("SELECT u FROM Utilisateur u WHERE u.validRole = 0", Utilisateur.class);
 		List<Utilisateur> result = q.getResultList();
-
-		return q.getResultList()/*resultat*/;
+		return result;
 	}
 
 	@Override
 	public Utilisateur getUtilisateurLogin(String email, String password) {
 		Utilisateur result = null;
-		Query q = (Query) em.createQuery("SELECT u FROM Utilisateur u WHERE u.mail='"+email+"'",Utilisateur.class);
+		Query q = (Query) em.createQuery("SELECT u FROM Utilisateur u WHERE u.mail= ? AND u.password = ?",Utilisateur.class);
 		System.out.println(email);
-		//q.setParameter(1, email);
-		//q.setParameter(2, password);
+		q.setParameter(1, email);
+		q.setParameter(2, password);
 		try{
 		result = (Utilisateur) q.getSingleResult();
 		}

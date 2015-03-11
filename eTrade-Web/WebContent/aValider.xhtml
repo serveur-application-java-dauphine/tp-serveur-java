@@ -20,14 +20,14 @@
 		      <f:facet name="header">Prénom</f:facet>
 		      #{u.lastname}
 		   </h:column>
-		   <!-- <h:column>
+		   <h:column>
 		      <f:facet name="header">Rôle demandé</f:facet>
-		      #{u.role}
-		   </h:column> -->
-		   <!--<h:column>
+		      #{u.role.libelle}
+		   </h:column>
+		   <h:column>
 		      <f:facet name="header">Société affiliée</f:facet>
-		      #{u.societe}
-		   </h:column> -->
+		      #{u.societe.name}
+		   </h:column>
 		   <h:column>
 		 	  <f:facet name="header">Valider</f:facet>
 		   	   <h:commandButton id="submit" value="Valider"

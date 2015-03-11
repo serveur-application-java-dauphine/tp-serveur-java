@@ -31,6 +31,7 @@ public class UtilisateurManagedBean {
 	 * @return the listNotValided
 	 */
 	public List<Utilisateur> getListNotValided() {
+		List<Utilisateur> result = su.getUnvalidatedUtilisateurs();
 		return su.getUnvalidatedUtilisateurs();
 	}
 

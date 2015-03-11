@@ -56,6 +56,7 @@ public class Inscription extends HttpServlet {
 			Utilisateur.setAdress(request.getParameter(ConstantesForms.I_USER_ADDRESS));
 			Utilisateur.setZipcode(request.getParameter(ConstantesForms.I_USER_ZIP_CODE));
 			Utilisateur.setCity(request.getParameter(ConstantesForms.I_USER_CITY));
+
 			Utilisateur.setBirthdate(java.sql.Date.valueOf(request.getParameter(ConstantesForms.I_USER_BIRTH_DATE)));
 			
 			Role role = new Role();
@@ -64,7 +65,7 @@ public class Inscription extends HttpServlet {
 			
 			Utilisateur.setRole(role);
 			
-			// L'utilisateur n'a pas encore été validé au moment de son insersion en base
+			// L'utilisateur n'a pas encore ï¿½tï¿½ validï¿½ au moment de son insersion en base
 			Utilisateur.setValidRole(false);
 			
 			servicesUtilisateur.addUtilisateur(Utilisateur);			
