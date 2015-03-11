@@ -8,11 +8,11 @@ import fr.dauphine.etrade.model.Utilisateur;
 
 @Remote
 public interface ServicesUtilisateur {
-	Utilisateur addUtilisateur(Utilisateur Utilisateur);
-	Utilisateur delUtilisateur(Utilisateur Utilisateur);
+	Utilisateur addUtilisateur(Utilisateur utilisateur);
+	Utilisateur delUtilisateur(Utilisateur utilisateur);
 	List<Utilisateur> allUtilisateurs();
 	Utilisateur getUtilisateurById(int id);
-	Utilisateur updateUtilisateur(Utilisateur Utilisateur);
+	Utilisateur updateUtilisateur(Utilisateur utilisateur);
 	List<Utilisateur> getUnvalidatedUtilisateurs();
 	Utilisateur getUtilisateurLogin(String email, String password);
 }

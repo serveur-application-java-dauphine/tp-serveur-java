@@ -10,6 +10,7 @@ import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceUnit;
 import javax.persistence.Query;
@@ -96,14 +97,17 @@ public class ServicesUtilisateurBean implements ServicesUtilisateur{
 	@Override
 	public Utilisateur getUtilisateurLogin(String email, String password) {
 		Utilisateur result = null;
-		Query q = (Query) em.createQuery("SELECT u FROM Utilisateur u WHERE u.mail= ? AND u.password = ?",Utilisateur.class);
+		Query q = (Query) em.createQuery("SELECT u FROM Utilisateur u, Role r WHERE u.mail= ? AND u.password = ? AND r.id=u.role.iduser",Utilisateur.class);
 		System.out.println(email);
 		q.setParameter(1, email);
 		q.setParameter(2, password);
 		try{
 		result = (Utilisateur) q.getSingleResult();
 		}
-		catch(Exception e){e.printStackTrace();}
+		//User not Find
+		catch(NoResultException e){
+			
+		}
 		return result;
 	}
 	

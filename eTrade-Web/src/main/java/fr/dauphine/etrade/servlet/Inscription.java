@@ -85,7 +85,6 @@ public class Inscription extends HttpServlet {
 	 * @return
 	 */
 	private boolean testRequest(HttpServletRequest request) {
-		boolean result = true;
 		if ( request.getParameter(ConstantesForms.I_USER_PASSWORD).length() < ConstantesForms.C_PASSWORD_MIN_SIZE
 				|| !request.getParameter(ConstantesForms.I_USER_PASSWORD).equals(request.getParameter(ConstantesForms.I_USER_CONFIRM_PASSWORD))
 				|| !Pattern.matches(PatternsControl.EMAIL_PATTERN, request.getParameter(ConstantesForms.I_USER_MAIL))

@@ -21,19 +21,20 @@ public class Administrateur  implements java.io.Serializable {
 	 * Generated serialVersionUID
 	 */
 	private static final long serialVersionUID = 1L;
-	private long id;
-     private String mail;
-     private String name;
-     private String password;
+	
+	private int id;
+    private String mail;
+    private String name;
+    private String password;
 
     public Administrateur() {
     }
 
 	
-    public Administrateur(long id) {
+    public Administrateur(int id) {
         this.id = id;
     }
-    public Administrateur(long id, String mail, String name, String password) {
+    public Administrateur(int id, String mail, String name, String password) {
        this.id = id;
        this.mail = mail;
        this.name = name;
@@ -48,7 +49,7 @@ public class Administrateur  implements java.io.Serializable {
         return this.id;
     }
     
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

@@ -1,5 +1,6 @@
 package fr.dauphine.etrade.managedbean;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -7,12 +8,17 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
+import org.jboss.logging.Logger.Level;
+
 import fr.dauphine.etrade.api.ServicesUtilisateur;
 import fr.dauphine.etrade.model.Utilisateur;
 
 @ManagedBean
 @RequestScoped
-public class UtilisateurManagedBean {
+public class UtilisateurManagedBean implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	private Utilisateur utilisateur;
 
 	@EJB
 	private ServicesUtilisateur su;
@@ -29,9 +35,9 @@ public class UtilisateurManagedBean {
 	 * 
 	 * @param u
 	 */
-	public void supprimer(Utilisateur u){
-		LOG.info("Deleting the user "+u.getIdUtilisateur());
-		su.delUtilisateur(u);
+	public void supprimer(){
+		LOG.info("Deleting the user "+utilisateur.getIdUtilisateur());
+		su.delUtilisateur(utilisateur);
 	}
 	
 	/**
@@ -51,7 +57,6 @@ public class UtilisateurManagedBean {
 	 * @return the listNotValided
 	 */
 	public List<Utilisateur> getListNotValided() {
-		List<Utilisateur> result = su.getUnvalidatedUtilisateurs();
 		return su.getUnvalidatedUtilisateurs();
 	}
 
@@ -62,5 +67,21 @@ public class UtilisateurManagedBean {
 		//this.listNotValided = listNotValided;
 	}
 	
+	/**
+	 * @return all the users
+	 */
+	public List<Utilisateur> getAllUsers() {
+		return su.allUtilisateurs();
+	}
+	
+	public void inscription() {
+		su.addUtilisateur(utilisateur);
+	}
+	
+	public Utilisateur getUtilisateur() {
+		if (utilisateur==null)
+			utilisateur = new Utilisateur();
+        return utilisateur;
+    }
 	
 }

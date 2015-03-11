@@ -9,11 +9,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import fr.dauphine.etrade.api.ServicesUtilisateur;
 import fr.dauphine.etrade.model.Role;
 import fr.dauphine.etrade.model.Utilisateur;
 import fr.dauphine.etrade.Constantes.ConstantesForms;
+import fr.dauphine.etrade.Constantes.ConstantesSession;
 import fr.dauphine.etrade.Constantes.PatternsControl;
 
 /**
@@ -50,18 +52,20 @@ public class Login extends HttpServlet {
 		if(testRequest(request)){
 			String email = request.getParameter(ConstantesForms.I_USER_MAIL);
 			String password = request.getParameter(ConstantesForms.I_USER_PASSWORD);
-			System.out.println(email);
-			System.out.println(password);
 			Utilisateur user = servicesUtilisateur.getUtilisateurLogin(email,password);			
 			
 			//Message de confirmation
 			if (user==null){
-				response.getWriter().append("Login KO");
+				request.getRequestDispatcher("login.html");
 				return;
 			}
 			
+			//User en session
+			HttpSession session = request.getSession();
+			session.setAttribute(ConstantesSession.SESSION_USER, user);
+			
 		} else {
-			System.out.println("Test Request KO");
+			request.getRequestDispatcher("login.html");
 		}
 
 	}
