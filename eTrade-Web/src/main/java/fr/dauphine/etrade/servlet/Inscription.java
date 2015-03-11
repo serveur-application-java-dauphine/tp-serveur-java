@@ -49,8 +49,8 @@ public class Inscription extends HttpServlet {
 		
 		if(testRequest(request)){
 			Utilisateur Utilisateur = new Utilisateur();
-			Utilisateur.setMail(request.getParameter(ConstantesForms.I_USER_MAIL));
-			Utilisateur.setName(request.getParameter(ConstantesForms.I_USER_FIRSTNAME));
+			Utilisateur.setEmail(request.getParameter(ConstantesForms.I_USER_MAIL));
+			Utilisateur.setFirstName(request.getParameter(ConstantesForms.I_USER_FIRSTNAME));
 			Utilisateur.setLastname(request.getParameter(ConstantesForms.I_USER_NAME));
 			Utilisateur.setPassword(request.getParameter(ConstantesForms.I_USER_PASSWORD)); 
 			Utilisateur.setAdress(request.getParameter(ConstantesForms.I_USER_ADDRESS));

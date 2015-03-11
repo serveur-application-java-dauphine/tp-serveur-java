@@ -48,7 +48,7 @@ public class ServicesUtilisateurBean implements ServicesUtilisateur{
 	
 	@Override
 	public Utilisateur addUtilisateur(Utilisateur utilisateur) {
-		LOG.info("Registering " + utilisateur.getName());
+		LOG.info("Registering " + utilisateur.getFirstName());
 		et.begin();
 		em.persist(utilisateur);
 		et.commit();
@@ -57,7 +57,7 @@ public class ServicesUtilisateurBean implements ServicesUtilisateur{
 
 	@Override
 	public Utilisateur delUtilisateur(Utilisateur utilisateur) {
-		LOG.info("Deleting " + utilisateur.getName());
+		LOG.info("Deleting " + utilisateur.getFirstName());
 		et.begin();
 		utilisateur = em.merge(utilisateur);
 		em.remove(utilisateur);
@@ -78,7 +78,7 @@ public class ServicesUtilisateurBean implements ServicesUtilisateur{
 
 	@Override
 	public Utilisateur updateUtilisateur(Utilisateur utilisateur) {
-		LOG.info("Updating " + utilisateur.getName());
+		LOG.info("Updating " + utilisateur.getFirstName());
 		et.begin();
 		em.merge(utilisateur);
 		et.commit();
@@ -111,13 +111,13 @@ public class ServicesUtilisateurBean implements ServicesUtilisateur{
 	}
 	
 	@Override
-	public Portefeuille createPortefolio(Utilisateur u){
-		Portefeuille p = new Portefeuille(u);
-		LOG.info("Adding a new portefolio to the user "+u.getName());
+	public Utilisateur createPortefolio(Utilisateur u){
+		u.setPortefeuille(new Portefeuille());
+		LOG.info("Adding a new portefolio to the user "+u.getFirstName());
 		et.begin();
-		em.persist(p);
+		em.merge(u);
 		et.commit();
-		return p;
+		return u;
 	}
 	
 }

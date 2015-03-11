@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.ejb.Remote;
 
-import fr.dauphine.etrade.model.Portefeuille;
 import fr.dauphine.etrade.model.Utilisateur;
 
 @Remote
@@ -16,5 +15,5 @@ public interface ServicesUtilisateur {
 	Utilisateur updateUtilisateur(Utilisateur utilisateur);
 	List<Utilisateur> getUnvalidatedUtilisateurs();
 	Utilisateur getUtilisateurLogin(String email, String password);
-	Portefeuille createPortefolio(Utilisateur u);
+	Utilisateur createPortefolio(Utilisateur u);
 }
