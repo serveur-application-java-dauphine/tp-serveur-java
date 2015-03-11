@@ -17,6 +17,7 @@ import javax.persistence.Query;
 import javax.persistence.EntityManager;
 
 import fr.dauphine.etrade.api.ServicesUtilisateur;
+import fr.dauphine.etrade.model.Portefeuille;
 import fr.dauphine.etrade.model.Utilisateur;
 
 @Remote(ServicesUtilisateur.class)
@@ -109,6 +110,16 @@ public class ServicesUtilisateurBean implements ServicesUtilisateur{
 			
 		}
 		return result;
+	}
+	
+	@Override
+	public Portefeuille createPortefolio(Utilisateur u){
+		Portefeuille p = new Portefeuille(u);
+		LOG.info("Adding a new portefolio to the user "+u.getName());
+		et.begin();
+		em.persist(p);
+		et.commit();
+		return p;
 	}
 	
 }

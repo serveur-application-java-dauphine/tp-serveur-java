@@ -24,7 +24,7 @@ import fr.dauphine.etrade.model.Role;
 @TransactionManagement(TransactionManagementType.BEAN)
 public class ServicesRoleBean implements ServicesRole{
 
-	private final Logger LOG = Logger.getLogger(ServicesRoleBean.class.getName());
+	private final static Logger LOG = Logger.getLogger(ServicesRoleBean.class.getName());
 	
 	@PersistenceUnit
 	private EntityManagerFactory emf;
@@ -43,7 +43,7 @@ public class ServicesRoleBean implements ServicesRole{
 	public List<Role> getRoles() {
 		Query q = (Query) em.createQuery("from Role", Role.class);
 		List<Role> result = q.getResultList();
-		LOG.log(Level.INFO, "getRoles(), result : "+result);
+		LOG.info("getRoles(), result : "+result);
 		return result;
 	}
 

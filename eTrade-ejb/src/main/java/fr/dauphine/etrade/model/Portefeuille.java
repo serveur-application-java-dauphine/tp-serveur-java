@@ -40,6 +40,10 @@ public class Portefeuille implements java.io.Serializable {
 	public Portefeuille(long idPortefeuille) {
 		this.idPortefeuille = idPortefeuille;
 	}
+	
+	public Portefeuille(Utilisateur u){
+		this.utilisateur = u;
+	}
 
 	public Portefeuille(long idPortefeuille, Utilisateur utilisateur,
 			String description, Set<Ordre> ordres,
