@@ -48,8 +48,7 @@ public class ServicesRoleBean implements ServicesRole{
 
 	@Override
 	public Role getRole(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		return em.find(Role.class, id);
 	}
 	
 }
