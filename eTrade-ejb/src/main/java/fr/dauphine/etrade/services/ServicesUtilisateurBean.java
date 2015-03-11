@@ -48,7 +48,7 @@ public class ServicesUtilisateurBean implements ServicesUtilisateur{
 	
 	@Override
 	public Utilisateur addUtilisateur(Utilisateur utilisateur) {
-		LOG.info("Registering " + utilisateur.getFirstName());
+		LOG.info("Registering " + utilisateur.getFirstname());
 		et.begin();
 		em.persist(utilisateur);
 		et.commit();
@@ -57,7 +57,7 @@ public class ServicesUtilisateurBean implements ServicesUtilisateur{
 
 	@Override
 	public Utilisateur delUtilisateur(Utilisateur utilisateur) {
-		LOG.info("Deleting " + utilisateur.getFirstName());
+		LOG.info("Deleting " + utilisateur.getFirstname());
 		et.begin();
 		utilisateur = em.merge(utilisateur);
 		em.remove(utilisateur);
@@ -78,7 +78,7 @@ public class ServicesUtilisateurBean implements ServicesUtilisateur{
 
 	@Override
 	public Utilisateur updateUtilisateur(Utilisateur utilisateur) {
-		LOG.info("Updating " + utilisateur.getFirstName());
+		LOG.info("Updating " + utilisateur.getFirstname());
 		et.begin();
 		em.merge(utilisateur);
 		et.commit();
@@ -88,7 +88,7 @@ public class ServicesUtilisateurBean implements ServicesUtilisateur{
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Utilisateur> getUnvalidatedUtilisateurs() {
-		Query q = (Query) em.createQuery("SELECT u FROM Utilisateur u WHERE u.validRole = 0", Utilisateur.class);
+		Query q = (Query) em.createQuery("SELECT u FROM Utilisateur u WHERE u.isValidRole = 0", Utilisateur.class);
 		List<Utilisateur> result = q.getResultList();
 		return result; 
 	}
@@ -96,7 +96,7 @@ public class ServicesUtilisateurBean implements ServicesUtilisateur{
 	@Override
 	public Utilisateur getUtilisateurLogin(String email, String password) {
 		Utilisateur result = null;
-		Query q = (Query) em.createQuery("SELECT u FROM Utilisateur u, Role r WHERE u.mail= ? AND u.password = ? AND r.id=u.role.iduser",Utilisateur.class);
+		Query q = (Query) em.createQuery("SELECT u FROM Utilisateur u, Role r WHERE u.email= ? AND u.password = ? AND r.id=u.role.iduser",Utilisateur.class);
 		System.out.println(email);
 		q.setParameter(1, email);
 		q.setParameter(2, password);
@@ -113,7 +113,7 @@ public class ServicesUtilisateurBean implements ServicesUtilisateur{
 	@Override
 	public Utilisateur createPortefolio(Utilisateur u){
 		u.setPortefeuille(new Portefeuille());
-		LOG.info("Adding a new portefolio to the user "+u.getFirstName());
+		LOG.info("Adding a new portefolio to the user "+u.getFirstname());
 		et.begin();
 		em.merge(u);
 		et.commit();

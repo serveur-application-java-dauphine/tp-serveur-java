@@ -36,7 +36,7 @@ public class Utilisateur implements java.io.Serializable {
 	private Portefeuille portefeuille;
 	private Role role;
 	private String lastname;
-	private String firstName;
+	private String firstname;
 	private String email;
 	private String password;
 	private Date birthdate;
@@ -54,7 +54,7 @@ public class Utilisateur implements java.io.Serializable {
 			String zipcode, String city, boolean validRole) {
 		this.role = role;
 		this.lastname = lastname;
-		this.firstName = firstName;
+		this.firstname = firstName;
 		this.email = email;
 		this.password = password;
 		this.birthdate = birthdate;
@@ -72,7 +72,7 @@ public class Utilisateur implements java.io.Serializable {
 		this.portefeuille = portefeuille;
 		this.role = role;
 		this.lastname = lastname;
-		this.firstName = firstName;
+		this.firstname = firstName;
 		this.email = email;
 		this.password = password;
 		this.birthdate = birthdate;
@@ -94,7 +94,7 @@ public class Utilisateur implements java.io.Serializable {
 		this.idUtilisateur = idUtilisateur;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "IdSociete")
 	public Societe getSociete() {
 		return this.societe;
@@ -114,7 +114,7 @@ public class Utilisateur implements java.io.Serializable {
 		this.portefeuille = portefeuille;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "IdRole", nullable = false)
 	public Role getRole() {
 		return this.role;
@@ -133,13 +133,13 @@ public class Utilisateur implements java.io.Serializable {
 		this.lastname = lastname;
 	}
 
-	@Column(name = "FirstName", nullable = false, length = 40)
-	public String getFirstName() {
-		return this.firstName;
+	@Column(name = "Firstname", nullable = false, length = 40)
+	public String getFirstname() {
+		return this.firstname;
 	}
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
+	public void setFirstname(String firstName) {
+		this.firstname = firstName;
 	}
 
 	@Column(name = "Email", unique = true, nullable = false, length = 40)
