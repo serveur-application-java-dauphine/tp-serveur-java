@@ -39,7 +39,9 @@
 	        <br /><br />
 	        
 	        <h:outputLabel for="birthDate">Date de naissance <span class="requis">*</span></h:outputLabel>
-	        <h:inputText id="birthDate" value="#{utilisateurManagedBean.utilisateur.birthdate}" required="true" size="10" maxlength="10" />
+	        <h:inputText id="birthDate" value="#{utilisateurManagedBean.utilisateur.birthdate}" required="true" size="10" maxlength="10" >
+	        	<f:convertDateTime pattern="dd/MM/yyyy"/>
+	        	</h:inputText>
 	        <h:message id="birthDateMessage" for="birthDate" errorClass="erreur" />
 	        <br /><br />
 	        
