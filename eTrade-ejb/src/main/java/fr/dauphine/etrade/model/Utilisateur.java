@@ -121,7 +121,7 @@ public class Utilisateur implements java.io.Serializable {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "IdRole", nullable = false)
 	public Role getRole() {
-		return this.role;
+		return this.role; 
 	}
 
 	public void setRole(Role role) {

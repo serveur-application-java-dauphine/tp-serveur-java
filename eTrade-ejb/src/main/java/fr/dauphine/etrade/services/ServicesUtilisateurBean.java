@@ -90,7 +90,7 @@ public class ServicesUtilisateurBean implements ServicesUtilisateur{
 	public List<Utilisateur> getUnvalidatedUtilisateurs() {
 		Query q = (Query) em.createQuery("SELECT u FROM Utilisateur u WHERE u.validRole = 0", Utilisateur.class);
 		List<Utilisateur> result = q.getResultList();
-		return result;
+		return result; 
 	}
 
 	@Override
