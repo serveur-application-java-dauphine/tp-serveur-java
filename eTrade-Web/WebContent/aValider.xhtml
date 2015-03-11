@@ -3,7 +3,6 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"> 
-
 <h:head>
 
 
@@ -14,11 +13,11 @@
 		<h:dataTable value="#{utilisateurManagedBean.listNotValided}" var="u">
 		   <h:column>    				
 		      <f:facet name="header">Nom</f:facet>    				
-		      #{u.name}
+		      #{u.lastname}
 		   </h:column>
 		   <h:column>
 		      <f:facet name="header">Prénom</f:facet>
-		      #{u.lastname}
+		      #{u.firstname}
 		   </h:column>
 		   <h:column>
 		      <f:facet name="header">Rôle demandé</f:facet>

@@ -8,8 +8,6 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
-import org.jboss.logging.Logger.Level;
-
 import fr.dauphine.etrade.api.ServicesUtilisateur;
 import fr.dauphine.etrade.model.Utilisateur;
 
@@ -41,13 +39,15 @@ public class UtilisateurManagedBean implements Serializable {
 	}
 	
 	/**
-	 * This method validates the role for the user u.
+	 * This method validates the role for the user u
+	 * and creates a portefolio for him
 	 * 
 	 * @param u
 	 */
 	public void valider(Utilisateur u){
 		LOG.info("Modifying the validity of the role to true for user "+ u.getIdUtilisateur());
 		u.setValidRole(true);
+		su.createPortefolio(u);
 		su.updateUtilisateur(u);
 	}
 

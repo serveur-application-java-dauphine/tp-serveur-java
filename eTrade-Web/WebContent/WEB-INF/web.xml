@@ -4,7 +4,7 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
 	id="WebApp_ID" version="3.0" >
 	
-	<display-name>BanqueTestWeb</display-name>
+	<display-name>eTrade</display-name>
 	<welcome-file-list>
         <welcome-file>login.html</welcome-file>
     </welcome-file-list>
@@ -22,10 +22,12 @@
 		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
-	<servlet-mapping>
+	<!-- 
+	servlet-mapping>
 		<servlet-name>Faces Servlet</servlet-name>
 		<url-pattern>/application/*</url-pattern>
 	</servlet-mapping>
+	-->
 	<servlet-mapping>
 		<servlet-name>Faces Servlet</servlet-name>
 		<url-pattern>*.xhtml</url-pattern>

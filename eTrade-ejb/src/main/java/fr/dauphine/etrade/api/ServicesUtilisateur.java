@@ -15,4 +15,5 @@ public interface ServicesUtilisateur {
 	Utilisateur updateUtilisateur(Utilisateur utilisateur);
 	List<Utilisateur> getUnvalidatedUtilisateurs();
 	Utilisateur getUtilisateurLogin(String email, String password);
+	Utilisateur createPortefolio(Utilisateur u);
 }

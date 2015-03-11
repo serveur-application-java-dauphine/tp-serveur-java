@@ -1,7 +1,6 @@
 package fr.dauphine.etrade.servlet;
 
 import java.io.IOException;
-import java.util.regex.Pattern;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -12,11 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import fr.dauphine.etrade.api.ServicesUtilisateur;
-import fr.dauphine.etrade.model.Role;
 import fr.dauphine.etrade.model.Utilisateur;
 import fr.dauphine.etrade.Constantes.ConstantesForms;
 import fr.dauphine.etrade.Constantes.ConstantesSession;
-import fr.dauphine.etrade.Constantes.PatternsControl;
 
 /**
  * Servlet implementation class InscriptionInvestisseur
@@ -50,7 +47,7 @@ public class Login extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		if(testRequest(request)){
-			String email = request.getParameter(ConstantesForms.I_USER_MAIL);
+			String email = request.getParameter(ConstantesForms.I_USER_EMAIL);
 			String password = request.getParameter(ConstantesForms.I_USER_PASSWORD);
 			Utilisateur user = servicesUtilisateur.getUtilisateurLogin(email,password);			
 			

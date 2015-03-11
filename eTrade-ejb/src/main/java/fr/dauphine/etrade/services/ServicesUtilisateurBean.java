@@ -17,6 +17,7 @@ import javax.persistence.Query;
 import javax.persistence.EntityManager;
 
 import fr.dauphine.etrade.api.ServicesUtilisateur;
+import fr.dauphine.etrade.model.Portefeuille;
 import fr.dauphine.etrade.model.Utilisateur;
 
 @Remote(ServicesUtilisateur.class)
@@ -47,9 +48,8 @@ public class ServicesUtilisateurBean implements ServicesUtilisateur{
 	
 	@Override
 	public Utilisateur addUtilisateur(Utilisateur utilisateur) {
-		LOG.info("Registering " + utilisateur.getName());
+		LOG.info("Registering " + utilisateur.getFirstname());
 		et.begin();
-		utilisateur.set
 		em.persist(utilisateur);
 		et.commit();
 		return utilisateur;
@@ -57,7 +57,7 @@ public class ServicesUtilisateurBean implements ServicesUtilisateur{
 
 	@Override
 	public Utilisateur delUtilisateur(Utilisateur utilisateur) {
-		LOG.info("Deleting " + utilisateur.getName());
+		LOG.info("Deleting " + utilisateur.getFirstname());
 		et.begin();
 		utilisateur = em.merge(utilisateur);
 		em.remove(utilisateur);
@@ -68,9 +68,7 @@ public class ServicesUtilisateurBean implements ServicesUtilisateur{
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Utilisateur> allUtilisateurs() {
-
-		Query q = (Query) em.createQuery("SELECT u FROM Utilisateur u");
-		
+		Query q = (Query) em.createQuery("SELECT u FROM Utilisateur u");	
 		return (List<Utilisateur>) q.getResultList();		
 	}
 	
@@ -80,7 +78,7 @@ public class ServicesUtilisateurBean implements ServicesUtilisateur{
 
 	@Override
 	public Utilisateur updateUtilisateur(Utilisateur utilisateur) {
-		LOG.info("Updating " + utilisateur.getName());
+		LOG.info("Updating " + utilisateur.getFirstname());
 		et.begin();
 		em.merge(utilisateur);
 		et.commit();
@@ -98,18 +96,28 @@ public class ServicesUtilisateurBean implements ServicesUtilisateur{
 	@Override
 	public Utilisateur getUtilisateurLogin(String email, String password) {
 		Utilisateur result = null;
-		Query q = (Query) em.createQuery("SELECT u FROM Utilisateur u, Role r WHERE u.mail= ? AND u.password = ? AND r.id=u.role.iduser",Utilisateur.class);
+		Query q = (Query) em.createQuery("SELECT u FROM Utilisateur u, Role r WHERE u.email= ? AND u.password = ? AND r.id=u.role.iduser",Utilisateur.class);
 		System.out.println(email);
 		q.setParameter(1, email);
 		q.setParameter(2, password);
+		
 		try{
-		result = (Utilisateur) q.getSingleResult();
-		}
-		//User not Find
-		catch(NoResultException e){
-			
+			result = (Utilisateur) q.getSingleResult();
+		} catch(NoResultException e){
+			//User not found
+			e.printStackTrace();
 		}
 		return result;
+	}
+	
+	@Override
+	public Utilisateur createPortefolio(Utilisateur u){
+		u.setPortefeuille(new Portefeuille());
+		LOG.info("Adding a new portefolio to the user "+u.getFirstname());
+		et.begin();
+		em.merge(u);
+		et.commit();
+		return u;
 	}
 	
 }

@@ -11,18 +11,18 @@
       <h:form>
          <fieldset>
          	<legend>Inscription</legend>
-         	<h:outputLabel for="nom">Nom <span class="requis">*</span></h:outputLabel>
-	        <h:inputText id="nom" value="#{utilisateurManagedBean.utilisateur.name}" required="true" size="20" maxlength="60" />
+         	<h:outputLabel for="firstname">Prénom <span class="requis">*</span></h:outputLabel>
+	        <h:inputText id="firstname" value="#{utilisateurManagedBean.utilisateur.firstname}" required="true" size="20" maxlength="60" />
 	        <h:message id="nomMessage" for="nom" errorClass="erreur" />
 	        <br /><br />
 	        
-	        <h:outputLabel for="lastname">Prénom <span class="requis">*</span></h:outputLabel>
+	        <h:outputLabel for="lastname">Nom <span class="requis">*</span></h:outputLabel>
 	        <h:inputText id="lastname" value="#{utilisateurManagedBean.utilisateur.lastname}" required="true" size="20" maxlength="60" />
 	        <h:message id="lastnameMessage" for="lastname" errorClass="erreur" />
 	        <br /><br />
 	        
 	     	<h:outputLabel for="email">Adresse email <span class="requis">*</span></h:outputLabel>
-	        <h:inputText id="email" value="#{utilisateurManagedBean.utilisateur.mail}" required="true" size="20" maxlength="60" >
+	        <h:inputText id="email" value="#{utilisateurManagedBean.utilisateur.email}" required="true" size="20" maxlength="60" >
 	       <f:validateRegex pattern="#{applicationManagedBean.EMAIL_PATTERN}"></f:validateRegex>
 	        </h:inputText>
 	        <h:message id="emailMessage" for="email" errorClass="erreur" />
