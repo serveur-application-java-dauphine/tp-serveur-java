@@ -22,6 +22,7 @@
 	<property name="javax.persistence.jdbc.Utilisateur" value="etrade"/>
 	<property name="javax.persistence.jdbc.password" value="azerty123"/>
 	<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+	<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
 	</properties>
 	</persistence-unit>
 </persistence>
