@@ -1,1 +1,0 @@
-INSERT INTO Role VALUES (1, 'Administrateur'), (2, 'Membre de societe'), (3, 'Investisseur'), (0, '');
