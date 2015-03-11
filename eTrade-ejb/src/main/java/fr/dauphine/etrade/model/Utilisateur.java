@@ -45,7 +45,6 @@ public class Utilisateur implements java.io.Serializable {
 	private String zipcode;
 	private String city;
 	private boolean validRole;
-	private Set<Portefeuille> portefeuilles = new HashSet<Portefeuille>(0);
 	private Set<Actualite> actualites = new HashSet<Actualite>(0);
 
 	public Utilisateur() {
@@ -83,7 +82,6 @@ public class Utilisateur implements java.io.Serializable {
 		this.zipcode = zipcode;
 		this.city = city;
 		this.validRole = validRole;
-		this.portefeuilles = portefeuilles;
 		this.actualites = actualites;
 	}
 
@@ -210,14 +208,6 @@ public class Utilisateur implements java.io.Serializable {
 		this.validRole = validRole;
 	}
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "utilisateur")
-	public Set<Portefeuille> getPortefeuilles() {
-		return this.portefeuilles;
-	}
-
-	public void setPortefeuilles(Set<Portefeuille> portefeuilles) {
-		this.portefeuilles = portefeuilles;
-	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "utilisateur")
 	public Set<Actualite> getActualites() {

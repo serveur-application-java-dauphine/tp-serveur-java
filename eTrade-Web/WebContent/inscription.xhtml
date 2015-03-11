@@ -60,7 +60,8 @@
 	        
 	        <h:outputLabel for="city">Rôle demandé (confirmé ensuite par l'administrateur) <span class="requis">*</span></h:outputLabel>
 	       	<h:selectOneMenu value="#{utilisateurManagedBean.utilisateur.role}" >
-	       		<f:selectItems value="#{roleManagedBean.roles}"/>
+	       		<f:selectItems value="#{roleManagedBean.roles}" var="entry"
+        itemValue="#{entry.idRole}" itemLabel="#{entry.libelle}"/>
 	       	</h:selectOneMenu>
 			<br /><br />
 		
