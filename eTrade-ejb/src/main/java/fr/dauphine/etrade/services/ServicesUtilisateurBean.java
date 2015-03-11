@@ -68,9 +68,7 @@ public class ServicesUtilisateurBean implements ServicesUtilisateur{
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Utilisateur> allUtilisateurs() {
-
-		Query q = (Query) em.createQuery("SELECT u FROM Utilisateur u");
-		
+		Query q = (Query) em.createQuery("SELECT u FROM Utilisateur u");	
 		return (List<Utilisateur>) q.getResultList();		
 	}
 	
@@ -102,12 +100,12 @@ public class ServicesUtilisateurBean implements ServicesUtilisateur{
 		System.out.println(email);
 		q.setParameter(1, email);
 		q.setParameter(2, password);
+		
 		try{
-		result = (Utilisateur) q.getSingleResult();
-		}
-		//User not Find
-		catch(NoResultException e){
-			
+			result = (Utilisateur) q.getSingleResult();
+		} catch(NoResultException e){
+			//User not found
+			e.printStackTrace();
 		}
 		return result;
 	}
