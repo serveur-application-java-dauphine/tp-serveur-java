@@ -88,7 +88,7 @@ public class ServicesUtilisateurBean implements ServicesUtilisateur{
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Utilisateur> getUnvalidatedUtilisateurs() {
-		Query q = (Query) em.createQuery("SELECT u FROM Utilisateur u WHERE u.isValidRole = 0", Utilisateur.class);
+		Query q = (Query) em.createQuery("SELECT u FROM Utilisateur u WHERE u.validRole = 0", Utilisateur.class);
 		List<Utilisateur> result = q.getResultList();
 		return result; 
 	}
