@@ -1,7 +1,6 @@
 package fr.dauphine.etrade.servlet;
 
 import java.io.IOException;
-import java.util.regex.Pattern;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -12,11 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import fr.dauphine.etrade.api.ServicesUtilisateur;
-import fr.dauphine.etrade.model.Role;
 import fr.dauphine.etrade.model.Utilisateur;
 import fr.dauphine.etrade.Constantes.ConstantesForms;
 import fr.dauphine.etrade.Constantes.ConstantesSession;
-import fr.dauphine.etrade.Constantes.PatternsControl;
 
 /**
  * Servlet implementation class InscriptionInvestisseur

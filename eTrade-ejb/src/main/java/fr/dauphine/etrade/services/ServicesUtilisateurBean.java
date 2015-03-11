@@ -50,7 +50,6 @@ public class ServicesUtilisateurBean implements ServicesUtilisateur{
 	public Utilisateur addUtilisateur(Utilisateur utilisateur) {
 		LOG.info("Registering " + utilisateur.getName());
 		et.begin();
-		utilisateur.set
 		em.persist(utilisateur);
 		et.commit();
 		return utilisateur;
