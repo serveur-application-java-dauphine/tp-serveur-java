@@ -14,11 +14,11 @@
 		<h:dataTable value="#{utilisateurManagedBean.listNotValided}" var="u">
 		   <h:column>    				
 		      <f:facet name="header">Nom</f:facet>    				
-		      #{u.name}
+		      #{u.lastname}
 		   </h:column>
 		   <h:column>
 		      <f:facet name="header">Prénom</f:facet>
-		      #{u.lastname}
+		      #{u.firstName}
 		   </h:column>
 		   <h:column>
 		      <f:facet name="header">Rôle demandé</f:facet>

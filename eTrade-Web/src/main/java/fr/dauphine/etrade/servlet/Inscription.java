@@ -49,9 +49,9 @@ public class Inscription extends HttpServlet {
 		
 		if(testRequest(request)){
 			Utilisateur Utilisateur = new Utilisateur();
-			Utilisateur.setEmail(request.getParameter(ConstantesForms.I_USER_MAIL));
+			Utilisateur.setEmail(request.getParameter(ConstantesForms.I_USER_EMAIL));
 			Utilisateur.setFirstName(request.getParameter(ConstantesForms.I_USER_FIRSTNAME));
-			Utilisateur.setLastname(request.getParameter(ConstantesForms.I_USER_NAME));
+			Utilisateur.setLastname(request.getParameter(ConstantesForms.I_USER_LASTNAME));
 			Utilisateur.setPassword(request.getParameter(ConstantesForms.I_USER_PASSWORD)); 
 			Utilisateur.setAdress(request.getParameter(ConstantesForms.I_USER_ADDRESS));
 			Utilisateur.setZipcode(request.getParameter(ConstantesForms.I_USER_ZIP_CODE));
@@ -87,7 +87,7 @@ public class Inscription extends HttpServlet {
 	private boolean testRequest(HttpServletRequest request) {
 		if ( request.getParameter(ConstantesForms.I_USER_PASSWORD).length() < ConstantesForms.C_PASSWORD_MIN_SIZE
 				|| !request.getParameter(ConstantesForms.I_USER_PASSWORD).equals(request.getParameter(ConstantesForms.I_USER_CONFIRM_PASSWORD))
-				|| !Pattern.matches(PatternsControl.EMAIL_PATTERN, request.getParameter(ConstantesForms.I_USER_MAIL))
+				|| !Pattern.matches(PatternsControl.EMAIL_PATTERN, request.getParameter(ConstantesForms.I_USER_EMAIL))
 			)
 			return false;
 		
