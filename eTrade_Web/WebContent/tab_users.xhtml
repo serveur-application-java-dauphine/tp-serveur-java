@@ -5,17 +5,15 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"> 
 
 <h:head>
-
-
+	<title>eTrade - Liste des utilisateurs</title>
 </h:head> 
 <body> 
-Mon Compte
 	<h:form>
 
 		<h:dataTable value="#{utilisateurManagedBean.allUsers}" var="u">
 		   <h:column>    				
 		      <f:facet name="header">Nom</f:facet>    				
-		      #{u.name}
+		      #{u.firstname}
 		   </h:column>
 		   <h:column>
 		      <f:facet name="header">Prénom</f:facet>

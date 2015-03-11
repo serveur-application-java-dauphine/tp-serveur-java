@@ -10,11 +10,13 @@ import javax.ejb.TransactionManagementType;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
+import javax.persistence.NamedQuery;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceUnit;
 import javax.persistence.Query;
 
 import fr.dauphine.etrade.api.ServicesSociete;
+import fr.dauphine.etrade.model.Actualite;
 import fr.dauphine.etrade.model.Societe;
 
 @Remote(ServicesSociete.class)
@@ -74,6 +76,25 @@ public class ServicesSocieteBean implements ServicesSociete {
 		em.merge(societe);
 		et.commit();
 		return societe;
+	}
+
+	/** Actualités **/
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Actualite> getAllActualites() {
+		return (List<Actualite>)em.createQuery("SELECT a FROM Actualite a").getResultList();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Actualite> getListActualites(Societe s) {
+		return (List<Actualite>)em.find(Actualite.class, s.getIdSociete());
+	}
+
+	@Override
+	public Actualite getActualite(int id) {
+		return em.find(Actualite.class, id);
 	}
 
 }
