@@ -1,0 +1,24 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"> 
+
+<h:head>
+	<title>eTrade - Liste des sociétés</title>
+</h:head> 
+<body> 
+	<p>Pour consulter les informations sur une société, cliquer ci-dessous sur la société désirée :</p>
+		<h:dataTable value="#{societeManagedBean.listSocietes}" var="s">
+		   <h:column>    				
+		      <f:facet name="header">Nom de la société</f:facet>    				
+		      #{s.name}
+		   </h:column>
+		   <h:column>
+		   		<h:link value="#{s.name}" action="societe.xhtml" >
+		  			<f:param name="s" value="#{s.idSociete}"/>
+		  		</h:link>
+		   </h:column>
+		</h:dataTable>
+</body> 
+</html>
