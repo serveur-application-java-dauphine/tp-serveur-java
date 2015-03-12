@@ -2,7 +2,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets"> 
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://java.sun.com/jstl/core"
+> 
 
 <h:head>
 	<title>eTrade - Liste des sociétés</title>
@@ -23,15 +25,15 @@
 		
 		
 		<!-- Si l'utilisateur est un membre société -->
-		<h:if value1="#{sessionManagedBean.user.role.idRole}" value2="2" op="eq">
+		<c:if rendered="#{facesContext.externalContext.isUserInRole('Membre de société')}">
 			<h:commandButton value="Créer une société" type="button" onclick="alert('Coucou')" />
 			<h:form id="creationSocieteForm">
-				<h:outputLabel for="companyName">Nom de l'entreprise <span class="requis">*</span></h:outputLabel>
-		        <h:inputText id="companyName" required="true" size="50" maxlength="100" />
-		        <h:commandButton value="Créer la société" action="#{societeManagedBean.createSociete(companyName)}" />
+				<h:outputLabel for="companyName">Nom de l'entreprise<span class="requis">*</span></h:outputLabel>
+		        <h:inputText id="companyName" required="true" size="50" maxlength="100" value="#{societeManagedBean.societe.name}"/>
+		        <h:commandButton value="Créer la société" action="#{societeManagedBean.createSociete}" />
 		        <h:message id="nomMessage" for="nom" errorClass="erreur" />
 			</h:form>
-		</h:if>
+		</c:if>
 		
 </body> 
 </html>

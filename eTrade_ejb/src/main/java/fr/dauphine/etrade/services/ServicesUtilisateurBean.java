@@ -99,10 +99,13 @@ public class ServicesUtilisateurBean implements ServicesUtilisateur{
 		Query q = (Query) em.createQuery("SELECT u FROM Utilisateur u, Role r WHERE u.email= ? AND u.password = ? AND r.idRole=u.role.idRole",Utilisateur.class);
 		q.setParameter(1, email);
 		q.setParameter(2, password);
+		
 		try{
 			result = (Utilisateur) q.getSingleResult();
-		//User not found	
-		} catch(NoResultException e){}
+		} catch(NoResultException e){
+			//User not found
+			e.printStackTrace();
+		}
 		return result;
 	}
 	

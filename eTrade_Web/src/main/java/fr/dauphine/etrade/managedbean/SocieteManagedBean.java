@@ -15,6 +15,8 @@ import fr.dauphine.etrade.model.Societe;
 @ManagedBean
 @RequestScoped
 public class SocieteManagedBean implements Serializable {
+	
+	private Societe societe;
 
 	/**
 	 * Default serialVersionUID
@@ -27,16 +29,9 @@ public class SocieteManagedBean implements Serializable {
 	private static Logger LOG = Logger.getLogger(SocieteManagedBean.class.getName());
 	
 	
-	public void createSociete(String name){
-		if(null == ss.getSocieteByName(name)){
-			Societe s = new Societe(name);
-			LOG.info("Ajout d'une nouvelle société en base : " + name);
-			ss.addSociete(s);
-		} else {
-			LOG.info("Tentative d'ajout d'une société déjà existante.");
-			
-		}
-		
+	public void createSociete(){
+		LOG.info("Ajout d'une nouvelle société en base : " + societe.getName());		
+		ss.addSociete(societe);
 	}
 	
 	public void removeSociete(Societe s){
@@ -101,6 +96,16 @@ public class SocieteManagedBean implements Serializable {
 	 */
 	public Actualite getActualite(int id){
 		return ss.getActualite(id);
+	}
+
+	public Societe getSociete() {
+		if(societe==null)
+			societe=new Societe();
+		return societe;
+	}
+
+	public void setSociete(Societe societe) {
+		this.societe = societe;
 	}
 	
 	
