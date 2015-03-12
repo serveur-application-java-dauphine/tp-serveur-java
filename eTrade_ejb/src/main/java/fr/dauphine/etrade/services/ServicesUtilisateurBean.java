@@ -96,17 +96,13 @@ public class ServicesUtilisateurBean implements ServicesUtilisateur{
 	@Override
 	public Utilisateur getUtilisateurLogin(String email, String password) {
 		Utilisateur result = null;
-		Query q = (Query) em.createQuery("SELECT u FROM Utilisateur u, Role r WHERE u.email= ? AND u.password = ? AND r.id=u.role.iduser",Utilisateur.class);
-		System.out.println(email);
+		Query q = (Query) em.createQuery("SELECT u FROM Utilisateur u, Role r WHERE u.email= ? AND u.password = ? AND r.idRole=u.role.idRole",Utilisateur.class);
 		q.setParameter(1, email);
 		q.setParameter(2, password);
-		
 		try{
 			result = (Utilisateur) q.getSingleResult();
-		} catch(NoResultException e){
-			//User not found
-			e.printStackTrace();
-		}
+		//User not found	
+		} catch(NoResultException e){}
 		return result;
 	}
 	

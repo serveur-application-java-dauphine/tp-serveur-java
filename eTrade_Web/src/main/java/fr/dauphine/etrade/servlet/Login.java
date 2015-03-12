@@ -1,8 +1,10 @@
 package fr.dauphine.etrade.servlet;
 
 import java.io.IOException;
+import java.util.logging.Logger;
 
 import javax.ejb.EJB;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,9 +13,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import fr.dauphine.etrade.api.ServicesUtilisateur;
+import fr.dauphine.etrade.constantes.ConstantesForms;
+import fr.dauphine.etrade.constantes.ConstantesSession;
 import fr.dauphine.etrade.model.Utilisateur;
-import fr.dauphine.etrade.Constantes.ConstantesForms;
-import fr.dauphine.etrade.Constantes.ConstantesSession;
+import fr.dauphine.etrade.services.ServicesUtilisateurBean;
 
 /**
  * Servlet implementation class InscriptionInvestisseur
@@ -21,6 +24,7 @@ import fr.dauphine.etrade.Constantes.ConstantesSession;
 @WebServlet(description = "This servlet deals with the registration of a new investor.", urlPatterns = { "/Login" })
 public class Login extends HttpServlet {
 	
+	private static final Logger LOG = Logger.getLogger(Login.class.getName());
 	/**
 	 * Generated serialVersionUID
 	 */
@@ -53,16 +57,22 @@ public class Login extends HttpServlet {
 			
 			//Message de confirmation
 			if (user==null){
-				request.getRequestDispatcher("login.html");
+				RequestDispatcher rd = request.getRequestDispatcher("login.html");
+				rd.forward(request, response);
+				LOG.info("User not found : request dispatch to login.html");
 				return;
 			}
 			
 			//User en session
 			HttpSession session = request.getSession();
 			session.setAttribute(ConstantesSession.SESSION_USER, user);
+			RequestDispatcher rd = request.getRequestDispatcher("my_account.xhtml");
+			rd.forward(request, response);
+			LOG.info("User found : request dispatch to my_account.xhtml");
 			
 		} else {
-			request.getRequestDispatcher("login.html");
+			RequestDispatcher rd = request.getRequestDispatcher("login.html");
+			rd.forward(request, response);
 		}
 
 	}
