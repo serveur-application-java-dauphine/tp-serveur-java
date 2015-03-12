@@ -1,4 +1,4 @@
-package fr.dauphine.etrade.Constantes;
+package fr.dauphine.etrade.constantes;
 
 public final class ConstantesForms {
 	

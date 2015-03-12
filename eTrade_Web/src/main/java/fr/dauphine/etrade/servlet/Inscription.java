@@ -1,7 +1,6 @@
 package fr.dauphine.etrade.servlet;
 
 import java.io.IOException;
-import java.util.regex.Pattern;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -11,10 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import fr.dauphine.etrade.api.ServicesUtilisateur;
+import fr.dauphine.etrade.constantes.ConstantesForms;
 import fr.dauphine.etrade.model.Role;
 import fr.dauphine.etrade.model.Utilisateur;
-import fr.dauphine.etrade.Constantes.ConstantesForms;
-import fr.dauphine.etrade.Constantes.PatternsControl;
 
 /**
  * Servlet implementation class InscriptionInvestisseur
@@ -87,7 +85,7 @@ public class Inscription extends HttpServlet {
 	private boolean testRequest(HttpServletRequest request) {
 		if ( request.getParameter(ConstantesForms.I_USER_PASSWORD).length() < ConstantesForms.C_PASSWORD_MIN_SIZE
 				|| !request.getParameter(ConstantesForms.I_USER_PASSWORD).equals(request.getParameter(ConstantesForms.I_USER_CONFIRM_PASSWORD))
-				|| !Pattern.matches(PatternsControl.EMAIL_PATTERN, request.getParameter(ConstantesForms.I_USER_EMAIL))
+				//|| !Pattern.matches(Appli.EMAIL_PATTERN, request.getParameter(ConstantesForms.I_USER_EMAIL))
 			)
 			return false;
 		

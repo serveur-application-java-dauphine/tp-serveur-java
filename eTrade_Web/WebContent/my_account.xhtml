@@ -7,16 +7,14 @@
 <h:head>
 	<title>eTrade - Mon compte</title>
 </h:head> 
-<body>
+<h:body>
 	<h1>Mon compte</h1>
 	
-		<table>
+	        <h:outputLabel for="firstname">Prénom</h:outputLabel>
+	        <h:inputText id="firstname" value="#{sessionManageBean.utilisateur.firstname}" required="true" size="20" maxlength="60" />
+		
 		<tr>
-			<td>Nom d'utilisateur</td>
-			<td><input type="text" id="name" name="lastname" value="#{sessionManageBean.user.lastname}"/></td>
-		</tr>
-		<tr>
-			<td>Prénom</td>
+			<td>Prénom </td>
 			<td><input type="text" id="firstname" name="firstname" /></td>
 		</tr>
 		<tr>
@@ -60,8 +58,7 @@
 		<tr>
 			<td><input type="submit" value="Créez votre compte"/></td>
 			<td></td>
-		</tr>			
-		</table>
+		</tr>
 
-</body>
+</h:body>
 </html>

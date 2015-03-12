@@ -9,6 +9,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
 import fr.dauphine.etrade.api.ServicesUtilisateur;
+import fr.dauphine.etrade.model.Role;
 import fr.dauphine.etrade.model.Utilisateur;
 
 @ManagedBean
@@ -79,8 +80,10 @@ public class UtilisateurManagedBean implements Serializable {
 	}
 	
 	public Utilisateur getUtilisateur() {
-		if (utilisateur==null)
+		if (utilisateur==null){
 			utilisateur = new Utilisateur();
+			//utilisateur.setRole(new Role());
+		}
         return utilisateur;
     }
 	

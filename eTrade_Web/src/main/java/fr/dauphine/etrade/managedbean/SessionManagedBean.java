@@ -6,7 +6,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
-import fr.dauphine.etrade.Constantes.ConstantesSession;
+import fr.dauphine.etrade.constantes.ConstantesSession;
 import fr.dauphine.etrade.model.Utilisateur;
 
 @ManagedBean
@@ -15,24 +15,26 @@ public class SessionManagedBean implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
-	private Utilisateur user;
+	private Utilisateur utilisateur;
 	
 	public SessionManagedBean() {
-		user = (Utilisateur) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get(ConstantesSession.SESSION_USER);
+		utilisateur = (Utilisateur) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get(ConstantesSession.SESSION_USER);
+		System.out.println(utilisateur.getLastname());
 	}
 
 	/**
 	 * @return the user
 	 */
-	public Utilisateur getUser() {
-		return user;
+	public Utilisateur getUtilisateur() {
+		System.out.println(utilisateur.getLastname());
+		return utilisateur;
 	}
 
 	/**
 	 * @param user the user to set
 	 */
-	public void setUser(Utilisateur user) {
-		this.user = user;
+	public void setUtilisateur(Utilisateur utilisateur) {
+		this.utilisateur = utilisateur;
 	}
 
 }
