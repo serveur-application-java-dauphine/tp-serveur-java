@@ -27,10 +27,16 @@ public class SocieteManagedBean implements Serializable {
 	private static Logger LOG = Logger.getLogger(SocieteManagedBean.class.getName());
 	
 	
-	public void createSociete(){
-		Societe s = new Societe();
-		LOG.info("Ajout d'une nouvelle société en base.");
-		ss.addSociete(s);
+	public void createSociete(String name){
+		if(null == ss.getSocieteByName(name)){
+			Societe s = new Societe(name);
+			LOG.info("Ajout d'une nouvelle société en base : " + name);
+			ss.addSociete(s);
+		} else {
+			LOG.info("Tentative d'ajout d'une société déjà existante.");
+			
+		}
+		
 	}
 	
 	public void removeSociete(Societe s){

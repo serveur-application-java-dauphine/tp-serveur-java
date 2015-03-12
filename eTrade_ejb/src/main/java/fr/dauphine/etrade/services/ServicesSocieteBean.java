@@ -68,6 +68,11 @@ public class ServicesSocieteBean implements ServicesSociete {
 	public Societe getSocieteById(int id) {
 		return  em.find(Societe.class, id);
 	}
+	
+	@Override
+	public Societe getSocieteByName(String name){
+		return em.find(Societe.class, name);
+	}
 
 	@Override
 	public Societe updateSociete(Societe societe) {
