@@ -13,6 +13,7 @@ public interface ServicesSociete {
 	Societe delSociete(Societe societe);
 	List<Societe> allSocietes();
 	Societe getSocieteById(int id);
+	Societe getSocieteByName(String name);
 	Societe updateSociete(Societe societe);
 	
 	List<Actualite> getAllActualites();

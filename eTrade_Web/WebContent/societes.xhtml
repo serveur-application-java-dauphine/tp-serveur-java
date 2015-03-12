@@ -20,5 +20,18 @@
 		  		</h:link>
 		   </h:column>
 		</h:dataTable>
+		
+		
+		<!-- Si l'utilisateur est un membre société -->
+		<h:if value1="#{sessionManagedBean.user.role.idRole}" value2="2" op="eq">
+			<h:commandButton value="Créer une société" type="button" onclick="alert('Coucou')" />
+			<h:form id="creationSocieteForm">
+				<h:outputLabel for="companyName">Nom de l'entreprise <span class="requis">*</span></h:outputLabel>
+		        <h:inputText id="companyName" required="true" size="50" maxlength="100" />
+		        <h:commandButton value="Créer la société" action="#{societeManagedBean.createSociete(companyName)}" />
+		        <h:message id="nomMessage" for="nom" errorClass="erreur" />
+			</h:form>
+		</h:if>
+		
 </body> 
 </html>
