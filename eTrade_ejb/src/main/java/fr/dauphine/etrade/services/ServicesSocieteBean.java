@@ -60,7 +60,7 @@ public class ServicesSocieteBean implements ServicesSociete {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Societe> allSocietes() {
-		Query q = (Query) em.createQuery("SELECT s FROM Societe s");
+		Query q = (Query) em.createQuery("SELECT s FROM Societe s ORDER BY s.name ASC");
 		return (List<Societe>)q.getResultList();
 	}
 
