@@ -99,13 +99,10 @@ public class ServicesUtilisateurBean implements ServicesUtilisateur{
 		Query q = (Query) em.createQuery("SELECT u FROM Utilisateur u, Role r WHERE u.email= ? AND u.password = ? AND r.idRole=u.role.idRole",Utilisateur.class);
 		q.setParameter(1, email);
 		q.setParameter(2, password);
-		
 		try{
 			result = (Utilisateur) q.getSingleResult();
-		} catch(NoResultException e){
-			//User not found
-			e.printStackTrace();
-		}
+		//User not found	
+		} catch(NoResultException e){}
 		return result;
 	}
 	
@@ -117,6 +114,14 @@ public class ServicesUtilisateurBean implements ServicesUtilisateur{
 		em.merge(u);
 		et.commit();
 		return u;
+	}
+
+	public Utilisateur getUtilisateurByEmail(String email) {
+		LOG.info("Getting Utilisateur for " + email);
+		Query q = (Query) em.createQuery("SELECT u FROM Utilisateur u WHERE u.email=?");	
+		q.setParameter(1, email);
+		Utilisateur result = (Utilisateur) q.getSingleResult();
+		return result;
 	}
 	
 }

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"> 
+    <h:head>
+        <meta charset="utf-8" />
+        <title>Passer un Ordre</title>
+        <h:outputStylesheet library="default" name="css/form.css"  />
+    </h:head>
+    <h:body>
+      <h:form>
+         <fieldset>
+         	<legend>Passer un ordre</legend>
+         	<h:outputLabel value="Bonjour, #{utilisateurManagedBean.utilisateurFromSession.firstname}"></h:outputLabel>
+         	<h:outputLabel for="produit">Société<span class="requis">*</span></h:outputLabel>
+         	<h:selectOneMenu value="#{utilisateurManagedBean.utilisateur.role}" required="true" >
+	       		<f:selectItems value="#{roleManagedBean.roles}" var="role"
+        		itemValue="#{role.idRole}" itemLabel="#{role.libelle}"/>
+        		<f:converter converterId="fr.dauphine.etrade.converter.RoleConverter"/>
+	       	</h:selectOneMenu>
+         	
+         	
+         	
+	        <h:inputText id="firstname" value="#{utilisateurManagedBean.utilisateur.firstname}" required="true" size="40" maxlength="60" />
+	        <h:message id="nomMessage" for="firstname" errorClass="erreur" />
+	        <br /><br />
+	        
+	        <h:outputLabel for="lastname">Nom <span class="requis">*</span></h:outputLabel>
+	        <h:inputText id="lastname" value="#{utilisateurManagedBean.utilisateur.lastname}" required="true" size="20" maxlength="60" />
+	        <h:message id="lastnameMessage" for="lastname" errorClass="erreur" />
+	        <br /><br />
+	        
+	     	<h:outputLabel for="email">Adresse email <span class="requis">*</span></h:outputLabel>
+	        <h:inputText id="email" value="#{utilisateurManagedBean.utilisateur.email}" required="true" size="20" maxlength="60" >
+	       <f:validateRegex pattern="#{applicationManagedBean.EMAIL_PATTERN}"></f:validateRegex>
+	        </h:inputText>
+	        <h:message id="emailMessage" for="email" errorClass="erreur" />
+	        <br /><br />
+	
+	        <h:outputLabel for="motdepasse">Mot de passe <span class="requis">*</span></h:outputLabel>
+	        <h:inputSecret id="motdepasse" value="#{utilisateurManagedBean.utilisateur.password}" required="true" size="20" maxlength="20" />
+	        <h:message id="motDePasseMessage" for="motdepasse" errorClass="erreur" />
+	        <br /><br />
+	
+	        <h:outputLabel for="confirmation">Confirmation du mot de passe <span class="requis">*</span></h:outputLabel>
+	        <h:inputSecret id="confirmation" value="#{utilisateurManagedBean.utilisateur.password}" required="true" size="20" maxlength="20" />
+	        <h:message id="confirmationMessage" for="confirmation" errorClass="erreur" />
+	        <br /><br />
+	        
+	        <h:outputLabel for="birthDate">Date de naissance (#{applicationManagedBean.DATE_PATTERN}) <span class="requis">*</span></h:outputLabel>
+	        <h:inputText id="birthDate" value="#{utilisateurManagedBean.utilisateur.birthdate}" required="true" size="10" maxlength="10" >
+	        	<f:convertDateTime pattern="#{applicationManagedBean.DATE_PATTERN}"/>
+	        	</h:inputText>
+	        <h:message id="birthDateMessage" for="birthDate" errorClass="erreur" />
+	        <br /><br />
+	        
+	        <h:outputLabel for="address">Adresse <span class="requis">*</span></h:outputLabel>
+	        <h:inputTextarea id="address" value="#{utilisateurManagedBean.utilisateur.adress}" required="true" size="25" maxlength="100" />
+	        <h:message id="addressMessage" for="address" errorClass="erreur" />
+	        <br /><br />
+	        
+	        <h:outputLabel for="zipCode">Code postal <span class="requis">*</span></h:outputLabel>
+	        <h:inputText id="zipCode" value="#{utilisateurManagedBean.utilisateur.zipcode}" required="true" size="5" maxlength="5" />
+	        <h:message id="zipCodeMessage" for="zipCode" errorClass="erreur" />
+	        <br /><br />
+	        
+	        <h:outputLabel for="city">Ville <span class="requis">*</span></h:outputLabel>
+	        <h:inputText id="city" value="#{utilisateurManagedBean.utilisateur.city}" required="true" size="5" maxlength="5" />
+	        <h:message id="cityMessage" for="city" errorClass="erreur" />
+	        <br /><br />
+	        
+	        <h:outputLabel for="city">Rôle demandé (confirmé ensuite par l'administrateur) <span class="requis">*</span></h:outputLabel>
+	       	<h:selectOneMenu value="#{utilisateurManagedBean.utilisateur.role}" required="true" >
+	       		<f:selectItems value="#{roleManagedBean.roles}" var="role"
+        		itemValue="#{role.idRole}" itemLabel="#{role.libelle}"/>
+        <f:converter converterId="fr.dauphine.etrade.converter.RoleConverter"/>
+	       	</h:selectOneMenu>
+			<br /><br />
+		
+	        
+	        <h:messages globalOnly="true" infoClass="info" />
+	
+	        <h:commandButton value="inscription" action="#{utilisateurManagedBean.inscription()}" styleClass="sansLabel" />
+	        <br />
+          </fieldset>
+        </h:form> 	
+    </h:body>
+</html>
