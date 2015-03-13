@@ -1,5 +1,6 @@
 package fr.dauphine.etrade.managedbean;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 import java.util.logging.Logger;
@@ -7,6 +8,7 @@ import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
 
 import fr.dauphine.etrade.api.ServicesUtilisateur;
 import fr.dauphine.etrade.model.Role;
@@ -30,7 +32,7 @@ public class UtilisateurManagedBean implements Serializable {
 	 * It is called when an administrator refuses the role asked by the user.
 	 * 
 	 * TODO : Envisager un message de confirmation 
-	 * avant de définitivement supprimer l'utilisateur.
+	 * avant de dï¿½finitivement supprimer l'utilisateur.
 	 * 
 	 * @param u
 	 */
@@ -76,15 +78,20 @@ public class UtilisateurManagedBean implements Serializable {
 	}
 	
 	public void inscription() {
-		su.addUtilisateur(utilisateur);
+		/*utilisateur = */su.addUtilisateur(utilisateur);
+		try {
+			FacesContext.getCurrentInstance().getExternalContext().redirect("my_account.xhtml");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public Utilisateur getUtilisateur() {
 		if (utilisateur==null){
 			utilisateur = new Utilisateur();
-			//utilisateur.setRole(new Role());
+			utilisateur.setRole(new Role());
 		}
         return utilisateur;
     }
-	
+
 }

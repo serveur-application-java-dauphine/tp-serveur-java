@@ -12,6 +12,7 @@ public interface ServicesUtilisateur {
 	Utilisateur delUtilisateur(Utilisateur utilisateur);
 	List<Utilisateur> allUtilisateurs();
 	Utilisateur getUtilisateurById(int id);
+	Utilisateur getUtilisateurByEmail(String email);
 	Utilisateur updateUtilisateur(Utilisateur utilisateur);
 	List<Utilisateur> getUnvalidatedUtilisateurs();
 	Utilisateur getUtilisateurLogin(String email, String password);

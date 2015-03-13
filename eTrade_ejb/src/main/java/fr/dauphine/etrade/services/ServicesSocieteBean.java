@@ -10,13 +10,13 @@ import javax.ejb.TransactionManagementType;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
-import javax.persistence.NamedQuery;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceUnit;
 import javax.persistence.Query;
 
 import fr.dauphine.etrade.api.ServicesSociete;
 import fr.dauphine.etrade.model.Actualite;
+import fr.dauphine.etrade.model.Produit;
 import fr.dauphine.etrade.model.Societe;
 
 @Remote(ServicesSociete.class)
@@ -83,7 +83,7 @@ public class ServicesSocieteBean implements ServicesSociete {
 		return societe;
 	}
 
-	/** Actualités **/
+	/** Actualitï¿½s **/
 	
 	@SuppressWarnings("unchecked")
 	@Override
@@ -100,6 +100,13 @@ public class ServicesSocieteBean implements ServicesSociete {
 	@Override
 	public Actualite getActualite(int id) {
 		return em.find(Actualite.class, id);
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Produit> getProduitsBySociete(Societe societe) {
+		
+		return (List<Produit>) societe.getProduits();
 	}
 
 }
