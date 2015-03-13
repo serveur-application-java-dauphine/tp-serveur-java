@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!ELEMENT actualite (title, date, content)>
+<!ELEMENT title (#PCDATA) >
+<!ELEMENT date (#PCDATA) >
+<!ELEMENT content (#PCDATA) >
+
