@@ -20,6 +20,7 @@ public class UtilisateurManagedBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private Utilisateur utilisateur;
+	private List<Utilisateur> utilisateurs;
 
 	@EJB
 	private ServicesUtilisateur su;
@@ -36,7 +37,7 @@ public class UtilisateurManagedBean implements Serializable {
 	 * 
 	 * @param u
 	 */
-	public void supprimer(){
+	public void supprimer(Utilisateur utilisateur){
 		LOG.info("Deleting the user "+utilisateur.getIdUtilisateur());
 		su.delUtilisateur(utilisateur);
 	}
@@ -47,36 +48,13 @@ public class UtilisateurManagedBean implements Serializable {
 	 * 
 	 * @param u
 	 */
-	public void valider(Utilisateur u){
-		LOG.info("Modifying the validity of the role to true for user "+ u.getIdUtilisateur());
-		u.setValidRole(true);
-		su.createPortefolio(u);
-		su.updateUtilisateur(u);
+	public void valider(Utilisateur utilisateur){
+		LOG.info("Modifying the validity of the role to true for user "+ utilisateur.getIdUtilisateur());
+		utilisateur.setValidRole(true);
+		su.createPortefolio(utilisateur);
+		su.updateUtilisateur(utilisateur);
 	}
 
-		
-
-	/**
-	 * @return the listNotValided
-	 */
-	public List<Utilisateur> getListNotValided() {
-		return su.getUnvalidatedUtilisateurs();
-	}
-
-	/**
-	 * @param listNotValided the listNotValided to set
-	 */
-	public void setListNotValided(List<Utilisateur> listNotValided) {
-		//this.listNotValided = listNotValided;
-	}
-	
-	/**
-	 * @return all the users
-	 */
-	public List<Utilisateur> getAllUsers() {
-		return su.allUtilisateurs();
-	}
-	
 	public void inscription() {
 		/*utilisateur = */su.addUtilisateur(utilisateur);
 		try {
@@ -93,5 +71,21 @@ public class UtilisateurManagedBean implements Serializable {
 		}
         return utilisateur;
     }
+
+	/**
+	 * @return the utilisateurs
+	 */
+	public List<Utilisateur> getUtilisateurs() {
+		if (utilisateurs==null)
+			utilisateurs = su.allUtilisateurs();
+		return utilisateurs;
+	}
+
+	/**
+	 * @param utilisateurs the utilisateurs to set
+	 */
+	public void setUtilisateurs(List<Utilisateur> utilisateurs) {
+		this.utilisateurs = utilisateurs;
+	}
 
 }
