@@ -11,19 +11,26 @@
       <h:form>
          <fieldset>
          	<legend>Passer un ordre</legend>
-         	<h:outputLabel value="Bonjour, #{utilisateurManagedBean.utilisateurFromSession.firstname}"></h:outputLabel>
-         	<h:outputLabel for="produit">Société<span class="requis">*</span></h:outputLabel>
-         	<h:selectOneMenu value="#{societeManagedBean.listSocietes}" required="true" >
-	       		<f:selectItems value="#{roleManagedBean.roles}" var="role"
-        		itemValue="#{role.idRole}" itemLabel="#{role.libelle}"/>
-        		<f:converter converterId="fr.dauphine.etrade.converter.RoleConverter"/>
-	       	</h:selectOneMenu>
+         	<h:outputLabel value="Bonjour, #{sessionUserManagedBean.utilisateur.firstname}"></h:outputLabel>
+         	<br /><br />
          	
-		
+         	<h:outputLabel for="societe">Société<span class="requis">*</span></h:outputLabel>
+         	<h:selectOneMenu value="#{ordreManagedBean.ordre.produit.societe.idSociete}" required="true" >
+	       		<f:selectItems value="#{societeManagedBean.listSocietes}" var="societe"
+        		itemValue="#{societe.idSociete}" itemLabel="#{societe.name}"/>
+	       	</h:selectOneMenu>
+         	<br /><br />
+         	
+			<h:outputLabel for="produit">Produit<span class="requis">*</span></h:outputLabel>
+         	<f:valueChangeListener> value="#{ordreManagedBean.ordre.produit.typeProduit.idTypeProduit}" required="true" >
+	       		<f:selectItems value="#{ordreManagedBean.ordre.produit.societe.produits}" var="Produit"
+        		itemValue="#{Produit.typeProduit.idTypeProduit}" itemLabel="#{Produit.typeProduit.idTypeProduit}"/>
+	       	</f:valueChangeListener>>
+	        <br /><br />
 	        
 	        <h:messages globalOnly="true" infoClass="info" />
 	
-	        <h:commandButton value="inscription" action="#{utilisateurManagedBean.inscription()}" styleClass="sansLabel" />
+	        <h:commandButton value="passerOrdre" action="#{ordreManagedBean.passerOrdre()}" styleClass="sansLabel" />
 	        <br />
           </fieldset>
         </h:form> 	
