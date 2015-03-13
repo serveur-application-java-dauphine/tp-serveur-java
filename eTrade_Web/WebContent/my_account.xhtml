@@ -13,13 +13,13 @@
 	
 	        <h:outputLabel for="firstname">Prénom </h:outputLabel>
 	        <h:inputText id="firstname" value="#{sessionUserManagedBean.utilisateur.firstname}" required="true" size="20" maxlength="60" />
-			<br/>
+			<br/><br />
 			<h:outputLabel for="lastname">Nom </h:outputLabel>
 			<h:inputText id="lastname" value="#{sessionUserManagedBean.utilisateur.lastname}" required="true" size="20" maxlength="60" />
-			<br/>
+			<br/><br />
 			<h:outputLabel for="mail">Adresse mail </h:outputLabel>
 			<h:inputText id="mail" value="#{sessionUserManagedBean.utilisateur.email}" required="true" size="20" maxlength="60" />
-			<br/>
+			<br/><br />
 			
 			<h:outputLabel for="birthDate">Date de naissance (#{applicationManagedBean.DATE_PATTERN}) <span class="requis">*</span></h:outputLabel>
 	        <h:inputText id="birthDate" value="#{sessionUserManagedBean.utilisateur.birthdate}" required="true" size="10" maxlength="10" >
@@ -43,19 +43,27 @@
 	        <h:message id="cityMessage" for="city" errorClass="erreur" />
 	        <br /><br />
 	        
-	        <h:outputLabel>Rôle : #{sessionUserManagedBean.utilisateur.role.libelle}</h:outputLabel>
-	        <br /><br />
-			<c:if test="#{sessionUserManagedBean.utilisateur.societe}!=Null">
-				<h:outputLabel >Societe : #{sessionUserManagedBean.utilisateur.societe.name}</h:outputLabel>
-	        <br /><br />
-			</c:if>
-			<h:link value="#{sessionUserManagedBean.utilisateur.portefeuille.idPortefeuille}" outcome="portefeuille.xhml"/>
+	        <h:outputLabel value="Rôle : #{sessionUserManagedBean.utilisateur.role.libelle}"/>
+	        
+	        <c:if test="#{sessionUserManagedBean.utilisateur.validRole==false}">
+	        <br />
+	        <h:outputLabel value="Votre Role n'a pas encore été validé par un administrateur!" style="color:red"/>
+	        </c:if>
 	        <br /><br />
 	        
-	        <h:outputLabel value="Votre Role n'a pas encore été validé par un administrateur!" rendered="!#{sessionUserManagedBean.utilisateur.validRole}" style="color:red"/>
+	        
+
+			<c:if test="#{sessionUserManagedBean.utilisateur.societe!=null}">
+			<h:outputLabel value="Societe : #{sessionUserManagedBean.utilisateur.societe.name}" />
+			<br /><br />
+			</c:if>
+			
+			<c:if test="#{sessionUserManagedBean.utilisateur.portefeuille!=null}">
+			<h:link value="#{sessionUserManagedBean.utilisateur.portefeuille.idPortefeuille}" outcome="portefeuille.xhml"/>
 	        <br /><br />
+			</c:if>
+
 	        <h:commandButton action="#{sessionUserManagedBean.modifier()}" value="Modifier votre compte" />
 			
-
 </h:body>
 </html>
