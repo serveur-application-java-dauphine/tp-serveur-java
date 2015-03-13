@@ -52,6 +52,7 @@ public class ServicesUtilisateurBean implements ServicesUtilisateur{
 		et.begin();
 		em.persist(utilisateur);
 		et.commit();
+		LOG.info(utilisateur.getFirstname()+" register");
 		return utilisateur;
 	}
 
@@ -114,6 +115,18 @@ public class ServicesUtilisateurBean implements ServicesUtilisateur{
 		em.merge(u);
 		et.commit();
 		return u;
+	}
+
+	@Override
+	public Utilisateur getUtilisateurByEmail(String email) {
+		Utilisateur result = null;
+		Query q = (Query) em.createQuery("SELECT u FROM Utilisateur u left join Role r left join societe s WHERE u.email= ?",Utilisateur.class);
+		q.setParameter(1, email);
+		try{
+			result = (Utilisateur) q.getSingleResult();
+		//User not found	
+		} catch(NoResultException e){}
+		return result;
 	}
 	
 }

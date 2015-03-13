@@ -124,7 +124,6 @@ public class Utilisateur implements java.io.Serializable {
 	}
 
 	public void setRole(Role role) {
-		System.out.println("setRole");
 		this.role = role;
 	}
 

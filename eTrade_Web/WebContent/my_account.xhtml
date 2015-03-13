@@ -10,53 +10,44 @@
 <h:body>
 	<h1>Mon compte</h1>
 	
-	        <h:outputLabel for="firstname">Prénom</h:outputLabel>
-	        <h:inputText id="firstname" value="#{sessionManageBean.utilisateur.firstname}" required="true" size="20" maxlength="60" />
+	        <h:outputLabel for="firstname">Prénom </h:outputLabel>
+	        <h:inputText id="firstname" value="#{sessionUserManagedBean.utilisateur.firstname}" required="true" size="20" maxlength="60" />
+			<br/>
+			<h:outputLabel for="lastname">Nom </h:outputLabel>
+			<h:inputText id="lastname" value="#{sessionUserManagedBean.utilisateur.lastname}" required="true" size="20" maxlength="60" />
+			<br/>
+			<h:outputLabel for="mail">Adresse mail </h:outputLabel>
+			<h:inputText id="mail" value="#{sessionUserManagedBean.utilisateur.email}" required="true" size="20" maxlength="60" />
+			<br/>
+			
+			<h:outputLabel for="birthDate">Date de naissance (#{applicationManagedBean.DATE_PATTERN}) <span class="requis">*</span></h:outputLabel>
+	        <h:inputText id="birthDate" value="#{sessionUserManagedBean.utilisateur.birthdate}" required="true" size="10" maxlength="10" >
+	        	<f:convertDateTime pattern="#{applicationManagedBean.DATE_PATTERN}"/>
+	        	</h:inputText>
+	        <h:message id="birthDateMessage" for="birthDate" errorClass="erreur" />
+	        <br /><br />
+	        
+	        <h:outputLabel for="address">Adresse <span class="requis">*</span></h:outputLabel>
+	        <h:inputTextarea id="address" value="#{sessionUserManagedBean.utilisateur.adress}" required="true" size="25" maxlength="100" />
+	        <h:message id="addressMessage" for="address" errorClass="erreur" />
+	        <br/><br/>
+	        
+	        <h:outputLabel for="zipCode">Code postal <span class="requis">*</span></h:outputLabel>
+	        <h:inputText id="zipCode" value="#{sessionUserManagedBean.utilisateur.zipcode}" required="true" size="5" maxlength="5" />
+	        <h:message id="zipCodeMessage" for="zipCode" errorClass="erreur" />
+	        <br /><br />
+	        
+	        <h:outputLabel for="city">Ville <span class="requis">*</span></h:outputLabel>
+	        <h:inputText id="city" value="#{sessionUserManagedBean.utilisateur.city}" required="true" size="5" maxlength="5" />
+	        <h:message id="cityMessage" for="city" errorClass="erreur" />
+	        <br /><br />
+	        
+	        <h:outputLabel for="city">Rôle : #{sessionUserManagedBean.utilisateur.role.libelle}</h:outputLabel>
+	        <br /><br />
+		
 		
 		<tr>
-			<td>Prénom </td>
-			<td><input type="text" id="firstname" name="firstname" /></td>
-		</tr>
-		<tr>
-			<td>Adresse mail</td>
-			<td><input type="text" id="mail" name="email" /></td>
-		</tr>
-		<tr>
-			<td>Mot de passe</td>
-			<td><input type="password" id="password" name="password" /></td>
-		</tr>
-		<tr>
-			<td>Confirmation du mot de passe</td>
-			<td><input type="password" id="confirmPassword" name="confirmPassword" /></td>
-		</tr>
-		<tr>
-			<td>Date de naissance</td>
-			<td><input type="date" id="birthDate" name="birthDate" /></td>
-		</tr>
-		<tr>
-			<td>Adresse</td>
-			<td><textarea  id="address" name="address" maxlength="100"></textarea></td>
-		</tr>
-		<tr>
-			<td>Code postal</td>
-			<td><input type="text" id="zipCode" name="zipCode" /></td>
-		</tr>
-		<tr>
-			<td>Ville</td>
-			<td><input type="text" id="city" name="city" /></td>
-		</tr>
-		<tr>
-			<td>Rôle demandé (confirmé ensuite par l'administrateur)</td>
-			<td>
-				<select id="role" name="role">
-					<option value=""></option>
-					<option value="1">Investisseur</option>
-					<option value="2">Membre d'une société</option>
-				</select>
-			</td>
-		</tr>
-		<tr>
-			<td><input type="submit" value="Créez votre compte"/></td>
+			<td><input type="submit" value="Modifier votre compte"/></td>
 			<td></td>
 		</tr>
 
