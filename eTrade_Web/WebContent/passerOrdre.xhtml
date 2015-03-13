@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"> 
+    <h:head>
+        <meta charset="utf-8" />
+        <title>Passer un Ordre</title>
+        <h:outputStylesheet library="default" name="css/form.css"  />
+    </h:head>
+    <h:body>
+      <h:form>
+         <fieldset>
+         	<legend>Passer un ordre</legend>
+         	<h:outputLabel value="Bonjour, #{utilisateurManagedBean.utilisateurFromSession.firstname}"></h:outputLabel>
+         	<h:outputLabel for="produit">Société<span class="requis">*</span></h:outputLabel>
+         	<h:selectOneMenu value="#{societeManagedBean.listSocietes}" required="true" >
+	       		<f:selectItems value="#{roleManagedBean.roles}" var="role"
+        		itemValue="#{role.idRole}" itemLabel="#{role.libelle}"/>
+        		<f:converter converterId="fr.dauphine.etrade.converter.RoleConverter"/>
+	       	</h:selectOneMenu>
+         	
+		
+	        
+	        <h:messages globalOnly="true" infoClass="info" />
+	
+	        <h:commandButton value="inscription" action="#{utilisateurManagedBean.inscription()}" styleClass="sansLabel" />
+	        <br />
+          </fieldset>
+        </h:form> 	
+    </h:body>
+</html>
