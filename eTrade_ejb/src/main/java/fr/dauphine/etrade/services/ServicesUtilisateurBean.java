@@ -19,6 +19,7 @@ import javax.persistence.EntityManager;
 import fr.dauphine.etrade.api.ServicesUtilisateur;
 import fr.dauphine.etrade.model.Portefeuille;
 import fr.dauphine.etrade.model.Utilisateur;
+import fr.dauphine.etrade.persit.Connexion;
 
 @Remote(ServicesUtilisateur.class)
 @Stateless
@@ -48,12 +49,7 @@ public class ServicesUtilisateurBean implements ServicesUtilisateur{
 	
 	@Override
 	public Utilisateur addUtilisateur(Utilisateur utilisateur) {
-		LOG.info("Registering " + utilisateur.getFirstname());
-		
-		et.begin();
-		em.persist(utilisateur);
-		et.commit();
-		LOG.info(utilisateur.getFirstname()+" register");
+		Connexion.getInstance().insert(utilisateur);
 		return utilisateur;
 	}
 
@@ -111,7 +107,7 @@ public class ServicesUtilisateurBean implements ServicesUtilisateur{
 	@Override
 	public Utilisateur createPortefolio(Utilisateur u){
 		u.setPortefeuille(new Portefeuille());
-		LOG.info("Adding a new portefolio to the user "+u.getFirstname());
+		LOG.info("Adding a new portefolio to the user "+u);
 		et.begin();
 		em.merge(u);
 		et.commit();
