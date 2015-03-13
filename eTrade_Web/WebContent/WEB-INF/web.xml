@@ -25,7 +25,6 @@
 
   
   <!-- Constraint sur les pages -->
- 
   <security-constraint>
     <display-name>Administration-Constraint</display-name>
     <web-resource-collection>
@@ -35,7 +34,7 @@
     <auth-constraint>
       <role-name>Administrateur</role-name>
       <role-name>Investisseur</role-name>
-      <role-name>Membre d'une société</role-name>
+      <role-name>Membredesociété</role-name>
     </auth-constraint>
     <user-data-constraint>
       <transport-guarantee>NONE</transport-guarantee>

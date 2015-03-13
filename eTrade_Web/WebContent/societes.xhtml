@@ -6,6 +6,9 @@
       xmlns:c="http://java.sun.com/jstl/core"
 > 
 
+<!--  TODO : Ajouter une barre permettant de rechercher sur une société -->
+
+
 <h:head>
 	<title>eTrade - Liste des sociétés</title>
 </h:head> 
@@ -25,9 +28,9 @@
 		
 		
 		<!-- Si l'utilisateur est un membre société -->
-		<c:if rendered="#{facesContext.externalContext.isUserInRole('Membre de société')}">
+		<c:if rendered="#{sessionUserManagedBean.utilisateur.role. == 2}" >
 			<h:commandButton value="Créer une société" type="button" onclick="alert('Coucou')" />
-			<h:form id="creationSocieteForm">
+			<h:form id="creationSocieteForm" >
 				<h:outputLabel for="companyName">Nom de l'entreprise<span class="requis">*</span></h:outputLabel>
 		        <h:inputText id="companyName" required="true" size="50" maxlength="100" value="#{societeManagedBean.societe.name}"/>
 		        <h:commandButton value="Créer la société" action="#{societeManagedBean.createSociete}" />

@@ -3,11 +3,15 @@ package fr.dauphine.etrade.model;
 // default package
 // Generated 11 mars 2015 16:13:53 by Hibernate Tools 4.0.0
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+
 import static javax.persistence.GenerationType.IDENTITY;
+
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -28,14 +32,20 @@ public class Actualite implements java.io.Serializable {
 	private Societe societe;
 	private Utilisateur utilisateur;
 	private String file;
+	private String titre;
+	private Date date_creation;
+	private Date date_modification;
 
 	public Actualite() {
 	}
 
-	public Actualite(Societe societe, Utilisateur utilisateur, String file) {
+	public Actualite(Societe societe, Utilisateur utilisateur, String file, String titre, Date date_creation, Date date_modification) {
 		this.societe = societe;
 		this.utilisateur = utilisateur;
 		this.file = file;
+		this.titre = titre;
+		this.date_creation = date_creation;
+		this.date_modification = date_modification;
 	}
 
 	@Id
@@ -77,5 +87,33 @@ public class Actualite implements java.io.Serializable {
 	public void setFile(String file) {
 		this.file = file;
 	}
+	
+	@Column(name="titre", nullable = false, length = 100)
+	public String getTitre(){
+		return this.titre;
+	}
+	
+	public void setTitre(String titre) {
+		this.titre = titre;
+	}
+	
+	@Column(name="date_creation", nullable = false)
+	public Date getDate_creation() {
+		return date_creation;
+	}
+
+	public void setDate_creation(Date date_creation) {
+		this.date_creation = date_creation;
+	}
+
+	@Column(name="date_modification")
+	public Date getDate_modification() {
+		return date_modification;
+	}
+
+	public void setDate_modification(Date date_modification) {
+		this.date_modification = date_modification;
+	}
+
 
 }
