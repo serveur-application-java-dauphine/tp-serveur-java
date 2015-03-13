@@ -9,7 +9,7 @@
 
 </h:head> 
 <body> 
-<h:link value="Protected page" outcome="protected/protected" rendered="#{facesContext.externalContext.isUserInRole('Administrateur')}"/>
+
 	<h:form>
 		<h:dataTable value="#{utilisateurManagedBean.utilisateurs}" var="u">
 		   <h:column>    				
@@ -28,18 +28,19 @@
 		      <f:facet name="header">Société affiliée</f:facet>
 		      #{u.societe.name}
 		   </h:column>
-		   <c:if test="#{!u.validRole}">
 			   <h:column>
 			 	  <f:facet name="header">Valider</f:facet>
-			   	   <h:commandButton id="valider" value="Valider"
+			 	  #{u.validRole}
+			   	   <h:commandButton id="valider" value="Valider" rendered="#{u.validRole==false}"
 					action="#{utilisateurManagedBean.valider(u)}" />
 	  	  	   </h:column>
 			   <h:column>
 			   	<f:facet name="header">Refuser</f:facet>
-			   	 <h:commandButton id="refuse" value="Refuser"
+			   	
+			   	 <h:commandButton id="refuse" value="Refuser" rendered="#{u.validRole==false}"
 					action="#{utilisateurManagedBean.supprimer(u)}" /> 
 			   </h:column>
-		   </c:if>
+		   
 		</h:dataTable>
 	</h:form>
 </body> 
