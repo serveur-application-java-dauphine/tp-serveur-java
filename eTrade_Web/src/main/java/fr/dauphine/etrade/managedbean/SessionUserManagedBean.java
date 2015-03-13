@@ -18,13 +18,12 @@ public class SessionUserManagedBean {
 	private ServicesUtilisateur su;
 	
 	/**
-	 * @return the utilisateur
+	 * @return the utilisateur avec son Role, sa Societe et son Portefeuille
 	 */
 	public Utilisateur getUtilisateur() {
 		if (utilisateur == null){
 			String email = FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal().getName();
 			utilisateur = su.getUtilisateurByEmail(email);
-			System.out.println(utilisateur);
 		}
 		return utilisateur;
 	}
@@ -34,6 +33,10 @@ public class SessionUserManagedBean {
 	 */
 	public void setUtilisateur(Utilisateur utilisateur) {
 		this.utilisateur = utilisateur;
+	}
+	
+	public void modifier(){
+		su.updateUtilisateur(utilisateur);
 	}
 
 }

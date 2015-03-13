@@ -2,7 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets"> 
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"> 
 
 <h:head>
 	<title>eTrade - Mon compte</title>
@@ -42,14 +43,19 @@
 	        <h:message id="cityMessage" for="city" errorClass="erreur" />
 	        <br /><br />
 	        
-	        <h:outputLabel for="city">Rôle : #{sessionUserManagedBean.utilisateur.role.libelle}</h:outputLabel>
+	        <h:outputLabel>Rôle : #{sessionUserManagedBean.utilisateur.role.libelle}</h:outputLabel>
 	        <br /><br />
-		
-		
-		<tr>
-			<td><input type="submit" value="Modifier votre compte"/></td>
-			<td></td>
-		</tr>
+			<c:if test="#{sessionUserManagedBean.utilisateur.societe}!=Null">
+				<h:outputLabel >Societe : #{sessionUserManagedBean.utilisateur.societe.name}</h:outputLabel>
+	        <br /><br />
+			</c:if>
+			<h:link value="#{sessionUserManagedBean.utilisateur.portefeuille.idPortefeuille}" outcome="portefeuille.xhml"/>
+	        <br /><br />
+	        
+	        <h:outputLabel value="Votre Role n'a pas encore été validé par un administrateur!" rendered="!#{sessionUserManagedBean.utilisateur.validRole}" style="color:red"/>
+	        <br /><br />
+	        <h:commandButton action="#{sessionUserManagedBean.modifier()}" value="Modifier votre compte" />
+			
 
 </h:body>
 </html>
