@@ -1,9 +1,14 @@
 package fr.dauphine.etrade.listener;
 
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
+import javax.faces.event.ValueChangeEvent;
+
+@ManagedBean
+@RequestScoped
 public class SocieteListener {
 
-	public SocieteListener() {
-		// TODO Auto-generated constructor stub
+	public void valueChangeMethod(ValueChangeEvent e){
+		//TODO
 	}
-
 }
