@@ -11,6 +11,7 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
 import fr.dauphine.etrade.api.ServicesUtilisateur;
+import fr.dauphine.etrade.model.Role;
 import fr.dauphine.etrade.model.Utilisateur;
 
 @ManagedBean
@@ -92,8 +93,5 @@ public class UtilisateurManagedBean implements Serializable {
 		}
         return utilisateur;
     }
-	
-	public Utilisateur getUtilisateurFromSession(){
-		return su.getUtilisateurByEmail(FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal().getName());
-	}
+
 }
