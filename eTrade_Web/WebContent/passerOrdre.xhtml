@@ -13,7 +13,7 @@
          	<legend>Passer un ordre</legend>
          	<h:outputLabel value="Bonjour, #{utilisateurManagedBean.utilisateurFromSession.firstname}"></h:outputLabel>
          	<h:outputLabel for="produit">Société<span class="requis">*</span></h:outputLabel>
-         	<h:selectOneMenu value="#{utilisateurManagedBean.utilisateur.role}" required="true" >
+         	<h:selectOneMenu value="#{societeManagedBean.listSocietes}" required="true" >
 	       		<f:selectItems value="#{roleManagedBean.roles}" var="role"
         		itemValue="#{role.idRole}" itemLabel="#{role.libelle}"/>
         		<f:converter converterId="fr.dauphine.etrade.converter.RoleConverter"/>

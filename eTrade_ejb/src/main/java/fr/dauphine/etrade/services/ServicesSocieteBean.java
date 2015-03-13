@@ -1,6 +1,7 @@
 package fr.dauphine.etrade.services;
 
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Logger;
 
 import javax.ejb.Remote;
@@ -17,6 +18,7 @@ import javax.persistence.Query;
 
 import fr.dauphine.etrade.api.ServicesSociete;
 import fr.dauphine.etrade.model.Actualite;
+import fr.dauphine.etrade.model.Produit;
 import fr.dauphine.etrade.model.Societe;
 
 @Remote(ServicesSociete.class)
@@ -83,7 +85,7 @@ public class ServicesSocieteBean implements ServicesSociete {
 		return societe;
 	}
 
-	/** Actualités **/
+	/** Actualitï¿½s **/
 	
 	@SuppressWarnings("unchecked")
 	@Override
@@ -100,6 +102,13 @@ public class ServicesSocieteBean implements ServicesSociete {
 	@Override
 	public Actualite getActualite(int id) {
 		return em.find(Actualite.class, id);
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Produit> getProduitsBySociete(Societe societe) {
+		
+		return (List<Produit>) societe.getProduits();
 	}
 
 }
