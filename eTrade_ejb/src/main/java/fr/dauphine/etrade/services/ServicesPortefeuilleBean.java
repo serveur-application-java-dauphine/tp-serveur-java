@@ -14,10 +14,9 @@ import javax.persistence.PersistenceUnit;
 import javax.persistence.Query;
 
 import fr.dauphine.etrade.api.ServicesPortefeuille;
-import fr.dauphine.etrade.api.ServicesUtilisateur;
 import fr.dauphine.etrade.model.Portefeuille;
 
-@Remote(ServicesUtilisateur.class)
+@Remote(ServicesPortefeuille.class)
 @Stateless
 @TransactionManagement(TransactionManagementType.BEAN)
 public class ServicesPortefeuilleBean implements ServicesPortefeuille{

@@ -8,19 +8,18 @@ import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
+import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceUnit;
 import javax.persistence.Query;
-import javax.persistence.EntityManager;
 
 import fr.dauphine.etrade.api.ServicesOrdre;
-import fr.dauphine.etrade.api.ServicesUtilisateur;
 import fr.dauphine.etrade.model.Ordre;
 import fr.dauphine.etrade.model.Utilisateur;
 
-@Remote(ServicesUtilisateur.class)
+@Remote(ServicesOrdre.class)
 @Stateless
 @TransactionManagement(TransactionManagementType.BEAN)
 public class ServicesOrdreBean implements ServicesOrdre{

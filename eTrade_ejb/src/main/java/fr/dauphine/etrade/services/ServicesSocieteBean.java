@@ -1,7 +1,6 @@
 package fr.dauphine.etrade.services;
 
 import java.util.List;
-import java.util.Set;
 import java.util.logging.Logger;
 
 import javax.ejb.Remote;
@@ -11,7 +10,6 @@ import javax.ejb.TransactionManagementType;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
-import javax.persistence.NamedQuery;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceUnit;
 import javax.persistence.Query;
