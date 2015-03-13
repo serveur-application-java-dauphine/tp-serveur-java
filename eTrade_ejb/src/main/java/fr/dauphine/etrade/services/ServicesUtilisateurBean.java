@@ -120,7 +120,7 @@ public class ServicesUtilisateurBean implements ServicesUtilisateur{
 	@Override
 	public Utilisateur getUtilisateurByEmail(String email) {
 		Utilisateur result = null;
-		Query q = (Query) em.createQuery("SELECT u FROM Utilisateur u left join Role r left join societe s WHERE u.email= ?",Utilisateur.class);
+		Query q = (Query) em.createQuery("SELECT u FROM Utilisateur u left join u.role left join u.societe WHERE u.email= ?",Utilisateur.class);
 		q.setParameter(1, email);
 		try{
 			result = (Utilisateur) q.getSingleResult();

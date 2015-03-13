@@ -64,7 +64,7 @@
 	       	<h:selectOneMenu value="#{utilisateurManagedBean.utilisateur.role.idRole}" required="true" >
 	       		<f:selectItems value="#{roleManagedBean.roles}" var="role"
         		itemValue="#{role.idRole}" itemLabel="#{role.libelle}"/>
-        		<f:converter converterId="fr.dauphine.etrade.converter.RoleConverter"/>
+        		<!-- <f:converter converterId="fr.dauphine.etrade.converter.RoleConverter"/> -->
 	       	</h:selectOneMenu>
 			<br /><br />
 		

@@ -30,9 +30,92 @@ import javax.persistence.UniqueConstraint;
 @Table(name = "Utilisateur", schema = "etrade_titres", uniqueConstraints = @UniqueConstraint(columnNames = "Email"))
 public class Utilisateur implements java.io.Serializable {
 
-	/**
-	 * Default serialVersionUID
-	 */
+	@Override
+	public String toString() {
+		return lastname + " "+ firstname;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((adress == null) ? 0 : adress.hashCode());
+		result = prime * result
+				+ ((birthdate == null) ? 0 : birthdate.hashCode());
+		result = prime * result + ((city == null) ? 0 : city.hashCode());
+		result = prime * result + ((email == null) ? 0 : email.hashCode());
+		result = prime * result
+				+ ((firstname == null) ? 0 : firstname.hashCode());
+		result = prime * result
+				+ ((idUtilisateur == null) ? 0 : idUtilisateur.hashCode());
+		result = prime * result
+				+ ((lastname == null) ? 0 : lastname.hashCode());
+		result = prime * result
+				+ ((password == null) ? 0 : password.hashCode());
+		result = prime * result + (validRole ? 1231 : 1237);
+		result = prime * result + ((zipcode == null) ? 0 : zipcode.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Utilisateur other = (Utilisateur) obj;
+		if (adress == null) {
+			if (other.adress != null)
+				return false;
+		} else if (!adress.equals(other.adress))
+			return false;
+		if (birthdate == null) {
+			if (other.birthdate != null)
+				return false;
+		} else if (!birthdate.equals(other.birthdate))
+			return false;
+		if (city == null) {
+			if (other.city != null)
+				return false;
+		} else if (!city.equals(other.city))
+			return false;
+		if (email == null) {
+			if (other.email != null)
+				return false;
+		} else if (!email.equals(other.email))
+			return false;
+		if (firstname == null) {
+			if (other.firstname != null)
+				return false;
+		} else if (!firstname.equals(other.firstname))
+			return false;
+		if (idUtilisateur == null) {
+			if (other.idUtilisateur != null)
+				return false;
+		} else if (!idUtilisateur.equals(other.idUtilisateur))
+			return false;
+		if (lastname == null) {
+			if (other.lastname != null)
+				return false;
+		} else if (!lastname.equals(other.lastname))
+			return false;
+		if (password == null) {
+			if (other.password != null)
+				return false;
+		} else if (!password.equals(other.password))
+			return false;
+		if (validRole != other.validRole)
+			return false;
+		if (zipcode == null) {
+			if (other.zipcode != null)
+				return false;
+		} else if (!zipcode.equals(other.zipcode))
+			return false;
+		return true;
+	}
+
 	private static final long serialVersionUID = 1L;
 	private Long idUtilisateur;
 	private Societe societe;

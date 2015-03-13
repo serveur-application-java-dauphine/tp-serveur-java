@@ -17,17 +17,15 @@ public class SessionUserManagedBean {
 	@EJB
 	private ServicesUtilisateur su;
 	
-	public SessionUserManagedBean() {
-		String email = FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal().getName();
-		System.out.println(email);
-		//if (utilisateur==null)
-		su.getUtilisateurByEmail(email);
-	}
-
 	/**
 	 * @return the utilisateur
 	 */
 	public Utilisateur getUtilisateur() {
+		if (utilisateur == null){
+			String email = FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal().getName();
+			utilisateur = su.getUtilisateurByEmail(email);
+			System.out.println(utilisateur);
+		}
 		return utilisateur;
 	}
 
