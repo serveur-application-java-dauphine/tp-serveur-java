@@ -1,7 +1,7 @@
 INSERT INTO `Societe` (`IdSociete`, `Name`) VALUES
-(2, 'Atos'),
-(NULL, 'Axa'),
-(NULL, 'BNP Paribas'),
-(NULL, 'CACIB'),
-(NULL, 'Société Générale'),
-(NULL, 'Test');
+(1, 'Atos'),
+(2, 'Axa'),
+(3, 'BNP Paribas'),
+(4, 'CACIB'),
+(5, 'Société Générale'),
+(6, 'Test');

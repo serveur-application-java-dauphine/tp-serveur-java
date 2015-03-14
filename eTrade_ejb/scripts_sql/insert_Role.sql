@@ -1,1 +1,4 @@
-INSERT INTO Role VALUES (NULL, 'Administrateur', 'Administrateur'), (NULL, 'Societe','Membre de societe'), (NULL, 'Investisseur','Investisseur');
+INSERT INTO Role VALUES 
+(1, 'Administrateur', 'Administrateur'),
+(2, 'Societe','Membre de societe'),
+(3, 'Investisseur','Investisseur');
