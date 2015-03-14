@@ -34,7 +34,7 @@
     <auth-constraint>
       <role-name>Administrateur</role-name>
       <role-name>Investisseur</role-name>
-      <role-name>Membredesociété</role-name>
+      <role-name>Societe</role-name>
     </auth-constraint>
     <user-data-constraint>
       <transport-guarantee>NONE</transport-guarantee>
@@ -72,7 +72,7 @@
     <role-name>Investisseur</role-name>
   </security-role>
   <security-role>
-    <role-name>Membredesociété</role-name>
+    <role-name>Societe</role-name>
   </security-role>
   <error-page>
     <error-code>403</error-code>

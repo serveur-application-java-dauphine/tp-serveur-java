@@ -11,6 +11,7 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
 import fr.dauphine.etrade.api.ServicesUtilisateur;
+import fr.dauphine.etrade.model.Portefeuille;
 import fr.dauphine.etrade.model.Role;
 import fr.dauphine.etrade.model.Utilisateur;
 
@@ -50,8 +51,9 @@ public class UtilisateurManagedBean implements Serializable {
 	 */
 	public void valider(Utilisateur utilisateur){
 		LOG.info("Modifying the validity of the role to true for user "+ utilisateur.getIdUtilisateur());
+		Portefeuille p = su.createPortefolio(new Portefeuille());
 		utilisateur.setValidRole(true);
-		su.createPortefolio(utilisateur);
+		utilisateur.setPortefeuille(p);
 		su.updateUtilisateur(utilisateur);
 	}
 
