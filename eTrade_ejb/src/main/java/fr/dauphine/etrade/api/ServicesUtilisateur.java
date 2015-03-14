@@ -12,7 +12,7 @@ public interface ServicesUtilisateur {
 	Utilisateur addUtilisateur(Utilisateur utilisateur);
 	Utilisateur delUtilisateur(Utilisateur utilisateur);
 	List<Utilisateur> allUtilisateurs();
-	Utilisateur getUtilisateurById(int id);
+	Utilisateur getUtilisateurById(long id);
 	Utilisateur getUtilisateurByEmail(String email);
 	Utilisateur updateUtilisateur(Utilisateur utilisateur);
 	List<Utilisateur> getUnvalidatedUtilisateurs();

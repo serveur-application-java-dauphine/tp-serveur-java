@@ -28,7 +28,7 @@ public final class Connexion {
 		return cnx;
 	}
 	
-	public Object insert(Object... objects){
+	public Object[] insert(Object... objects){
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
 		for (Object object : objects)

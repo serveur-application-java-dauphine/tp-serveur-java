@@ -40,7 +40,8 @@ public class ServicesUtilisateurBean implements ServicesUtilisateur{
 		return Connexion.getInstance().queryListResult(query, Utilisateur.class);
 	}
 	
-	public Utilisateur getUtilisateurById(int id) {
+	@Override
+	public Utilisateur getUtilisateurById(long id) {
 		return  Connexion.getInstance().find(Utilisateur.class, id);
 	}
 

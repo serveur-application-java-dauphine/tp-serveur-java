@@ -7,7 +7,6 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Transient;
 
@@ -36,8 +35,9 @@ public class Actualite implements java.io.Serializable {
 	private String titre;
 	private Date date_creation;
 	private Date date_modification;
+	
 	@Transient
-	public byte[] fileContent;
+	private String content;
 
 	public Actualite() {
 	}
@@ -62,8 +62,8 @@ public class Actualite implements java.io.Serializable {
 		this.idActualite = idActualite;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "idSociete", nullable = false)
+	@ManyToOne
+	@JoinColumn(name = "IdSociete", nullable = false)
 	public Societe getSociete() {
 		return this.societe;
 	}
@@ -72,8 +72,8 @@ public class Actualite implements java.io.Serializable {
 		this.societe = societe;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "idUtilisateur", nullable = false)
+	@ManyToOne
+	@JoinColumn(name = "IdUtilisateur", nullable = false)
 	public Utilisateur getUtilisateur() {
 		return this.utilisateur;
 	}
@@ -82,7 +82,7 @@ public class Actualite implements java.io.Serializable {
 		this.utilisateur = utilisateur;
 	}
 
-	@Column(name = "file", nullable = false, length = 50)
+	@Column(name = "File", nullable = false, length = 200)
 	public String getFile() {
 		return this.file;
 	}
@@ -116,6 +116,16 @@ public class Actualite implements java.io.Serializable {
 
 	public void setDate_modification(Date date_modification) {
 		this.date_modification = date_modification;
+	}
+	
+	@Transient
+	public String getContent() {
+		return content;
+	}
+
+	@Transient
+	public void setContent(String content) {
+		this.content = content;
 	}
 
 

@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
 	<persistence-unit name="eTrade-MySql" transaction-type="RESOURCE_LOCAL" >
-	    <!-- <non-jta-data-source>java:jboss/datasources/etrade_mysql</non-jta-data-source> -->
-	    <non-jta-data-source>java:jboss/datasources/etrade_mysql2</non-jta-data-source>
+	    <non-jta-data-source>java:jboss/datasources/etrade_mysql</non-jta-data-source>
 	    <class>fr.dauphine.etrade.model.Actualite</class>
 	    <class>fr.dauphine.etrade.model.DirectionOrdre</class>
 	    <class>fr.dauphine.etrade.model.Ordre</class>
@@ -18,8 +17,7 @@
 	    <class>fr.dauphine.etrade.model.TypeTransactionBancaire</class>
 	    <class>fr.dauphine.etrade.model.Utilisateur</class>
 	<properties>
-	<!-- <property name="javax.persistence.jdbc.url" value="jdbc:mysql://mysql.etrade.alwaysdata.net:3306/etrade_titres"/> -->
-	<property name="javax.persistence.jdbc.url" value="jdbc:mysql://mysql.etrade.alwaysdata.net:3306/etrade_titres2"/>
+	<property name="javax.persistence.jdbc.url" value="jdbc:mysql://mysql.etrade.alwaysdata.net:3306/etrade_titres"/>
 	<property name="javax.persistence.jdbc.Utilisateur" value="etrade"/>
 	<property name="javax.persistence.jdbc.password" value="azerty123"/>
 	<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
