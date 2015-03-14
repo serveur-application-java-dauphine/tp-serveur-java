@@ -10,7 +10,6 @@ import javax.faces.bean.RequestScoped;
 
 import fr.dauphine.etrade.api.ServicesSociete;
 import fr.dauphine.etrade.model.Actualite;
-import fr.dauphine.etrade.model.Produit;
 import fr.dauphine.etrade.model.Societe;
 
 @ManagedBean
@@ -65,7 +64,7 @@ public class SocieteManagedBean implements Serializable {
 	 * 
 	 * Can be called by all types of profiles.
 	 */
-	public Societe getSociete(int id){
+	public Societe getSociete(Long id){
 		return ss.getSocieteById(id);
 	}
 	
@@ -118,10 +117,6 @@ public class SocieteManagedBean implements Serializable {
 	public void setSociete(Societe societe) {
 		this.societe = societe;
 	}
-	
-	public List<Produit> getProduitBySociete(Societe societe){
-		return ss.getProduitsBySociete(societe);		
-	}
-	
+
 	
 }

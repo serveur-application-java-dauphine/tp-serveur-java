@@ -65,7 +65,7 @@ public class ServicesSocieteBean implements ServicesSociete {
 	}
 
 	@Override
-	public Societe getSocieteById(int id) {
+	public Societe getSocieteById(long id) {
 		return  em.find(Societe.class, id);
 	}
 	
@@ -101,12 +101,6 @@ public class ServicesSocieteBean implements ServicesSociete {
 	public Actualite getActualite(int id) {
 		return em.find(Actualite.class, id);
 	}
-	
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<Produit> getProduitsBySociete(Societe societe) {
-		
-		return (List<Produit>) societe.getProduits();
-	}
+
 
 }

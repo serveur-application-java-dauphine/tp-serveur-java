@@ -16,7 +16,10 @@ import javax.persistence.PersistenceUnit;
 import javax.persistence.Query;
 
 import fr.dauphine.etrade.api.ServicesOrdre;
+import fr.dauphine.etrade.model.DirectionOrdre;
 import fr.dauphine.etrade.model.Ordre;
+import fr.dauphine.etrade.model.StatusOrdre;
+import fr.dauphine.etrade.model.TypeOrdre;
 import fr.dauphine.etrade.model.Utilisateur;
 
 @Remote(ServicesOrdre.class)
@@ -77,7 +80,38 @@ public class ServicesOrdreBean implements ServicesOrdre{
 		List<Ordre> result = q.getResultList();
 		return result;
 	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<DirectionOrdre> getPossibleDirectionOrdre(){
+		Query q = (Query) em.createQuery("SELECT do FROM DirectionOrdre do");	
+		List<DirectionOrdre> result = q.getResultList();
+		return result;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<TypeOrdre> getAllTypeOrdre(){
+		Query q = (Query) em.createQuery("SELECT to FROM TypeOrdre to");	
+		List<TypeOrdre> result = q.getResultList();
+		return result;
+	}
 
+	@Override
+	public StatusOrdre getStatusOrdreByLibelle(String libelle){
+		Query q = (Query) em.createQuery("SELECT so FROM StatusOrdre so WHERE libelle=?");
+		q.setParameter(1, libelle);
+		StatusOrdre result = (StatusOrdre) q.getSingleResult();
+		return result;
+	}
+	
+	@Override
+	public TypeOrdre getTypeOrdreById(Long idTypeOrdre){
+		Query q = (Query) em.createQuery("SELECT to FROM TypeOrdre to WHERE to.idTypeOrdre=?");
+		q.setParameter(1, idTypeOrdre);
+		TypeOrdre result = (TypeOrdre) q.getSingleResult();
+		return result;
+	}
 
 	
 }
