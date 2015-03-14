@@ -73,7 +73,7 @@ public class Societe implements java.io.Serializable {
 		this.name = name;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "societe")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "societe")
 	public Set<Produit> getProduits() {
 		return this.produits;
 	}
