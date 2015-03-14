@@ -131,7 +131,7 @@ public class Utilisateur implements java.io.Serializable {
 	private String zipcode;
 	private String city;
 	private boolean validRole;
-	private Set<Actualite> actualites = new HashSet<Actualite>(0);
+	//private Set<Actualite> actualites = new HashSet<Actualite>(0);
 
 	public Utilisateur() {
 	}
@@ -154,7 +154,7 @@ public class Utilisateur implements java.io.Serializable {
 	public Utilisateur(Societe societe, Portefeuille portefeuille, Role role,
 			String lastname, String firstName, String email, String password,
 			Date birthdate, String adress, String zipcode, String city,
-			boolean validRole, Set<Actualite> actualites) {
+			boolean validRole){//, Set<Actualite> actualites) {
 		this.societe = societe;
 		this.portefeuille = portefeuille;
 		this.role = role;
@@ -167,7 +167,7 @@ public class Utilisateur implements java.io.Serializable {
 		this.zipcode = zipcode;
 		this.city = city;
 		this.validRole = validRole;
-		this.actualites = actualites;
+		//this.actualites = actualites;
 	}
 
 	@Id
@@ -293,13 +293,13 @@ public class Utilisateur implements java.io.Serializable {
 		this.validRole = validRole;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "utilisateur")
-	public Set<Actualite> getActualites() {
-		return this.actualites;
-	}
-
-	public void setActualites(Set<Actualite> actualites) {
-		this.actualites = actualites;
-	}
+//	@OneToMany(fetch = FetchType.LAZY, mappedBy = "utilisateur")
+//	public Set<Actualite> getActualites() {
+//		return this.actualites;
+//	}
+//
+//	public void setActualites(Set<Actualite> actualites) {
+//		this.actualites = actualites;
+//	}
 
 }
