@@ -25,13 +25,7 @@ import fr.dauphine.etrade.persit.Connexion;
 @Stateless
 @TransactionManagement(TransactionManagementType.BEAN)
 public class ServicesUtilisateurBean implements ServicesUtilisateur{
-//	TODO A envisager par rapport � EntityManagerFactory en rempla�ant dans persistence.xml le transaction-type par "JTA".
-//  Dans un tel cas, supprimer les emf, et, et et.begin/commit().
-//	@PersistenceContext(unitName = "eTrade-MySql")
-//	private EntityManager em;	
-	
-	
-	
+
 	@PersistenceUnit
 	private EntityManagerFactory emf;
 	
@@ -70,7 +64,7 @@ public class ServicesUtilisateurBean implements ServicesUtilisateur{
 		return (List<Utilisateur>) q.getResultList();		
 	}
 	
-	public Utilisateur getUtilisateurById(int id) {
+	public Utilisateur getUtilisateurById(Long id) {
 		return  em.find(Utilisateur.class, id);
 	}
 

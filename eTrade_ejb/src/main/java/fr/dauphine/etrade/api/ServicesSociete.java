@@ -19,5 +19,4 @@ public interface ServicesSociete {
 	List<Actualite> getListActualites(Societe s);
 	Actualite getActualite(int id);
 	List<Produit> getProduitsBySociete(Societe societe);
-	
 }

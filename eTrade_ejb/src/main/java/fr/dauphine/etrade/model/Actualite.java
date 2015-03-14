@@ -9,6 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.Transient;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
@@ -35,6 +36,9 @@ public class Actualite implements java.io.Serializable {
 	private String titre;
 	private Date date_creation;
 	private Date date_modification;
+	
+	@Transient
+	private String content;
 
 	public Actualite() {
 	}
@@ -59,7 +63,7 @@ public class Actualite implements java.io.Serializable {
 		this.idActualite = idActualite;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "IdSociete", nullable = false)
 	public Societe getSociete() {
 		return this.societe;
@@ -69,7 +73,7 @@ public class Actualite implements java.io.Serializable {
 		this.societe = societe;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "IdUtilisateur", nullable = false)
 	public Utilisateur getUtilisateur() {
 		return this.utilisateur;
@@ -113,6 +117,16 @@ public class Actualite implements java.io.Serializable {
 
 	public void setDate_modification(Date date_modification) {
 		this.date_modification = date_modification;
+	}
+	
+	@Transient
+	public String getContent() {
+		return content;
+	}
+
+	@Transient
+	public void setContent(String content) {
+		this.content = content;
 	}
 
 
