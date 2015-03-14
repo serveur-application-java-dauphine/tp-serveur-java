@@ -16,6 +16,7 @@ import javax.persistence.Query;
 
 import fr.dauphine.etrade.api.ServicesSociete;
 import fr.dauphine.etrade.model.Actualite;
+import fr.dauphine.etrade.model.Produit;
 import fr.dauphine.etrade.model.Societe;
 
 @Remote(ServicesSociete.class)
@@ -100,5 +101,6 @@ public class ServicesSocieteBean implements ServicesSociete {
 	public Actualite getActualite(int id) {
 		return em.find(Actualite.class, id);
 	}
+
 
 }

@@ -4,7 +4,7 @@
 	xmlns:f="http://java.sun.com/jsf/core"> 
     <h:head>
         <meta charset="utf-8" />
-        <title>Inscription</title>
+        <title>eTrade - Inscription</title>
         <h:outputStylesheet library="default" name="css/form.css"  />
     </h:head>
     <h:body>
@@ -56,7 +56,7 @@
 	        <br /><br />
 	        
 	        <h:outputLabel for="city">Ville <span class="requis">*</span></h:outputLabel>
-	        <h:inputText id="city" value="#{utilisateurManagedBean.utilisateur.city}" required="true" size="5" maxlength="5" />
+	        <h:inputText id="city" value="#{utilisateurManagedBean.utilisateur.city}" required="true" size="30" />
 	        <h:message id="cityMessage" for="city" errorClass="erreur" />
 	        <br /><br />
 	        
