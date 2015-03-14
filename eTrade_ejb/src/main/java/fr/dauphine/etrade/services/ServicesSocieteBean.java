@@ -16,7 +16,6 @@ import javax.persistence.Query;
 
 import fr.dauphine.etrade.api.ServicesSociete;
 import fr.dauphine.etrade.model.Actualite;
-import fr.dauphine.etrade.model.Produit;
 import fr.dauphine.etrade.model.Societe;
 
 @Remote(ServicesSociete.class)
@@ -65,7 +64,7 @@ public class ServicesSocieteBean implements ServicesSociete {
 	}
 
 	@Override
-	public Societe getSocieteById(int id) {
+	public Societe getSocieteById(long id) {
 		return  em.find(Societe.class, id);
 	}
 	
@@ -100,13 +99,6 @@ public class ServicesSocieteBean implements ServicesSociete {
 	@Override
 	public Actualite getActualite(int id) {
 		return em.find(Actualite.class, id);
-	}
-	
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<Produit> getProduitsBySociete(Societe societe) {
-		
-		return (List<Produit>) societe.getProduits();
 	}
 
 }
