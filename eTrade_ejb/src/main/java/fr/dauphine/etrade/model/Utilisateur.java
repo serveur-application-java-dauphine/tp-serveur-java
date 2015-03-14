@@ -4,8 +4,6 @@ package fr.dauphine.etrade.model;
 // Generated 11 mars 2015 16:13:53 by Hibernate Tools 4.0.0
 
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,7 +15,6 @@ import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -293,13 +290,13 @@ public class Utilisateur implements java.io.Serializable {
 		this.validRole = validRole;
 	}
 
-//	@OneToMany(fetch = FetchType.LAZY, mappedBy = "utilisateur")
-//	public Set<Actualite> getActualites() {
-//		return this.actualites;
-//	}
-//
-//	public void setActualites(Set<Actualite> actualites) {
-//		this.actualites = actualites;
-//	}
+	/*@OneToMany(fetch = FetchType.LAZY, mappedBy = "utilisateur")
+	public Set<Actualite> getActualites() {
+		return this.actualites;
+	}
+
+	public void setActualites(Set<Actualite> actualites) {
+		this.actualites = actualites;
+	}*/
 
 }

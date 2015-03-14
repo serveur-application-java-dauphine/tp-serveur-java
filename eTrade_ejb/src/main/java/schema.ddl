@@ -3,10 +3,10 @@
         IdActualite bigint not null auto_increment unique,
         date_creation datetime not null,
         date_modification datetime,
-        file varchar(50) not null,
+        File varchar(200) not null,
         titre varchar(100) not null,
-        idSociete bigint not null,
-        idUtilisateur bigint not null,
+        IdSociete bigint not null,
+        IdUtilisateur bigint not null,
         primary key (IdActualite)
     );
 
@@ -124,15 +124,15 @@
     );
 
     alter table Actualite 
-        add index FK96F7FC2CAAB6C975 (idSociete), 
+        add index FK96F7FC2CAAB6C975 (IdSociete), 
         add constraint FK96F7FC2CAAB6C975 
-        foreign key (idSociete) 
+        foreign key (IdSociete) 
         references Societe (IdSociete);
 
     alter table Actualite 
-        add index FK96F7FC2C5B4C74D3 (idUtilisateur), 
+        add index FK96F7FC2C5B4C74D3 (IdUtilisateur), 
         add constraint FK96F7FC2C5B4C74D3 
-        foreign key (idUtilisateur) 
+        foreign key (IdUtilisateur) 
         references Utilisateur (IdUtilisateur);
 
     alter table Ordre 

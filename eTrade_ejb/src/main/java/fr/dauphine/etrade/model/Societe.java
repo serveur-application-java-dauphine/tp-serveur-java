@@ -91,7 +91,7 @@ public class Societe implements java.io.Serializable {
 		this.utilisateurs = utilisateurs;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "societe", orphanRemoval=true)
+	@OneToMany(fetch = FetchType.LAZY/*, mappedBy = "societe"*/, orphanRemoval=true)
 	@JoinColumn(name="IdSociete")
 	public Set<Actualite> getActualites() {
 		return this.actualites;
