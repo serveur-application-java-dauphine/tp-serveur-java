@@ -9,7 +9,6 @@ import javax.ejb.Stateless;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceUnit;
 import javax.persistence.EntityManager;
@@ -28,13 +27,12 @@ public class ServicesRoleBean implements ServicesRole{
 	@PersistenceUnit
 	private EntityManagerFactory emf;
 	
-	//@PersistenceContext(unitName = "eTrade-MySql")
 	private EntityManager em;
-	private EntityTransaction et;
+	//private EntityTransaction et;
 	
 	public ServicesRoleBean() {
 		em = Persistence.createEntityManagerFactory("eTrade-MySql").createEntityManager();
-		et = em.getTransaction();
+		//et = em.getTransaction();
 	}
 
 	@SuppressWarnings("unchecked")

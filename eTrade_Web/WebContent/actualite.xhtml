@@ -3,27 +3,24 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:c="http://java.sun.com/jstl/core"
 > 
 
 <h:head>
-	<title><!-- Insérer le titre de l'actualité --></title>
+	<title><h:outputText value="#{actualiteManagedBean.actualite.titre}"/></title>
 </h:head> 
 <body> 
-	<h:form>
 	<fieldset>
-       	<legend><h:outputText value="#{}"></h:outputText></legend>
-       	<h:outputLabel for="firstname">Prénom <span class="requis">*</span></h:outputLabel>
-       <h:inputText id="firstname" value="#{utilisateurManagedBean.utilisateur.firstname}" required="true" size="20" maxlength="60" />
-       <h:message id="nomMessage" for="firstname" errorClass="erreur" />
-		    
-
-       
-       <h:messages globalOnly="true" infoClass="info" />
-
-       <h:commandButton value="inscription" action="#{utilisateurManagedBean.inscription()}" styleClass="sansLabel" />
+       	<legend><h:outputText value="#{actualiteManagedBean.actualite.titre}"></h:outputText></legend>
+      	<legend>Date de création : </legend>
+      	<h:outputLabel value="#{actualiteManagedBean.actualite.date_creation}" />
+      	
+      	<h:outputLabel rendered="#{not empty actualiteManagedBean.actualite.date_modification}">
+      		<legend>Date de dernière modification : </legend>
+      		<h:outputLabel value="#{actualiteManagedBean.actualite.date_modification}" />
+      	</h:outputLabel>
+      	
+      	<h:outputText value="#{actualiteManagedBean.actualite.content}"></h:outputText>  
        <br />
-    </fieldset>
-	</h:form>
+	</fieldset>
 </body> 
 </html>

@@ -3,7 +3,7 @@
                         <login-module code="org.jboss.security.auth.spi.DatabaseServerLoginModule" flag="required">
                             <module-option name="dsJndiName" value="java:jboss/datasources/etrade_mysql"/>
                             <module-option name="principalsQuery" value="SELECT Password FROM Utilisateur WHERE Email = ?"/>
-                            <module-option name="rolesQuery" value="SELECT RoleCode, 'Roles' FROM Role INNER JOIN Utilisateur ON Role.idRole = Utilisateur.idRole WHERE Utilisateur.Email = ?"/>
+                            <module-option name="rolesQuery" value="SELECT Code, 'Roles' FROM Role INNER JOIN Utilisateur ON Role.idRole = Utilisateur.idRole WHERE Utilisateur.Email = ?"/>
                             <module-option name="realm" value="ApplicationRealm"/>
                         </login-module>
                     </authentication>

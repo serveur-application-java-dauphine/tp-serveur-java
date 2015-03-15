@@ -5,7 +5,6 @@ import java.util.List;
 import javax.ejb.Remote;
 
 import fr.dauphine.etrade.model.Actualite;
-import fr.dauphine.etrade.model.Produit;
 import fr.dauphine.etrade.model.Societe;
 
 @Remote
