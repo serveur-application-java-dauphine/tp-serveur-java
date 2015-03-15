@@ -1,7 +1,6 @@
 package fr.dauphine.etrade.model;
-
 // default package
-// Generated 11 mars 2015 16:13:53 by Hibernate Tools 4.0.0
+// Generated 15 mars 2015 14:57:54 by Hibernate Tools 4.0.0
 
 import java.math.BigDecimal;
 import java.text.DateFormat;
@@ -21,6 +20,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 /**
@@ -37,14 +38,12 @@ public class Produit implements java.io.Serializable {
 	private Long idProduit;
 	private TypeProduit typeProduit;
 	private Societe societe;
-	private Set<Ordre> ordres = new HashSet<Ordre>(0);
 	private Date maturite;
 	private BigDecimal coupon;
+	private BigDecimal taux;
 	private BigDecimal strike;
 	private BigDecimal volatilite;
-	private BigDecimal taux;
-	
-	
+	private Set<Ordre> ordres = new HashSet<Ordre>(0);
 
 	public Produit() {
 	}
@@ -54,62 +53,28 @@ public class Produit implements java.io.Serializable {
 		this.societe = societe;
 	}
 
-	public Produit(TypeProduit typeProduit, Societe societe, Set<Ordre> ordres) {
+	public Produit(TypeProduit typeProduit, Societe societe, Date maturite,
+			BigDecimal coupon, BigDecimal taux, BigDecimal strike,
+			BigDecimal volatilite, Set<Ordre> ordres) {
 		this.typeProduit = typeProduit;
 		this.societe = societe;
+		this.maturite = maturite;
+		this.coupon = coupon;
+		this.taux = taux;
+		this.strike = strike;
+		this.volatilite = volatilite;
 		this.ordres = ordres;
 	}
 
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
-	@Column(name = "IdProduit", unique = false, nullable = true)
+	@Column(name = "IdProduit", unique = true, nullable = false)
 	public Long getIdProduit() {
 		return this.idProduit;
 	}
-	
+
 	public void setIdProduit(Long idProduit) {
 		this.idProduit = idProduit;
-	}
-	
-	@Column(name = "Maturite", unique = false, nullable = true)
-	public Date getMaturite() {
-		return this.maturite;
-	}
-	
-	public void setMaturite(Date maturite) {
-		this.maturite = maturite;
-	}
-	
-	@Column(name = "Coupon", unique = false, nullable = true)
-	public BigDecimal getCoupon() {
-		return this.coupon;
-	}
-	public void setCoupon(BigDecimal coupon) {
-		this.coupon = coupon;
-	}
-	
-	@Column(name = "Taux", unique = false, nullable = true)
-	public BigDecimal getTaux() {
-		return this.taux;
-	}
-	public void setTaux(BigDecimal taux) {
-		this.taux = taux;
-	}
-	
-	@Column(name = "Strike", unique = false, nullable = true)
-	public BigDecimal getStrike() {
-		return this.strike;
-	}
-	public void setStrike(BigDecimal strike) {
-		this.coupon = strike;
-	}
-	
-	@Column(name = "Volatilite", unique = false, nullable = true)
-	public BigDecimal getVolatilite() {
-		return this.volatilite;
-	}
-	public void setVolatilite(BigDecimal volatilite) {
-		this.volatilite = volatilite;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -132,6 +97,52 @@ public class Produit implements java.io.Serializable {
 		this.societe = societe;
 	}
 
+	@Temporal(TemporalType.DATE)
+	@Column(name = "Maturite", length = 10)
+	public Date getMaturite() {
+		return this.maturite;
+	}
+
+	public void setMaturite(Date maturite) {
+		this.maturite = maturite;
+	}
+
+	@Column(name = "Coupon", precision = 10)
+	public BigDecimal getCoupon() {
+		return this.coupon;
+	}
+
+	public void setCoupon(BigDecimal coupon) {
+		this.coupon = coupon;
+	}
+
+	@Column(name = "Taux", precision = 10)
+	public BigDecimal getTaux() {
+		return this.taux;
+	}
+
+	public void setTaux(BigDecimal taux) {
+		this.taux = taux;
+	}
+
+	@Column(name = "Strike", precision = 10)
+	public BigDecimal getStrike() {
+		return this.strike;
+	}
+
+	public void setStrike(BigDecimal strike) {
+		this.strike = strike;
+	}
+
+	@Column(name = "Volatilite", precision = 10)
+	public BigDecimal getVolatilite() {
+		return this.volatilite;
+	}
+
+	public void setVolatilite(BigDecimal volatilite) {
+		this.volatilite = volatilite;
+	}
+
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "produit")
 	public Set<Ordre> getOrdres() {
 		return this.ordres;
@@ -148,9 +159,10 @@ public class Produit implements java.io.Serializable {
 			result = this.typeProduit.getLibelle();
 		} else if (this.typeProduit.getIdTypeProduit()==2) {
 			result = this.typeProduit.getLibelle() + " K" + this.getStrike() + " T" + DateFormat.getDateInstance(DateFormat.MEDIUM).format(this.getMaturite());
-		} else if (this.typeProduit.getIdTypeProduit()==2) {
+		} else if (this.typeProduit.getIdTypeProduit()==3) {
 			result = this.typeProduit.getLibelle() + " C" + this.getCoupon() + "% T" + DateFormat.getDateInstance(DateFormat.MEDIUM).format(this.getMaturite());
 		}
 		return result;
 	}
+
 }
