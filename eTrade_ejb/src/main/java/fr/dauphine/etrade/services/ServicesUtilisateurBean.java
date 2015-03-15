@@ -24,12 +24,14 @@ public class ServicesUtilisateurBean implements ServicesUtilisateur{
 	
 	@Override
 	public Utilisateur addUtilisateur(Utilisateur utilisateur) {
+		LOG.info("Adding user : " + utilisateur.getLastname());
 		Connexion.getInstance().insert(utilisateur);
 		return utilisateur;
 	}
 
 	@Override
 	public Utilisateur delUtilisateur(Utilisateur utilisateur) {
+		LOG.info("Deleting user : " + utilisateur.getLastname());
 		Connexion.getInstance().delete(utilisateur);
 		return utilisateur;
 	}
@@ -47,6 +49,7 @@ public class ServicesUtilisateurBean implements ServicesUtilisateur{
 
 	@Override
 	public Utilisateur updateUtilisateur(Utilisateur utilisateur) {
+		LOG.info("Update user : " + utilisateur.getLastname());
 		Connexion.getInstance().update(utilisateur);
 		return utilisateur;
 	}

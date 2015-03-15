@@ -16,7 +16,6 @@ import javax.persistence.Query;
 
 import fr.dauphine.etrade.api.ServicesSociete;
 import fr.dauphine.etrade.model.Actualite;
-import fr.dauphine.etrade.model.Produit;
 import fr.dauphine.etrade.model.Societe;
 
 @Remote(ServicesSociete.class)
@@ -27,7 +26,6 @@ public class ServicesSocieteBean implements ServicesSociete {
 	@PersistenceUnit
 	private EntityManagerFactory emf;
 	
-	//@PersistenceContext(unitName = "eTrade-MySql")
 	private EntityManager em;
 	private EntityTransaction et;
 	

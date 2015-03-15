@@ -57,8 +57,6 @@ public class OrdreManagedBean implements Serializable {
 	 * 
 	 * @param u
 	 */
-	
-
 	public void supprimer(Ordre o){
 		LOG.info("Deleting the order "+ o.getIdOrder());
 		so.delOrdre(o);
