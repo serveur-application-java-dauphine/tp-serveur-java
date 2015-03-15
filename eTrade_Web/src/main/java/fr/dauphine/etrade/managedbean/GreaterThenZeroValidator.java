@@ -9,11 +9,10 @@ import javax.faces.validator.ValidatorException;
 public final class GreaterThenZeroValidator implements javax.faces.validator.Validator {
 
 	@Override
-	public void validate(FacesContext context, UIComponent component,
-	        Object value) throws ValidatorException {
+	public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
 
 	    try {
-	        if ((int) value < 1) {
+	        if (Integer.parseInt(value.toString()) < 1) {
 	            FacesMessage msg = new FacesMessage("Validation failed.", 
 	                    "Number must be strictly positive");
 	            msg.setSeverity(FacesMessage.SEVERITY_ERROR);
