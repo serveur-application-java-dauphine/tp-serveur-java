@@ -48,14 +48,14 @@ public class ServicesSocieteBean implements ServicesSociete {
 		return societe;
 	}
 
-	@Override
+	/*@Override
 	public Societe delSociete(Societe societe) {
 		LOG.info("Deleting : " +societe.getName());
 		et.begin();
 		em.remove(societe);
 		et.commit();
 		return societe;
-	}
+	}*/
 
 	@SuppressWarnings("unchecked")
 	@Override

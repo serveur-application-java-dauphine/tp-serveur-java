@@ -4,8 +4,6 @@ package fr.dauphine.etrade.model;
 // Generated 11 mars 2015 16:13:53 by Hibernate Tools 4.0.0
 
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,7 +15,6 @@ import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -131,7 +128,7 @@ public class Utilisateur implements java.io.Serializable {
 	private String zipcode;
 	private String city;
 	private boolean validRole;
-	private Set<Actualite> actualites = new HashSet<Actualite>(0);
+	//private Set<Actualite> actualites = new HashSet<Actualite>(0);
 
 	public Utilisateur() {
 	}
@@ -154,7 +151,7 @@ public class Utilisateur implements java.io.Serializable {
 	public Utilisateur(Societe societe, Portefeuille portefeuille, Role role,
 			String lastname, String firstName, String email, String password,
 			Date birthdate, String adress, String zipcode, String city,
-			boolean validRole, Set<Actualite> actualites) {
+			boolean validRole){//, Set<Actualite> actualites) {
 		this.societe = societe;
 		this.portefeuille = portefeuille;
 		this.role = role;
@@ -167,7 +164,7 @@ public class Utilisateur implements java.io.Serializable {
 		this.zipcode = zipcode;
 		this.city = city;
 		this.validRole = validRole;
-		this.actualites = actualites;
+		//this.actualites = actualites;
 	}
 
 	@Id
@@ -293,13 +290,13 @@ public class Utilisateur implements java.io.Serializable {
 		this.validRole = validRole;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "utilisateur")
+	/*@OneToMany(fetch = FetchType.LAZY, mappedBy = "utilisateur")
 	public Set<Actualite> getActualites() {
 		return this.actualites;
 	}
 
 	public void setActualites(Set<Actualite> actualites) {
 		this.actualites = actualites;
-	}
+	}*/
 
 }
