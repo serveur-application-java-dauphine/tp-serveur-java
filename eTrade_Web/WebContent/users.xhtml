@@ -5,13 +5,15 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:c="http://java.sun.com/jsp/jstl/core"> 
 <h:head>
-
-
+<h:outputStylesheet library="css" name="table-style.css"/>
 </h:head> 
 <body> 
 
 	<h:form>
-		<h:dataTable value="#{utilisateurManagedBean.utilisateurs}" var="u">
+		<h:dataTable value="#{utilisateurManagedBean.utilisateurs}" var="u"
+				styleClass="order-table"
+    			headerClass="order-table-header"
+    			rowClasses="order-table-odd-row,order-table-even-row">
 		  <h:column>
 			   	<f:facet name="header">Supprimer</f:facet>
 			   	 <h:commandButton id="supprimer" value="supprimer" 
@@ -19,49 +21,63 @@
 			   </h:column>
 		   <h:column>    				
 		      <f:facet name="header">Nom</f:facet>
-		      <h:inputText id="lastname" value="#{u.lastname}" required="true" size="20" maxlength="60" onchange="#{utilisateurManagedBean.}"/>
+		      <h:inputText id="lastname" value="#{u.lastname}" required="true" size="20" maxlength="60">
+		      <f:ajax listener="#{utilisateurManagedBean.modifier(this,u)}"/>
+		      </h:inputText>
 	        <h:message id="lastnameMessage" for="lastname" errorClass="erreur" />
 		   </h:column>
 		   <h:column>
 		      <f:facet name="header">Prénom</f:facet>
-		      <h:inputText id="firstname" value="#{u.firstname}" required="true" size="20" maxlength="60" />
+		      <h:inputText id="firstname" value="#{u.firstname}" required="true" size="20" maxlength="60" >
+		      <f:ajax listener="#{utilisateurManagedBean.modifier(this,u)}"/>
+		      </h:inputText>		      
 	        <h:message id="nomMessage" for="firstname" errorClass="erreur" />
 		   </h:column>
 		   <h:column>
 		      <f:facet name="header">Email</f:facet>
 		      <h:inputText id="email" value="#{u.email}" required="true" size="20" maxlength="60" >
-	       <f:validateRegex pattern="#{applicationManagedBean.EMAIL_PATTERN}"></f:validateRegex>
+	       <f:validateRegex pattern="#{applicationManagedBean.EMAIL_PATTERN}"/>
+	       <f:ajax listener="#{utilisateurManagedBean.modifier(this,u)}"/>
 	        </h:inputText>
 	        <h:message id="emailMessage" for="email" errorClass="erreur" />
 		   </h:column>
 		   <h:column>
 		      <f:facet name="header">Mot de passe</f:facet>
-		      <h:inputSecret id="motdepasse" value="#{u.password}" required="true" size="20" maxlength="20" />
+		      <h:inputText id="motdepasse" value="#{u.password}" required="true" size="20" maxlength="20" >
+		      <f:ajax listener="#{utilisateurManagedBean.modifier(this,u)}"/>
+		      </h:inputText>
 	        <h:message id="motDePasseMessage" for="motdepasse" errorClass="erreur" />
 		   </h:column>
 		   <h:column>
 		      <f:facet name="header">Date de naissance (#{applicationManagedBean.DATE_PATTERN})</f:facet>
 		      <h:inputText id="birthDate" value="#{u.birthdate}" required="true" size="10" maxlength="10" >
 	        	<f:convertDateTime pattern="#{applicationManagedBean.DATE_PATTERN}"/>
+	        	<f:ajax listener="#{utilisateurManagedBean.modifier(this,u)}"/>
 	        	</h:inputText>
 	        <h:message id="birthDateMessage" for="birthDate" errorClass="erreur" />
 		   </h:column>
 		   
 		   <h:column>
 		      <f:facet name="header">Adresse</f:facet>
-		       <h:inputTextarea id="address" value="#{u.adress}" required="true" size="25" maxlength="100" />
+		       <h:inputTextarea id="address" value="#{u.adress}" required="true" size="25" maxlength="100" >
+		       <f:ajax listener="#{utilisateurManagedBean.modifier(this,u)}"/>
+		       </h:inputTextarea>
 	        <h:message id="addressMessage" for="address" errorClass="erreur" />
 	        </h:column>
 	        
 	        <h:column>
 		      <f:facet name="header">Code postal</f:facet>
-	        <h:inputText id="zipCode" value="#{u.zipcode}" required="true" size="5" maxlength="5" />
+	        <h:inputText id="zipCode" value="#{u.zipcode}" required="true" size="5" maxlength="5" >
+	        <f:ajax listener="#{utilisateurManagedBean.modifier(this,u)}"/>
+	        </h:inputText>
 	        <h:message id="zipCodeMessage" for="zipCode" errorClass="erreur" />
 	        </h:column>
 	        
 	        <h:column>
 		      <f:facet name="header">Ville</f:facet>
-	        <h:inputText id="city" value="#{u.city}" required="true" size="30" />
+	        <h:inputText id="city" value="#{u.city}" required="true" size="30" >
+	        <f:ajax listener="#{utilisateurManagedBean.modifier(this,u)}"/>
+		      </h:inputText>
 	        <h:message id="cityMessage" for="city" errorClass="erreur" />
 	        </h:column>
 	        
@@ -70,12 +86,13 @@
 	       	<h:selectOneMenu value="#{u.role.idRole}" required="true" >
 	       		<f:selectItems value="#{roleManagedBean.roles}" var="role"
         		itemValue="#{role.idRole}" itemLabel="#{role.libelle}"/>
+        		<f:ajax listener="#{utilisateurManagedBean.modifier(this,u)}"/>
 	       	</h:selectOneMenu>
 		   </h:column>
 		   <h:column>
 		      <f:facet name="header">Société affiliée</f:facet>
-		      <h:selectOneMenu value="#{u.societe.idSociete}" required="true" rendered="#{u.role.code=='Societe'}">
-	       		<f:selectItems value="#{societeManagedBean.societes}" var="societe"
+		      <h:selectOneMenu value="#{u.societe.idSociete}" required="true" rendered="#{u.role.code}==#{applicationManagedBean.ROLE_CODE_SOCIETE}">
+	       		<f:selectItems value="#{societeManagedBean.societes}" var="societe" 
         		itemValue="#{societe.idSociete}" itemLabel="#{societe.name}"/>
 	       	</h:selectOneMenu>
 		   </h:column>

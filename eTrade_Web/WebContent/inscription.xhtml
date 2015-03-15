@@ -29,12 +29,16 @@
 	        <br /><br />
 	
 	        <h:outputLabel for="motdepasse">Mot de passe <span class="requis">*</span></h:outputLabel>
-	        <h:inputSecret id="motdepasse" value="#{utilisateurManagedBean.utilisateur.password}" required="true" size="20" maxlength="20" />
+	        <h:inputSecret id="motdepasse" value="#{utilisateurManagedBean.utilisateur.password}" required="true" size="20" maxlength="20" >
+	        <f:validateRegex pattern="#{applicationManagedBean.PASSWORD_PATTERN}"/>
+	        </h:inputSecret>
 	        <h:message id="motDePasseMessage" for="motdepasse" errorClass="erreur" />
 	        <br /><br />
 	
 	        <h:outputLabel for="confirmation">Confirmation du mot de passe <span class="requis">*</span></h:outputLabel>
-	        <h:inputSecret id="confirmation" value="#{utilisateurManagedBean.utilisateur.password}" required="true" size="20" maxlength="20" />
+	        <h:inputSecret id="confirmation" value="#{utilisateurManagedBean.utilisateur.password}" required="true" size="20" maxlength="20" >
+	        <f:validateRegex pattern="#{applicationManagedBean.PASSWORD_PATTERN}"/>
+	        </h:inputSecret>
 	        <h:message id="confirmationMessage" for="confirmation" errorClass="erreur" />
 	        <br /><br />
 	        

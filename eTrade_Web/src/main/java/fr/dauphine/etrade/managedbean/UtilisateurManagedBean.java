@@ -9,10 +9,12 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.AjaxBehaviorEvent;
 
 import fr.dauphine.etrade.api.ServicesUtilisateur;
 import fr.dauphine.etrade.model.Portefeuille;
 import fr.dauphine.etrade.model.Role;
+import fr.dauphine.etrade.model.Societe;
 import fr.dauphine.etrade.model.Utilisateur;
 
 @ManagedBean
@@ -58,10 +60,11 @@ public class UtilisateurManagedBean implements Serializable {
 			utilisateur.setPortefeuille(p);
 		}
 		utilisateur.setValidRole(true);
-		this.modifier(utilisateur);
+		this.modifier(null,utilisateur);
 	}
 	
-	public void modifier(Utilisateur utilisateur){
+	public void modifier(AjaxBehaviorEvent event, Utilisateur utilisateur){
+		System.out.println("modifier en ajax");
 		su.updateUtilisateur(utilisateur);
 	}
 
@@ -78,6 +81,7 @@ public class UtilisateurManagedBean implements Serializable {
 		if (utilisateur==null){
 			utilisateur = new Utilisateur();
 			utilisateur.setRole(new Role());
+			//utilisateur.setSociete(new Societe());
 		}
         return utilisateur;
     }

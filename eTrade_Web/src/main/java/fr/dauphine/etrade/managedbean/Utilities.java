@@ -9,6 +9,7 @@ public final class Utilities {
 		String managedBeanNameString = "#{"+managedBeanClasse.getSimpleName()+"}";
 		System.out.println(managedBeanNameString);
 		Object obj = fc.getApplication().getELResolver().getValue(fc.getELContext(), null, managedBeanNameString);
+		System.out.println(obj);
 		//Object obj = fc.getApplication().createValueBinding("#{"+managedBeanClasse.getSimpleName()+"}").getValue(fc);
 		return managedBeanClasse.cast(obj);
 	}
