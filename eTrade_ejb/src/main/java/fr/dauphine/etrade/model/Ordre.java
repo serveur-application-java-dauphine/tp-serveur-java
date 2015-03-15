@@ -142,7 +142,7 @@ public class Ordre implements java.io.Serializable {
 		this.typeOrdre = typeOrdre;
 	}
 
-	@Column(name = "Prix", nullable = false, precision = 8)
+	@Column(name = "Prix", nullable = true, precision = 8)
 	public BigDecimal getPrix() {
 		return this.prix;
 	}

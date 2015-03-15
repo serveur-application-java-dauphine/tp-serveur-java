@@ -6,10 +6,8 @@ import java.util.logging.Logger;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
-import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.ValueChangeEvent;
 
 import fr.dauphine.etrade.api.ServicesOrdre;
@@ -26,7 +24,7 @@ import fr.dauphine.etrade.model.TypeProduit;
 import fr.dauphine.etrade.model.Utilisateur;
 
 @ManagedBean
-@RequestScoped
+@SessionScoped
 public class OrdreManagedBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -39,6 +37,7 @@ public class OrdreManagedBean implements Serializable {
 	FacesContext facesContext = FacesContext.getCurrentInstance();
 	@SuppressWarnings("deprecation")
 	Utilisateur utilisateur  = (Utilisateur) facesContext.getApplication().createValueBinding("#{sessionUserManagedBean.utilisateur}").getValue(facesContext);
+	
 
 	@EJB
 	private ServicesOrdre so;
@@ -100,25 +99,17 @@ public class OrdreManagedBean implements Serializable {
 	}
 	
 	public List<TypeOrdre> getListTypeOrdres(){
-		return so.getAllTypeOrdre();
+		List<TypeOrdre> result = so.getAllTypeOrdre();
+		return result;
 	}
 	
-	/*
+	/**
 	 * Each time we change the Societe in the drop down list it changes
 	 * in the ordre.produit	 
 	 */
-	public void changeSocieteListener(Societe e){
-		System.out.println("changeSocieteListener() :"+e);
-	}
-	
-	public void actionListener(ActionEvent actionEvent) {
-	    // Add event code here...
-	    System.out.println("Made it!");
-	}
-
-	public void morePressed(AjaxBehaviorEvent e) {
-
-	    System.out.println("Made it!");
+	public void changeSocieteListener(ValueChangeEvent event){
+		ordre.setProduit(new Produit());
+		ordre.getProduit().setSociete(ss.getSocieteById(Long.parseLong(event.getNewValue().toString())));
 	}
 
 	
@@ -131,7 +122,7 @@ public class OrdreManagedBean implements Serializable {
 			Utilities.redirect("no_ordre.xhtml");
 		else {
 			ordre.setPortefeuille(utilisateur.getPortefeuille());
-			System.out.println("passerOrdre");
+			ordre.setProduit(sp.getProduitById(ordre.getProduit().getIdProduit()));
 			so.addOrdre(ordre);
 			Utilities.redirect("succes_ordre.xhtml");
 		}

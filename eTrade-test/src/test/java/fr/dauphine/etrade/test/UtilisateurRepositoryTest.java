@@ -1,9 +1,10 @@
 package fr.dauphine.etrade.test;
 
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -46,8 +47,10 @@ public class UtilisateurRepositoryTest {
 	@Test
 	public void testAddRemoveGetByIDUtilisateur() throws NamingException {
 		InitialContext ic = Main.initialiserJBOSS();
+		//InitialContext ic = new InitialContext();
 		
 		String lookupStringUser = "eTrade-WebEAR/eTrade-ejb/ServicesUtilisateurBean!fr.dauphine.etrade.api.ServicesUtilisateur";
+
 		ServicesUtilisateur rUser = (ServicesUtilisateur) ic.lookup(lookupStringUser);
 		Utilisateur user = createTestUtilisateur(rUser); 
 		
@@ -60,40 +63,38 @@ public class UtilisateurRepositoryTest {
 		ic.close();
 	}
 	
-//	// U
-//		@Test public void testUpdateUtilisateur() throws NamingException {
-//	        InitialContext ic = Main.initialiserJBOSS();
-//
-//			String lookupStringUtilisateur = "amap-ear/amap-ejb/UtilisateurRepository!abracadacook.amap.api.IUtilisateurRepository";
-//			IUtilisateurRepository rUtilisateur = (IUtilisateurRepository) ic.lookup(lookupStringUtilisateur);
-//			Utilisateur Utilisateur = createTestUtilisateur(rUtilisateur); 
-//			
-//			Utilisateur.changerNom("Nouveau nom");
-//			rUtilisateur.updateUtilisateur(Utilisateur);
-//			Utilisateur fetchedUtilisateur = rUtilisateur.getUtilisateurById(Utilisateur.idUtilisateur());
-//			assertTrue(fetchedUtilisateur.nom().equals("Nouveau nom"));
-//			
-//			removeTestUtilisateur(rUtilisateur, Utilisateur);
-//			ic.close();
-//		}
-//		
-//		// D
-//			@Test public void testDeleteUtilisateur() throws NamingException {
-//		        InitialContext ic = Main.initialiserJBOSS();
-//
-//				String lookupStringUtilisateur = "amap-ear/amap-ejb/UtilisateurRepository!abracadacook.amap.api.IUtilisateurRepository";
-//				IUtilisateurRepository rUtilisateur = (IUtilisateurRepository) ic.lookup(lookupStringUtilisateur);
-//				Utilisateur Utilisateur = createTestUtilisateur(rUtilisateur); 
-//				
-//				assertTrue(Utilisateur.estValide());
-//				rUtilisateur.deleteUtilisateur(Utilisateur);
-//				Utilisateur fetchedUtilisateur = rUtilisateur.getUtilisateurById(Utilisateur.getIdUtilisateur());
-//				assertFalse(fetchedUtilisateur.estValide());
-//				
-//				removeTestUtilisateur(rUtilisateur, Utilisateur);
-//				ic.close();
-//			}
-//	
+	// U
+	@Test
+	public void testUpdateUtilisateur() throws NamingException {
+        InitialContext ic = Main.initialiserJBOSS();
+
+		String lookupStringUser = "eTrade-WebEAR/eTrade-ejb/ServicesUtilisateurBean!fr.dauphine.etrade.api.ServicesUtilisateur";
+		ServicesUtilisateur rUser = (ServicesUtilisateur) ic.lookup(lookupStringUser);
+		Utilisateur user = createTestUtilisateur(rUser); 
+		
+		user.setLastname("Nouveau nom");
+		rUser.updateUtilisateur(user);
+		Utilisateur fetchedUser = rUser.getUtilisateurById(user.getIdUtilisateur());
+		assertTrue(fetchedUser.getLastname().equals("Nouveau nom"));
+		
+		removeTestUtilisateur(rUser, user);
+		ic.close();
+	}
 	
+	
+	// D
+	@Test public void testDeleteMembre() throws NamingException {
+        InitialContext ic = Main.initialiserJBOSS();
+
+        String lookupStringUser = "eTrade-WebEAR/eTrade-ejb/ServicesUtilisateurBean!fr.dauphine.etrade.api.ServicesUtilisateur";
+		ServicesUtilisateur rUser = (ServicesUtilisateur) ic.lookup(lookupStringUser);
+		Utilisateur user = createTestUtilisateur(rUser);
+		
+		assertNotNull(user);
+		removeTestUtilisateur(rUser, user);
+		assertNull(rUser.getUtilisateurById(user.getIdUtilisateur()));
+		
+		ic.close();
+	}
 	
 }

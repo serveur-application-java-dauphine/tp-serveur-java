@@ -23,7 +23,7 @@
 	        
 	     	<h:outputLabel for="email">Adresse email <span class="requis">*</span></h:outputLabel>
 	        <h:inputText id="email" value="#{utilisateurManagedBean.utilisateur.email}" required="true" size="20" maxlength="60" >
-	       <f:validateRegex pattern="#{applicationManagedBean.EMAIL_PATTERN}"></f:validateRegex>
+	       	<f:validateRegex pattern="#{applicationManagedBean.EMAIL_PATTERN}"></f:validateRegex>
 	        </h:inputText>
 	        <h:message id="emailMessage" for="email" errorClass="erreur" />
 	        <br /><br />

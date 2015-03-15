@@ -17,7 +17,6 @@ public class ApplicationManagedBean implements Serializable{
 	private final String ROLE_CODE_INVESTISSEUR = "Investisseur";
 	
 	private final String PASSWORD_PATTERN = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})";
-
 	private final String EMAIL_PATTERN = "^[_A-Za-z0-9-]+(\\." +
 			"[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*" +
 			"(\\.[A-Za-z]{2,})$";
