@@ -6,7 +6,6 @@
 	    <class>fr.dauphine.etrade.model.DirectionOrdre</class>
 	    <class>fr.dauphine.etrade.model.Ordre</class>
 	    <class>fr.dauphine.etrade.model.Portefeuille</class>
-	    <class>fr.dauphine.etrade.model.Produit</class>
 	    <class>fr.dauphine.etrade.model.Role</class>
 	    <class>fr.dauphine.etrade.model.Societe</class>
 	    <class>fr.dauphine.etrade.model.StatusOrdre</class>

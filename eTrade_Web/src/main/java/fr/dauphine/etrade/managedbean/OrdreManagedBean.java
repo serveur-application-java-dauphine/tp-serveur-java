@@ -105,8 +105,8 @@ public class OrdreManagedBean implements Serializable {
 	 * in the ordre.produit	 
 	 */
 	public void changeSocieteListener(ValueChangeEvent event){
+		ordre.setProduit(new Produit());
 		ordre.getProduit().setSociete(ss.getSocieteById(Long.parseLong(event.getNewValue().toString())));
-		ordre.getProduit().setTypeProduit(new TypeProduit());
 	}
 	
 	public void changeTypeProduitListener(ValueChangeEvent event){
