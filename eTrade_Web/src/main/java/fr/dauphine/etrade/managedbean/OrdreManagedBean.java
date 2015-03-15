@@ -1,6 +1,5 @@
 package fr.dauphine.etrade.managedbean;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 import java.util.logging.Logger;
@@ -8,9 +7,8 @@ import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.ValueChangeEvent;
 
@@ -28,11 +26,13 @@ import fr.dauphine.etrade.model.TypeProduit;
 import fr.dauphine.etrade.model.Utilisateur;
 
 @ManagedBean
-@ViewScoped
+@RequestScoped
 public class OrdreManagedBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private Ordre ordre;
+	private long idSociete;
+
 	
 	//@ManagedProperty(value="#{sessionUserManagedBean}")
 	//private SessionUserManagedBean session;
@@ -107,9 +107,18 @@ public class OrdreManagedBean implements Serializable {
 	 * Each time we change the Societe in the drop down list it changes
 	 * in the ordre.produit	 
 	 */
-	public void changeSocieteListener(AjaxBehaviorEvent event, Societe societe){
-		ordre.setProduit(new Produit());
-		ordre.getProduit().setSociete(societe);
+	public void changeSocieteListener(Societe e){
+		System.out.println("changeSocieteListener() :"+e);
+	}
+	
+	public void actionListener(ActionEvent actionEvent) {
+	    // Add event code here...
+	    System.out.println("Made it!");
+	}
+
+	public void morePressed(AjaxBehaviorEvent e) {
+
+	    System.out.println("Made it!");
 	}
 
 	
@@ -132,4 +141,21 @@ public class OrdreManagedBean implements Serializable {
 	public void annulerOrdre(Ordre o){
 		so.delOrdre(o);
 	}
+
+
+	/**
+	 * @return the idSociete
+	 */
+	public long getIdSociete() {
+		return idSociete;
+	}
+
+
+	/**
+	 * @param idSociete the idSociete to set
+	 */
+	public void setIdSociete(int idSociete) {
+		this.idSociete = idSociete;
+	}
+
 }

@@ -1,34 +1,29 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"   
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      >
-    <h:body>
-    <a href="/eTrade_Web/Logout" style="float:right">Se déconnecter</a>
- 	<h:outputLabel value="Bonjour, #{sessionUserManagedBean.utilisateur.firstname} &nbsp; &nbsp;" style="float:right"/>
- 	
-   	<br/><br/>
-   	<h1>eTrade</h1>
-   	<h2>Passer un ordre</h2>
-	
-	<br/><br/>
- 	<h:form>
+      xmlns:c="http://java.sun.com/jsp/jstl/core"> 
+<h:head>
+<h:outputStylesheet library="css" name="table-style.css"/>
+</h:head> 
+<body> 
+
+	<h:form>
+			
 	  	<table>
 		<tr>
 			<td>Société*:</td>
 			<td><h:selectOneMenu value="#{ordreManagedBean.ordre.produit.societe.idSociete}">
-	   			<f:selectItems value="#{societeManagedBean.listSocietes}" var="societe" 
+	   			<f:selectItems value="#{societeManagedBean.societes}" var="societe" 
 	   				itemValue="#{societe.idSociete}" itemLabel="#{societe.name}"/>
-	   			<f:ajax listener="#{ordreManagedBean.changeSocieteListener(this, societe)}"/>
+	   				<f:ajax listener="#{ordreManagedBean.changeSocieteListener(societe)}" render="@form" immediate="true" execute="@form"/>
 	   		</h:selectOneMenu></td>
 		</tr>
-		<tr>
+		  <tr>
 			<td>Produit*:</td>
 			<td><h:selectOneMenu value="#{ordreManagedBean.ordre.produit.idProduit}" style="width: 150px;">
-	   			<f:selectItems value="#{produitManagedBean.getListProduitParSocieteID(ordreManagedBean.ordre.produit.societe.idSociete)}" var="produit" 
+	   			<f:selectItems value="#{produitManagedBean.getListProduitParSocieteID(ordreManagedBean.idSociete)}" var="produit" 
 	   				itemValue="#{produit.idProduit}" itemLabel="#{produit.libelleProduit}"/> 
 	   		</h:selectOneMenu></td>
 		</tr>
@@ -56,9 +51,7 @@
 			<td><h:inputText id="prix" rendered="#{ordreManagedBean.ordre.typeOrdre.idTypeOrder > 1 }" value="#{ordreManagedBean.ordre.prix}" default="Le prix souhaité" required="false" size="20" maxlength="60" style="width: 146px;"/></td>
 		</tr>
 		</table>
- 			<h:commandButton value="Passer l'ordre" action="#{ordreManagedBean.passerOrdre()}" styleClass="sansLabel" type="submit" />
-		</h:form>
-	
- 
-    </h:body>
+		  <h:commandButton value="Passer l'ordre" action="#{ordreManagedBean.passerOrdre()}" styleClass="sansLabel" type="submit" />
+	</h:form>
+</body> 
 </html>
