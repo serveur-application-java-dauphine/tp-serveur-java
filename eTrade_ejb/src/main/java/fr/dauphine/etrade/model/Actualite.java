@@ -100,7 +100,7 @@ public class Actualite implements java.io.Serializable {
 		this.titre = titre;
 	}
 	
-	@Column(name="date_creation", nullable = false)
+	@Column(name="date_creation", nullable = false,columnDefinition="DEFAULT CURRENT_TIMESTAMP")
 	public Date getDate_creation() {
 		return date_creation;
 	}
@@ -109,7 +109,7 @@ public class Actualite implements java.io.Serializable {
 		this.date_creation = date_creation;
 	}
 
-	@Column(name="date_modification")
+	@Column(name="date_modification", columnDefinition="ON UPDATE CURRENT_TIMESTAMP")
 	public Date getDate_modification() {
 		return date_modification;
 	}
