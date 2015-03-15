@@ -38,8 +38,7 @@ public class ServicesUtilisateurBean implements ServicesUtilisateur{
 	
 	@Override
 	public List<Utilisateur> allUtilisateurs() {
-		String query = "FROM Utilisateur";
-		return Connexion.getInstance().queryListResult(query, Utilisateur.class);
+		return Connexion.getInstance().getAll(Utilisateur.class);
 	}
 	
 	@Override

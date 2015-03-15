@@ -14,7 +14,6 @@ import javax.faces.event.AjaxBehaviorEvent;
 import fr.dauphine.etrade.api.ServicesUtilisateur;
 import fr.dauphine.etrade.model.Portefeuille;
 import fr.dauphine.etrade.model.Role;
-import fr.dauphine.etrade.model.Societe;
 import fr.dauphine.etrade.model.Utilisateur;
 
 @ManagedBean
