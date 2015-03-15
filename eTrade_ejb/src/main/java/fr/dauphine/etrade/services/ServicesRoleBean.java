@@ -19,13 +19,18 @@ public class ServicesRoleBean implements ServicesRole{
 
 	@Override
 	public List<Role> getRoles() {
-		String query = "from Role";
-		return Connexion.getInstance().queryListResult(query, Role.class);
+		return Connexion.getInstance().getAll(Role.class);
 	}
 
 	@Override
 	public Role getRole(int id) {
 		return Connexion.getInstance().find(Role.class, id);
+	}
+
+	@Override
+	public List<Role> getRolesLogin() {
+		String query = "FROM Role WHERE idRole>?";
+		return Connexion.getInstance().queryListResult(query, Role.class, new Long(1));
 	}
 	
 }

@@ -3,7 +3,6 @@ package fr.dauphine.etrade.services;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.logging.Logger;
 
@@ -14,8 +13,6 @@ import javax.ejb.TransactionManagementType;
 
 import fr.dauphine.etrade.api.ServicesActualite;
 import fr.dauphine.etrade.model.Actualite;
-import fr.dauphine.etrade.model.Societe;
-import fr.dauphine.etrade.model.Utilisateur;
 import fr.dauphine.etrade.persit.Connexion;
 
 @Remote(ServicesActualite.class)

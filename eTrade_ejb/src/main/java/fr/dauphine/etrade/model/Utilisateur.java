@@ -298,5 +298,10 @@ public class Utilisateur implements java.io.Serializable {
 	public void setActualites(Set<Actualite> actualites) {
 		this.actualites = actualites;
 	}*/
+	
+	public String getFullName(){
+		return firstname+" "+lastname;
+	}
+	
 
 }

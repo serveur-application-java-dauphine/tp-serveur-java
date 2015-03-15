@@ -10,4 +10,5 @@ import fr.dauphine.etrade.model.Role;
 public interface ServicesRole {
 	List<Role> getRoles();
 	Role getRole(int id);
+	List<Role> getRolesLogin();
 }

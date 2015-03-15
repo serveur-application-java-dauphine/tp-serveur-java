@@ -1,20 +1,19 @@
 package fr.dauphine.etrade.managedbean;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 import java.util.logging.Logger;
 
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
+import javax.faces.validator.ValidatorException;
 
 import fr.dauphine.etrade.api.ServicesUtilisateur;
 import fr.dauphine.etrade.model.Portefeuille;
 import fr.dauphine.etrade.model.Role;
-import fr.dauphine.etrade.model.Societe;
 import fr.dauphine.etrade.model.Utilisateur;
 
 @ManagedBean
@@ -24,6 +23,7 @@ public class UtilisateurManagedBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Utilisateur utilisateur;
 	private List<Utilisateur> utilisateurs;
+	private String confirm;
 
 	@EJB
 	private ServicesUtilisateur su;
@@ -54,27 +54,28 @@ public class UtilisateurManagedBean implements Serializable {
 	public void valider(Utilisateur utilisateur){
 		LOG.info("Modifying the validity of the role to true for user "+ utilisateur.getIdUtilisateur());
 		ApplicationManagedBean amb = Utilities.getManagedBean(ApplicationManagedBean.class);
-		System.out.println(amb);
 		if (utilisateur.getRole().getCode()==amb.getROLE_CODE_INVESTISSEUR()){
 			Portefeuille p = su.createPortefolio(new Portefeuille());
 			utilisateur.setPortefeuille(p);
 		}
 		utilisateur.setValidRole(true);
-		this.modifier(null,utilisateur);
+		this.modifier(utilisateur);
 	}
 	
-	public void modifier(AjaxBehaviorEvent event, Utilisateur utilisateur){
-		System.out.println("modifier en ajax");
+	public void modifier(Utilisateur utilisateur){
+		su.updateUtilisateur(utilisateur);
+	}
+	
+	public void modifierRole(Utilisateur utilisateur){
 		su.updateUtilisateur(utilisateur);
 	}
 
 	public void inscription() {
-		/*utilisateur = */su.addUtilisateur(utilisateur);
-		try {
-			FacesContext.getCurrentInstance().getExternalContext().redirect("my_account.xhtml");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		if (confirm.equals(utilisateur.getPassword()))
+			return;
+		su.addUtilisateur(utilisateur);
+		Utilities.redirect("my_account.xhtml");
+		
 	}
 	
 	public Utilisateur getUtilisateur() {
@@ -100,6 +101,20 @@ public class UtilisateurManagedBean implements Serializable {
 	 */
 	public void setUtilisateurs(List<Utilisateur> utilisateurs) {
 		this.utilisateurs = utilisateurs;
+	}
+
+	/**
+	 * @return the confirm
+	 */
+	public String getConfirm() {
+		return confirm;
+	}
+
+	/**
+	 * @param confirm the confirm to set
+	 */
+	public void setConfirm(String confirm) {
+		this.confirm = confirm;
 	}
 
 }

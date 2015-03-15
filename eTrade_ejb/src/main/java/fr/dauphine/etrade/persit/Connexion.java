@@ -57,11 +57,8 @@ public final class Connexion {
 		em.getTransaction().begin();
 		for (Object object : objects){
 			object = em.merge(object);
-			System.out.println(object);
 			em.remove(object);
 		}
-		System.out.println(em==null);
-		System.out.println(em.getTransaction()==null);
 		em.getTransaction().commit();
 		em.close();
 		for (Object object : objects)
