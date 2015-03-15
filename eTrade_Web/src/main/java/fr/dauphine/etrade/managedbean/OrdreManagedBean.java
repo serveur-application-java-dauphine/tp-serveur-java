@@ -112,7 +112,7 @@ public class OrdreManagedBean implements Serializable {
 	}
 	
 	public void changeTypeProduitListener(ValueChangeEvent event){
-		ordre.getProduit().setTypeProduit(sp.getTypeProduitById(Long.parseLong(event.getNewValue().toString())));
+		ordre.setProduit(sp.getProduitById(Long.parseLong(event.getNewValue().toString())));
 	}
 	
 	public void changeTypeOrdreListener(ValueChangeEvent event){
