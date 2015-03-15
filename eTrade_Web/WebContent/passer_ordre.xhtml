@@ -27,10 +27,10 @@
 		</tr>
 		<tr>
 			<td>Produit*:</td>
-			<td><h:selectOneMenu value="#{ordreManagedBean.ordre.produit.typeProduit.idTypeProduit}" onchange="submit()" 
+			<td><h:selectOneMenu value="#{ordreManagedBean.ordre.produit.idProduit}" onchange="submit()" 
 	   			valueChangeListener="#{ordreManagedBean.changeTypeProduitListener}" style="width: 150px;">
 	   			<f:selectItems value="#{produitManagedBean.getListProduitParSocieteID(ordreManagedBean.ordre.produit.societe.idSociete)}" var="produit" 
-	   				itemValue="#{produit.typeProduit.idTypeProduit}" itemLabel="#{produit.typeProduit.libelle}"/> 
+	   				itemValue="#{produit.idProduit}" itemLabel="#{produit.libelleProduit}"/> 
 	   		</h:selectOneMenu></td>
 		</tr>
 		<tr>

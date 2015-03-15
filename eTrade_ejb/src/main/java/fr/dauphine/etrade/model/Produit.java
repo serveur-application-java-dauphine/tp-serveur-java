@@ -3,13 +3,20 @@ package fr.dauphine.etrade.model;
 // default package
 // Generated 11 mars 2015 16:13:53 by Hibernate Tools 4.0.0
 
+import java.awt.image.SampleModel;
+import java.math.BigDecimal;
+import java.text.DateFormat;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+
 import static javax.persistence.GenerationType.IDENTITY;
+
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -31,6 +38,13 @@ public class Produit implements java.io.Serializable {
 	private TypeProduit typeProduit;
 	private Societe societe;
 	private Set<Ordre> ordres = new HashSet<Ordre>(0);
+	private Date maturite;
+	private BigDecimal coupon;
+	private BigDecimal strike;
+	private BigDecimal volatilite;
+	private BigDecimal taux;
+	
+	
 
 	public Produit() {
 	}
@@ -48,13 +62,54 @@ public class Produit implements java.io.Serializable {
 
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
-	@Column(name = "IdProduit", unique = true, nullable = false)
+	@Column(name = "IdProduit", unique = false, nullable = true)
 	public Long getIdProduit() {
 		return this.idProduit;
 	}
-
+	
 	public void setIdProduit(Long idProduit) {
 		this.idProduit = idProduit;
+	}
+	
+	@Column(name = "Maturite", unique = false, nullable = true)
+	public Date getMaturite() {
+		return this.maturite;
+	}
+	
+	public void setMaturite(Date maturite) {
+		this.maturite = maturite;
+	}
+	
+	@Column(name = "Coupon", unique = false, nullable = true)
+	public BigDecimal getCoupon() {
+		return this.coupon;
+	}
+	public void setCoupon(BigDecimal coupon) {
+		this.coupon = coupon;
+	}
+	
+	@Column(name = "Taux", unique = false, nullable = true)
+	public BigDecimal getTaux() {
+		return this.taux;
+	}
+	public void setTaux(BigDecimal taux) {
+		this.taux = taux;
+	}
+	
+	@Column(name = "Strike", unique = false, nullable = true)
+	public BigDecimal getStrike() {
+		return this.strike;
+	}
+	public void setStrike(BigDecimal strike) {
+		this.coupon = strike;
+	}
+	
+	@Column(name = "Volatilite", unique = false, nullable = true)
+	public BigDecimal getVolatilite() {
+		return this.volatilite;
+	}
+	public void setVolatilite(BigDecimal volatilite) {
+		this.volatilite = volatilite;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -86,4 +141,15 @@ public class Produit implements java.io.Serializable {
 		this.ordres = ordres;
 	}
 
+	public String getLibelleProduit(){
+		String result = "";
+		if(this.typeProduit.getIdTypeProduit()==1){
+			result = this.typeProduit.getLibelle();
+		} else if (this.typeProduit.getIdTypeProduit()==2) {
+			result = this.typeProduit.getLibelle() + " K" + this.getStrike() + " T" + DateFormat.getDateInstance(DateFormat.MEDIUM).format(this.getMaturite());
+		} else if (this.typeProduit.getIdTypeProduit()==2) {
+			result = this.typeProduit.getLibelle() + " C" + this.getCoupon() + "% T" + DateFormat.getDateInstance(DateFormat.MEDIUM).format(this.getMaturite());
+		}
+		return result;
+	}
 }
