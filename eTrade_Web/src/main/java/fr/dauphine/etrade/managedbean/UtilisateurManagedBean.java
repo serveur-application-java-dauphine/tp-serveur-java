@@ -53,7 +53,7 @@ public class UtilisateurManagedBean implements Serializable {
 	 */
 	public void valider(Utilisateur utilisateur){
 		LOG.info("Modifying the validity of the role to true for user "+ utilisateur.getIdUtilisateur());
-		ApplicationManagedBean amb = Utilities.getOtherManagedBean(ApplicationManagedBean.class);
+		ApplicationManagedBean amb = Utilities.getManagedBean(ApplicationManagedBean.class);
 		System.out.println(amb);
 		if (utilisateur.getRole().getCode()==amb.getROLE_CODE_INVESTISSEUR()){
 			Portefeuille p = su.createPortefolio(new Portefeuille());

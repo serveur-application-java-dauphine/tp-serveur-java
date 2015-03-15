@@ -4,7 +4,7 @@ import javax.faces.context.FacesContext;
 
 public final class Utilities {
 
-	public final static <T extends Object> T getOtherManagedBean(Class<T> managedBeanClasse){
+	public final static <T extends Object> T getManagedBean(Class<T> managedBeanClasse){
 		FacesContext fc = FacesContext.getCurrentInstance();
 		String managedBeanNameString = "#{"+managedBeanClasse.getSimpleName()+"}";
 		System.out.println(managedBeanNameString);
