@@ -19,16 +19,15 @@
 	  	<table>
 		<tr>
 			<td>Société*:</td>
-			<td><h:selectOneMenu value="#{ordreManagedBean.ordre.produit.societe.idSociete}" onchange="submit()" 
-				valueChangeListener="#{ordreManagedBean.changeSocieteListener}" style="width: 150px;">
+			<td><h:selectOneMenu value="#{ordreManagedBean.ordre.produit.societe.idSociete}">
 	   			<f:selectItems value="#{societeManagedBean.listSocietes}" var="societe" 
-	   				itemValue="#{societe.idSociete}" itemLabel="#{societe.name}"/> 
+	   				itemValue="#{societe.idSociete}" itemLabel="#{societe.name}"/>
+	   			<f:ajax listener="#{ordreManagedBean.changeSocieteListener(this, societe)}"/>
 	   		</h:selectOneMenu></td>
 		</tr>
 		<tr>
 			<td>Produit*:</td>
-			<td><h:selectOneMenu value="#{ordreManagedBean.ordre.produit.idProduit}" onchange="submit()" 
-	   			valueChangeListener="#{ordreManagedBean.changeTypeProduitListener}" style="width: 150px;">
+			<td><h:selectOneMenu value="#{ordreManagedBean.ordre.produit.idProduit}" style="width: 150px;">
 	   			<f:selectItems value="#{produitManagedBean.getListProduitParSocieteID(ordreManagedBean.ordre.produit.societe.idSociete)}" var="produit" 
 	   				itemValue="#{produit.idProduit}" itemLabel="#{produit.libelleProduit}"/> 
 	   		</h:selectOneMenu></td>
