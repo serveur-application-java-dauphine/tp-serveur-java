@@ -86,6 +86,15 @@ public class ServicesProduitBean implements ServicesProduit{
 		return result;
 	}
 
+	@Override
+	public Produit getProduitById(long idProduit) {
+		LOG.info("Getting the Product for id " + idProduit);
+		Query q = (Query) em.createQuery("SELECT tp FROM TypeProduit tp WHERE tp.idTypeProduit=?", Produit.class);	
+		q.setParameter(1, idProduit);
+		Produit result = (Produit) q.getSingleResult();
+		return result;
+	}
+
 
 	
 }

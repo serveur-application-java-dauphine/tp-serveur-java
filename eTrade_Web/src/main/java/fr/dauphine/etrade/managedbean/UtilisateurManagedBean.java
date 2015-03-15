@@ -9,6 +9,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.AjaxBehaviorEvent;
 
 import fr.dauphine.etrade.api.ServicesUtilisateur;
 import fr.dauphine.etrade.model.Portefeuille;
@@ -46,15 +47,24 @@ public class UtilisateurManagedBean implements Serializable {
 	
 	/**
 	 * This method validates the role for the user u
-	 * and creates a portefolio for him
+	 * and creates a portefolio if it's an investissor
 	 * 
 	 * @param u
 	 */
 	public void valider(Utilisateur utilisateur){
 		LOG.info("Modifying the validity of the role to true for user "+ utilisateur.getIdUtilisateur());
-		Portefeuille p = su.createPortefolio(new Portefeuille());
+		ApplicationManagedBean amb = Utilities.getManagedBean(ApplicationManagedBean.class);
+		System.out.println(amb);
+		if (utilisateur.getRole().getCode()==amb.getROLE_CODE_INVESTISSEUR()){
+			Portefeuille p = su.createPortefolio(new Portefeuille());
+			utilisateur.setPortefeuille(p);
+		}
 		utilisateur.setValidRole(true);
-		utilisateur.setPortefeuille(p);
+		this.modifier(null,utilisateur);
+	}
+	
+	public void modifier(AjaxBehaviorEvent event, Utilisateur utilisateur){
+		System.out.println("modifier en ajax");
 		su.updateUtilisateur(utilisateur);
 	}
 
@@ -71,6 +81,7 @@ public class UtilisateurManagedBean implements Serializable {
 		if (utilisateur==null){
 			utilisateur = new Utilisateur();
 			utilisateur.setRole(new Role());
+			//utilisateur.setSociete(new Societe());
 		}
         return utilisateur;
     }

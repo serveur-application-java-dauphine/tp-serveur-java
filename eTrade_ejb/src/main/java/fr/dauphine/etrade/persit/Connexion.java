@@ -28,7 +28,7 @@ public final class Connexion {
 		return cnx;
 	}
 	
-	public Object[] insert(Object... objects){
+	public Object insert(Object... objects){
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
 		for (Object object : objects)
@@ -69,6 +69,7 @@ public final class Connexion {
 		return objects;
 	}
 	
+	
 	public <T extends Object> T querySingleResult (String query, Class<T> classe, Object... params){
 		EntityManager em = emf.createEntityManager();
 		TypedQuery<T> typedquery = em.createQuery(query, classe);
@@ -96,6 +97,27 @@ public final class Connexion {
 	public <T extends Object> T find(Class<T> classe, Object key){
 		EntityManager em = emf.createEntityManager();
 		T result = em.find(classe, key);
+		em.close();
+		return result;
+	}
+	
+	public <T extends Object> List<T> namedQueryListResult(String name, Class<T> classe, Object... params){
+		EntityManager em = emf.createEntityManager();
+		TypedQuery<T> typedquery = em.createNamedQuery(name, classe);
+		int i = 0;
+		for (Object object : params){
+			i++;typedquery.setParameter(i, object);
+		}
+		List<T> results = typedquery.getResultList();
+		em.close();
+		return results;
+	}
+	
+	
+	public <T extends Object> List<T> getAll(Class<T> classe){
+		EntityManager em = emf.createEntityManager();
+		TypedQuery<T> typedquery = em.createQuery("FROM "+classe.getSimpleName(),classe);
+		List<T> result = typedquery.getResultList();
 		em.close();
 		return result;
 	}

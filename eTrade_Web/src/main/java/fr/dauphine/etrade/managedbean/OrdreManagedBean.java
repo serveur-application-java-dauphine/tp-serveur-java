@@ -1,14 +1,15 @@
 package fr.dauphine.etrade.managedbean;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 import java.util.logging.Logger;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
+import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.ValueChangeEvent;
 
 import fr.dauphine.etrade.api.ServicesOrdre;
@@ -25,11 +26,13 @@ import fr.dauphine.etrade.model.TypeProduit;
 import fr.dauphine.etrade.model.Utilisateur;
 
 @ManagedBean
-@SessionScoped
+@RequestScoped
 public class OrdreManagedBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private Ordre ordre;
+	private long idSociete;
+
 	
 	//@ManagedProperty(value="#{sessionUserManagedBean}")
 	//private SessionUserManagedBean session;
@@ -104,43 +107,55 @@ public class OrdreManagedBean implements Serializable {
 	 * Each time we change the Societe in the drop down list it changes
 	 * in the ordre.produit	 
 	 */
-	public void changeSocieteListener(ValueChangeEvent event){
-		ordre.getProduit().setSociete(ss.getSocieteById(Long.parseLong(event.getNewValue().toString())));
-		ordre.getProduit().setTypeProduit(new TypeProduit());
+	public void changeSocieteListener(Societe e){
+		System.out.println("changeSocieteListener() :"+e);
 	}
 	
-	public void changeTypeProduitListener(ValueChangeEvent event){
-		ordre.getProduit().setTypeProduit(sp.getTypeProduitById(Long.parseLong(event.getNewValue().toString())));
+	public void actionListener(ActionEvent actionEvent) {
+	    // Add event code here...
+	    System.out.println("Made it!");
 	}
+
+	public void morePressed(AjaxBehaviorEvent e) {
+
+	    System.out.println("Made it!");
+	}
+
 	
 	public void changeTypeOrdreListener(ValueChangeEvent event){
 		ordre.setTypeOrdre(so.getTypeOrdreById(Long.parseLong(event.getNewValue().toString())));
 	}
 	
 	public void passerOrdre(){
-		ordre.setProduit(sp.getProduitByTypeIdAndSocieteId(ordre.getProduit().getSociete().getIdSociete(), ordre.getProduit().getTypeProduit().getIdTypeProduit()));
-		ordre.setStatusOrdre(so.getStatusOrdreByLibelle("Pending"));
-		if(utilisateur.getPortefeuille()==null){
-			try {
-				FacesContext.getCurrentInstance().getExternalContext().redirect("no_ordre.xhtml");
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		} else {
+		if(utilisateur.getPortefeuille()==null)
+			Utilities.redirect("no_ordre.xhtml");
+		else {
 			ordre.setPortefeuille(utilisateur.getPortefeuille());
 			System.out.println("passerOrdre");
-			so.addOrdre(ordre);			
-			try {
-				FacesContext.getCurrentInstance().getExternalContext().redirect("succes_ordre.xhtml");
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			so.addOrdre(ordre);
+			Utilities.redirect("succes_ordre.xhtml");
 		}
 		ordre = null;
-		
 	}
 	
 	public void annulerOrdre(Ordre o){
 		so.delOrdre(o);
 	}
+
+
+	/**
+	 * @return the idSociete
+	 */
+	public long getIdSociete() {
+		return idSociete;
+	}
+
+
+	/**
+	 * @param idSociete the idSociete to set
+	 */
+	public void setIdSociete(int idSociete) {
+		this.idSociete = idSociete;
+	}
+
 }

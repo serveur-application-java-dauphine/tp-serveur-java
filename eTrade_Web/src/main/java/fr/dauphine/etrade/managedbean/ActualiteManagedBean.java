@@ -1,5 +1,7 @@
 package fr.dauphine.etrade.managedbean;
 
+import java.io.Serializable;
+
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
@@ -11,7 +13,9 @@ import fr.dauphine.etrade.model.Utilisateur;
 
 @ManagedBean
 @RequestScoped
-public class ActualiteManagedBean {
+public class ActualiteManagedBean implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
 	
 	@EJB
 	private ServicesActualite sa;

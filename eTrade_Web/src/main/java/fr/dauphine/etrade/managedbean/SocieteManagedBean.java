@@ -23,6 +23,7 @@ public class SocieteManagedBean implements Serializable {
 	
 	private Societe societe;
 	private List<Actualite> actualites;
+	private List<Societe> societes;
 
 	/**
 	 * Default serialVersionUID
@@ -56,10 +57,12 @@ public class SocieteManagedBean implements Serializable {
 		su.updateUtilisateur(utilisateur);
 	}
 	
+
 //	public void removeSociete(Societe s){
 //		LOG.info("Suppression de la société : " +s.getName());
 //		ss.delSociete(s);
 //	}
+
 	
 	public void updateSociete(Societe s){
 		LOG.info("Modification de la société : "+s.getName());
@@ -137,6 +140,24 @@ public class SocieteManagedBean implements Serializable {
 
 	public void setSociete(Societe societe) {
 		this.societe = societe;
+	}
+
+
+	/**
+	 * @return the societes
+	 */
+	public List<Societe> getSocietes() {
+		if (societes==null)
+			societes = ss.allSocietes();
+		return societes;
+	}
+
+
+	/**
+	 * @param societes the societes to set
+	 */
+	public void setSocietes(List<Societe> societes) {
+		this.societes = societes;
 	}
 
 	

@@ -7,14 +7,18 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+
 import static javax.persistence.GenerationType.IDENTITY;
+
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -25,8 +29,10 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "Ordre")
+@NamedQuery(query="SELECT o FROM Ordre o JOIN FETCH o.directionOrdre JOIN FETCH o.statusOrdre JOIN FETCH o.typeOrdre JOIN FETCH o.portefeuille JOIN FETCH o.produit p JOIN FETCH p.societe JOIN FETCH p.typeProduit WHERE o.statusOrdre.idStatusOrder = ?1 AND o.portefeuille.idPortefeuille=?2", name = "QUERY_ORDRE_STATUS")
 public class Ordre implements java.io.Serializable {
 
+	public static final String QUERY_ORDRE_STATUS = "QUERY_ORDRE_STATUS";
 	/**
 	 * Default serialVersionUID
 	 */

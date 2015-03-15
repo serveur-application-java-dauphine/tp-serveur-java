@@ -19,7 +19,8 @@ import fr.dauphine.etrade.model.TypeProduit;
 public class ProduitManagedBean implements Serializable {
 	
 	private Produit produit;
-
+	private List<Produit> produits;
+	
 	/**
 	 * Default serialVersionUID
 	 */
@@ -72,6 +73,17 @@ public class ProduitManagedBean implements Serializable {
 
 	public void setProduit(Produit produit) {
 		this.produit = produit;
+	}
+
+	public List<Produit> getProduits() {
+		if(produits==null){
+			//produits=sp.get
+		}
+		return produits;
+	}
+
+	public void setProduits(List<Produit> produits) {
+		this.produits = produits;
 	}
 	
 }

@@ -15,4 +15,5 @@ public interface ServicesProduit {
 	Produit delProduit(Produit produit);
 	Produit getProduitByTypeIdAndSocieteId(long idSociete, long idTypeProduit);
 	TypeProduit getTypeProduitById(long idTypeProduit);
+	Produit getProduitById(long idProduit);
 }

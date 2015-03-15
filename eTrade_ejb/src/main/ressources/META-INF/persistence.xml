@@ -6,7 +6,6 @@
 	    <class>fr.dauphine.etrade.model.DirectionOrdre</class>
 	    <class>fr.dauphine.etrade.model.Ordre</class>
 	    <class>fr.dauphine.etrade.model.Portefeuille</class>
-	    <class>fr.dauphine.etrade.model.Produit</class>
 	    <class>fr.dauphine.etrade.model.Role</class>
 	    <class>fr.dauphine.etrade.model.Societe</class>
 	    <class>fr.dauphine.etrade.model.StatusOrdre</class>
@@ -16,6 +15,7 @@
 	    <class>fr.dauphine.etrade.model.TypeProduit</class>
 	    <class>fr.dauphine.etrade.model.TypeTransactionBancaire</class>
 	    <class>fr.dauphine.etrade.model.Utilisateur</class>
+	    <class>fr.dauphine.etrade.model.Produit</class>
 	<properties>
 	<property name="javax.persistence.jdbc.url" value="jdbc:mysql://mysql.etrade.alwaysdata.net:3306/etrade_titres"/>
 	<property name="javax.persistence.jdbc.Utilisateur" value="etrade"/>
