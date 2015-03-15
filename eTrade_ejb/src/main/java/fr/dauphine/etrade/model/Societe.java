@@ -3,7 +3,9 @@ package fr.dauphine.etrade.model;
 // default package
 // Generated 11 mars 2015 16:13:53 by Hibernate Tools 4.0.0
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -103,12 +105,12 @@ public class Societe implements java.io.Serializable {
 
 	@OneToMany(fetch = FetchType.LAZY/*, mappedBy = "societe"*/, orphanRemoval=true)
 	@JoinColumn(name="IdSociete")
-	public Set<Actualite> getActualites() {
-		return this.actualites;
+	public List<Actualite> getActualites() {
+		return new ArrayList<Actualite>(this.actualites);
 	}
 
-	public void setActualites(Set<Actualite> actualites) {
-		this.actualites = actualites;
+	public void setActualites(List<Actualite> actualites) {
+		this.actualites = new HashSet<Actualite>(actualites);
 	}
 
 }

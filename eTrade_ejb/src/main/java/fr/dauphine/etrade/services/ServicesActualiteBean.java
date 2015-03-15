@@ -1,6 +1,9 @@
 package fr.dauphine.etrade.services;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.logging.Logger;
 
@@ -24,7 +27,7 @@ public class ServicesActualiteBean implements ServicesActualite {
 	
 	
 	@Override
-	public Actualite getActualite(int id){
+	public Actualite getActualite(Long id){
 		return Connexion.getInstance().find(Actualite.class, id);
 	}
 
@@ -35,59 +38,30 @@ public class ServicesActualiteBean implements ServicesActualite {
 		//+ l'id de l'utilisateur l'ayant créé 
 		//+ l'id de la société à laquelle est affilié l'utilisateur.
 		long creationDate = System.currentTimeMillis();
-		String fileName = creationDate + "-"; // TODO à récupérer en session + a.getUtilisateur().getIdUtilisateur() + "-" + a.getSociete().getIdSociete();
+		String fileName = creationDate + "-" + a.getUtilisateur().getIdUtilisateur() + "-" + a.getSociete().getIdSociete() + ".txt";
 		a.setFile(fileName);
 		a.setDate_creation(new java.sql.Date(creationDate));
 		
-		//TODO à enlever
-		Societe s = new Societe();
-		s.setIdSociete((long)1);
-		Utilisateur u = new Utilisateur();
-		u.setIdUtilisateur((long)8);
-		
-		a.setSociete(s);
-		a.setUtilisateur(u);
-		
 		LOG.info("Registering actualité : "+fileName);
 		
-		FileOutputStream fos = null;
+		BufferedOutputStream bos = null;
 		try{
-			fos = new FileOutputStream(fileName);
-			fos.write(a.getContent().getBytes());
-			fos.flush();
+			bos = new BufferedOutputStream(new FileOutputStream(new File("/actualites/"+fileName)));
+			bos.write(a.getContent().getBytes());
+			bos.flush();
 		} catch(IOException e){
 			e.printStackTrace();
 		} finally{
 			try {
-				if (fos!=null)
-					fos.close();
+				if (bos!=null)
+					bos.close();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
 		
-		//Persistence en base afin de récupérer l'id
-		/*a = (Actualite)*/ Connexion.getInstance().insert(a);
+		Connexion.getInstance().insert(a);
 		
-		return a;
-	}
-	
-	@Override
-	public Actualite updateActualite(Actualite a) {
-		LOG.info("Updating actualité : "+a.getFile());
-		FileOutputStream fos = null;
-		try{
-			fos = new FileOutputStream(a.getFile());
-			fos.write(a.getContent().getBytes());
-		} catch(IOException e){
-			e.printStackTrace();
-		} finally{
-			try {
-				fos.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
 		return a;
 	}
 
@@ -95,7 +69,9 @@ public class ServicesActualiteBean implements ServicesActualite {
 	public Actualite deleteActualite(Actualite a) {
 		LOG.info("Deleting actualité : "+a.getFile());
 		
-		//Suppression du fichier 
+		//Suppression du fichier
+		File f = new File("/actualites/"+a.getFile());
+		f.delete();
 		
 		//Puis suppression de la localisation du xml en base
 		Connexion.getInstance().delete(a);

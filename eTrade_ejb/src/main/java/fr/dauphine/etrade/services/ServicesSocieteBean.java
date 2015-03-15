@@ -81,7 +81,7 @@ public class ServicesSocieteBean implements ServicesSociete {
 		return societe;
 	}
 
-	/** Actualitï¿½s **/
+	/** Actualités **/
 	
 	@SuppressWarnings("unchecked")
 	@Override
@@ -89,10 +89,20 @@ public class ServicesSocieteBean implements ServicesSociete {
 		return (List<Actualite>)em.createQuery("SELECT a FROM Actualite a").getResultList();
 	}
 
+	/**
+	 * Retourne la liste des actualités 
+	 * correspondant à notre société 
+	 * et triés par ordre de création décroissante.
+	 * 
+	 * @param la société pour laquelle on veut les actualités
+	 * @return la liste des actualités
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Actualite> getListActualites(Societe s) {
-		return (List<Actualite>)em.find(Actualite.class, s.getIdSociete());
+		Query q = (Query) em.createQuery("SELECT a FROM Actualite a WHERE a.idSociete = :idSociete ORDER BY a.date_creation DESC");
+		q.setParameter("idSociete", s.getIdSociete());
+		return (List<Actualite>)q.getResultList();
 	}
 
 	@Override

@@ -21,11 +21,6 @@ import fr.dauphine.etrade.model.Utilisateur;
 @RequestScoped
 public class SocieteManagedBean implements Serializable {
 	
-	
-	FacesContext facesContext = FacesContext.getCurrentInstance();
-	@SuppressWarnings("deprecation")
-	Utilisateur utilisateur  = (Utilisateur) facesContext.getApplication().createValueBinding("#{sessionUserManagedBean.utilisateur}").getValue(facesContext);
-	
 	private Societe societe;
 	private List<Actualite> actualites;
 
@@ -39,6 +34,12 @@ public class SocieteManagedBean implements Serializable {
 	
 	@EJB
 	private ServicesUtilisateur su;
+	
+	
+	FacesContext facesContext = FacesContext.getCurrentInstance();
+	@SuppressWarnings("deprecation")
+	Utilisateur utilisateur  = (Utilisateur) facesContext.getApplication().createValueBinding("#{sessionUserManagedBean.utilisateur}").getValue(facesContext);
+	
 	
 	private static Logger LOG = Logger.getLogger(SocieteManagedBean.class.getName());
 	

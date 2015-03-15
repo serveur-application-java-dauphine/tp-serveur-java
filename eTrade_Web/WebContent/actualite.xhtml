@@ -8,19 +8,24 @@
 <h:head>
 	<title><h:outputText value="#{actualiteManagedBean.actualite.titre}"/></title>
 </h:head> 
-<body> 
+<h:body> 
+	<a href="/eTrade_Web/Logout" style="float:right">Se déconnecter</a>
+	 	<h:outputLabel value="Bonjour, #{sessionUserManagedBean.utilisateur.firstname} &nbsp; &nbsp;" style="float:right"/>
+	 	
+	   	<br/><br/>
+
 	<fieldset>
        	<legend><h:outputText value="#{actualiteManagedBean.actualite.titre}"></h:outputText></legend>
       	<legend>Date de création : </legend>
-      	<h:outputLabel value="#{actualiteManagedBean.actualite.date_creation}" />
+      	<h:outputLabel value="#{actualiteManagedBean.getActualite(param.a).date_creation}" />
       	
-      	<h:outputLabel rendered="#{not empty actualiteManagedBean.actualite.date_modification}">
+      	<h:outputLabel rendered="#{not empty actualiteManagedBean.getActualite(param.a).date_modification}">
       		<legend>Date de dernière modification : </legend>
-      		<h:outputLabel value="#{actualiteManagedBean.actualite.date_modification}" />
+      		<h:outputLabel value="#{actualiteManagedBean.getActualite(param.a).date_modification}" />
       	</h:outputLabel>
       	
-      	<h:outputText value="#{actualiteManagedBean.actualite.content}"></h:outputText>  
+      	<h:outputText value="#{actualiteManagedBean.getActualite(param.a).content}"></h:outputText>  
        <br />
 	</fieldset>
-</body> 
+</h:body> 
 </html>
