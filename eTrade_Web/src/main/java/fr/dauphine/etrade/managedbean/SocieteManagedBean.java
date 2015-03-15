@@ -37,7 +37,7 @@ public class SocieteManagedBean implements Serializable {
 	
 	public void removeSociete(Societe s){
 		LOG.info("Suppression de la soci�t� : " +s.getName());
-		ss.delSociete(s);
+		//ss.delSociete(s);
 	}
 	
 	public void updateSociete(Societe s){
