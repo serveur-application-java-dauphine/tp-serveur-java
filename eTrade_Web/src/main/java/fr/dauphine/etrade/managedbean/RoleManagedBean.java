@@ -17,13 +17,10 @@ public class RoleManagedBean implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	private List<Role> roles;
+	private List<Role> rolesLogin;
 	
 	@EJB
 	private ServicesRole sr;
-
-	public RoleManagedBean() {
-		
-	}
 
 
 	/**
@@ -34,6 +31,15 @@ public class RoleManagedBean implements Serializable{
 			roles = sr.getRoles();
 		return roles;
 	}
+	
+	/**
+	 * @return the roles
+	 */
+	public List<Role> getRolesLogin() {
+		if (rolesLogin==null)
+			rolesLogin=sr.getRolesLogin();
+		return rolesLogin;
+	}
 
 
 	/**
@@ -41,6 +47,13 @@ public class RoleManagedBean implements Serializable{
 	 */
 	public void setRoles(List<Role> roles) {
 		this.roles = roles;
+	}
+
+	/**
+	 * @param rolesLogin the rolesLogin to set
+	 */
+	public void setRolesLogin(List<Role> rolesLogin) {
+		this.rolesLogin = rolesLogin;
 	}
 
 }

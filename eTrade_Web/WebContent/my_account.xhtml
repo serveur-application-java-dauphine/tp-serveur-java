@@ -9,10 +9,8 @@
 	<title>eTrade - Mon compte</title>
 </h:head> 
 <h:body>
-    <a href="/eTrade_Web/Logout" style="float:right">Se déconnecter</a>
- 	<h:outputLabel value="Bonjour, #{sessionUserManagedBean.utilisateur.firstname} &nbsp; &nbsp;" style="float:right"/>
- 	
-   	<br/><br/>
+<ui:include src="/menu.xhtml" />
+ 
 
 	<h1>Mon compte</h1>
 	
@@ -70,7 +68,7 @@
 			
 			<!-- Si l'utilisateur est un membre société -->
 			
-			<h:panelGroup rendered="#{sessionUserManagedBean.utilisateur.role.code == 'Societe' and sessionUserManagedBean.utilisateur.societe.idSociete == null}">
+			<h:panelGroup rendered="#{sessionUserManagedBean.utilisateur.role.code} == #{applicationManagedBean.ROLE_CODE_SOCIETE} and sessionUserManagedBean.utilisateur.societe.idSociete == null}">
 				<p>Choisissez votre société :</p>
 				<h:selectOneMenu value="#{societeManagedBean.societe}" style="width: 150px;">
 					<f:selectItem itemLabel="---" itemValue="#{null}" />

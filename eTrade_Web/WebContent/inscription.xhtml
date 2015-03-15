@@ -30,14 +30,19 @@
 	
 	        <h:outputLabel for="motdepasse">Mot de passe <span class="requis">*</span></h:outputLabel>
 	        <h:inputSecret id="motdepasse" value="#{utilisateurManagedBean.utilisateur.password}" required="true" size="20" maxlength="20" >
-	        <f:validateRegex pattern="#{applicationManagedBean.PASSWORD_PATTERN}"/>
+	        <!-- 
+	        <f:validateRegex pattern="#{applicationManagedBean.PASSWORD_PATTERN}"/> 
+	        -->
 	        </h:inputSecret>
 	        <h:message id="motDePasseMessage" for="motdepasse" errorClass="erreur" />
 	        <br /><br />
 	
 	        <h:outputLabel for="confirmation">Confirmation du mot de passe <span class="requis">*</span></h:outputLabel>
-	        <h:inputSecret id="confirmation" value="#{utilisateurManagedBean.utilisateur.password}" required="true" size="20" maxlength="20" >
+	        <h:inputSecret id="confirmation" value="#{utilisateurManagedBean.confirm}" required="true" size="20" maxlength="20" >
+	        
+	        <!-- 
 	        <f:validateRegex pattern="#{applicationManagedBean.PASSWORD_PATTERN}"/>
+	         -->
 	        </h:inputSecret>
 	        <h:message id="confirmationMessage" for="confirmation" errorClass="erreur" />
 	        <br /><br />
@@ -66,14 +71,10 @@
 	        
 	        <h:outputLabel for="city">Rôle demandé (confirmé ensuite par l'administrateur) <span class="requis">*</span></h:outputLabel>
 	       	<h:selectOneMenu value="#{utilisateurManagedBean.utilisateur.role.idRole}" required="true" >
-	       		<f:selectItems value="#{roleManagedBean.roles}" var="role"
+	       		<f:selectItems value="#{roleManagedBean.rolesLogin}" var="role"
         		itemValue="#{role.idRole}" itemLabel="#{role.libelle}"/>
-        		<!-- <f:converter converterId="fr.dauphine.etrade.converter.RoleConverter"/> -->
 	       	</h:selectOneMenu>
 			<br /><br />
-		
-	        
-	        <h:messages globalOnly="true" infoClass="info" />
 	
 	        <h:commandButton value="inscription" action="#{utilisateurManagedBean.inscription()}" styleClass="sansLabel" />
 	        <br />

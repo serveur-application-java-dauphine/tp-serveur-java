@@ -58,7 +58,6 @@ public class ServicesSocieteBean implements ServicesSociete {
 
 	/** Actualit�s **/
 	
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<Actualite> getAllActualites() {
 		return Connexion.getInstance().getAll(Actualite.class);
