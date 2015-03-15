@@ -45,15 +45,23 @@ public class UtilisateurManagedBean implements Serializable {
 	
 	/**
 	 * This method validates the role for the user u
-	 * and creates a portefolio for him
+	 * and creates a portefolio if it's an investissor
 	 * 
 	 * @param u
 	 */
 	public void valider(Utilisateur utilisateur){
 		LOG.info("Modifying the validity of the role to true for user "+ utilisateur.getIdUtilisateur());
-		Portefeuille p = su.createPortefolio(new Portefeuille());
+		ApplicationManagedBean amb = Utilities.getOtherManagedBean(ApplicationManagedBean.class);
+		System.out.println(amb);
+		if (utilisateur.getRole().getCode()==amb.getROLE_CODE_INVESTISSEUR()){
+			Portefeuille p = su.createPortefolio(new Portefeuille());
+			utilisateur.setPortefeuille(p);
+		}
 		utilisateur.setValidRole(true);
-		utilisateur.setPortefeuille(p);
+		this.modifier(utilisateur);
+	}
+	
+	public void modifier(Utilisateur utilisateur){
 		su.updateUtilisateur(utilisateur);
 	}
 
