@@ -31,9 +31,9 @@ public class Main {
 	public static InitialContext initialiserJBOSS() throws NamingException {
 		Properties props = new Properties();
 		
-        props.put(Context.INITIAL_CONTEXT_FACTORY, "org.jnp.interfaces.NamingContextFactory");//"org.jboss.naming.remote.client.InitialContextFactory");
-        props.put("java.naming.factory.url.pkgs", "org.jboss.naming:org.jnp.interfaces");
-        props.put(Context.PROVIDER_URL, "localhost");//"remote://localhost:4447");
+        props.put(Context.INITIAL_CONTEXT_FACTORY, "org.jboss.naming.remote.client.InitialContextFactory");
+        //props.put("java.naming.factory.url.pkgs", "org.jboss.naming:org.jnp.interfaces");
+        props.put(Context.PROVIDER_URL, "remote://localhost:4447");
         props.put(Context.SECURITY_PRINCIPAL, "etrade");
         props.put(Context.SECURITY_CREDENTIALS, "etradepwd");
         props.put("jboss.naming.client.ejb.context", true);
