@@ -7,6 +7,7 @@
 </head>
 <body>
 	<h1>Connection</h1>
+	<br/>
 	<form name="login" id="form_login" method="POST" action="j_security_check" >
 		<table>
 		<tr>
@@ -19,13 +20,14 @@
 			<td><input type="password" id="password" name="j_password" onblur="verifPassword(this)"/></td>
 		</tr>
 		<tr>
-			<td><input type="submit" value="Se connecter"/></td>
 			<td></td>
+			<td><br/><input type="submit" value="Se connecter" style="float:right"/></td>
+		</tr>
+		<tr>
+			<td>Pas encore inscrit ? <a href="inscription.xhtml">Cliquez ici</a></td>
 		</tr>
 		</table>
-
 	</form>
-	Pas encore inscrit ? <a href="inscription.xhtml" >Cliquez ici</a>
-	<a href="/eTrade_Web/Logout" >Se déconnecter</a>
+	
 </body>
 </html>
