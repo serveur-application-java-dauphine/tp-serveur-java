@@ -1,5 +1,7 @@
 package fr.dauphine.etrade.managedbean;
 
+import java.io.IOException;
+
 import javax.faces.context.FacesContext;
 
 public final class Utilities {
@@ -12,6 +14,14 @@ public final class Utilities {
 		System.out.println(obj);
 		//Object obj = fc.getApplication().createValueBinding("#{"+managedBeanClasse.getSimpleName()+"}").getValue(fc);
 		return managedBeanClasse.cast(obj);
+	}
+	
+	public final static void redirect(String namePage){
+		try {
+			FacesContext.getCurrentInstance().getExternalContext().redirect("no_ordre.xhtml");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

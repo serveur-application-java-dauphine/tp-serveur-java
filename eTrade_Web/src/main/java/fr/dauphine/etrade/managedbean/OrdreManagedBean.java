@@ -118,26 +118,15 @@ public class OrdreManagedBean implements Serializable {
 	}
 	
 	public void passerOrdre(){
-		ordre.setProduit(sp.getProduitByTypeIdAndSocieteId(ordre.getProduit().getSociete().getIdSociete(), ordre.getProduit().getTypeProduit().getIdTypeProduit()));
-		ordre.setStatusOrdre(so.getStatusOrdreByLibelle("Pending"));
-		if(utilisateur.getPortefeuille()==null){
-			try {
-				FacesContext.getCurrentInstance().getExternalContext().redirect("no_ordre.xhtml");
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		} else {
+		if(utilisateur.getPortefeuille()==null)
+			Utilities.redirect("no_ordre.xhtml");
+		else {
 			ordre.setPortefeuille(utilisateur.getPortefeuille());
 			System.out.println("passerOrdre");
-			so.addOrdre(ordre);			
-			try {
-				FacesContext.getCurrentInstance().getExternalContext().redirect("succes_ordre.xhtml");
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			so.addOrdre(ordre);
+			Utilities.redirect("succes_ordre.xhtml");
 		}
 		ordre = null;
-		
 	}
 	
 	public void annulerOrdre(Ordre o){

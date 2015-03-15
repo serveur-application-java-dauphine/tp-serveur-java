@@ -11,8 +11,8 @@ import fr.dauphine.etrade.model.TypeOrdre;
 
 @Remote
 public interface ServicesOrdre {
-	boolean addOrdre(Ordre ordre);
-	boolean delOrdre(Ordre ordre);
+	Ordre addOrdre(Ordre ordre);
+	Ordre delOrdre(Ordre ordre);
 	List<Ordre> allDoneOrdres(long idPortefeuille);
 	List<Ordre> allPendingOrdres(long idPortefeuille);
 	List<DirectionOrdre> getPossibleDirectionOrdre();
