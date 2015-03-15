@@ -2,7 +2,7 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
   <display-name>eTrade</display-name>
   <welcome-file-list>
-    <welcome-file>login.html</welcome-file>
+    <welcome-file>index.html</welcome-file>
   </welcome-file-list>
   <context-param>
     <description>State saving method: 'client' or 'server' (=default). See JSF Specification 2.5.2</description>
@@ -49,6 +49,36 @@
     </web-resource-collection>
     <auth-constraint>
       <role-name>Administrateur</role-name>
+    </auth-constraint>
+    <user-data-constraint>
+      <transport-guarantee>NONE</transport-guarantee>
+    </user-data-constraint>
+  </security-constraint>
+  
+  <security-constraint>
+    <display-name>Administration-Constraint</display-name>
+    <web-resource-collection>
+      <web-resource-name>Passer un ordre</web-resource-name>
+      <url-pattern>/passer_ordre.xhtml</url-pattern>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>Administrateur</role-name>
+      <role-name>Investisseur</role-name>
+    </auth-constraint>
+    <user-data-constraint>
+      <transport-guarantee>NONE</transport-guarantee>
+    </user-data-constraint>
+  </security-constraint>
+  
+  <security-constraint>
+    <display-name>Administration-Constraint</display-name>
+    <web-resource-collection>
+      <web-resource-name>Portefeuille</web-resource-name>
+      <url-pattern>/portefeuille.xhtml</url-pattern>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>Administrateur</role-name>
+      <role-name>Investisseur</role-name>
     </auth-constraint>
     <user-data-constraint>
       <transport-guarantee>NONE</transport-guarantee>

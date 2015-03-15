@@ -1,39 +1,23 @@
 package fr.dauphine.etrade.managedbean;
 
+import java.io.IOException;
 import java.io.Serializable;
-import java.sql.Date;
-import java.util.Calendar;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Logger;
 
 import javax.ejb.EJB;
-import javax.enterprise.inject.spi.Bean;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.NoneScoped;
-import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.event.AbortProcessingException;
-import javax.faces.event.ActionEvent;
-import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.ValueChangeEvent;
 
-import com.sun.jmx.snmp.Timestamp;
-
-import sun.org.mozilla.javascript.internal.ast.NewExpression;
 import fr.dauphine.etrade.api.ServicesOrdre;
-import fr.dauphine.etrade.api.ServicesPortefeuille;
 import fr.dauphine.etrade.api.ServicesProduit;
 import fr.dauphine.etrade.api.ServicesSociete;
 import fr.dauphine.etrade.model.DirectionOrdre;
 import fr.dauphine.etrade.model.Ordre;
 import fr.dauphine.etrade.model.Portefeuille;
 import fr.dauphine.etrade.model.Produit;
-import fr.dauphine.etrade.model.Role;
 import fr.dauphine.etrade.model.Societe;
 import fr.dauphine.etrade.model.StatusOrdre;
 import fr.dauphine.etrade.model.TypeOrdre;
@@ -47,8 +31,11 @@ public class OrdreManagedBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Ordre ordre;
 	
-	//TODO @ManagedProperty(value="#{SessionUserManagedBean.utilisateur}")
-	//private Utilisateur utilisateur;
+	//@ManagedProperty(value="#{sessionUserManagedBean}")
+	//private SessionUserManagedBean session;
+	FacesContext facesContext = FacesContext.getCurrentInstance();
+	@SuppressWarnings("deprecation")
+	Utilisateur utilisateur  = (Utilisateur) facesContext.getApplication().createValueBinding("#{sessionUserManagedBean.utilisateur}").getValue(facesContext);
 
 	@EJB
 	private ServicesOrdre so;
@@ -82,16 +69,15 @@ public class OrdreManagedBean implements Serializable {
 	 * @return the list of executed orders
 	 */
 	public List<Ordre> getExecutedOrders() {
-		//TODO return so.allDoneOrdres(utilisateur.getPortefeuille().getIdPortefeuille());
-		return null;
+		return so.allDoneOrdres(utilisateur.getPortefeuille().getIdPortefeuille());
 	}
 
 	/**
 	 * @return the list of pending orders
 	 */
 	public List<Ordre> getPendingOrders() {
-		//TODO return so.allPendingOrdres(utilisateur.getPortefeuille().getIdPortefeuille());
-		return null;
+		List<Ordre> result = so.allPendingOrdres(utilisateur.getPortefeuille().getIdPortefeuille());
+		return result;
 	}
 	
 	public Ordre getOrdre() {
@@ -99,6 +85,7 @@ public class OrdreManagedBean implements Serializable {
 			ordre = new Ordre();
 			ordre.setProduit(new Produit());
 			ordre.getProduit().setSociete(new Societe());
+			ordre.getProduit().setTypeProduit(new TypeProduit());
 			ordre.setPortefeuille(new Portefeuille());
 			ordre.setTypeOrdre(new TypeOrdre());
 			ordre.setDirectionOrdre(new DirectionOrdre());
@@ -133,11 +120,29 @@ public class OrdreManagedBean implements Serializable {
 	}
 	
 	public void passerOrdre(){
-		ordre.setProduit(sp.getProduitByTypeIdAndSocieteId(ordre.getProduit().getTypeProduit().getIdTypeProduit(), ordre.getProduit().getSociete().getIdSociete()));
+		ordre.setProduit(sp.getProduitByTypeIdAndSocieteId(ordre.getProduit().getSociete().getIdSociete(), ordre.getProduit().getTypeProduit().getIdTypeProduit()));
 		ordre.setStatusOrdre(so.getStatusOrdreByLibelle("Pending"));
-		//ordre.setPortefeuille(utilisateur.getPortefeuille());
-		System.out.println("passerOrdre");
-		so.addOrdre(ordre);
+		if(utilisateur.getPortefeuille()==null){
+			try {
+				FacesContext.getCurrentInstance().getExternalContext().redirect("no_ordre.xhtml");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} else {
+			ordre.setPortefeuille(utilisateur.getPortefeuille());
+			System.out.println("passerOrdre");
+			so.addOrdre(ordre);			
+			try {
+				FacesContext.getCurrentInstance().getExternalContext().redirect("succes_ordre.xhtml");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		ordre = null;
 		
+	}
+	
+	public void annulerOrdre(Ordre o){
+		so.delOrdre(o);
 	}
 }

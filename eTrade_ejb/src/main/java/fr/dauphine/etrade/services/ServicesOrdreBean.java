@@ -8,6 +8,7 @@ import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
+import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -67,17 +68,25 @@ public class ServicesOrdreBean implements ServicesOrdre{
 
 	@SuppressWarnings("unchecked")
 	public List<Ordre> allDoneOrdres(long idPortefeuille) {
-		Query q = (Query) em.createQuery("SELECT o FROM Ordre o WHERE o.statusOrdre.id = 1 AND o.portefeuille.idPortefeuille=?");	
+		Query q = (Query) em.createQuery("SELECT o FROM Ordre o LEFT JOIN FETCH o.directionOrdre "
+				+ "LEFT JOIN FETCH o.statusOrdre LEFT JOIN FETCH o.typeOrdre "
+				+ "LEFT JOIN FETCH o.portefeuille "
+				+ "LEFT JOIN FETCH o.produit p LEFT JOIN FETCH p.societe LEFT JOIN FETCH p.typeProduit "
+				+ "WHERE o.statusOrdre.id = 1 AND o.portefeuille.idPortefeuille=?");	
 		q.setParameter(1, idPortefeuille);
-		List<Ordre> result = q.getResultList();
+		List<Ordre> result = (List<Ordre>) q.getResultList();
 		return result;
 	}
 	
 	@SuppressWarnings("unchecked")
 	public List<Ordre> allPendingOrdres(long idPortefeuille) {
-		Query q = (Query) em.createQuery("SELECT o FROM Ordre o WHERE o.statusOrdre.id = 2 AND o.portefeuille.idPortefeuille=?");	
+		Query q = (Query) em.createQuery("SELECT o FROM Ordre o LEFT JOIN FETCH o.directionOrdre "
+				+ "LEFT JOIN FETCH o.statusOrdre LEFT JOIN FETCH o.typeOrdre "
+				+ "LEFT JOIN FETCH o.portefeuille "
+				+ "LEFT JOIN FETCH o.produit p LEFT JOIN FETCH p.societe LEFT JOIN FETCH p.typeProduit "
+				+ "WHERE o.statusOrdre.id = 2 AND o.portefeuille.idPortefeuille=?");	
 		q.setParameter(1, idPortefeuille);
-		List<Ordre> result = q.getResultList();
+		List<Ordre> result = (List<Ordre>) q.getResultList();
 		return result;
 	}
 	
@@ -107,7 +116,7 @@ public class ServicesOrdreBean implements ServicesOrdre{
 	
 	@Override
 	public TypeOrdre getTypeOrdreById(Long idTypeOrdre){
-		Query q = (Query) em.createQuery("SELECT to FROM TypeOrdre to WHERE to.idTypeOrdre=?");
+		Query q = (Query) em.createQuery("SELECT to FROM TypeOrdre to WHERE to.idTypeOrder=?");
 		q.setParameter(1, idTypeOrdre);
 		TypeOrdre result = (TypeOrdre) q.getSingleResult();
 		return result;
