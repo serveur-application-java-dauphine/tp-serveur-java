@@ -1,44 +1,25 @@
 package fr.dauphine.etrade.managedbean;
 
 import java.io.Serializable;
-import java.sql.Date;
-import java.util.Calendar;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Logger;
 
 import javax.ejb.EJB;
-import javax.enterprise.inject.spi.Bean;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.NoneScoped;
-import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
-import javax.faces.event.AbortProcessingException;
-import javax.faces.event.ActionEvent;
-import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.ValueChangeEvent;
 
-import com.sun.jmx.snmp.Timestamp;
-
-import sun.org.mozilla.javascript.internal.ast.NewExpression;
 import fr.dauphine.etrade.api.ServicesOrdre;
-import fr.dauphine.etrade.api.ServicesPortefeuille;
 import fr.dauphine.etrade.api.ServicesProduit;
 import fr.dauphine.etrade.api.ServicesSociete;
 import fr.dauphine.etrade.model.DirectionOrdre;
 import fr.dauphine.etrade.model.Ordre;
 import fr.dauphine.etrade.model.Portefeuille;
 import fr.dauphine.etrade.model.Produit;
-import fr.dauphine.etrade.model.Role;
 import fr.dauphine.etrade.model.Societe;
 import fr.dauphine.etrade.model.StatusOrdre;
 import fr.dauphine.etrade.model.TypeOrdre;
 import fr.dauphine.etrade.model.TypeProduit;
-import fr.dauphine.etrade.model.Utilisateur;
 
 @ManagedBean
 @SessionScoped
@@ -70,8 +51,6 @@ public class OrdreManagedBean implements Serializable {
 	 * 
 	 * @param u
 	 */
-	
-
 	public void supprimer(Ordre o){
 		LOG.info("Deleting the order "+ o.getIdOrder());
 		so.delOrdre(o);

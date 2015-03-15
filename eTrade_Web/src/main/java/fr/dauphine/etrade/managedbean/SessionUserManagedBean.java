@@ -20,7 +20,7 @@ public class SessionUserManagedBean implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	private Utilisateur utilisateur;
-	
+
 	@EJB
 	private ServicesUtilisateur su;
 	
@@ -31,7 +31,6 @@ public class SessionUserManagedBean implements Serializable{
 		if (utilisateur == null){
 			String email = FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal().getName();
 			utilisateur = su.getUtilisateurByEmail(email);
-			System.out.println("Utilisateur Chargé");
 		}
 		return utilisateur;
 	}

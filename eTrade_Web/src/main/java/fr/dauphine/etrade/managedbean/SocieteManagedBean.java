@@ -31,17 +31,17 @@ public class SocieteManagedBean implements Serializable {
 	
 	
 	public void createSociete(){
-		LOG.info("Ajout d'une nouvelle sociï¿½tï¿½ en base : " + societe.getName());		
+		LOG.info("Ajout d'une nouvelle société en base : " + societe.getName());		
 		ss.addSociete(societe);
 	}
 	
-	public void removeSociete(Societe s){
-		LOG.info("Suppression de la sociï¿½tï¿½ : " +s.getName());
-		ss.delSociete(s);
-	}
+//	public void removeSociete(Societe s){
+//		LOG.info("Suppression de la société : " +s.getName());
+//		ss.delSociete(s);
+//	}
 	
 	public void updateSociete(Societe s){
-		LOG.info("Modification de la sociï¿½tï¿½ : "+s.getName());
+		LOG.info("Modification de la société : "+s.getName());
 		ss.updateSociete(s);
 	}
 	

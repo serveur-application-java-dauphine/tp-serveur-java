@@ -10,8 +10,6 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.event.ValueChangeEvent;
 
 import fr.dauphine.etrade.api.ServicesProduit;
-import fr.dauphine.etrade.api.ServicesSociete;
-import fr.dauphine.etrade.model.Actualite;
 import fr.dauphine.etrade.model.Produit;
 import fr.dauphine.etrade.model.Societe;
 import fr.dauphine.etrade.model.TypeProduit;

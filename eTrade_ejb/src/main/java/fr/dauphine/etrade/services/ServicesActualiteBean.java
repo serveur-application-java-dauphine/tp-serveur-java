@@ -2,25 +2,12 @@ package fr.dauphine.etrade.services;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.Serializable;
-import java.nio.ByteBuffer;
-import java.nio.channels.FileChannel;
-import java.sql.Connection;
-import java.sql.Time;
-import java.sql.Timestamp;
-import java.util.Date;
 import java.util.logging.Logger;
 
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
-import javax.persistence.PersistenceUnit;
-import javax.persistence.Query;
 
 import fr.dauphine.etrade.api.ServicesActualite;
 import fr.dauphine.etrade.model.Actualite;
@@ -33,27 +20,12 @@ import fr.dauphine.etrade.persit.Connexion;
 @TransactionManagement(TransactionManagementType.BEAN)
 public class ServicesActualiteBean implements ServicesActualite {
 	
-	/**
-	 * Default generated serialVersionUID
-	 */
-	private static final long serialVersionUID = 1L;
-
-	@PersistenceUnit
-	private EntityManagerFactory emf;
-	
-	private EntityManager em;
-	private EntityTransaction et;
-	
 	private static final Logger LOG = Logger.getLogger(ServicesActualiteBean.class.getName());
 	
-	public ServicesActualiteBean(){
-		em = Persistence.createEntityManagerFactory("eTrade-MySql").createEntityManager();
-		et = em.getTransaction();
-	}
 	
 	@Override
 	public Actualite getActualite(int id){
-		return em.find(Actualite.class, id);
+		return Connexion.getInstance().find(Actualite.class, id);
 	}
 
 	@Override
