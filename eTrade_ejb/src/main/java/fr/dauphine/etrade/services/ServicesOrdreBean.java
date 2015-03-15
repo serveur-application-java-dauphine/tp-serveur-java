@@ -27,14 +27,16 @@ public class ServicesOrdreBean implements ServicesOrdre{
 
 	@Override
 	public Ordre addOrdre(Ordre ordre) {
-		if (ordre.getStatusOrdre()==null)
+		if (ordre.getStatusOrdre().getIdStatusOrder()==null)
 			ordre.setStatusOrdre(getStatusOrdreByLibelle("Pending"));
-		return (Ordre) Connexion.getInstance().insert(ordre);
+		Connexion.getInstance().insert(ordre);
+		return ordre ;
 	}
 
 	@Override
 	public Ordre delOrdre(Ordre ordre) {
-		return (Ordre) Connexion.getInstance().delete(ordre);
+		Connexion.getInstance().delete(ordre);
+		return ordre;
 	}
 
 	public List<Ordre> allDoneOrdres(long idPortefeuille) {

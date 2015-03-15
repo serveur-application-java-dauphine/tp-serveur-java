@@ -19,10 +19,11 @@
 	  	<table>
 		<tr>
 			<td>Société*:</td>
-			<td><h:selectOneMenu value="#{ordreManagedBean.ordre.produit.societe.idSociete}">
+			<td><h:selectOneMenu value="#{ordreManagedBean.ordre.produit.societe.idSociete}" style="width: 150px;"
+				onchange="submit()" valueChangeListener="#{ordreManagedBean.changeSocieteListener}">
+				<f:selectItem itemValue="0" itemLabel="Selectionez..."></f:selectItem>
 	   			<f:selectItems value="#{societeManagedBean.listSocietes}" var="societe" 
 	   				itemValue="#{societe.idSociete}" itemLabel="#{societe.name}"/>
-	   			<f:ajax listener="#{ordreManagedBean.changeSocieteListener(this, societe)}"/>
 	   		</h:selectOneMenu></td>
 		</tr>
 		<tr>
@@ -41,15 +42,16 @@
 		</tr>
 		<tr>
 			<td>Type de l'ordre:*</td>
-			<td><h:selectOneMenu id="typeOrdre" value="#{ordreManagedBean.ordre.typeOrdre.idTypeOrder}" onchange="submit()"
-				valueChangeListener="#{ordreManagedBean.changeTypeOrdreListener}" style="width: 150px;">
+			<td><h:selectOneMenu id="typeOrdre" value="#{ordreManagedBean.ordre.typeOrdre.idTypeOrder}" style="width: 150px;"
+				onchange="submit()" valueChangeListener="#{ordreManagedBean.changeTypeOrdreListener}" >
 	   			<f:selectItems value="#{ordreManagedBean.listTypeOrdres}" var="type"
 	   				itemValue="#{type.idTypeOrder}" itemLabel="#{type.libelle}"/> 
 	   		</h:selectOneMenu></td>
 		</tr>
-		<tr>
+		<tr>		
 			<td>Quantité:*</td>
-			<td><h:inputText id="quantite" value="#{ordreManagedBean.ordre.quantite}" required="true" size="20" maxlength="60" style="width: 146px;"/></td>
+			<td><h:inputText id="quantite" value="#{ordreManagedBean.ordre.quantite}" required="true" size="20" maxlength="60" style="width: 146px;">
+			<f:validator validatorId="positiveNumberValidator" /></h:inputText><h:message for="quantite" style="color:red" /></td>
 		</tr>
 		<tr>
 			<td><h:outputLabel for="prix" rendered="#{ordreManagedBean.ordre.typeOrdre.idTypeOrder > 1 }">Prix<span class="requis">*:</span></h:outputLabel></td>

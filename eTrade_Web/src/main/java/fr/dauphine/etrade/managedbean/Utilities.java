@@ -18,7 +18,7 @@ public final class Utilities {
 	
 	public final static void redirect(String namePage){
 		try {
-			FacesContext.getCurrentInstance().getExternalContext().redirect("no_ordre.xhtml");
+			FacesContext.getCurrentInstance().getExternalContext().redirect(namePage);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
