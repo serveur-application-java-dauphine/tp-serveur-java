@@ -32,7 +32,7 @@ public class ServicesProduitBean implements ServicesProduit{
 	
 	@Override
 	public List<Produit> getListProductBySocieteId(long idSociete) {
-		String query = "SELECT p FROM Produit p LEFT JOIN FETCH p.typeProduit LEFT JOIN FETCH p.societe s WHERE s.idSociete=?";
+		String query = "SELECT p FROM Produit p LEFT JOIN FETCH p.typeProduit tp LEFT JOIN FETCH p.societe s WHERE s.idSociete=? ORDER BY tp.libelle";
 		return Connexion.getInstance().queryListResult(query, Produit.class, idSociete);
 	}
 	

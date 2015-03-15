@@ -56,7 +56,7 @@ public class ServicesSocieteBean implements ServicesSociete {
 		return (Societe) Connexion.getInstance().update(societe);
 	}
 
-	/** Actualités **/
+	/** Actualitï¿½s **/
 	
 	@SuppressWarnings("unchecked")
 	@Override
@@ -66,12 +66,12 @@ public class ServicesSocieteBean implements ServicesSociete {
 
 
 	/**
-	 * Retourne la liste des actualités 
-	 * correspondant à notre société 
-	 * et triés par ordre de création décroissante.
+	 * Retourne la liste des actualitï¿½s 
+	 * correspondant ï¿½ notre sociï¿½tï¿½ 
+	 * et triï¿½s par ordre de crï¿½ation dï¿½croissante.
 	 * 
-	 * @param la société pour laquelle on veut les actualités
-	 * @return la liste des actualités
+	 * @param la sociï¿½tï¿½ pour laquelle on veut les actualitï¿½s
+	 * @return la liste des actualitï¿½s
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
@@ -84,6 +84,12 @@ public class ServicesSocieteBean implements ServicesSociete {
 	@Override
 	public Actualite getActualite(int id) {
 		return Connexion.getInstance().find(Actualite.class, id);
+	}
+
+	@Override
+	public List<Societe> allSocietesAvecProduits() {
+		String query = "SELECT distinct (s) FROM Societe s INNER JOIN s.produits";
+		return Connexion.getInstance().queryListResult(query, Societe.class);
 	}
 
 

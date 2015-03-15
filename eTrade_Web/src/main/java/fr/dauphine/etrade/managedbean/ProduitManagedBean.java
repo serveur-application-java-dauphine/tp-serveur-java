@@ -19,7 +19,7 @@ import fr.dauphine.etrade.model.TypeProduit;
 public class ProduitManagedBean implements Serializable {
 	
 	private Produit produit;
-	private List<Produit> produits;
+	private List<Produit> produitsParSocieteId;
 	
 	/**
 	 * Default serialVersionUID
@@ -46,18 +46,20 @@ public class ProduitManagedBean implements Serializable {
 		//TODO
 	}
 	/**
-	 * 
 	 * @return The list of the available products fors societies
 	 * 
 	 * Can be called by an administrator and an investor profile.
 	 */
-	public List<Produit> getListProduitParSocieteID(long idSociete){
+	public List<Produit> getProduitsParSocieteId(long idSociete){
 		if(idSociete==0){
 			return null;
-		} else {
-			List<Produit> produits = sp.getListProductBySocieteId(idSociete);
-			return produits;
-		}		
+		} else if(produitsParSocieteId==null){
+			return sp.getListProductBySocieteId(idSociete);
+		}
+		return produitsParSocieteId;
+	}
+	public void setProduitsParSocieteId(List<Produit> produitsParSocieteId) {
+		this.produitsParSocieteId = produitsParSocieteId;
 	}
 	
 
@@ -75,15 +77,6 @@ public class ProduitManagedBean implements Serializable {
 		this.produit = produit;
 	}
 
-	public List<Produit> getProduits() {
-		if(produits==null){
-			//produits=sp.get
-		}
-		return produits;
-	}
 
-	public void setProduits(List<Produit> produits) {
-		this.produits = produits;
-	}
-	
+
 }

@@ -7,32 +7,38 @@
 <h:head>
 <h:outputStylesheet library="css" name="table-style.css"/>
 </h:head> 
-<body> 
+<h:body>
+    <a href="/eTrade_Web/Logout" style="float:right">Se déconnecter</a>
+ 	<h:outputLabel value="Bonjour, #{sessionUserManagedBean.utilisateur.firstname} &nbsp; &nbsp;" style="float:right"/>
+ 	
+   	<br/><br/>
+   	<h1>eTrade</h1>
+   	<h2>Passer un ordre</h2>
+	
+	<br/><br/>
 
 	<h:form>
 			
 	  	<table>
 		<tr>
 			<td>Société*:</td>
-
 			<td><h:selectOneMenu value="#{ordreManagedBean.ordre.produit.societe.idSociete}" style="width: 150px;"
 				onchange="submit()" valueChangeListener="#{ordreManagedBean.changeSocieteListener}">
 				<f:selectItem itemValue="0" itemLabel="Selectionez..."></f:selectItem>
-	   			<f:selectItems value="#{societeManagedBean.listSocietes}" var="societe"
+	   			<f:selectItems value="#{ordreManagedBean.listSocietes}" var="societe"
 	   				itemValue="#{societe.idSociete}" itemLabel="#{societe.name}"/>
 	   		</h:selectOneMenu></td>
 		</tr>
 		  <tr>
 			<td>Produit*:</td>
 			<td><h:selectOneMenu value="#{ordreManagedBean.ordre.produit.idProduit}" style="width: 150px;">
-	   			<f:selectItems value="#{produitManagedBean.getListProduitParSocieteID(ordreManagedBean.idSociete)}" var="produit" 
+	   			<f:selectItems value="#{produitManagedBean.getProduitsParSocieteId(ordreManagedBean.ordre.produit.societe.idSociete)}" var="produit" 
 	   				itemValue="#{produit.idProduit}" itemLabel="#{produit.libelleProduit}"/> 
 	   		</h:selectOneMenu></td>
 		</tr>
 		<tr>
 			<td>Direction:*</td>
 			<td><h:selectOneRadio  value="#{ordreManagedBean.ordre.directionOrdre.idDirectionOrdre}" style="width: 150px;">
-				<f:selectItem itemLabel="---" itemValue="#{null}" />
 	   			<f:selectItems value="#{ordreManagedBean.listDirectionOrdres}" var="direction"
 	   			itemValue="#{direction.idDirectionOrdre}" itemLabel="#{direction.libelle}" />
 	   		</h:selectOneRadio></td>
@@ -48,7 +54,7 @@
 		<tr>		
 			<td>Quantité:*</td>
 			<td><h:inputText id="quantite" value="#{ordreManagedBean.ordre.quantite}" required="true" size="20" maxlength="60" style="width: 146px;">
-			<f:validator validatorId="positiveNumberValidator" /></h:inputText><h:message for="quantite" style="color:red" /></td>
+			</h:inputText></td>
 		</tr>
 		<tr>
 			<td><h:outputLabel for="prix" rendered="#{ordreManagedBean.ordre.typeOrdre.idTypeOrder > 1 }">Prix<span class="requis">*:</span></h:outputLabel></td>
@@ -57,5 +63,5 @@
 		</table>
 		  <h:commandButton value="Passer l'ordre" action="#{ordreManagedBean.passerOrdre()}" styleClass="sansLabel" type="submit" />
 	</h:form>
-</body> 
+</h:body> 
 </html>

@@ -12,12 +12,12 @@ public interface ServicesSociete {
 	Societe addSociete(Societe societe);
 	
 	/**
-	 * N'est pas possible car si l'on supprime une société,
-	 * tout l'historique des ordres associés sera supprimé,
+	 * N'est pas possible car si l'on supprime une sociï¿½tï¿½,
+	 * tout l'historique des ordres associï¿½s sera supprimï¿½,
 	 * chose totalement inacceptable.
 	 * 
-	 * Il faut soit la rendre invalide, soit empêcher la supression.
-	 * C'est cette deuxième solution qui a été choisie.
+	 * Il faut soit la rendre invalide, soit empï¿½cher la supression.
+	 * C'est cette deuxiï¿½me solution qui a ï¿½tï¿½ choisie.
 	 */
 	//Societe delSociete(Societe societe);
 	List<Societe> allSocietes();
@@ -27,5 +27,6 @@ public interface ServicesSociete {
 	List<Actualite> getAllActualites();
 	List<Actualite> getListActualites(Societe s);
 	Actualite getActualite(int id);
+	List<Societe> allSocietesAvecProduits();
 
 }

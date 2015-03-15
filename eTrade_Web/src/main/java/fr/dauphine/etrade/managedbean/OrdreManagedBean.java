@@ -29,14 +29,13 @@ public class OrdreManagedBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private Ordre ordre;
-	private long idSociete;
-
+	private List<Societe> listSocietes;
+	private List<TypeOrdre> listTypeOrdres;
+	private List<DirectionOrdre> listDirectionOrdres;
 	
-	//@ManagedProperty(value="#{sessionUserManagedBean}")
-	//private SessionUserManagedBean session;
-	FacesContext facesContext = FacesContext.getCurrentInstance();
+	FacesContext fc = FacesContext.getCurrentInstance();
 	@SuppressWarnings("deprecation")
-	Utilisateur utilisateur  = (Utilisateur) facesContext.getApplication().createValueBinding("#{sessionUserManagedBean.utilisateur}").getValue(facesContext);
+	Utilisateur utilisateur  = (Utilisateur) fc.getApplication().createValueBinding("#{sessionUserManagedBean.utilisateur}").getValue(fc);
 	
 
 	@EJB
@@ -47,8 +46,6 @@ public class OrdreManagedBean implements Serializable {
 	
 	@EJB
 	private ServicesProduit sp;
-	
-	private static Logger LOG = Logger.getLogger(OrdreManagedBean.class.getName());
 
 	/**
 	 * This method deletes an order from the database.
@@ -59,8 +56,7 @@ public class OrdreManagedBean implements Serializable {
 	 * 
 	 * @param u
 	 */
-	public void supprimer(Ordre o){
-		LOG.info("Deleting the order "+ o.getIdOrder());
+	public void annulerOrdre(Ordre o){
 		so.delOrdre(o);
 	}
 	
@@ -76,8 +72,7 @@ public class OrdreManagedBean implements Serializable {
 	 * @return the list of pending orders
 	 */
 	public List<Ordre> getPendingOrders() {
-		List<Ordre> result = so.allPendingOrdres(utilisateur.getPortefeuille().getIdPortefeuille());
-		return result;
+		return so.allPendingOrdres(utilisateur.getPortefeuille().getIdPortefeuille());
 	}
 	
 	public Ordre getOrdre() {
@@ -94,14 +89,6 @@ public class OrdreManagedBean implements Serializable {
         return ordre;
     }
 	
-	public List<DirectionOrdre> getListDirectionOrdres(){
-		return so.getPossibleDirectionOrdre();
-	}
-	
-	public List<TypeOrdre> getListTypeOrdres(){
-		List<TypeOrdre> result = so.getAllTypeOrdre();
-		return result;
-	}
 	
 	/**
 	 * Each time we change the Societe in the drop down list it changes
@@ -116,7 +103,9 @@ public class OrdreManagedBean implements Serializable {
 	public void changeTypeOrdreListener(ValueChangeEvent event){
 		ordre.setTypeOrdre(so.getTypeOrdreById(Long.parseLong(event.getNewValue().toString())));
 	}
-	
+	/**
+	 * Passing the order
+	 */
 	public void passerOrdre(){
 		if(utilisateur.getPortefeuille()==null)
 			Utilities.redirect("no_ordre.xhtml");
@@ -128,25 +117,47 @@ public class OrdreManagedBean implements Serializable {
 		}
 		ordre = null;
 	}
+
+	/**
+	 * On instancie qu'une seule fois la listSocietes
+	 * @return listTypeOrdres
+	 */
+	public List<Societe> getListSocietes() {
+		if(listSocietes==null){
+			listSocietes=ss.allSocietesAvecProduits();
+		}
+		return listSocietes;
+	}
+	public void setListSocietes(List<Societe> societes) {
+		this.listSocietes = societes;
+	}
 	
-	public void annulerOrdre(Ordre o){
-		so.delOrdre(o);
-	}
-
-
 	/**
-	 * @return the idSociete
+	 * On instancie qu'une seule fois la listTypeOrdres
+	 * @return listTypeOrdres
 	 */
-	public long getIdSociete() {
-		return idSociete;
+	public List<TypeOrdre> getListTypeOrdres(){
+		if(listTypeOrdres==null){
+			listTypeOrdres=so.getAllTypeOrdre();
+		}
+		return listTypeOrdres;
 	}
-
-
+	public void setListTypeOrdres(List<TypeOrdre> listTypeOrdres) {
+		this.listTypeOrdres = listTypeOrdres;
+	}
+	
 	/**
-	 * @param idSociete the idSociete to set
+	 * On instancie qu'une seule fois la listDirectionOrdres
+	 * @return listTypeOrdres
 	 */
-	public void setIdSociete(int idSociete) {
-		this.idSociete = idSociete;
+	public List<DirectionOrdre> getListDirectionOrdres(){
+		if(listDirectionOrdres==null){
+			listDirectionOrdres = so.getPossibleDirectionOrdre();
+		}
+		return listDirectionOrdres;
+	}
+	public void setListDirectionOrdres(List<DirectionOrdre> listDirectionOrdres) {
+		this.listDirectionOrdres = listDirectionOrdres;
 	}
 
 }

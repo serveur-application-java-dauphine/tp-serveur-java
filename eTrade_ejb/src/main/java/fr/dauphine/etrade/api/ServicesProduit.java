@@ -10,7 +10,6 @@ import fr.dauphine.etrade.model.TypeProduit;
 @Remote
 public interface ServicesProduit {
 	List<Produit> getListProductBySocieteId(long idSociete);
-
 	Produit addProduit(Produit produit);
 	Produit delProduit(Produit produit);
 	TypeProduit getTypeProduitById(long idTypeProduit);

@@ -46,11 +46,11 @@ public class SocieteManagedBean implements Serializable {
 	
 	
 	/**
-	 * Cette méthode crée une société
-	 * puis l'affecte automatiquement à l'utilisateur en ayant demandé la création.
+	 * Cette mï¿½thode crï¿½e une sociï¿½tï¿½
+	 * puis l'affecte automatiquement ï¿½ l'utilisateur en ayant demandï¿½ la crï¿½ation.
 	 */
 	public void createSociete(){
-		LOG.info("Ajout d'une nouvelle société en base : " + societe.getName());		
+		LOG.info("Ajout d'une nouvelle sociï¿½tï¿½ en base : " + societe.getName());		
 		Societe s = ss.addSociete(societe);
 		
 		utilisateur.setSociete(s);
@@ -59,13 +59,13 @@ public class SocieteManagedBean implements Serializable {
 	
 
 //	public void removeSociete(Societe s){
-//		LOG.info("Suppression de la société : " +s.getName());
+//		LOG.info("Suppression de la sociï¿½tï¿½ : " +s.getName());
 //		ss.delSociete(s);
 //	}
 
 	
 	public void updateSociete(Societe s){
-		LOG.info("Modification de la société : "+s.getName());
+		LOG.info("Modification de la sociï¿½tï¿½ : "+s.getName());
 		ss.updateSociete(s);
 	}
 	
@@ -77,6 +77,10 @@ public class SocieteManagedBean implements Serializable {
 	 * 
 	 * Can be called by an administrator and an investor profile.
 	 */
+	
+	public List<Societe> getListSocietesAvecProduits(){
+		return ss.allSocietesAvecProduits();
+	}
 	public List<Societe> getListSocietes(){
 		return ss.allSocietes();
 	}
