@@ -7,8 +7,11 @@ import java.util.logging.Logger;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.ValueChangeEvent;
 
 import fr.dauphine.etrade.api.ServicesOrdre;
@@ -25,7 +28,7 @@ import fr.dauphine.etrade.model.TypeProduit;
 import fr.dauphine.etrade.model.Utilisateur;
 
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class OrdreManagedBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -104,14 +107,11 @@ public class OrdreManagedBean implements Serializable {
 	 * Each time we change the Societe in the drop down list it changes
 	 * in the ordre.produit	 
 	 */
-	public void changeSocieteListener(ValueChangeEvent event){
+	public void changeSocieteListener(AjaxBehaviorEvent event, Societe societe){
 		ordre.setProduit(new Produit());
-		ordre.getProduit().setSociete(ss.getSocieteById(Long.parseLong(event.getNewValue().toString())));
+		ordre.getProduit().setSociete(societe);
 	}
-	
-	public void changeTypeProduitListener(ValueChangeEvent event){
-		ordre.setProduit(sp.getProduitById(Long.parseLong(event.getNewValue().toString())));
-	}
+
 	
 	public void changeTypeOrdreListener(ValueChangeEvent event){
 		ordre.setTypeOrdre(so.getTypeOrdreById(Long.parseLong(event.getNewValue().toString())));
