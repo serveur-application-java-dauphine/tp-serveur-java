@@ -85,6 +85,67 @@
     </user-data-constraint>
   </security-constraint>
   
+  
+   <security-constraint>
+    <display-name>Administration-Constraint</display-name>
+    <web-resource-collection>
+      <web-resource-name>societes</web-resource-name>
+      <url-pattern>/societes.xhtml</url-pattern>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>Administrateur</role-name>
+      <role-name>Investisseur</role-name>
+      <role-name>Societe</role-name>
+    </auth-constraint>
+    <user-data-constraint>
+      <transport-guarantee>NONE</transport-guarantee>
+    </user-data-constraint>
+  </security-constraint>
+  <security-constraint>
+    <display-name>Administration-Constraint</display-name>
+    <web-resource-collection>
+      <web-resource-name>societe</web-resource-name>
+      <url-pattern>/societe.xhtml</url-pattern>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>Administrateur</role-name>
+      <role-name>Investisseur</role-name>
+      <role-name>Societe</role-name>
+    </auth-constraint>
+    <user-data-constraint>
+      <transport-guarantee>NONE</transport-guarantee>
+    </user-data-constraint>
+  </security-constraint>
+  <security-constraint>
+    <display-name>Administration-Constraint</display-name>
+    <web-resource-collection>
+      <web-resource-name>actualite</web-resource-name>
+      <url-pattern>/actualite.xhtml</url-pattern>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>Administrateur</role-name>
+      <role-name>Investisseur</role-name>
+      <role-name>Societe</role-name>
+    </auth-constraint>
+    <user-data-constraint>
+      <transport-guarantee>NONE</transport-guarantee>
+    </user-data-constraint>
+  </security-constraint>
+  <security-constraint>
+    <display-name>Administration-Constraint</display-name>
+    <web-resource-collection>
+      <web-resource-name>actualite-creer</web-resource-name>
+      <url-pattern>/actualite-creer.xhtml</url-pattern>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>Societe</role-name>
+    </auth-constraint>
+    <user-data-constraint>
+      <transport-guarantee>NONE</transport-guarantee>
+    </user-data-constraint>
+  </security-constraint>
+  
+  
   <!-- END Constraint sur les pages -->
   
   <login-config>
@@ -104,10 +165,30 @@
   <security-role>
     <role-name>Societe</role-name>
   </security-role>
+  
+  
   <error-page>
     <error-code>403</error-code>
-    <location>/error-403.html</location>
+    <location>/errors/error-403.html</location>
   </error-page>
+  <error-page>
+      <error-code>404</error-code>
+      <location>/errors/error-404.html</location>
+  </error-page>
+  <!-- Gestion de l'exception FileNotFountException  : on ne souhaite pas une 500 mais bien une 404 -->
+  <error-page>
+      <exception-type>com.sun.faces.context.FacesFileNotFoundException</exception-type>
+      <location>/errors/error-404.html</location>
+  </error-page> 
+ 
+ <!--  TODO : A décommenter lors du passage en prod -->
+ <!--  
+  <error-page>
+      <error-code>500</error-code>
+      <location>/errors/error-500.html</location>
+  </error-page>
+ -->
+  
   <listener>
     <listener-class>com.sun.faces.config.ConfigureListener</listener-class>
   </listener>

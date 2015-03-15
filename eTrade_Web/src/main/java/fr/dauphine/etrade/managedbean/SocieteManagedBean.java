@@ -7,10 +7,15 @@ import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
+import javax.faces.event.ValueChangeEvent;
 
 import fr.dauphine.etrade.api.ServicesSociete;
+import fr.dauphine.etrade.api.ServicesUtilisateur;
 import fr.dauphine.etrade.model.Actualite;
 import fr.dauphine.etrade.model.Societe;
+import fr.dauphine.etrade.model.TypeProduit;
+import fr.dauphine.etrade.model.Utilisateur;
 
 @ManagedBean
 @RequestScoped
@@ -28,12 +33,28 @@ public class SocieteManagedBean implements Serializable {
 	@EJB
 	private ServicesSociete ss;
 	
+	@EJB
+	private ServicesUtilisateur su;
+	
+	
+	FacesContext facesContext = FacesContext.getCurrentInstance();
+	@SuppressWarnings("deprecation")
+	Utilisateur utilisateur  = (Utilisateur) facesContext.getApplication().createValueBinding("#{sessionUserManagedBean.utilisateur}").getValue(facesContext);
+	
+	
 	private static Logger LOG = Logger.getLogger(SocieteManagedBean.class.getName());
 	
 	
+	/**
+	 * Cette méthode crée une société
+	 * puis l'affecte automatiquement à l'utilisateur en ayant demandé la création.
+	 */
 	public void createSociete(){
 		LOG.info("Ajout d'une nouvelle société en base : " + societe.getName());		
-		ss.addSociete(societe);
+		Societe s = ss.addSociete(societe);
+		
+		utilisateur.setSociete(s);
+		su.updateUtilisateur(utilisateur);
 	}
 	
 

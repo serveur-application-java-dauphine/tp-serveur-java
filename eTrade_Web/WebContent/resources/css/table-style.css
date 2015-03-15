@@ -1,4 +1,4 @@
-@CHARSET "ISO-8859-1";
+@CHARSET "UTF-8";
 .order-table{   
 	border-collapse:collapse;
 }
@@ -20,4 +20,18 @@
 	text-align: center;
 	background: none repeat scroll 0 0 #F9F9F9;
 	border-top: 1px solid #BBBBBB;
+}
+
+body {
+	margin:0;
+	margin-left: auto;
+	margin-top: auto;
+	width: 70%;
+	display: table-cell;
+	vertical-align: middle;
+}
+
+img.resize{
+    width:20%;
+    height: auto;
 }

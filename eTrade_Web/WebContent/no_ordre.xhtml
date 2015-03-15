@@ -7,9 +7,14 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       >
     <h:body>
- 
+    
+    	<a href="/eTrade_Web/Logout" style="float:right">Se déconnecter</a>
+	 	<h:outputLabel value="Bonjour, #{sessionUserManagedBean.utilisateur.firstname} &nbsp; &nbsp;" style="float:right"/>
+	 	
+	   	<br/><br/>
+
     	<h1>eTrade</h1>
- 		<p>Votre portefeuille n'a pas encore été validé, vous ne pouvez pas passer des ordres</p>
+ 		<p>Votre compte n'a pas encore été validé, vous ne pouvez pas passer d'ordres.</p>
  		<form action="/eTrade_Web/my_account.xhtml">
 		    <input type="submit" value="Votre compte"/>
 		</form>

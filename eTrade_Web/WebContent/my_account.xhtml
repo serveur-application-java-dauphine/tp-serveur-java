@@ -9,6 +9,11 @@
 	<title>eTrade - Mon compte</title>
 </h:head> 
 <h:body>
+    <a href="/eTrade_Web/Logout" style="float:right">Se déconnecter</a>
+ 	<h:outputLabel value="Bonjour, #{sessionUserManagedBean.utilisateur.firstname} &nbsp; &nbsp;" style="float:right"/>
+ 	
+   	<br/><br/>
+
 	<h1>Mon compte</h1>
 	
 	        <h:outputLabel for="firstname">Prénom </h:outputLabel>
@@ -39,7 +44,7 @@
 	        <br /><br />
 	        
 	        <h:outputLabel for="city">Ville <span class="requis">*</span></h:outputLabel>
-	        <h:inputText id="city" value="#{sessionUserManagedBean.utilisateur.city}" required="true" size="5" maxlength="5" />
+	        <h:inputText id="city" value="#{sessionUserManagedBean.utilisateur.city}" required="true" size="10" />
 	        <h:message id="cityMessage" for="city" errorClass="erreur" />
 	        <br /><br />
 	        
@@ -62,7 +67,33 @@
 			<h:link value="#{sessionUserManagedBean.utilisateur.portefeuille.idPortefeuille}" outcome="portefeuille.xhml"/>
 	        <br /><br />
 			</c:if>
-
+			
+			<!-- Si l'utilisateur est un membre société -->
+			
+			<h:panelGroup rendered="#{sessionUserManagedBean.utilisateur.role.code == 'Societe' and sessionUserManagedBean.utilisateur.societe.idSociete == null}">
+				<p>Choisissez votre société :</p>
+				<h:selectOneMenu value="#{societeManagedBean.societe}" style="width: 150px;">
+					<f:selectItem itemLabel="---" itemValue="#{null}" />
+		   			<f:selectItems value="#{societeManagedBean.listSocietes}" var="s" 
+		   				itemValue="#{s.idSociete}" itemLabel="#{s.name}"/> 
+	   			</h:selectOneMenu>
+				<p>Si vous ne trouvez pas votre société, créez-la en cliquant sur le bouton ci-dessous :</p>
+				<h:commandButton value="Créer votre société" type="button" onclick="document.getElementById('creationSocieteForm').style.display = 'inline'" />
+				<br/><br/>
+				<h:form id="creationSocieteForm" style="display:none;">
+					<h:outputLabel for="companyName">Nom de l'entreprise<span class="requis">*</span></h:outputLabel>
+			        <h:inputText id="companyName" required="true" size="50" maxlength="100" value="#{societeManagedBean.societe.name}"/>
+			        <br/>
+			        <h:outputLabel for="companyDescription">Description de l'entreprise</h:outputLabel>
+			       	<br/>
+			        <h:inputTextarea id="companyDescription" rows="10" cols="50" maxlength="300" value="#{societeManagedBean.societe.description}" />
+			        <br/>
+			        <h:commandButton value="Créer la société" action="#{societeManagedBean.createSociete}" />
+			        <h:message id="nomMessage" for="nom" errorClass="erreur" />
+				</h:form>
+			
+			</h:panelGroup>
+			<br/>
 	        <h:commandButton action="#{sessionUserManagedBean.modifier()}" value="Modifier votre compte" />
 			
 </h:body>

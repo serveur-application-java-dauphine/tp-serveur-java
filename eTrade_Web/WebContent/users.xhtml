@@ -8,6 +8,10 @@
 <h:outputStylesheet library="css" name="table-style.css"/>
 </h:head> 
 <body> 
+	<a href="/eTrade_Web/Logout" style="float:right">Se déconnecter</a>
+ 	<h:outputLabel value="Bonjour, #{sessionUserManagedBean.utilisateur.firstname} &nbsp; &nbsp;" style="float:right"/>
+ 	
+   	<br/><br/>
 
 	<h:form>
 		<h:dataTable value="#{utilisateurManagedBean.utilisateurs}" var="u"

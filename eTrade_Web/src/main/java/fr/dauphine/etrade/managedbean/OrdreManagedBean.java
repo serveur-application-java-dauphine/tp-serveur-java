@@ -29,6 +29,8 @@ public class OrdreManagedBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private Ordre ordre;
+	private long idSociete;
+
 	
 	//@ManagedProperty(value="#{sessionUserManagedBean}")
 	//private SessionUserManagedBean session;
@@ -130,4 +132,21 @@ public class OrdreManagedBean implements Serializable {
 	public void annulerOrdre(Ordre o){
 		so.delOrdre(o);
 	}
+
+
+	/**
+	 * @return the idSociete
+	 */
+	public long getIdSociete() {
+		return idSociete;
+	}
+
+
+	/**
+	 * @param idSociete the idSociete to set
+	 */
+	public void setIdSociete(int idSociete) {
+		this.idSociete = idSociete;
+	}
+
 }

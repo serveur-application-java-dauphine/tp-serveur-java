@@ -8,6 +8,11 @@
         <h:outputStylesheet library="default" name="css/form.css"  />
     </h:head>
     <h:body>
+        <a href="/eTrade_Web/Logout" style="float:right">Se déconnecter</a>
+	 	<h:outputLabel value="Bonjour, #{sessionUserManagedBean.utilisateur.firstname} &#160; &#160;" style="float:right"/>
+	 	
+	   	<br/><br/>
+    
       <h:form>
          <fieldset>
          	<legend>Créer une actualité</legend>

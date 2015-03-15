@@ -7,7 +7,6 @@ import fr.dauphine.etrade.model.Actualite;
 @Remote
 public interface ServicesActualite {
 	Actualite addActualite(Actualite a);
-	Actualite getActualite(int id);
-	Actualite updateActualite(Actualite a);
+	Actualite getActualite(Long id);
 	Actualite deleteActualite(Actualite a);
 }

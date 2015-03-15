@@ -12,8 +12,9 @@ public final class Utilities {
 		System.out.println(managedBeanNameString);
 		Object obj = fc.getApplication().getELResolver().getValue(fc.getELContext(), null, managedBeanNameString);
 		System.out.println(obj);
-		//Object obj = fc.getApplication().createValueBinding("#{"+managedBeanClasse.getSimpleName()+"}").getValue(fc);
-		return managedBeanClasse.cast(obj);
+		Object obj1 = fc.getApplication().createValueBinding("#{"+managedBeanClasse.getSimpleName()+"}").getValue(fc);
+		System.out.println(obj1);
+		return managedBeanClasse.cast(obj1);
 	}
 	
 	public final static void redirect(String namePage){

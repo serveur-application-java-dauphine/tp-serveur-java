@@ -20,7 +20,7 @@ public class ProduitManagedBean implements Serializable {
 	
 	private Produit produit;
 	private List<Produit> produits;
-
+	
 	/**
 	 * Default serialVersionUID
 	 */
