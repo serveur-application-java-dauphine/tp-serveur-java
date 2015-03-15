@@ -180,11 +180,14 @@
       <exception-type>com.sun.faces.context.FacesFileNotFoundException</exception-type>
       <location>/errors/error-404.html</location>
   </error-page> 
+ 
+ <!--  TODO : A décommenter lors du passage en prod -->
+ <!--  
   <error-page>
       <error-code>500</error-code>
       <location>/errors/error-500.html</location>
   </error-page>
-  
+ -->
   
   <listener>
     <listener-class>com.sun.faces.config.ConfigureListener</listener-class>

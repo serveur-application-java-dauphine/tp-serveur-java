@@ -11,32 +11,39 @@
 
 <h:head>
 	<title>eTrade - Liste des sociétés</title>
+	<h:outputStylesheet library="css" name="table-style.css"/>
 </h:head> 
 <body> 
+	<a href="/eTrade_Web/Logout" style="float:right">Se déconnecter</a>
+ 	<h:outputLabel value="Bonjour, #{sessionUserManagedBean.utilisateur.firstname} &nbsp; &nbsp;" style="float:right"/>
+ 	
+   	<br/><br/>
+
 	<p>Pour consulter les informations sur une société, cliquer ci-dessous sur la société désirée :</p>
-		<h:dataTable value="#{societeManagedBean.listSocietes}" var="s">
-		   <h:column>    				
-		      <f:facet name="header">Nom de la société</f:facet>    				
-		      #{s.name}
-		   </h:column>
-		   <h:column>
-		   		<h:link value="#{s.name}" action="societe.xhtml" >
-		  			<f:param name="s" value="#{s.idSociete}"/>
-		  		</h:link>
-		   </h:column>
-		</h:dataTable>
+		<table>
+			<tr>
+				<td>	
+					<h:dataTable value="#{societeManagedBean.listSocietes}" var="s"
+						styleClass="order-table"
+		    			headerClass="order-table-header"
+		    			rowClasses="order-table-odd-row,order-table-even-row"
+					>
+					   <h:column>    				
+					      <f:facet name="header">Nom de la société</f:facet>    				
+					      #{s.name}
+					   </h:column>
+					   <h:column>
+					   	  <f:facet name="header">Lien vers sa page</f:facet>
+					   		<h:link value="#{s.name}" outcome="societe" >
+					  			<f:param name="s" value="#{s.idSociete}"/>
+					  		</h:link>
+					   </h:column>
+					</h:dataTable>
+				</td>
+			</tr>
+		</table>
 		
-		
-		<!-- Si l'utilisateur est un membre société -->
-		<c:if test="#{sessionUserManagedBean.utilisateur.role.idRole == 2}" >
-			<h:commandButton value="Créer une société" type="button" onclick="alert('Coucou')" />
-			<h:form id="creationSocieteForm" >
-				<h:outputLabel for="companyName">Nom de l'entreprise<span class="requis">*</span></h:outputLabel>
-		        <h:inputText id="companyName" required="true" size="50" maxlength="100" value="#{societeManagedBean.societe.name}"/>
-		        <h:commandButton value="Créer la société" action="#{societeManagedBean.createSociete}" />
-		        <h:message id="nomMessage" for="nom" errorClass="erreur" />
-			</h:form>
-		</c:if>
+		<br/>
 		
 </body> 
 </html>

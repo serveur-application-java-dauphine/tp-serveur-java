@@ -21,6 +21,7 @@
 			<td>Société*:</td>
 			<td><h:selectOneMenu value="#{ordreManagedBean.ordre.produit.societe.idSociete}" onchange="submit()" 
 				valueChangeListener="#{ordreManagedBean.changeSocieteListener}" style="width: 150px;">
+				<f:selectItem itemLabel="---" itemValue="#{null}" />
 	   			<f:selectItems value="#{societeManagedBean.listSocietes}" var="societe" 
 	   				itemValue="#{societe.idSociete}" itemLabel="#{societe.name}"/> 
 	   		</h:selectOneMenu></td>
@@ -29,6 +30,7 @@
 			<td>Produit*:</td>
 			<td><h:selectOneMenu value="#{ordreManagedBean.ordre.produit.typeProduit.idTypeProduit}" onchange="submit()" 
 	   			valueChangeListener="#{ordreManagedBean.changeTypeProduitListener}" style="width: 150px;">
+	   			<f:selectItem itemLabel="---" itemValue="#{null}" />
 	   			<f:selectItems value="#{produitManagedBean.getListProduitParSocieteID(ordreManagedBean.ordre.produit.societe.idSociete)}" var="produit" 
 	   				itemValue="#{produit.typeProduit.idTypeProduit}" itemLabel="#{produit.typeProduit.libelle}"/> 
 	   		</h:selectOneMenu></td>
@@ -36,6 +38,7 @@
 		<tr>
 			<td>Direction:*</td>
 			<td><h:selectOneRadio  value="#{ordreManagedBean.ordre.directionOrdre.idDirectionOrdre}" style="width: 150px;">
+				<f:selectItem itemLabel="---" itemValue="#{null}" />
 	   			<f:selectItems value="#{ordreManagedBean.listDirectionOrdres}" var="direction"
 	   			itemValue="#{direction.idDirectionOrdre}" itemLabel="#{direction.libelle}" />
 	   		</h:selectOneRadio></td>
@@ -44,6 +47,7 @@
 			<td>Type de l'ordre:*</td>
 			<td><h:selectOneMenu id="typeOrdre" value="#{ordreManagedBean.ordre.typeOrdre.idTypeOrder}" onchange="submit()"
 				valueChangeListener="#{ordreManagedBean.changeTypeOrdreListener}" style="width: 150px;">
+				<f:selectItem itemLabel="---" itemValue="#{null}" />
 	   			<f:selectItems value="#{ordreManagedBean.listTypeOrdres}" var="type"
 	   				itemValue="#{type.idTypeOrder}" itemLabel="#{type.libelle}"/> 
 	   		</h:selectOneMenu></td>
