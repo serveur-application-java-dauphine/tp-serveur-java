@@ -29,8 +29,10 @@ public class SessionUserManagedBean implements Serializable {
 		if (utilisateur == null) {
 			Principal user = FacesContext.getCurrentInstance()
 					.getExternalContext().getUserPrincipal();
-			if (user != null)
+			if (user != null) {
+				System.out.println("recup user");
 				utilisateur = su.getUtilisateurByEmail(user.getName());
+			}
 		}
 		return utilisateur;
 	}

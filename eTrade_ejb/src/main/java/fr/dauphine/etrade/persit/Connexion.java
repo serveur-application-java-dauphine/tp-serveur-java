@@ -218,5 +218,4 @@ public final class Connexion {
     em.close();
     return result;
   }
-
 }
