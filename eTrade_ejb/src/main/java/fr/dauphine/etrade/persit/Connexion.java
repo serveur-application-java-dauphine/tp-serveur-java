@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.PersistenceUnit;
 import javax.persistence.TypedQuery;
 
 public final class Connexion {
@@ -16,6 +17,7 @@ public final class Connexion {
 	//== persistence-unit name du fichier persitence.xml
 	private final static String ENTITY_MANAGER_FACTORY = "eTrade-MySql";
 	
+	@PersistenceUnit
 	private EntityManagerFactory emf;
 	
 	private Connexion(){

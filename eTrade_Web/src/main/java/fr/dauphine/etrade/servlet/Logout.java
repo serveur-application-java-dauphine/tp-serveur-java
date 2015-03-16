@@ -4,10 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
 
-import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +14,7 @@ import javax.servlet.http.HttpSession;
 /**
  * Servlet implementation class LogoutServlet
  */
-@WebServlet("/Logout")
+@WebServlet("/logout")
 public class Logout extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -47,25 +44,10 @@ public class Logout extends HttpServlet {
         
         System.out.println("--- After logout ---");  
         System.out.println("Session ID is " + (request.isRequestedSessionIdValid() ? "valid" : "invalid"));  
-         
-
         
         out.close();  
         response.sendRedirect("/index.xhtml");  
 	}
-	
-	 public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException    
-     {    
-          String  value = "no-cache";    
-          ((HttpServletResponse)response).setHeader("Cache-Control", value);    
-          chain.doFilter(request, response);  
-     } 
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-	}
 
 }
