@@ -8,13 +8,11 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ValueChangeEvent;
 
 import fr.dauphine.etrade.api.ServicesSociete;
 import fr.dauphine.etrade.api.ServicesUtilisateur;
 import fr.dauphine.etrade.model.Actualite;
 import fr.dauphine.etrade.model.Societe;
-import fr.dauphine.etrade.model.TypeProduit;
 import fr.dauphine.etrade.model.Utilisateur;
 
 @ManagedBean

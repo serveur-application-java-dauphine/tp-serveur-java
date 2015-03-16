@@ -2,7 +2,6 @@ package fr.dauphine.etrade.managedbean;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.logging.Logger;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -121,8 +120,6 @@ public class OrdreManagedBean implements Serializable {
 	 * This method deletes an order from the database.
 	 * It is called when an user wants to delete it.
 	 * 
-	 * TODO : Envisager un message de confirmation 
-	 * avant de definitivement le supprimer
 	 * 
 	 * @param u
 	 */

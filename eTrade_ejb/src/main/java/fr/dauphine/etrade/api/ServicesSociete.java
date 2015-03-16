@@ -29,4 +29,6 @@ public interface ServicesSociete {
 	Actualite getActualite(int id);
 	List<Societe> allSocietesAvecProduits();
 
+	List<Societe> societesFiltrees(String filtre);
+
 }

@@ -35,9 +35,7 @@ public class ServicesSocieteBean implements ServicesSociete {
 
 	@Override
 	public List<Societe> allSocietes() {
-		return Connexion.getInstance().getAll(Societe.class);
-		//Query q = (Query) em.createQuery("SELECT s FROM Societe s ORDER BY s.name ASC");
-		//return (List<Societe>)q.getResultList();
+		return Connexion.getInstance().getAll(Societe.class, "ORDER BY s.name ASC");
 	}
 
 	@Override
@@ -89,6 +87,11 @@ public class ServicesSocieteBean implements ServicesSociete {
 	public List<Societe> allSocietesAvecProduits() {
 		String query = "SELECT distinct (s) FROM Societe s INNER JOIN s.produits";
 		return Connexion.getInstance().queryListResult(query, Societe.class);
+	}
+
+	@Override
+	public List<Societe> societesFiltrees(String filtre) {
+		return Connexion.getInstance().queryListResult("SELECT distinct (s) FROM Societe s WHERE s.name LIKE %?%", Societe.class, filtre);
 	}
 
 

@@ -14,8 +14,10 @@ public final class Utilities {
 		System.out.println(managedBeanNameString);
 		Object obj = fc.getApplication().getELResolver().getValue(fc.getELContext(), null, managedBeanNameString);
 		System.out.println(obj);
+		@SuppressWarnings("deprecation")
 		Object obj1 = fc.getApplication().createValueBinding("#{"+managedBeanClasse.getSimpleName()+"}").getValue(fc);
 		System.out.println(obj1);
+		@SuppressWarnings("deprecation")
 		Utilisateur utilisateur  = (Utilisateur) fc.getApplication().createValueBinding("#{sessionUserManagedBean.utilisateur}").getValue(fc);
 		System.out.println(utilisateur);
 		return managedBeanClasse.cast(obj1);

@@ -119,5 +119,13 @@ public final class Connexion {
 		return result;
 	}
 	
+	public <T extends Object> List<T> getAll(Class<T> classe, String complement){
+		EntityManager em = emf.createEntityManager();
+		TypedQuery<T> typedquery = em.createQuery("FROM "+classe.getSimpleName() + " " + complement, classe);
+		List<T> result = typedquery.getResultList();
+		em.close();
+		return result;
+	}
+	
 	
 }
