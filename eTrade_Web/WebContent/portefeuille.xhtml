@@ -10,9 +10,9 @@
     	<h:outputStylesheet library="css" name="table-style.css"/>
     </h:head>
     <h:body>
- 	<a href="/eTrade_Web/Logout" style="float:right">Se déconnecter</a>
- 	<h:outputLabel value="Bonjour, #{sessionUserManagedBean.utilisateur.firstname} &nbsp; &nbsp;" style="float:right"/>
- 	<br/><br/>
+ 	
+ 	<ui:include src="/menu.xhtml" />
+ 	
    	<h1>Portefeuille</h1>	
 	<br/><br/>
  	<h:form>

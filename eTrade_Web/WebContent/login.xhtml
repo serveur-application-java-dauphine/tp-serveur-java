@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:h="http://java.sun.com/jsf/html">
+      <head>
+      	<title>eTrade - Login</title>
+      </head>
+      <body>
+
+	<ui:include src="/menu.xhtml" />
+	<h1>Connection</h1>
+	<br/>
+	
+	<form name="login" id="form_login" method="post" action="j_security_check" >
+		<table>
+		<tr>
+			<td>Email</td>
+			<td><input type="text" id="email" name="j_username"/></td>
+		</tr>
+		<tr>
+			<td>Passsword</td>
+
+			<td><input type="password" id="password" name="j_password"/></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td><br/><input type="submit" value="Se connecter" style="float:right"/></td>
+		</tr>
+		<tr>
+			<td>Pas encore inscrit ? <a href="inscription.xhtml">Cliquez ici</a></td>
+		</tr>
+		</table>
+	</form>
+	
+</body>
+</html>

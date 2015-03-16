@@ -1,17 +1,15 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" 
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"> 
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"> 
     <h:head>
         <meta charset="utf-8" />
         <title>eTrade - Créer une actualité</title>
         <h:outputStylesheet library="default" name="css/form.css"  />
     </h:head>
     <h:body>
-        <a href="/eTrade_Web/Logout" style="float:right">Se déconnecter</a>
-	 	<h:outputLabel value="Bonjour, #{sessionUserManagedBean.utilisateur.firstname} &#160; &#160;" style="float:right"/>
-	 	
-	   	<br/><br/>
+        <ui:include src="/menu.xhtml" />
     
       <h:form>
          <fieldset>

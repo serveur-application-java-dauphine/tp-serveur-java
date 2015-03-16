@@ -5,20 +5,18 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:c="http://java.sun.com/jsp/jstl/core">
       
-   <h:body>
-   <h:panelGroup rendered="#{sessionUserManagedBean.utilisateur}!=null">
-   <h:link rendered="#{sessionUserManagedBean.administrateur}!=null" href="users.xhtml" value="Users"/>
-   <h:link rendered="#{sessionUserManagedBean.administrateur}!=null" href="societes.xhtml" value="Societes"/>
-	<h:link rendered="#{sessionUserManagedBean.investisseur}!=null" href="portefeuille.xhtml" value="Mon Portefeuille"/>
-	<h:link rendered="#{sessionUserManagedBean.investisseur}!=null" href="passer_ordre.xhtml" value="Passer Ordre"/>
+   <h:panelGroup rendered="#{sessionUserManagedBean.utilisateur!=null}">
+   <h:link rendered="#{sessionUserManagedBean.administrateur}" href="users.xhtml" value="Users"/>
+   <h:link rendered="#{sessionUserManagedBean.administrateur}" href="societes.xhtml" value="Societes"/>
+	<h:link rendered="#{sessionUserManagedBean.investisseur}" href="portefeuille.xhtml" value="Mon Portefeuille"/>
+	<h:link rendered="#{sessionUserManagedBean.investisseur}" href="passer_ordre.xhtml" value="Passer Ordre"/>
 	<h:link style="float:right" outcome="#{sessionUserManagedBean.logOut()}" value="Se déconnecter"/> 
 
          <br/>
          <a href="my_account.xhtml" style="float:right">Bonjour, #{sessionUserManagedBean.utilisateur.fullName}</a>
     </h:panelGroup>
-    <h:panelGroup rendered="#{sessionUserManagedBean.utilisateur}==null">
-    <h:link rendered="#{sessionUserManagedBean.utilisateur}==null" href="inscription.xhtml" value="Se logger"/>
-    <h:link rendered="#{sessionUserManagedBean.utilisateur}==null" href="inscription.xhtml" value=", S'inscrire"/>
+    <h:panelGroup rendered="#{sessionUserManagedBean.utilisateur==null}">
+    <h:link outcome="login.xhtml" value="Se logger" style="float:right"/><br />
+    <h:link outcome="inscription.xhtml" value="S'inscrire" style="float:right"/>
     </h:panelGroup>
-	</h:body> 
 </html>

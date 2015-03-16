@@ -1,11 +1,11 @@
 package fr.dauphine.etrade.managedbean;
 
 import java.io.Serializable;
+import java.security.Principal;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
 import fr.dauphine.etrade.api.ServicesUtilisateur;
@@ -27,8 +27,9 @@ public class SessionUserManagedBean implements Serializable{
 	 */
 	public Utilisateur getUtilisateur() {
 		if (utilisateur == null){
-			String email = FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal().getName();
-			utilisateur = su.getUtilisateurByEmail(email);
+			Principal user = FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal();
+			if (user!=null)
+				utilisateur = su.getUtilisateurByEmail(user.getName());
 		}
 		return utilisateur;
 	}

@@ -10,9 +10,7 @@
 
 </h:head> 
 <body> 
-	<a href="/eTrade_Web/Logout" style="float:right">Se déconnecter</a>
-	<h:outputLabel value="Bonjour, #{sessionUserManagedBean.utilisateur.firstname} &nbsp; &nbsp;" style="float:right"/>
-	<br/><br/>
+<ui:include src="/menu.xhtml" />
 
 	<h:form>
   	  <h:dataTable value="#{societeManagedBean.getSociete(param.s).actualites}" var="actu">

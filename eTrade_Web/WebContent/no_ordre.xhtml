@@ -8,10 +8,7 @@
       >
     <h:body>
     
-    	<a href="/eTrade_Web/Logout" style="float:right">Se déconnecter</a>
-	 	<h:outputLabel value="Bonjour, #{sessionUserManagedBean.utilisateur.firstname} &nbsp; &nbsp;" style="float:right"/>
-	 	
-	   	<br/><br/>
+    	<ui:include src="/menu.xhtml" />
 
     	<h1>eTrade</h1>
  		<p>Votre compte n'a pas encore été validé, vous ne pouvez pas passer d'ordres.</p>
