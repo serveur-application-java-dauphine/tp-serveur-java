@@ -46,14 +46,20 @@ public class SessionUserManagedBean implements Serializable{
 	}
 	
 	public boolean isAdministrateur(){
+		if (utilisateur==null)
+			return false;
 		return utilisateur.getRole().getCode().equals(Utilities.getManagedBean(ApplicationManagedBean.class).getROLE_CODE_ADMINISTRATEUR());
 	}
 	
 	public boolean isMembreSociete(){
+		if (utilisateur==null)
+			return false;
 		return utilisateur.getRole().getCode().equals(Utilities.getManagedBean(ApplicationManagedBean.class).getROLE_CODE_SOCIETE());
 	}
 	
 	public boolean isInvestisseur(){
+		if (utilisateur==null)
+			return false;
 		return utilisateur.getRole().getCode().equals(Utilities.getManagedBean(ApplicationManagedBean.class).getROLE_CODE_INVESTISSEUR());
 	}
 	

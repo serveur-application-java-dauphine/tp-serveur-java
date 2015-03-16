@@ -5,6 +5,11 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
      >
       
+      
+      <h:link outcome="index.xhtml"> 
+    	<h:graphicImage value="/img/Logo.png" alt="home" />
+		</h:link>
+      
    <h:panelGroup rendered="#{sessionUserManagedBean.utilisateur!=null}">
    <h:link rendered="#{sessionUserManagedBean.administrateur}" href="users.xhtml" value="Users"/>
    <h:link rendered="#{sessionUserManagedBean.administrateur}" href="societes.xhtml" value="Societes"/>
@@ -16,7 +21,7 @@
          <a href="my_account.xhtml" style="float:right">Bonjour, #{sessionUserManagedBean.utilisateur.fullName}</a>
     </h:panelGroup>
     <h:panelGroup rendered="#{sessionUserManagedBean.utilisateur==null}">
-    <h:link outcome="login.xhtml" value="Se logger" style="float:right"/><br />
+    <h:link outcome="my_account.xhtml" value="Se logger" style="float:right"/>
     <h:link outcome="inscription.xhtml" value="S'inscrire" style="float:right"/>
     </h:panelGroup>
 </html>
