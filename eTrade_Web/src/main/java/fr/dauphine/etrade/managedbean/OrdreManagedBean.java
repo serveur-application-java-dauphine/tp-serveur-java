@@ -48,18 +48,17 @@ public class OrdreManagedBean implements Serializable {
 	private ServicesProduit sp;
 
 	/**
-	 * This method deletes an order from the database.
-	 * It is called when an user wants to delete it.
-	 * 
-	 * TODO : Envisager un message de confirmation 
-	 * avant de definitivement le supprimer
-	 * 
-	 * @param u
+	 * Liste pour le carnet d'ordres la partie achat (gauche)
 	 */
-	public void annulerOrdre(Ordre o){
-		so.delOrdre(o);
+	public List<Ordre> ordresAchatParProduit(long idProduit){
+		return so.ordresAchatParProduitId(idProduit);
 	}
-	
+	/**
+	 * Liste pour le carnet d'ordres la partie vente (droite)
+	 */
+	public List<Ordre> ordresVenteParProduit(long idProduit){
+		return so.ordresVenteParProduitId(idProduit);
+	}
 	
 	/**
 	 * @return the list of executed orders
@@ -117,6 +116,19 @@ public class OrdreManagedBean implements Serializable {
 		}
 		ordre = null;
 	}
+	
+	/**
+	 * This method deletes an order from the database.
+	 * It is called when an user wants to delete it.
+	 * 
+	 * TODO : Envisager un message de confirmation 
+	 * avant de definitivement le supprimer
+	 * 
+	 * @param u
+	 */
+	public void annulerOrdre(Ordre o){
+		so.delOrdre(o);
+	}
 
 	/**
 	 * On instancie qu'une seule fois la listSocietes
@@ -159,5 +171,6 @@ public class OrdreManagedBean implements Serializable {
 	public void setListDirectionOrdres(List<DirectionOrdre> listDirectionOrdres) {
 		this.listDirectionOrdres = listDirectionOrdres;
 	}
+	
 
 }

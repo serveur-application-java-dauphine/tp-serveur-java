@@ -64,9 +64,37 @@ public class ServicesOrdreBean implements ServicesOrdre{
 	}
 	
 	@Override
-	public TypeOrdre getTypeOrdreById(Long idTypeOrdre){
+	public TypeOrdre getTypeOrdreById(long idTypeOrdre){
 		return Connexion.getInstance().find(TypeOrdre.class, idTypeOrdre);
 	}
+	
+	/**
+	 * Returns the order list in a desc order.
+	 * 
+	 * TODO: Enlever libelle une fois la cotation en continue
+	 */
+	@Override
+	public List<Ordre> ordresAchatParProduitId(long idProduit){
+		String query = "SELECT o FROM Ordre o "
+				+ "LEFT JOIN FETCH o.typeOrdre t LEFT JOIN FETCH o.directionOrdre do "
+				+ "LEFT JOIN FETCH o.statusOrdre so LEFT JOIN FETCH o.portefeuille "
+				+ "LEFT JOIN FETCH o.produit p LEFT JOIN p.societe LEFT JOIN p.typeProduit "
+				+ "WHERE do.idDirectionOrdre = 1 AND p.idProduit = ? AND so.idStatusOrder = 2 "
+				+ "ORDER BY o.prix DESC, t.libelle ASC, o.date DESC";
+		List<Ordre> result = Connexion.getInstance().queryListResult(query, Ordre.class, idProduit);
+		return result;
+	}
 
+	@Override
+	public List<Ordre> ordresVenteParProduitId(long idProduit){
+		String query = "SELECT o FROM Ordre o "
+				+ "LEFT JOIN FETCH o.typeOrdre t LEFT JOIN FETCH o.directionOrdre do "
+				+ "LEFT JOIN FETCH o.statusOrdre so LEFT JOIN FETCH o.portefeuille "
+				+ "LEFT JOIN FETCH o.produit p LEFT JOIN p.societe LEFT JOIN p.typeProduit "
+				+ "WHERE do.idDirectionOrdre = 2 AND p.idProduit = ? AND so.idStatusOrder = 2 "
+				+ "ORDER BY o.prix ASC, t.libelle ASC, o.date DESC";
+		List<Ordre> result = Connexion.getInstance().queryListResult(query, Ordre.class, idProduit);
+		return result;
+	}
 	
 }

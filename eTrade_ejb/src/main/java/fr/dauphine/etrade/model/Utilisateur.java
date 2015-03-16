@@ -19,6 +19,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 /**
@@ -299,6 +300,7 @@ public class Utilisateur implements java.io.Serializable {
 		this.actualites = actualites;
 	}*/
 	
+	@Transient
 	public String getFullName(){
 		return firstname+" "+lastname;
 	}

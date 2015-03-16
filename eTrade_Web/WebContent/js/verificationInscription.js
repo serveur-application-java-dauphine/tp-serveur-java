@@ -103,9 +103,13 @@ function verifForm(f)
    
    if(pseudoOk && mailOk && passwordOk && passwordConfirmOk)
       return true;
-   else
+   else	
    {
       alert("Merci de remplir correctement tous les champs");
       return false;
    }
 }
+
+function disableIt(champ) {
+   document.getElementById(champ).disabled = true;
+}  
