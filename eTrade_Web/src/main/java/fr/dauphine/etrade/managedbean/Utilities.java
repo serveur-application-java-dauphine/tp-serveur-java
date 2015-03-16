@@ -4,6 +4,8 @@ import java.io.IOException;
 
 import javax.faces.context.FacesContext;
 
+import fr.dauphine.etrade.model.Utilisateur;
+
 public final class Utilities {
 
 	public final static <T extends Object> T getManagedBean(Class<T> managedBeanClasse){
@@ -14,6 +16,8 @@ public final class Utilities {
 		System.out.println(obj);
 		Object obj1 = fc.getApplication().createValueBinding("#{"+managedBeanClasse.getSimpleName()+"}").getValue(fc);
 		System.out.println(obj1);
+		Utilisateur utilisateur  = (Utilisateur) fc.getApplication().createValueBinding("#{sessionUserManagedBean.utilisateur}").getValue(fc);
+		System.out.println(utilisateur);
 		return managedBeanClasse.cast(obj1);
 	}
 	
