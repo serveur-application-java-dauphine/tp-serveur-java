@@ -299,6 +299,7 @@ public class Utilisateur implements java.io.Serializable {
 	public void setActualites(Set<Actualite> actualites) {
 		this.actualites = actualites;
 	}*/
+
 	@Transient
 	public String getFullName(){
 		return firstname+" "+lastname;

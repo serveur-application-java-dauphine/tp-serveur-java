@@ -18,5 +18,7 @@ public interface ServicesOrdre {
 	List<DirectionOrdre> getPossibleDirectionOrdre();
 	List<TypeOrdre> getAllTypeOrdre();
 	StatusOrdre getStatusOrdreByLibelle(String libelle);
-	TypeOrdre getTypeOrdreById(Long idTypeOrdre);
+	TypeOrdre getTypeOrdreById(long idTypeOrdre);
+	List<Ordre> ordresAchatParProduitId(long idProduit);
+	List<Ordre> ordresVenteParProduitId(long idProduit);
 }

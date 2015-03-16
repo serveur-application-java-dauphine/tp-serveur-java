@@ -36,7 +36,7 @@ public class Logout extends HttpServlet {
         out.print("<p style='float:right'>You are successfully logged out!</p><br/><br/>");  
         System.out.println("--- Before logout ---");  
         System.out.println("Session ID is " + (request.isRequestedSessionIdValid() ? "valid" : "invalid"));    
-        request.getRequestDispatcher("index.html").include(request, response);  
+        request.getRequestDispatcher("index.xhtml").include(request, response);  
 
         if (session != null)  
         {  
@@ -51,7 +51,7 @@ public class Logout extends HttpServlet {
 
         
         out.close();  
-        response.sendRedirect("/index.html");  
+        response.sendRedirect("/index.xhtml");  
 	}
 	
 	 public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException    

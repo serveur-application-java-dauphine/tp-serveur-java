@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="ISO-8859-1">
+	<title>eTrade - login page</title>
+	<script type="text/javascript" src="js/verificationInscription.js"></script>
+</head>
+<body>
+	<h1>Connection</h1>
+	<br/>
+	<form name="login" id="form_login" method="POST" action="j_security_check" >
+		<table>
+		<tr>
+			<td>Email</td>
+			<td><input type="text" id="email" name="j_username" onblur="verifMail(this)"/></td>
+		</tr>
+		<tr>
+			<td>Passsword</td>
+
+			<td><input type="password" id="password" name="j_password" onblur="verifPassword(this)"/></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td><br/><input type="submit" id="btn" value="Se connecter" style="float:right" onclick="disableIt(this)"/></td>
+		</tr>
+		<tr>
+			<td>Pas encore inscrit ? <a href="inscription.xhtml">Cliquez ici</a></td>
+		</tr>
+		</table>
+	</form>
+	
+</body>
+</html>
