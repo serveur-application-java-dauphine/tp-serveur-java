@@ -1,33 +1,34 @@
 @CHARSET "UTF-8";
-.order-table{   
-	border-collapse:collapse;
+
+.order-table {
+	border-collapse: collapse;
 }
- 
-.order-table-header{
-	text-align:center;
-	background:none repeat scroll 0 0 #E5E5E5;
-	border-bottom:1px solid #BBBBBB;
-	padding:16px;
+
+.order-table-header {
+	text-align: center;
+	background: none repeat scroll 0 0 #E5E5E5;
+	border-bottom: 1px solid #BBBBBB;
+	padding: 16px;
 }
- 
-.order-table-odd-row{
-	text-align:center;
-	background:none repeat scroll 0 0 #FFFFFFF;
-	border-top:1px solid #BBBBBB;
+
+.order-table-odd-row {
+	text-align: center;
+	background: none repeat scroll 0 0 #FFFFFFF;
+	border-top: 1px solid #BBBBBB;
 }
- 
-.order-table-even-row{
+
+.order-table-even-row {
 	text-align: center;
 	background: none repeat scroll 0 0 #F9F9F9;
 	border-top: 1px solid #BBBBBB;
 }
 
 table td, table td * {
-    vertical-align: top;
+	vertical-align: top;
 }
 
 body {
-	margin:0;
+	margin: 0;
 	margin-left: auto;
 	margin-top: auto;
 	width: 70%;
@@ -35,7 +36,15 @@ body {
 	vertical-align: middle;
 }
 
-img.resize{
-    width:20%;
-    height: auto;
+img.resize {
+	width: 20%;
+	height: auto;
+}
+
+#loggingPanel {
+	position: absolute;
+	margin-top: 5px;
+	margin-right: 5px;
+	width: 40px;
+	length: 20px;
 }

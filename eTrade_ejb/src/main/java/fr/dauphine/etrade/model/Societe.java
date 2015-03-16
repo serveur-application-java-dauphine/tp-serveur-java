@@ -3,6 +3,8 @@ package fr.dauphine.etrade.model;
 // default package
 // Generated 11 mars 2015 16:13:53 by Hibernate Tools 4.0.0
 
+import static javax.persistence.GenerationType.IDENTITY;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -12,11 +14,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import javax.persistence.JoinColumn;
-
-import static javax.persistence.GenerationType.IDENTITY;
-
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -28,89 +27,88 @@ import javax.persistence.UniqueConstraint;
 @Table(name = "Societe", uniqueConstraints = @UniqueConstraint(columnNames = "Name"))
 public class Societe implements java.io.Serializable {
 
-	/**
-	 * Default serialVersionUID
-	 */
-	private static final long serialVersionUID = 1L;
-	private Long idSociete;
-	private String name;
-	private String description;
+  /**
+   * Default serialVersionUID
+   */
+  private static final long serialVersionUID = 1L;
+  private Long idSociete;
+  private String name;
+  private String description;
 
-	private Set<Produit> produits = new HashSet<Produit>(0);
-	private Set<Utilisateur> utilisateurs = new HashSet<Utilisateur>(0);
-	private Set<Actualite> actualites = new HashSet<Actualite>(0);
+  private Set<Produit> produits = new HashSet<Produit>(0);
+  private Set<Utilisateur> utilisateurs = new HashSet<Utilisateur>(0);
+  private Set<Actualite> actualites = new HashSet<Actualite>(0);
 
-	public Societe() {
-	}
+  public Societe() {
+  }
 
-	public Societe(String name) {
-		this.name = name;
-	}
+  public Societe(String name) {
+    this.name = name;
+  }
 
-	public Societe(String name, Set<Produit> produits,
-			Set<Utilisateur> utilisateurs, Set<Actualite> actualites) {
-		this.name = name;
-		this.produits = produits;
-		this.utilisateurs = utilisateurs;
-		this.actualites = actualites;
-	}
+  public Societe(String name, Set<Produit> produits, Set<Utilisateur> utilisateurs,
+      Set<Actualite> actualites) {
+    this.name = name;
+    this.produits = produits;
+    this.utilisateurs = utilisateurs;
+    this.actualites = actualites;
+  }
 
-	@Id
-	@GeneratedValue(strategy = IDENTITY)
-	@Column(name = "IdSociete", unique = true, nullable = false)
-	public Long getIdSociete() {
-		return this.idSociete;
-	}
+  @Id
+  @GeneratedValue(strategy = IDENTITY)
+  @Column(name = "IdSociete", unique = true, nullable = false)
+  public Long getIdSociete() {
+    return this.idSociete;
+  }
 
-	public void setIdSociete(Long idSociete) {
-		this.idSociete = idSociete;
-	}
+  public void setIdSociete(Long idSociete) {
+    this.idSociete = idSociete;
+  }
 
-	@Column(name = "Name", unique = true, nullable = false, length = 100)
-	public String getName() {
-		return this.name;
-	}
+  @Column(name = "Name", unique = true, nullable = false, length = 100)
+  public String getName() {
+    return this.name;
+  }
 
-	public void setName(String name) {
-		this.name = name;
-	}
-	
-	@Column(name = "Description", length = 300)
-	public String getDescription() {
-		return description;
-	}
+  public void setName(String name) {
+    this.name = name;
+  }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
-	
+  @Column(name = "Description", length = 300)
+  public String getDescription() {
+    return description;
+  }
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "societe")
-	public Set<Produit> getProduits() {
-		return this.produits;
-	}
+  public void setDescription(String description) {
+    this.description = description;
+  }
 
-	public void setProduits(Set<Produit> produits) {
-		this.produits = produits;
-	}
+  @OneToMany(fetch = FetchType.EAGER, mappedBy = "societe")
+  public Set<Produit> getProduits() {
+    return this.produits;
+  }
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "societe")
-	public Set<Utilisateur> getUtilisateurs() {
-		return this.utilisateurs;
-	}
+  public void setProduits(Set<Produit> produits) {
+    this.produits = produits;
+  }
 
-	public void setUtilisateurs(Set<Utilisateur> utilisateurs) {
-		this.utilisateurs = utilisateurs;
-	}
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "societe")
+  public Set<Utilisateur> getUtilisateurs() {
+    return this.utilisateurs;
+  }
 
-	@OneToMany(fetch = FetchType.LAZY/*, mappedBy = "societe"*/, orphanRemoval=true)
-	@JoinColumn(name="IdSociete")
-	public List<Actualite> getActualites() {
-		return new ArrayList<Actualite>(this.actualites);
-	}
+  public void setUtilisateurs(Set<Utilisateur> utilisateurs) {
+    this.utilisateurs = utilisateurs;
+  }
 
-	public void setActualites(List<Actualite> actualites) {
-		this.actualites = new HashSet<Actualite>(actualites);
-	}
+  @OneToMany(fetch = FetchType.LAZY/* , mappedBy = "societe" */, orphanRemoval = true)
+  @JoinColumn(name = "IdSociete")
+  public List<Actualite> getActualites() {
+    return new ArrayList<Actualite>(this.actualites);
+  }
+
+  public void setActualites(List<Actualite> actualites) {
+    this.actualites = new HashSet<Actualite>(actualites);
+  }
 
 }

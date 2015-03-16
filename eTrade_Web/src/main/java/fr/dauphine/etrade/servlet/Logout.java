@@ -22,50 +22,59 @@ public class Logout extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
-		response.setHeader("Cache-Control", "no-cache, no-store");  
-        response.setHeader("Pragma", "no-cache");  
-        response.setHeader("Expires", new Date().toString());  
-       
-        HttpSession session = request.getSession(false);  
-		  
-        PrintWriter out=response.getWriter();  
-        out.print("<p style='float:right'>You are successfully logged out!</p><br/><br/>");  
-        System.out.println("--- Before logout ---");  
-        System.out.println("Session ID is " + (request.isRequestedSessionIdValid() ? "valid" : "invalid"));    
-        request.getRequestDispatcher("index.xhtml").include(request, response);  
+		response.setHeader("Cache-Control", "no-cache, no-store");
+		response.setHeader("Pragma", "no-cache");
+		response.setHeader("Expires", new Date().toString());
 
-        if (session != null)  
-        {  
-            session.invalidate();  
-            System.out.println("Invalidate has been called");  
-        }  
-        request.logout(); 
-        
-        System.out.println("--- After logout ---");  
-        System.out.println("Session ID is " + (request.isRequestedSessionIdValid() ? "valid" : "invalid"));  
-         
+		HttpSession session = request.getSession(false);
 
-        
-        out.close();  
-        response.sendRedirect("/index.xhtml");  
+		PrintWriter out = response.getWriter();
+		out.print("<p style='float:right'>You are successfully logged out!</p><br/><br/>");
+		System.out.println("--- Before logout ---");
+		System.out.println("Session ID is "
+				+ (request.isRequestedSessionIdValid() ? "valid" : "invalid"));
+		request.getRequestDispatcher("index.xhtml").include(request, response);
+
+		if (session != null) {
+			session.invalidate();
+			System.out.println("Invalidate has been called");
+		}
+		request.logout();
+
+		System.out.println("--- After logout ---");
+		System.out.println("Session ID is "
+				+ (request.isRequestedSessionIdValid() ? "valid" : "invalid"));
+
+		out.close();
+		response.sendRedirect("/index.xhtml");
 	}
-	
-	 public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException    
-     {    
-          String  value = "no-cache";    
-          ((HttpServletResponse)response).setHeader("Cache-Control", value);    
-          chain.doFilter(request, response);  
-     } 
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * Sets off the cache of the user browser
+	 * 
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+	public void doFilter(ServletRequest request, ServletResponse response,
+			FilterChain chain) throws IOException, ServletException {
+		String value = "no-cache";
+		((HttpServletResponse) response).setHeader("Cache-Control", value);
+		chain.doFilter(request, response);
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		super.doPost(request, response);
 	}
 
 }

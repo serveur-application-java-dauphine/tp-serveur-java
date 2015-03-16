@@ -11,14 +11,24 @@ import fr.dauphine.etrade.model.TypeOrdre;
 
 @Remote
 public interface ServicesOrdre {
-	Ordre addOrdre(Ordre ordre);
-	Ordre delOrdre(Ordre ordre);
-	List<Ordre> allDoneOrdres(long idPortefeuille);
-	List<Ordre> allPendingOrdres(long idPortefeuille);
-	List<DirectionOrdre> getPossibleDirectionOrdre();
-	List<TypeOrdre> getAllTypeOrdre();
-	StatusOrdre getStatusOrdreByLibelle(String libelle);
-	TypeOrdre getTypeOrdreById(long idTypeOrdre);
-	List<Ordre> ordresAchatParProduitId(long idProduit);
-	List<Ordre> ordresVenteParProduitId(long idProduit);
+  Ordre addOrdre(Ordre ordre);
+
+  Ordre delOrdre(Ordre ordre);
+
+  List<Ordre> allDoneOrdres(long idPortefeuille);
+
+  List<Ordre> allPendingOrdres(long idPortefeuille);
+
+  List<DirectionOrdre> getPossibleDirectionOrdre();
+
+  List<TypeOrdre> getAllTypeOrdre();
+
+  StatusOrdre getStatusOrdreByLibelle(String libelle);
+
+  TypeOrdre getTypeOrdreById(long idTypeOrdre);
+
+  List<Ordre> ordresAchatParProduitId(long idProduit);
+
+  List<Ordre> ordresVenteParProduitId(long idProduit);
+
 }
