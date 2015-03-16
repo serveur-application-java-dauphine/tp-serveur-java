@@ -25,7 +25,8 @@ public class ServicesSocieteBean implements ServicesSociete {
 
   @Override
   public List<Societe> allSocietes() {
-    return Connexion.getInstance().getAll(Societe.class, "ORDER BY s.name ASC");
+    return Connexion.getInstance().queryListResult("FROM Societe s ORDER BY s.name ASC",
+        Societe.class);
   }
 
   @Override
@@ -34,9 +35,9 @@ public class ServicesSocieteBean implements ServicesSociete {
   }
 
   @Override
-  public Societe getSocieteByName(String name) {
-    String query = "FROM Societe s WHERE s.name=?";
-    return Connexion.getInstance().querySingleResult(query, Societe.class, name);
+  public List<Societe> getSocietesByName(String name) {
+    String query = "FROM Societe s WHERE lower(s.name) LIKE lower(?)";
+    return Connexion.getInstance().queryListResult(query, Societe.class, "%" + name + "%");
   }
 
   @Override

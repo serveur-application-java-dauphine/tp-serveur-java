@@ -1,6 +1,7 @@
 package fr.dauphine.etrade.managedbean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -22,6 +23,11 @@ public class SocieteManagedBean implements Serializable {
 	private Societe societe;
 	private List<Actualite> actualites;
 	private List<Societe> societes;
+
+	/**
+	 * Name of the company to filter on.
+	 */
+	private String name;
 
 	/**
 	 * Default serialVersionUID
@@ -76,8 +82,20 @@ public class SocieteManagedBean implements Serializable {
 		return ss.allSocietesAvecProduits();
 	}
 
+	/**
+	 * Returns all societies if the input is empty, societies filtered by name
+	 * otherwise.
+	 * 
+	 * @return result
+	 */
 	public List<Societe> getListSocietes() {
-		return ss.allSocietes();
+		List<Societe> result = new ArrayList<Societe>();
+		if (null == name || name.equals("")) {
+			result = ss.allSocietes();
+		} else {
+			result = ss.getSocietesByName(name);
+		}
+		return result;
 	}
 
 	/**
@@ -155,6 +173,14 @@ public class SocieteManagedBean implements Serializable {
 	 */
 	public void setSocietes(List<Societe> societes) {
 		this.societes = societes;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 }

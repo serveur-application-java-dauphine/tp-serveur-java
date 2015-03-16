@@ -23,7 +23,7 @@ public interface ServicesSociete {
 
   Societe getSocieteById(long id);
 
-  Societe getSocieteByName(String name);
+  List<Societe> getSocietesByName(String name);
 
   Societe updateSociete(Societe societe);
 

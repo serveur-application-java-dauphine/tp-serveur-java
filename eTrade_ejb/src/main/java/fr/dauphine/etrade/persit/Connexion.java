@@ -200,22 +200,4 @@ public final class Connexion {
     em.close();
     return result;
   }
-
-  /**
-   * This method implements a SELECT * FROM Table + some other HQL text query
-   * 
-   * @param classe
-   *          the type of object which is returned
-   * @param complement
-   *          a complement for our request
-   * @return result
-   */
-  public <T extends Object> List<T> getAll(Class<T> classe, String complement) {
-    EntityManager em = emf.createEntityManager();
-    TypedQuery<T> typedquery = em.createQuery("FROM " + classe.getSimpleName() + " " + complement,
-        classe);
-    List<T> result = typedquery.getResultList();
-    em.close();
-    return result;
-  }
 }

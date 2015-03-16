@@ -16,7 +16,7 @@
 
 	<p>Filtrez ci-dessous sur votre société :</p>
 	<h:form>
-		<h:inputText id="filteredSociety" onblur="submit()" />
+		<h:inputText id="filteredSociety" onchange="submit()" value="#{societeManagedBean.name}" />
 	</h:form>
 
 	<p>Pour consulter les informations sur une société, cliquer
