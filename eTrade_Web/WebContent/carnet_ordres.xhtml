@@ -17,7 +17,7 @@
 	  	<table>
 		<tr>
 			<td valign="top">
-			<h:dataTable rows="5" value="#{fixingManagedBean.ordresAchatParProduit(41)}" var="o"
+			<h:dataTable rows="5" value="#{fixingManagedBean.ordresAchatParProduit(ordreManagedBean.ordre.produit.idProduit)}" var="o"
 				styleClass="order-table"
     			headerClass="order-table-header"
     			rowClasses="order-table-odd-row,order-table-even-row">
@@ -32,7 +32,7 @@
 			</h:dataTable>
 			</td>
 			<td valign="top">
-			<h:dataTable rows="5" value="#{fixingManagedBean.ordresVenteParProduit(41)}" var="o"
+			<h:dataTable rows="5" value="#{fixingManagedBean.ordresVenteParProduit(ordreManagedBean.ordre.produit.idProduit)}" var="o"
 				styleClass="order-table"
     			headerClass="order-table-header"
     			rowClasses="order-table-odd-row,order-table-even-row">
@@ -47,10 +47,7 @@
 			</h:dataTable>
 			</td>
 		</tr>
-		<tr>
-			<td></td>
-			<td><h:commandButton value="Effectuer le fixing" action="#{fixingManagedBean.fixing()}" styleClass="sansLabel" type="submit" /></td>
-		</tr>
+		
 		</table>
 	</h:form>
 </h:body>

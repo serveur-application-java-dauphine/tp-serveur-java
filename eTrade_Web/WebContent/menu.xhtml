@@ -3,32 +3,40 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
-
+<h:head>
+	<h:outputStylesheet library="css" name="table-style.css" />
+</h:head>
 
 <h:link outcome="index.xhtml">
-	<h:graphicImage value="/img/Logo.png" alt="home" />
+	<h:graphicImage value="/images/Logo.png" alt="home" />
 </h:link>
 
 <h:panelGroup rendered="#{sessionUserManagedBean.utilisateur!=null}">
-	<h:link rendered="#{sessionUserManagedBean.administrateur}"
-		href="users.xhtml" value="Users" />
-	<h:link rendered="#{sessionUserManagedBean.administrateur}"
-		href="societes.xhtml" value="Societes" />
-	<h:link rendered="#{sessionUserManagedBean.investisseur}"
-		href="portefeuille.xhtml" value="Mon Portefeuille" />
-	<h:link rendered="#{sessionUserManagedBean.investisseur}"
-		href="passer_ordre.xhtml" value="Passer Ordre" />
-	<h:link href="/logout" value="Se déconnecter" />
-
-	<br />
-	<a href="my_account.xhtml" style="float: right">Bonjour,
-		#{sessionUserManagedBean.utilisateur.fullName}</a>
+	<table>
+		<tr>
+			<td><h:link href="my_account" value="Bonjour, #{sessionUserManagedBean.utilisateur.firstname}"></h:link></td>
+			<td style="width: 50px"></td>
+			<td><h:link rendered="#{sessionUserManagedBean.administrateur}"
+				outcome="users" value="Users"/></td>
+			<td><h:link outcome="societes" value="Societes"/></td>
+			<td><h:link rendered="#{sessionUserManagedBean.investisseur}"
+				outcome="portefeuille" value="Mon Portefeuille"/></td>
+			<td><h:link rendered="#{sessionUserManagedBean.investisseur}"
+				outcome="passer_ordre" value="Passer Ordre"/></td>
+			<td><a href="/eTrade_Web/logout">Se déconnecter</a></td>
+			<td></td>
+		</tr>
+	</table>	
 </h:panelGroup>
 
 <h:panelGroup rendered="#{sessionUserManagedBean.utilisateur==null}">
-	<h:link outcome="my_account.xhtml" value="Se connecter"
-		style="float:right" />
-	<h:link outcome="inscription.xhtml" value="S'inscrire"
-		style="float:right" />
+	<table style="float:right" >
+		<tr>
+			<td><h:link outcome="my_account.xhtml" value="Se connecter"/></td>
+			<td><h:link outcome="inscription.xhtml" value="S'inscrire"/></td>
+		</tr>
+	</table>
+	
+	
 </h:panelGroup>
 </html>
