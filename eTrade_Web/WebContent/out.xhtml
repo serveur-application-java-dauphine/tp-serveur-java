@@ -1,12 +1,19 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
-<head>
-<title>eTrade</title>
-</head>
-<body>
+<h:head>
+	<title>eTrade</title>
+</h:head>
 
-	<img src="/images/Logo.png" alt="eTrade"/>
+<h:body>
+
+	<h:link outcome="index.xhtml">
+		<h:graphicImage value="/img/Logo.png" alt="home" />
+	</h:link>
+
+
 	<h2>Merci d'avoir choisi eTrade</h2>
 	<table>
 		<tr>
@@ -14,5 +21,5 @@
 			<td><a href="/eTrade_Web/inscription.xhtml">S'inscrire</a></td>
 		</tr>
 	</table>	
-</body>
+</h:body>
 </html>

@@ -31,7 +31,6 @@ public class TransactionBancaire implements java.io.Serializable {
    */
   private static final long serialVersionUID = 1L;
   private Long idTrBancaire;
-  private TypeTransactionBancaire typeTransactionBancaire;
   private Portefeuille portefeuille;
   private BigDecimal montant;
   private Date date;
@@ -40,9 +39,7 @@ public class TransactionBancaire implements java.io.Serializable {
 
   }
 
-  public TransactionBancaire(TypeTransactionBancaire typeTransactionBancaire,
-      Portefeuille portefeuille, BigDecimal montant, Date date) {
-    this.typeTransactionBancaire = typeTransactionBancaire;
+  public TransactionBancaire(Portefeuille portefeuille, BigDecimal montant, Date date) {
     this.portefeuille = portefeuille;
     this.montant = montant;
     this.date = date;
@@ -57,16 +54,6 @@ public class TransactionBancaire implements java.io.Serializable {
 
   public void setIdTrBancaire(Long idTrBancaire) {
     this.idTrBancaire = idTrBancaire;
-  }
-
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "IdTypeTrBancaire", nullable = false)
-  public TypeTransactionBancaire getTypeTransactionBancaire() {
-    return this.typeTransactionBancaire;
-  }
-
-  public void setTypeTransactionBancaire(TypeTransactionBancaire typeTransactionBancaire) {
-    this.typeTransactionBancaire = typeTransactionBancaire;
   }
 
   @ManyToOne(fetch = FetchType.LAZY)
