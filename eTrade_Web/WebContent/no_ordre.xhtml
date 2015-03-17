@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"   
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      >
-    <h:body>
-    
-    	<ui:include src="/menu.xhtml" />
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:body>
 
-    	<h1>eTrade</h1>
- 		<p>Votre compte n'a pas encore été validé, vous ne pouvez pas passer d'ordres.</p>
- 		<form action="/eTrade_Web/my_account.xhtml">
-		    <input type="submit" value="Votre compte"/>
-		</form>
-		<form action="/eTrade_Web/societes.xhtml">
-		    <input type="submit" value="Liste des sociétés"/>
-		</form>
-    </h:body>
+	<ui:include src="/menu.xhtml" />
+
+	<h1>eTrade</h1>
+	<p>Votre compte n'a pas encore été validé, vous ne pouvez pas
+		passer d'ordres.</p>
+	<form action="/eTrade_Web/my_account.xhtml">
+		<input type="submit" value="Votre compte" style="width: 120px"/>
+	</form>
+	<form action="/eTrade_Web/societes.xhtml">
+		<input type="submit" value="Liste des sociétés" style="width: 120px"/>
+	</form>
+</h:body>
 </html>

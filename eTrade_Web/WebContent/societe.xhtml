@@ -1,61 +1,84 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
->  
-      
-<h:head>
-	<title>eTrade - <h:outputText value="#{societeManagedBean.getSociete(param.s).name}" /> </title>
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:o="http://omnifaces.org/ui">
 
-</h:head> 
-<body> 
-<ui:include src="/menu.xhtml" />
+<h:head>
+	<title>eTrade - <h:outputText
+			value="#{societeManagedBean.getSociete(param.s).name}" />
+	</title>
+
+</h:head>
+<body>
+	<ui:include src="/menu.xhtml" />
 
 	<h:panelGrid id="description">
-		<h:outputText value="#{societeManagedBean.getSociete(param.s).description}" />
+		<h2>Description de #{societeManagedBean.getSociete(param.s).name}
+			:</h2>
+		<h:outputText
+			value="#{societeManagedBean.getSociete(param.s).description}" />
 	</h:panelGrid>
+	<br />
 
 	<h:panelGrid id="actualites">
- 	  <h:dataTable value="#{societeManagedBean.getSociete(param.s).actualites}" var="actu">
-  	  	<f:facet name="header">Actualités de la société #{societeManagedBean.getSociete(param.s).name} :</f:facet>
-  	  	<!-- TODO ce rendu ne fonctionne pas. -->
-  	  	<h:outputText rendered="#{empty societeManagedBean.getSociete(param.s).actualites}" >Il n'y a pas d'actualité à afficher pour cette entreprise.</h:outputText>
-  	  	<h:column>
-	  	  	<h:link value="#{actu.titre}" outcome="actualite">
-	  	  		<f:param name="a" value="#{actu.idActualite}"/>
-	  	  	</h:link>
-  	  	</h:column>
-  	  	<span style="font-size: 11px;">
-	  	  	<h:column>
-	  	  		<h:outputText value="créé le #{actu.date_creation}" />
-	  	  	</h:column>
-	  	  	<h:column>
-	  	  		<h:outputText rendered="#{not empty actu.date_modification}" value="modifié le #{actu.date_modification}" />
- 	  			</h:column>
- 	  		</span>
-  	  	<h:column>
-  	  		<!-- TODO à améliorer -->
-  	  		<!-- TODO A voir pour passer dans actualite.xhtml -->
-  	  		<!-- Si la société est celle de l'utilisateur et que l'article a été créé par ce même utilisateur, il peut le supprimer -->
-  	  		<h:panelGroup rendered="#{sessionUserManagedBean.utilisateur.societe.idSociete eq param.s and actu.utilisateur.idUtilisateur eq sessionUserManagedBean.utilisateur.idUtilisateur}">
-  	  			<h:link action="#{actualiteManagedBean.deleteActualite()}" value="Supprimer votre actualité" outcome="societe">
-  	  				<f:param name="s" value="#{param.s}"></f:param>
-  	  			</h:link> 
-  	  		</h:panelGroup>
-  	  	</h:column>
- 	  </h:dataTable>
-  	   <br/>
-  	   <!-- On ne peut créer une actualité pour la société s que si l'utilisateur est associé à s -->
-   	   <h:link rendered="#{sessionUserManagedBean.utilisateur.societe.idSociete eq param.s}" value="Créer une nouvelle actualité." outcome="actualite-creer"></h:link>
-   </h:panelGrid>
-   
-   <h:panelGrid id="ordres">
-   
-   	//Bouton vers passer_ordre.xhtml
-   	Inclure le carnet d'ordre par produit (après choix du produit)
-   </h:panelGrid>
-   
-   		
-</body> 
-</html>				
+		<h:dataTable
+			value="#{societeManagedBean.getSociete(param.s).actualites}"
+			var="actu">
+			<f:facet name="header">Actualités de #{societeManagedBean.getSociete(param.s).name} :</f:facet>
+			<!-- TODO ce rendu ne fonctionne pas. -->
+			<h:panelGrid
+				rendered="#{societeManagedBean.getSociete(param.s).actualites.size() eq 0}">
+				<p>Il n'y a pas d'actualité à afficher pour cette entreprise.</p>
+			</h:panelGrid>
+			<h:column>
+				<h:link value="#{actu.titre}" outcome="actualite">
+					<f:param name="a" value="#{actu.idActualite}" />
+				</h:link>
+			</h:column>
+			<span style="font-size: 11px;"> <h:column>
+					<h:outputText value="créé le #{actu.dateCreation}" />
+				</h:column> <h:column>
+					<h:outputText rendered="#{not empty actu.dateModification}"
+						value="modifié le #{actu.dateModification}" />
+				</h:column>
+			</span>
+		</h:dataTable>
+		<br />
+		<!-- On ne peut créer une actualité pour la société s que si l'utilisateur est membre société et associé à s -->
+		<h:link
+			rendered="#{sessionUserManagedBean.membreSociete and sessionUserManagedBean.utilisateur.societe.idSociete eq param.s}"
+			value="Créer une nouvelle actualité." outcome="actualite-creer"></h:link>
+	</h:panelGrid>
+
+	<!-- Section investisseur -->
+	<h:panelGrid rendered="#{sessionUserManagedBean.investisseur}"
+		id="ordres">
+		<h2>Passer des ordres</h2>
+		<h:link
+			value="Passer un ordre pour l'entreprise #{societeManagedBean.getSociete(param.s).name}"
+			outcome="passer_ordre">
+			<f:param name="s" value="#{param.s}" />
+		</h:link>
+		<p>Produit :</p>
+		<o:form includeRequestParams="true">
+			<h:selectOneMenu value="#{ordreManagedBean.ordre.produit.idProduit}"
+				style="width: 150px;" onchange="submit()">
+				<f:selectItem itemValue="0" itemLabel="Selectionez..."></f:selectItem>
+				<f:selectItems
+					value="#{produitManagedBean.getProduitsParSocieteId(param.s)}"
+					var="produit" itemValue="#{produit.idProduit}"
+					itemLabel="#{produit.libelleProduit}" />
+			</h:selectOneMenu>
+		</o:form>
+		<h:panelGrid
+			rendered="#{not empty ordreManagedBean.ordre.produit.idProduit and ordreManagedBean.ordre.produit.idProduit != 0}">
+			<ui:include src="/carnet_ordres.xhtml" />
+		</h:panelGrid>
+
+	</h:panelGrid>
+
+
+</body>
+</html>

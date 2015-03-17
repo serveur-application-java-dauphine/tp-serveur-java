@@ -1,6 +1,5 @@
 package fr.dauphine.etrade.services;
 
-
 import java.util.logging.Logger;
 
 import javax.ejb.Remote;
@@ -19,32 +18,26 @@ import fr.dauphine.etrade.model.Portefeuille;
 @Remote(ServicesPortefeuille.class)
 @Stateless
 @TransactionManagement(TransactionManagementType.BEAN)
-public class ServicesPortefeuilleBean implements ServicesPortefeuille{
-	
-	@PersistenceUnit
-	private EntityManagerFactory emf;
-	
-	//@PersistenceContext(unitName = "eTrade-MySql")
-	private EntityManager em;
-	//private EntityTransaction et;
-	
-	public ServicesPortefeuilleBean() {
-		em = Persistence.createEntityManagerFactory("eTrade-MySql").createEntityManager();
-		//et = em.getTransaction();
-	}
-	
-	
-	private static final Logger LOG = Logger.getLogger(ServicesPortefeuilleBean.class.getName());
-	
-	public Portefeuille getPortefeuilleByUserEmail(String email) {
-		LOG.info("Getting idPortefeuille for " + email);
-		Query q = (Query) em.createQuery("SELECT p FROM Portefeuille p INNER JOIN Utilisateur u ON p.idPortefeuille=u.idPortefeuille WHERE u.email=?");	
-		q.setParameter(1, email);
-		Portefeuille result = (Portefeuille) q.getSingleResult();
-		return result;
-	}
+public class ServicesPortefeuilleBean implements ServicesPortefeuille {
 
+  @PersistenceUnit
+  private EntityManagerFactory emf;
 
+  private EntityManager em;
 
-	
+  public ServicesPortefeuilleBean() {
+    em = Persistence.createEntityManagerFactory("eTrade-MySql").createEntityManager();
+  }
+
+  private static final Logger LOG = Logger.getLogger(ServicesPortefeuilleBean.class.getName());
+
+  public Portefeuille getPortefeuilleByUserEmail(String email) {
+    LOG.info("Getting idPortefeuille for " + email);
+    Query q = (Query) em.createQuery("SELECT p FROM Portefeuille p INNER JOIN Utilisateur u "
+        + "ON p.idPortefeuille=u.idPortefeuille WHERE u.email=?");
+    q.setParameter(1, email);
+    Portefeuille result = (Portefeuille) q.getSingleResult();
+    return result;
+  }
+
 }

@@ -1,47 +1,43 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-> 
-
-<!--  TODO : Ajouter une barre permettant de rechercher sur une société -->
-
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <h:head>
 	<title>eTrade - Liste des sociétés</title>
-	<h:outputStylesheet library="css" name="table-style.css"/>
-</h:head> 
-<body> 
-	<ui:include src="/menu.xhtml" />
-	
-	<h:inputText value="#{societeManagedBean.societe}" id="filteredSociety" />
+	<h:outputStylesheet library="css" name="table-style.css" />
+</h:head>
+<h:body>
+	<ui:include src="/menu.xhtml"/>
 
-	<p>Pour consulter les informations sur une société, cliquer ci-dessous sur la société désirée :</p>
-		<table>
-			<tr>
-				<td>	
-					<h:dataTable value="#{societeManagedBean.listSocietes}" var="s"
-						styleClass="order-table"
-		    			headerClass="order-table-header"
-		    			rowClasses="order-table-odd-row,order-table-even-row"
-					>
-					   <h:column>    				
-					      <f:facet name="header">Nom de la société</f:facet>    				
+	<p>Filtrez ci-dessous sur votre société :</p>
+	<h:form>
+		<h:inputText id="filteredSociety" onchange="submit()" value="#{societeManagedBean.name}" />
+	</h:form>
+
+	<p>Pour consulter les informations sur une société, cliquer
+		ci-dessous sur la société désirée :</p>
+	<table>
+		<tr>
+			<td><h:dataTable value="#{societeManagedBean.listSocietes}"
+					var="s" styleClass="order-table" headerClass="order-table-header"
+					rowClasses="order-table-odd-row,order-table-even-row">
+					<h:column>
+						<f:facet name="header">Nom de la société</f:facet>    				
 					      #{s.name}
 					   </h:column>
-					   <h:column>
-					   	  <f:facet name="header">Lien vers sa page</f:facet>
-					   		<h:link value="#{s.name}" outcome="societe" >
-					  			<f:param name="s" value="#{s.idSociete}"/>
-					  		</h:link>
-					   </h:column>
-					</h:dataTable>
-				</td>
-			</tr>
-		</table>
-		
-		<br/>
-		
-</body> 
+					<h:column>
+						<f:facet name="header">Lien vers sa page</f:facet>
+						<h:link value="#{s.name}" outcome="societe">
+							<f:param name="s" value="#{s.idSociete}" />
+						</h:link>
+					</h:column>
+				</h:dataTable></td>
+		</tr>
+	</table>
+
+	<br />
+
+</h:body>
 </html>

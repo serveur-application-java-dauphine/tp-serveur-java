@@ -3,13 +3,15 @@ package fr.dauphine.etrade.model;
 // default package
 // Generated 11 mars 2015 16:13:53 by Hibernate Tools 4.0.0
 
+import static javax.persistence.GenerationType.IDENTITY;
+
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -22,53 +24,54 @@ import javax.persistence.UniqueConstraint;
 @Table(name = "Status_Ordre", uniqueConstraints = @UniqueConstraint(columnNames = "Libelle"))
 public class StatusOrdre implements java.io.Serializable {
 
-	/**
-	 * Default serialVersionUID
-	 */
-	private static final long serialVersionUID = 1L;
-	private Long idStatusOrder;
-	private String libelle;
-	private Set<Ordre> ordres = new HashSet<Ordre>(0);
+  /**
+   * Default serialVersionUID
+   */
+  private static final long serialVersionUID = 1L;
+  private Long idStatusOrder;
+  private String libelle;
+  private Set<Ordre> ordres = new HashSet<Ordre>(0);
 
-	public StatusOrdre() {
-	}
+  public StatusOrdre() {
 
-	public StatusOrdre(String libelle) {
-		this.libelle = libelle;
-	}
+  }
 
-	public StatusOrdre(String libelle, Set<Ordre> ordres) {
-		this.libelle = libelle;
-		this.ordres = ordres;
-	}
+  public StatusOrdre(String libelle) {
+    this.libelle = libelle;
+  }
 
-	@Id
-	@GeneratedValue(strategy = IDENTITY)
-	@Column(name = "IdStatusOrder", unique = true, nullable = false)
-	public Long getIdStatusOrder() {
-		return this.idStatusOrder;
-	}
+  public StatusOrdre(String libelle, Set<Ordre> ordres) {
+    this.libelle = libelle;
+    this.ordres = ordres;
+  }
 
-	public void setIdStatusOrder(Long idStatusOrder) {
-		this.idStatusOrder = idStatusOrder;
-	}
+  @Id
+  @GeneratedValue(strategy = IDENTITY)
+  @Column(name = "IdStatusOrder", unique = true, nullable = false)
+  public Long getIdStatusOrder() {
+    return this.idStatusOrder;
+  }
 
-	@Column(name = "Libelle", unique = true, nullable = false, length = 20)
-	public String getLibelle() {
-		return this.libelle;
-	}
+  public void setIdStatusOrder(Long idStatusOrder) {
+    this.idStatusOrder = idStatusOrder;
+  }
 
-	public void setLibelle(String libelle) {
-		this.libelle = libelle;
-	}
+  @Column(name = "Libelle", unique = true, nullable = false, length = 20)
+  public String getLibelle() {
+    return this.libelle;
+  }
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "statusOrdre")
-	public Set<Ordre> getOrdres() {
-		return this.ordres;
-	}
+  public void setLibelle(String libelle) {
+    this.libelle = libelle;
+  }
 
-	public void setOrdres(Set<Ordre> ordres) {
-		this.ordres = ordres;
-	}
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "statusOrdre")
+  public Set<Ordre> getOrdres() {
+    return this.ordres;
+  }
+
+  public void setOrdres(Set<Ordre> ordres) {
+    this.ordres = ordres;
+  }
 
 }

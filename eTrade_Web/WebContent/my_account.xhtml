@@ -1,98 +1,134 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:c="http://java.sun.com/jsp/jstl/core"> 
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
 
 <h:head>
 	<title>eTrade - Mon compte</title>
-</h:head> 
+</h:head>
 <h:body>
-<ui:include src="/menu.xhtml" />
- 
+	<ui:include src="/menu.xhtml" />
+
 
 	<h1>Mon compte</h1>
-	
-	        <h:outputLabel for="firstname">Prénom </h:outputLabel>
-	        <h:inputText id="firstname" value="#{sessionUserManagedBean.utilisateur.firstname}" required="true" size="20" maxlength="60" />
-			<br/><br />
-			<h:outputLabel for="lastname">Nom </h:outputLabel>
-			<h:inputText id="lastname" value="#{sessionUserManagedBean.utilisateur.lastname}" required="true" size="20" maxlength="60" />
-			<br/><br />
-			<h:outputLabel for="mail">Adresse mail </h:outputLabel>
-			<h:inputText id="mail" value="#{sessionUserManagedBean.utilisateur.email}" required="true" size="20" maxlength="60" />
-			<br/><br />
-			
-			<h:outputLabel for="birthDate">Date de naissance (#{applicationManagedBean.DATE_PATTERN}) <span class="requis">*</span></h:outputLabel>
-	        <h:inputText id="birthDate" value="#{sessionUserManagedBean.utilisateur.birthdate}" required="true" size="10" maxlength="10" >
-	        	<f:convertDateTime pattern="#{applicationManagedBean.DATE_PATTERN}"/>
-	        	</h:inputText>
-	        <h:message id="birthDateMessage" for="birthDate" errorClass="erreur" />
-	        <br /><br />
-	        
-	        <h:outputLabel for="address">Adresse <span class="requis">*</span></h:outputLabel>
-	        <h:inputTextarea id="address" value="#{sessionUserManagedBean.utilisateur.adress}" required="true" size="25" maxlength="100" />
-	        <h:message id="addressMessage" for="address" errorClass="erreur" />
-	        <br/><br/>
-	        
-	        <h:outputLabel for="zipCode">Code postal <span class="requis">*</span></h:outputLabel>
-	        <h:inputText id="zipCode" value="#{sessionUserManagedBean.utilisateur.zipcode}" required="true" size="5" maxlength="5" />
-	        <h:message id="zipCodeMessage" for="zipCode" errorClass="erreur" />
-	        <br /><br />
-	        
-	        <h:outputLabel for="city">Ville <span class="requis">*</span></h:outputLabel>
-	        <h:inputText id="city" value="#{sessionUserManagedBean.utilisateur.city}" required="true" size="10" />
-	        <h:message id="cityMessage" for="city" errorClass="erreur" />
-	        <br /><br />
-	        
-	        <h:outputLabel value="Rôle : #{sessionUserManagedBean.utilisateur.role.libelle}"/>
-	        
-	        <c:if test="#{sessionUserManagedBean.utilisateur.validRole==false}">
-	        <br />
-	        <h:outputLabel value="Votre Role n'a pas encore été validé par un administrateur!" style="color:red"/>
-	        </c:if>
-	        <br /><br />
-	        
-	        
 
-			<c:if test="#{sessionUserManagedBean.utilisateur.societe!=null}">
-			<h:outputLabel value="Societe : #{sessionUserManagedBean.utilisateur.societe.name}" />
-			<br /><br />
-			</c:if>
-			
-			<c:if test="#{sessionUserManagedBean.utilisateur.portefeuille!=null}">
-			<h:link value="#{sessionUserManagedBean.utilisateur.portefeuille.idPortefeuille}" outcome="portefeuille.xhml"/>
-	        <br /><br />
-			</c:if>
-			
-			<!-- Si l'utilisateur est un membre société -->
-			
-			<h:panelGroup rendered="#{sessionUserManagedBean.utilisateur.role.code} == #{applicationManagedBean.ROLE_CODE_SOCIETE} and sessionUserManagedBean.utilisateur.societe.idSociete == null}">
-				<p>Choisissez votre société :</p>
-				<h:selectOneMenu value="#{societeManagedBean.societe}" style="width: 150px;">
-					<f:selectItem itemLabel="---" itemValue="#{null}" />
-		   			<f:selectItems value="#{societeManagedBean.listSocietes}" var="s" 
-		   				itemValue="#{s.idSociete}" itemLabel="#{s.name}"/> 
-	   			</h:selectOneMenu>
-				<p>Si vous ne trouvez pas votre société, créez-la en cliquant sur le bouton ci-dessous :</p>
-				<h:commandButton value="Créer votre société" type="button" onclick="document.getElementById('creationSocieteForm').style.display = 'inline'" />
-				<br/><br/>
-				<h:form id="creationSocieteForm" style="display:none;">
-					<h:outputLabel for="companyName">Nom de l'entreprise<span class="requis">*</span></h:outputLabel>
-			        <h:inputText id="companyName" required="true" size="50" maxlength="100" value="#{societeManagedBean.societe.name}"/>
-			        <br/>
-			        <h:outputLabel for="companyDescription">Description de l'entreprise</h:outputLabel>
-			       	<br/>
-			        <h:inputTextarea id="companyDescription" rows="10" cols="50" maxlength="300" value="#{societeManagedBean.societe.description}" />
-			        <br/>
-			        <h:commandButton value="Créer la société" action="#{societeManagedBean.createSociete}" />
-			        <h:message id="nomMessage" for="nom" errorClass="erreur" />
-				</h:form>
-			
-			</h:panelGroup>
-			<br/>
-	        <h:commandButton action="#{sessionUserManagedBean.modifier()}" value="Modifier votre compte" />
-			
+	<table>
+	<tr>
+		<td><h:outputLabel for="firstname">Prénom </h:outputLabel></td>
+		<td><h:inputText id="firstname"
+		value="#{sessionUserManagedBean.utilisateur.firstname}" style="width: 150px;" 
+		required="true" size="20" maxlength="60" /></td>
+	</tr>
+	<tr>
+		<td><h:outputLabel for="lastname">Nom </h:outputLabel></td>
+		<td><h:inputText id="lastname" style="width: 150px;" 
+		value="#{sessionUserManagedBean.utilisateur.lastname}" required="true"
+		size="20" maxlength="60" /></td>
+	</tr>
+	<tr>
+		<td><h:outputLabel for="mail">Adresse mail </h:outputLabel></td>
+		<td><h:inputText id="mail"
+		value="#{sessionUserManagedBean.utilisateur.email}" required="true" style="width: 150px;" 
+		size="20" maxlength="60" /></td>
+	</tr>
+	<tr>
+		<td><h:outputLabel for="birthDate">Date de naissance (#{applicationManagedBean.DATE_PATTERN}) <span
+			class="requis">*</span></h:outputLabel></td>
+		<td><h:inputText id="birthDate"
+		value="#{sessionUserManagedBean.utilisateur.birthdate}" style="width: 150px;" 
+		required="true" size="10" maxlength="10">
+		<f:convertDateTime pattern="#{applicationManagedBean.DATE_PATTERN}" />
+		</h:inputText>
+		<h:message id="birthDateMessage" for="birthDate" errorClass="erreur" /></td>
+	</tr>
+	<tr>
+		<td><h:outputLabel for="address">Adresse <span
+			class="requis">*</span>
+			</h:outputLabel></td>
+		<td><h:inputTextarea id="address"
+		value="#{sessionUserManagedBean.utilisateur.adress}" required="true" style="width: 148px;" 
+		size="25" maxlength="100" />
+		<h:message id="addressMessage" for="address" errorClass="erreur" /></td>
+	</tr>
+	<tr>
+		<td><h:outputLabel for="zipCode">Code postal <span
+			class="requis">*</span>
+			</h:outputLabel></td>
+		<td><h:inputText id="zipCode"
+		value="#{sessionUserManagedBean.utilisateur.zipcode}" required="true" style="width: 150px;" 
+		size="5" maxlength="5" />
+		<h:message id="zipCodeMessage" for="zipCode" errorClass="erreur" /></td>
+	</tr>
+	<tr>
+		<td><h:outputLabel for="city">Ville <span class="requis">*</span>
+			</h:outputLabel></td>
+		<td><h:inputText id="city"
+		value="#{sessionUserManagedBean.utilisateur.city}" required="true" style="width: 150px;" 
+		size="10" />
+		<h:message id="cityMessage" for="city" errorClass="erreur" /></td>
+	</tr>
+	<tr>
+		<td><h:outputLabel
+			value="Rôle : #{sessionUserManagedBean.utilisateur.role.libelle}" /></td>
+		<td><c:if test="#{sessionUserManagedBean.utilisateur.validRole==false}">
+		<h:outputLabel
+			value="Votre Role n'a pas encore été validé par un administrateur!"
+			style="color:red" />
+		</c:if><c:if test="#{sessionUserManagedBean.utilisateur.societe!=null}">
+		<h:outputLabel
+			value="Societe : #{sessionUserManagedBean.utilisateur.societe.name}" />
+		</c:if></td>
+	</tr>
+	<tr>
+		<td><c:if test="#{sessionUserManagedBean.utilisateur.portefeuille!=null}">
+		<h:link
+			value="Votre portefeuille"
+			outcome="portefeuille.xhml" />
+		</c:if></td>
+		<td></td>
+	</tr>
+	</table>
+	
+	<!-- Si l'utilisateur est un membre société -->
+
+	<h:panelGroup
+		rendered="#{sessionUserManagedBean.utilisateur.role.code} == #{applicationManagedBean.ROLE_CODE_SOCIETE} and sessionUserManagedBean.utilisateur.societe.idSociete == null}">
+		<p>Choisissez votre société :</p>
+		<h:selectOneMenu value="#{societeManagedBean.societe}"
+			style="width: 150px;">
+			<f:selectItem itemLabel="---" itemValue="#{null}" />
+			<f:selectItems value="#{societeManagedBean.listSocietes}" var="s"
+				itemValue="#{s.idSociete}" itemLabel="#{s.name}" />
+		</h:selectOneMenu>
+		<p>Si vous ne trouvez pas votre société, créez-la en cliquant sur
+			le bouton ci-dessous :</p>
+		<h:commandButton value="Créer votre société" type="button"
+			onclick="document.getElementById('creationSocieteForm').style.display = 'inline'" />
+		<br />
+		<br />
+		<h:form id="creationSocieteForm" style="display:none;">
+			<h:outputLabel for="companyName">Nom de l'entreprise<span
+					class="requis">*</span>
+			</h:outputLabel>
+			<h:inputText id="companyName" required="true" size="50"
+				maxlength="100" value="#{societeManagedBean.societe.name}" />
+			<br />
+			<h:outputLabel for="companyDescription">Description de l'entreprise</h:outputLabel>
+			<br />
+			<h:inputTextarea id="companyDescription" rows="10" cols="50"
+				maxlength="300" value="#{societeManagedBean.societe.description}" />
+			<br />
+			<h:commandButton value="Créer la société"
+				action="#{societeManagedBean.createSociete}" />
+			<h:message id="nomMessage" for="nom" errorClass="erreur" />
+		</h:form>
+
+	</h:panelGroup>
+	<br />
+	<h:commandButton action="#{sessionUserManagedBean.modifier()}"
+		value="Modifier votre compte" />
+
 </h:body>
 </html>

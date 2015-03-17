@@ -13,7 +13,7 @@ import fr.dauphine.etrade.model.Utilisateur;
 
 @ManagedBean
 @SessionScoped
-public class SessionUserManagedBean implements Serializable{
+public class SessionUserManagedBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -21,14 +21,15 @@ public class SessionUserManagedBean implements Serializable{
 
 	@EJB
 	private ServicesUtilisateur su;
-	
+
 	/**
-	 * @return the utilisateur avec son Role, sa Societe et son Portefeuille
+	 * @return the user with its Role, his society and his portefolio
 	 */
 	public Utilisateur getUtilisateur() {
-		if (utilisateur == null){
-			Principal user = FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal();
-			if (user!=null){
+		if (utilisateur == null) {
+			Principal user = FacesContext.getCurrentInstance()
+					.getExternalContext().getUserPrincipal();
+			if (user != null) {
 				System.out.println("recup user");
 				utilisateur = su.getUtilisateurByEmail(user.getName());
 			}
@@ -37,37 +38,69 @@ public class SessionUserManagedBean implements Serializable{
 	}
 
 	/**
-	 * @param utilisateur the utilisateur to set
+	 * @param utilisateur
+	 *            the utilisateur to set
 	 */
 	public void setUtilisateur(Utilisateur utilisateur) {
 		this.utilisateur = utilisateur;
 	}
-	
-	public void modifier(){
+
+	public void modifier() {
 		su.updateUtilisateur(utilisateur);
 	}
-	
-	public boolean isAdministrateur(){
-		if (utilisateur==null)
+
+	/**
+	 * Checks if the user is an administrator or not
+	 * 
+	 * @return true if he is an administrator
+	 */
+	public boolean isAdministrateur() {
+		if (utilisateur == null)
 			return false;
-		return utilisateur.getRole().getCode().equals(Utilities.getManagedBean(ApplicationManagedBean.class).getROLE_CODE_ADMINISTRATEUR());
+		return utilisateur
+				.getRole()
+				.getCode()
+				.equals(Utilities.getManagedBean(ApplicationManagedBean.class)
+						.getROLE_CODE_ADMINISTRATEUR());
 	}
-	
-	public boolean isMembreSociete(){
-		if (utilisateur==null)
+
+	/**
+	 * Checks if the user is a society member or not
+	 * 
+	 * @return true if he is a society member
+	 */
+	public boolean isMembreSociete() {
+		if (utilisateur == null)
 			return false;
-		return utilisateur.getRole().getCode().equals(Utilities.getManagedBean(ApplicationManagedBean.class).getROLE_CODE_SOCIETE());
+		return utilisateur
+				.getRole()
+				.getCode()
+				.equals(Utilities.getManagedBean(ApplicationManagedBean.class)
+						.getROLE_CODE_SOCIETE());
 	}
-	
-	public boolean isInvestisseur(){
-		if (utilisateur==null)
+
+	/**
+	 * Checks if the user is an investor or not
+	 * 
+	 * @return true if he is an investor
+	 */
+	public boolean isInvestisseur() {
+		if (utilisateur == null)
 			return false;
-		return utilisateur.getRole().getCode().equals(Utilities.getManagedBean(ApplicationManagedBean.class).getROLE_CODE_INVESTISSEUR());
+		return utilisateur
+				.getRole()
+				.getCode()
+				.equals(Utilities.getManagedBean(ApplicationManagedBean.class)
+						.getROLE_CODE_INVESTISSEUR());
 	}
-	
-	public void logOut(){
-		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-	    Utilities.redirect("index.xhtml");
+
+	/**
+	 * Invalidates the user session, which is equivalent to log him out
+	 */
+	public void logOut() {
+		FacesContext.getCurrentInstance().getExternalContext()
+				.invalidateSession();
+		Utilities.redirect("index.xhtml");
 	}
 
 }

@@ -3,13 +3,15 @@ package fr.dauphine.etrade.model;
 // default package
 // Generated 11 mars 2015 16:13:53 by Hibernate Tools 4.0.0
 
+import static javax.persistence.GenerationType.IDENTITY;
+
 import java.math.BigDecimal;
 import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -24,62 +26,63 @@ import javax.persistence.TemporalType;
 @Table(name = "Transaction_bancaire")
 public class TransactionBancaire implements java.io.Serializable {
 
-	/**
-	 * Default serialVersionUID
-	 */
-	private static final long serialVersionUID = 1L;
-	private Long idTrBancaire;
-	private Portefeuille portefeuille;
-	private BigDecimal montant;
-	private Date date;
+  /**
+   * Default serialVersionUID
+   */
+  private static final long serialVersionUID = 1L;
+  private Long idTrBancaire;
+  private Portefeuille portefeuille;
+  private BigDecimal montant;
+  private Date date;
 
-	public TransactionBancaire() {
-	}
+  public TransactionBancaire() {
 
-	public TransactionBancaire(Portefeuille portefeuille, BigDecimal montant, Date date) {
-		this.portefeuille = portefeuille;
-		this.montant = montant;
-		this.date = date;
-	}
+  }
 
-	@Id
-	@GeneratedValue(strategy = IDENTITY)
-	@Column(name = "IdTrBancaire", unique = true, nullable = false)
-	public Long getIdTrBancaire() {
-		return this.idTrBancaire;
-	}
+  public TransactionBancaire(Portefeuille portefeuille, BigDecimal montant, Date date) {
+    this.portefeuille = portefeuille;
+    this.montant = montant;
+    this.date = date;
+  }
 
-	public void setIdTrBancaire(Long idTrBancaire) {
-		this.idTrBancaire = idTrBancaire;
-	}
+  @Id
+  @GeneratedValue(strategy = IDENTITY)
+  @Column(name = "IdTrBancaire", unique = true, nullable = false)
+  public Long getIdTrBancaire() {
+    return this.idTrBancaire;
+  }
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "IdPortefeuille", nullable = false)
-	public Portefeuille getPortefeuille() {
-		return this.portefeuille;
-	}
+  public void setIdTrBancaire(Long idTrBancaire) {
+    this.idTrBancaire = idTrBancaire;
+  }
 
-	public void setPortefeuille(Portefeuille portefeuille) {
-		this.portefeuille = portefeuille;
-	}
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "IdPortefeuille", nullable = false)
+  public Portefeuille getPortefeuille() {
+    return this.portefeuille;
+  }
 
-	@Column(name = "Montant", nullable = false, precision = 8)
-	public BigDecimal getMontant() {
-		return this.montant;
-	}
+  public void setPortefeuille(Portefeuille portefeuille) {
+    this.portefeuille = portefeuille;
+  }
 
-	public void setMontant(BigDecimal montant) {
-		this.montant = montant;
-	}
+  @Column(name = "Montant", nullable = false, precision = 8)
+  public BigDecimal getMontant() {
+    return this.montant;
+  }
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "Date", nullable = false, length = 19)
-	public Date getDate() {
-		return this.date;
-	}
+  public void setMontant(BigDecimal montant) {
+    this.montant = montant;
+  }
 
-	public void setDate(Date date) {
-		this.date = date;
-	}
+  @Temporal(TemporalType.TIMESTAMP)
+  @Column(name = "Date", nullable = false, length = 19)
+  public Date getDate() {
+    return this.date;
+  }
+
+  public void setDate(Date date) {
+    this.date = date;
+  }
 
 }

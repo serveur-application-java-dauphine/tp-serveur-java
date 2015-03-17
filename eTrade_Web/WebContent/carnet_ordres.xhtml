@@ -17,30 +17,22 @@
 	  	<table>
 		<tr>
 			<td valign="top">
-			<h:dataTable rows="5" value="#{ordreManagedBean.ordresAchatParProduit(41)}" var="o"
+			<h:dataTable rows="5" value="#{fixingManagedBean.ordresAchatParProduit(ordreManagedBean.ordre.produit.idProduit)}" var="o"
 				styleClass="order-table"
     			headerClass="order-table-header"
     			rowClasses="order-table-odd-row,order-table-even-row">
-    			<h:column>    				
-				      <f:facet name="header">Date</f:facet>    				
-				      #{o.date.toString()}
-				   </h:column>
-				   <h:column>    				
-				      <f:facet name="header">Type</f:facet>    				
-				      #{o.typeOrdre.libelle}
-				   </h:column>
-				   <h:column>
-				      <f:facet name="header">Quantité</f:facet>
-				      #{o.quantite}
-				   </h:column>
-				   <h:column>
-				      <f:facet name="header">Prix</f:facet>
-				      #{o.prix}
-				   </h:column>
+			   <h:column>
+			      <f:facet name="header">Quantité</f:facet>
+			      #{o.quantiteNonExecute}
+			   </h:column>
+			   <h:column>
+			      <f:facet name="header">Prix</f:facet>
+			      #{o.prix}
+			   </h:column>
 			</h:dataTable>
 			</td>
 			<td valign="top">
-			<h:dataTable rows="5" value="#{ordreManagedBean.ordresVenteParProduit(41)}" var="o"
+			<h:dataTable rows="5" value="#{fixingManagedBean.ordresVenteParProduit(ordreManagedBean.ordre.produit.idProduit)}" var="o"
 				styleClass="order-table"
     			headerClass="order-table-header"
     			rowClasses="order-table-odd-row,order-table-even-row">
@@ -50,20 +42,13 @@
 			   	</h:column>
 			   	<h:column>
 			      <f:facet name="header">Quantité</f:facet>
-			      #{o.quantite}
-			   	</h:column>
-			   	<h:column>    				
-			      <f:facet name="header">Type</f:facet>    				
-			      #{o.typeOrdre.libelle}
-			   	</h:column>
-			   	<h:column>    				
-			   	   <f:facet name="header">Date</f:facet>    				
-			      #{o.date.toString()}
-			   	</h:column>				   
+			      #{o.quantiteNonExecute}
+			   	</h:column>		   
 			</h:dataTable>
 			</td>
 		</tr>
+		
 		</table>
 	</h:form>
-    </h:body>
+</h:body>
 </html>

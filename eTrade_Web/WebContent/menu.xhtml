@@ -1,28 +1,35 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-     >
-      
-      
-      <h:link outcome="index.xhtml"> 
-    	<h:graphicImage value="/img/Logo.png" alt="home" />
-		</h:link>
-      
-       <h:panelGroup rendered="#{sessionUserManagedBean.utilisateur!=null}">
-   <h:link rendered="#{sessionUserManagedBean.administrateur}" href="users.xhtml" value="Users"/>
-   <h:link rendered="#{sessionUserManagedBean.administrateur}" href="societes.xhtml" value="Societes"/>
-	<h:link rendered="#{sessionUserManagedBean.investisseur}" href="portefeuille.xhtml" value="Mon Portefeuille"/>
-	<h:link rendered="#{sessionUserManagedBean.investisseur}" href="passer_ordre.xhtml" value="Passer Ordre"/>
-	<h:link href="/logout" value="Se déconnecter" />
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<h:outputStylesheet library="css" name="table-style.css" />
+</h:head>
+<h:body>
+<h:link outcome="index.xhtml">
+	<h:graphicImage value="/img/Logo.png" alt="home" />
+</h:link>
+<h:panelGrid id="panel_1" rendered="#{sessionUserManagedBean.utilisateur!=null}" columns="8"
+  cellpadding="10" cellspacing="2" styleClass="order-table"
+  rowClasses="order-table-header-row">
+      <h:link href="my_account" value="Bonjour, #{sessionUserManagedBean.utilisateur.firstname}" width="120px" />
+      <td style="width: 400px"></td>
+      <h:link rendered="#{sessionUserManagedBean.administrateur}" outcome="users" value="Users" width="120px" />
+      <h:link outcome="societes" value="Societes" width="120px" />
+      <h:link rendered="#{sessionUserManagedBean.investisseur}"
+				outcome="portefeuille" value="Mon Portefeuille" width="120px" />
+	  <h:link rendered="#{sessionUserManagedBean.investisseur}"
+				outcome="passer_ordre" value="Passer Ordre" width="120px"/>
+	  <a href="/eTrade_Web/logout">Se déconnecter</a>
+</h:panelGrid>
 
-         <br/>
-         <a href="my_account.xhtml" style="float:right">Bonjour, #{sessionUserManagedBean.utilisateur.fullName}</a>
-    </h:panelGroup> 
- 
-    <h:panelGroup rendered="#{sessionUserManagedBean.utilisateur==null}">
-    <h:link outcome="my_account.xhtml" value="Se logger" style="float:right"/>
-    <h:link outcome="inscription.xhtml" value="S'inscrire" style="float:right"/>
-    </h:panelGroup>
+<br/><br/>
+
+<h:panelGrid id="panel_2" rendered="#{sessionUserManagedBean.utilisateur==null}" columns="2"
+  cellpadding="10" cellspacing="2" styleClass="order-table" style="float:right">
+      <h:link outcome="my_account.xhtml" value="Se connecter"/>
+      <h:link outcome="inscription.xhtml" value="S'inscrire"/>
+</h:panelGrid>
+</h:body>
 </html>

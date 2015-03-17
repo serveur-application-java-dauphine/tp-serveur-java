@@ -17,66 +17,66 @@ import fr.dauphine.etrade.model.TypeProduit;
 @ManagedBean
 @RequestScoped
 public class ProduitManagedBean implements Serializable {
-	
+
 	private Produit produit;
 	private List<Produit> produitsParSocieteId;
-	
+
 	/**
 	 * Default serialVersionUID
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	@EJB
 	private ServicesProduit sp;
-	
-	private static Logger LOG = Logger.getLogger(ProduitManagedBean.class.getName());
-	
-	
-	public void createProduct(){
-		LOG.info("Ajout d'un nouveau produit en base : " + produit.getIdProduit());		
+
+	private static Logger LOG = Logger.getLogger(ProduitManagedBean.class
+			.getName());
+
+	public void createProduct() {
+		LOG.info("Ajout d'un nouveau produit en base : "
+				+ produit.getIdProduit());
 		sp.addProduit(produit);
 	}
-	
-	public void removeProduit(Produit p){
-		LOG.info("Suppression d'un produit : " +p.getIdProduit());
+
+	public void removeProduit(Produit p) {
+		LOG.info("Suppression d'un produit : " + p.getIdProduit());
 		sp.delProduit(p);
 	}
-	
-	public void valueChangeMethod(ValueChangeEvent event){
-		//TODO
+
+	public void valueChangeMethod(ValueChangeEvent event) {
+		// TODO
 	}
+
 	/**
-	 * @return The list of the available products fors societies
+	 * @return The list of the available products for societies
 	 * 
-	 * Can be called by an administrator and an investor profile.
+	 *         Can be called by an administrator and an investor profile.
 	 */
-	public List<Produit> getProduitsParSocieteId(long idSociete){
-		if(idSociete==0){
+	public List<Produit> getProduitsParSocieteId(long idSociete) {
+		if (idSociete == 0) {
 			return null;
-		} else if(produitsParSocieteId==null){
+		} else if (produitsParSocieteId == null) {
 			return sp.getListProductBySocieteId(idSociete);
 		}
 		return produitsParSocieteId;
 	}
+
 	public void setProduitsParSocieteId(List<Produit> produitsParSocieteId) {
 		this.produitsParSocieteId = produitsParSocieteId;
 	}
-	
 
 	public Produit getProduit() {
-		if(produit==null){
-			produit=new Produit();
+		if (produit == null) {
+			produit = new Produit();
 			produit.setSociete(new Societe());
 			produit.setTypeProduit(new TypeProduit());
 		}
-			
+
 		return produit;
 	}
 
 	public void setProduit(Produit produit) {
 		this.produit = produit;
 	}
-
-
 
 }
