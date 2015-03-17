@@ -6,5 +6,5 @@ import fr.dauphine.etrade.model.Portefeuille;
 
 @Remote
 public interface ServicesPortefeuille {
-	Portefeuille getPortefeuilleByUserEmail(String email);
+  Portefeuille getPortefeuilleByUserEmail(String email);
 }

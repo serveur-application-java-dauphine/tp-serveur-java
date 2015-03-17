@@ -24,80 +24,77 @@ import javax.persistence.Table;
 @Table(name = "Portefeuille")
 public class Portefeuille implements java.io.Serializable {
 
-	/**
-	 * Default serialVersionUID
-	 */
-	private static final long serialVersionUID = 1L;
-	private long idPortefeuille;
-	private String description;
-	private Set<Ordre> ordres = new HashSet<Ordre>(0);
-	private Set<TransactionBancaire> transactionBancaires = new HashSet<TransactionBancaire>(
-			0);
-	private Utilisateur utilisateurs ;
+  /**
+   * Default serialVersionUID
+   */
+  private static final long serialVersionUID = 1L;
+  private long idPortefeuille;
+  private String description;
+  private Set<Ordre> ordres = new HashSet<Ordre>(0);
+  private Set<TransactionBancaire> transactionBancaires = new HashSet<TransactionBancaire>(0);
+  private Utilisateur utilisateurs;
 
-	public Portefeuille() {
-	}
+  public Portefeuille() {
+  }
 
-	public Portefeuille(long idPortefeuille) {
-		this.idPortefeuille = idPortefeuille;
-	}
+  public Portefeuille(long idPortefeuille) {
+    this.idPortefeuille = idPortefeuille;
+  }
 
-	public Portefeuille(long idPortefeuille, String description,
-			Set<Ordre> ordres, Set<TransactionBancaire> transactionBancaires,
-			Utilisateur utilisateurs) {
-		this.idPortefeuille = idPortefeuille;
-		this.description = description;
-		this.ordres = ordres;
-		this.transactionBancaires = transactionBancaires;
-		this.utilisateurs = utilisateurs;
-	}
+  public Portefeuille(long idPortefeuille, String description, Set<Ordre> ordres,
+      Set<TransactionBancaire> transactionBancaires, Utilisateur utilisateurs) {
+    this.idPortefeuille = idPortefeuille;
+    this.description = description;
+    this.ordres = ordres;
+    this.transactionBancaires = transactionBancaires;
+    this.utilisateurs = utilisateurs;
+  }
 
-	@Id
-	@GeneratedValue(strategy = IDENTITY)
-	@Column(name = "IdPortefeuille", unique = true, nullable = false)
-	public long getIdPortefeuille() {
-		return this.idPortefeuille;
-	}
+  @Id
+  @GeneratedValue(strategy = IDENTITY)
+  @Column(name = "IdPortefeuille", unique = true, nullable = false)
+  public long getIdPortefeuille() {
+    return this.idPortefeuille;
+  }
 
-	public void setIdPortefeuille(long idPortefeuille) {
-		this.idPortefeuille = idPortefeuille;
-	}
+  public void setIdPortefeuille(long idPortefeuille) {
+    this.idPortefeuille = idPortefeuille;
+  }
 
-	@Column(name = "Description", length = 200)
-	public String getDescription() {
-		return this.description;
-	}
+  @Column(name = "Description", length = 200)
+  public String getDescription() {
+    return this.description;
+  }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+  public void setDescription(String description) {
+    this.description = description;
+  }
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "portefeuille")
-	public Set<Ordre> getOrdres() {
-		return this.ordres;
-	}
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "portefeuille")
+  public Set<Ordre> getOrdres() {
+    return this.ordres;
+  }
 
-	public void setOrdres(Set<Ordre> ordres) {
-		this.ordres = ordres;
-	}
+  public void setOrdres(Set<Ordre> ordres) {
+    this.ordres = ordres;
+  }
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "portefeuille")
-	public Set<TransactionBancaire> getTransactionBancaires() {
-		return this.transactionBancaires;
-	}
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "portefeuille")
+  public Set<TransactionBancaire> getTransactionBancaires() {
+    return this.transactionBancaires;
+  }
 
-	public void setTransactionBancaires(
-			Set<TransactionBancaire> transactionBancaires) {
-		this.transactionBancaires = transactionBancaires;
-	}
+  public void setTransactionBancaires(Set<TransactionBancaire> transactionBancaires) {
+    this.transactionBancaires = transactionBancaires;
+  }
 
-	@OneToOne(mappedBy = "portefeuille")
-	public Utilisateur getUtilisateurs() {
-		return this.utilisateurs;
-	}
+  @OneToOne(mappedBy = "portefeuille")
+  public Utilisateur getUtilisateurs() {
+    return this.utilisateurs;
+  }
 
-	public void setUtilisateurs(Utilisateur utilisateurs) {
-		this.utilisateurs = utilisateurs;
-	}
+  public void setUtilisateurs(Utilisateur utilisateurs) {
+    this.utilisateurs = utilisateurs;
+  }
 
 }

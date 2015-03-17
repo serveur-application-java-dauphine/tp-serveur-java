@@ -1,195 +1,191 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
-  <display-name>eTrade</display-name>
-  <welcome-file-list>
-    <welcome-file>index.xhtml</welcome-file>
-  </welcome-file-list>
-  <context-param>
-    <description>State saving method: 'client' or 'server' (=default). See JSF Specification 2.5.2</description>
-    <param-name>javax.faces.STATE_SAVING_METHOD</param-name>
-    <param-value>client</param-value>
-  </context-param>
-  <context-param>
-    <param-name>javax.faces.application.CONFIG_FILES</param-name>
-    <param-value>/WEB-INF/faces-config.xml</param-value>
-  </context-param>
-  <servlet>
-    <servlet-name>Faces Servlet</servlet-name>
-    <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
-    <load-on-startup>1</load-on-startup>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>Faces Servlet</servlet-name>
-    <url-pattern>*.xhtml</url-pattern>
-  </servlet-mapping>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	id="WebApp_ID" version="3.0">
+	<display-name>eTrade</display-name>
+	<welcome-file-list>
+		<welcome-file>index.xhtml</welcome-file>
+	</welcome-file-list>
+	<context-param>
+		<description>State saving method: 'client' or 'server' (=default). See JSF Specification 2.5.2</description>
+		<param-name>javax.faces.STATE_SAVING_METHOD</param-name>
+		<param-value>client</param-value>
+	</context-param>
+	<context-param>
+		<param-name>javax.faces.application.CONFIG_FILES</param-name>
+		<param-value>/WEB-INF/faces-config.xml</param-value>
+	</context-param>
+	<servlet>
+		<servlet-name>Faces Servlet</servlet-name>
+		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Faces Servlet</servlet-name>
+		<url-pattern>*.xhtml</url-pattern>
+	</servlet-mapping>
 
-  
-  <!-- Constraint sur les pages -->
-  <security-constraint>
-    <display-name>Administration-Constraint</display-name>
-    <web-resource-collection>
-      <web-resource-name>my_account</web-resource-name>
-      <url-pattern>/my_account.xhtml</url-pattern>
-    </web-resource-collection>
-    <auth-constraint>
-      <role-name>Administrateur</role-name>
-      <role-name>Investisseur</role-name>
-      <role-name>Societe</role-name>
-    </auth-constraint>
-    <user-data-constraint>
-      <transport-guarantee>NONE</transport-guarantee>
-    </user-data-constraint>
-  </security-constraint>
-  
-   <security-constraint>
-    <display-name>Administration-Constraint</display-name>
-    <web-resource-collection>
-      <web-resource-name>users</web-resource-name>
-      <url-pattern>/users.xhtml</url-pattern>
-    </web-resource-collection>
-    <auth-constraint>
-      <role-name>Administrateur</role-name>
-    </auth-constraint>
-    <user-data-constraint>
-      <transport-guarantee>NONE</transport-guarantee>
-    </user-data-constraint>
-  </security-constraint>
-  
-  <security-constraint>
-    <display-name>Administration-Constraint</display-name>
-    <web-resource-collection>
-      <web-resource-name>Passer un ordre</web-resource-name>
-      <url-pattern>/passer_ordre.xhtml</url-pattern>
-    </web-resource-collection>
-    <auth-constraint>
-      <role-name>Administrateur</role-name>
-      <role-name>Investisseur</role-name>
-    </auth-constraint>
-    <user-data-constraint>
-      <transport-guarantee>NONE</transport-guarantee>
-    </user-data-constraint>
-  </security-constraint>
-  
-  <security-constraint>
-    <display-name>Administration-Constraint</display-name>
-    <web-resource-collection>
-      <web-resource-name>Portefeuille</web-resource-name>
-      <url-pattern>/portefeuille.xhtml</url-pattern>
-    </web-resource-collection>
-    <auth-constraint>
-      <role-name>Administrateur</role-name>
-      <role-name>Investisseur</role-name>
-    </auth-constraint>
-    <user-data-constraint>
-      <transport-guarantee>NONE</transport-guarantee>
-    </user-data-constraint>
-  </security-constraint>
-  
-  
-   <security-constraint>
-    <display-name>Administration-Constraint</display-name>
-    <web-resource-collection>
-      <web-resource-name>societes</web-resource-name>
-      <url-pattern>/societes.xhtml</url-pattern>
-    </web-resource-collection>
-    <auth-constraint>
-      <role-name>Administrateur</role-name>
-      <role-name>Investisseur</role-name>
-      <role-name>Societe</role-name>
-    </auth-constraint>
-    <user-data-constraint>
-      <transport-guarantee>NONE</transport-guarantee>
-    </user-data-constraint>
-  </security-constraint>
-  <security-constraint>
-    <display-name>Administration-Constraint</display-name>
-    <web-resource-collection>
-      <web-resource-name>societe</web-resource-name>
-      <url-pattern>/societe.xhtml</url-pattern>
-    </web-resource-collection>
-    <auth-constraint>
-      <role-name>Administrateur</role-name>
-      <role-name>Investisseur</role-name>
-      <role-name>Societe</role-name>
-    </auth-constraint>
-    <user-data-constraint>
-      <transport-guarantee>NONE</transport-guarantee>
-    </user-data-constraint>
-  </security-constraint>
-  <security-constraint>
-    <display-name>Administration-Constraint</display-name>
-    <web-resource-collection>
-      <web-resource-name>actualite</web-resource-name>
-      <url-pattern>/actualite.xhtml</url-pattern>
-    </web-resource-collection>
-    <auth-constraint>
-      <role-name>Administrateur</role-name>
-      <role-name>Investisseur</role-name>
-      <role-name>Societe</role-name>
-    </auth-constraint>
-    <user-data-constraint>
-      <transport-guarantee>NONE</transport-guarantee>
-    </user-data-constraint>
-  </security-constraint>
-  <security-constraint>
-    <display-name>Administration-Constraint</display-name>
-    <web-resource-collection>
-      <web-resource-name>actualite-creer</web-resource-name>
-      <url-pattern>/actualite-creer.xhtml</url-pattern>
-    </web-resource-collection>
-    <auth-constraint>
-      <role-name>Societe</role-name>
-    </auth-constraint>
-    <user-data-constraint>
-      <transport-guarantee>NONE</transport-guarantee>
-    </user-data-constraint>
-  </security-constraint>
-  
-  
-  <!-- END Constraint sur les pages -->
-  
-  <login-config>
-    <auth-method>FORM</auth-method>
-    <realm-name>JDBCRealm</realm-name>
-    <form-login-config>
-      <form-login-page>/login.html</form-login-page>
-      <form-error-page>/login-error.html</form-error-page>
-    </form-login-config>
-  </login-config>
-  <security-role>
-    <role-name>Administrateur</role-name>
-  </security-role>
-  <security-role>
-    <role-name>Investisseur</role-name>
-  </security-role>
-  <security-role>
-    <role-name>Societe</role-name>
-  </security-role>
-  
-  
-  <error-page>
-    <error-code>403</error-code>
-    <location>/errors/error-403.html</location>
-  </error-page>
-  <error-page>
-      <error-code>404</error-code>
-      <location>/errors/error-404.html</location>
-  </error-page>
-  <!-- Gestion de l'exception FileNotFountException  : on ne souhaite pas une 500 mais bien une 404 -->
-  <error-page>
-      <exception-type>com.sun.faces.context.FacesFileNotFoundException</exception-type>
-      <location>/errors/error-404.html</location>
-  </error-page> 
- 
- <!--  TODO : A décommenter lors du passage en prod -->
- <!--  
-  <error-page>
-      <error-code>500</error-code>
-      <location>/errors/error-500.html</location>
-  </error-page>
- -->
-  
-  <listener>
-    <listener-class>com.sun.faces.config.ConfigureListener</listener-class>
-  </listener>
+
+	<!-- Constraint sur les pages -->
+	<security-constraint>
+		<display-name>Administration-Constraint</display-name>
+		<web-resource-collection>
+			<web-resource-name>my_account</web-resource-name>
+			<url-pattern>/my_account.xhtml</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>Administrateur</role-name>
+			<role-name>Investisseur</role-name>
+			<role-name>Societe</role-name>
+		</auth-constraint>
+		<user-data-constraint>
+			<transport-guarantee>NONE</transport-guarantee>
+		</user-data-constraint>
+	</security-constraint>
+	<security-constraint>
+		<display-name>Administration-Constraint</display-name>
+		<web-resource-collection>
+			<web-resource-name>users</web-resource-name>
+			<url-pattern>/users.xhtml</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>Administrateur</role-name>
+		</auth-constraint>
+		<user-data-constraint>
+			<transport-guarantee>NONE</transport-guarantee>
+		</user-data-constraint>
+	</security-constraint>
+	<security-constraint>
+		<display-name>Administration-Constraint</display-name>
+		<web-resource-collection>
+			<web-resource-name>Passer un ordre</web-resource-name>
+			<url-pattern>/passer_ordre.xhtml</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>Administrateur</role-name>
+			<role-name>Investisseur</role-name>
+		</auth-constraint>
+		<user-data-constraint>
+			<transport-guarantee>NONE</transport-guarantee>
+		</user-data-constraint>
+	</security-constraint>
+	<security-constraint>
+		<display-name>Administration-Constraint</display-name>
+		<web-resource-collection>
+			<web-resource-name>Portefeuille</web-resource-name>
+			<url-pattern>/portefeuille.xhtml</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>Administrateur</role-name>
+			<role-name>Investisseur</role-name>
+		</auth-constraint>
+		<user-data-constraint>
+			<transport-guarantee>NONE</transport-guarantee>
+		</user-data-constraint>
+	</security-constraint>
+	<security-constraint>
+		<display-name>Administration-Constraint</display-name>
+		<web-resource-collection>
+			<web-resource-name>societes</web-resource-name>
+			<url-pattern>/societes.xhtml</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>Administrateur</role-name>
+			<role-name>Investisseur</role-name>
+			<role-name>Societe</role-name>
+		</auth-constraint>
+		<user-data-constraint>
+			<transport-guarantee>NONE</transport-guarantee>
+		</user-data-constraint>
+	</security-constraint>
+	<security-constraint>
+		<display-name>Administration-Constraint</display-name>
+		<web-resource-collection>
+			<web-resource-name>societe</web-resource-name>
+			<url-pattern>/societe.xhtml</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>Administrateur</role-name>
+			<role-name>Investisseur</role-name>
+			<role-name>Societe</role-name>
+		</auth-constraint>
+		<user-data-constraint>
+			<transport-guarantee>NONE</transport-guarantee>
+		</user-data-constraint>
+	</security-constraint>
+	<security-constraint>
+		<display-name>Administration-Constraint</display-name>
+		<web-resource-collection>
+			<web-resource-name>actualite</web-resource-name>
+			<url-pattern>/actualite.xhtml</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>Administrateur</role-name>
+			<role-name>Investisseur</role-name>
+			<role-name>Societe</role-name>
+		</auth-constraint>
+		<user-data-constraint>
+			<transport-guarantee>NONE</transport-guarantee>
+		</user-data-constraint>
+	</security-constraint>
+	<security-constraint>
+		<display-name>Administration-Constraint</display-name>
+		<web-resource-collection>
+			<web-resource-name>actualite-creer</web-resource-name>
+			<url-pattern>/actualite-creer.xhtml</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>Societe</role-name>
+		</auth-constraint>
+		<user-data-constraint>
+			<transport-guarantee>NONE</transport-guarantee>
+		</user-data-constraint>
+	</security-constraint>
+
+
+	<!-- END Constraint sur les pages -->
+
+	<login-config>
+		<auth-method>FORM</auth-method>
+		<realm-name>JDBCRealm</realm-name>
+		<form-login-config>
+			<form-login-page>/login.xhtml</form-login-page>
+			<form-error-page>/login-error.xhtml</form-error-page>
+		</form-login-config>
+	</login-config>
+	<security-role>
+		<role-name>Administrateur</role-name>
+	</security-role>
+	<security-role>
+		<role-name>Investisseur</role-name>
+	</security-role>
+	<security-role>
+		<role-name>Societe</role-name>
+	</security-role>
+
+
+	<error-page>
+		<error-code>403</error-code>
+		<location>/errors/error-403.html</location>
+	</error-page>
+	<error-page>
+		<error-code>404</error-code>
+		<location>/errors/error-404.html</location>
+	</error-page>
+	<!-- Gestion de l'exception FileNotFountException : on ne souhaite pas une 
+		500 mais bien une 404 -->
+	<error-page>
+		<exception-type>com.sun.faces.context.FacesFileNotFoundException</exception-type>
+		<location>/errors/error-404.html</location>
+	</error-page>
+
+	<error-page>
+		<error-code>500</error-code>
+		<location>/errors/error-500.html</location>
+	</error-page>
+
+	<listener>
+		<listener-class>com.sun.faces.config.ConfigureListener</listener-class>
+	</listener>
 </web-app>

@@ -3,13 +3,15 @@ package fr.dauphine.etrade.model;
 // default package
 // Generated 11 mars 2015 16:13:53 by Hibernate Tools 4.0.0
 
+import static javax.persistence.GenerationType.IDENTITY;
+
 import java.math.BigDecimal;
 import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -24,86 +26,87 @@ import javax.persistence.TemporalType;
 @Table(name = "Transaction")
 public class Transaction implements java.io.Serializable {
 
-	/**
-	 * Default serialVersionUID
-	 */
-	private static final long serialVersionUID = 1L;
-	private Long idTransaction;
-	private Ordre ordreByIdOrderAchat;
-	private Ordre ordreByIdOrderVente;
-	private BigDecimal prix;
-	private int quantite;
-	private Date date;
+  /**
+   * Default serialVersionUID
+   */
+  private static final long serialVersionUID = 1L;
+  private Long idTransaction;
+  private Ordre ordreByIdOrderAchat;
+  private Ordre ordreByIdOrderVente;
+  private BigDecimal prix;
+  private int quantite;
+  private Date date;
 
-	public Transaction() {
-	}
+  public Transaction() {
 
-	public Transaction(Ordre ordreByIdOrderAchat, Ordre ordreByIdOrderVente,
-			BigDecimal prix, int quantite, Date date) {
-		this.ordreByIdOrderAchat = ordreByIdOrderAchat;
-		this.ordreByIdOrderVente = ordreByIdOrderVente;
-		this.prix = prix;
-		this.quantite = quantite;
-		this.date = date;
-	}
+  }
 
-	@Id
-	@GeneratedValue(strategy = IDENTITY)
-	@Column(name = "IdTransaction", unique = true, nullable = false)
-	public Long getIdTransaction() {
-		return this.idTransaction;
-	}
+  public Transaction(Ordre ordreByIdOrderAchat, Ordre ordreByIdOrderVente, BigDecimal prix,
+      int quantite, Date date) {
+    this.ordreByIdOrderAchat = ordreByIdOrderAchat;
+    this.ordreByIdOrderVente = ordreByIdOrderVente;
+    this.prix = prix;
+    this.quantite = quantite;
+    this.date = date;
+  }
 
-	public void setIdTransaction(Long idTransaction) {
-		this.idTransaction = idTransaction;
-	}
+  @Id
+  @GeneratedValue(strategy = IDENTITY)
+  @Column(name = "IdTransaction", unique = true, nullable = false)
+  public Long getIdTransaction() {
+    return this.idTransaction;
+  }
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "IdOrderAchat", nullable = false)
-	public Ordre getOrdreByIdOrderAchat() {
-		return this.ordreByIdOrderAchat;
-	}
+  public void setIdTransaction(Long idTransaction) {
+    this.idTransaction = idTransaction;
+  }
 
-	public void setOrdreByIdOrderAchat(Ordre ordreByIdOrderAchat) {
-		this.ordreByIdOrderAchat = ordreByIdOrderAchat;
-	}
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "IdOrderAchat", nullable = false)
+  public Ordre getOrdreByIdOrderAchat() {
+    return this.ordreByIdOrderAchat;
+  }
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "IdOrderVente", nullable = false)
-	public Ordre getOrdreByIdOrderVente() {
-		return this.ordreByIdOrderVente;
-	}
+  public void setOrdreByIdOrderAchat(Ordre ordreByIdOrderAchat) {
+    this.ordreByIdOrderAchat = ordreByIdOrderAchat;
+  }
 
-	public void setOrdreByIdOrderVente(Ordre ordreByIdOrderVente) {
-		this.ordreByIdOrderVente = ordreByIdOrderVente;
-	}
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "IdOrderVente", nullable = false)
+  public Ordre getOrdreByIdOrderVente() {
+    return this.ordreByIdOrderVente;
+  }
 
-	@Column(name = "Prix", nullable = false, precision = 8)
-	public BigDecimal getPrix() {
-		return this.prix;
-	}
+  public void setOrdreByIdOrderVente(Ordre ordreByIdOrderVente) {
+    this.ordreByIdOrderVente = ordreByIdOrderVente;
+  }
 
-	public void setPrix(BigDecimal prix) {
-		this.prix = prix;
-	}
+  @Column(name = "Prix", nullable = false, precision = 8)
+  public BigDecimal getPrix() {
+    return this.prix;
+  }
 
-	@Column(name = "Quantite", nullable = false)
-	public int getQuantite() {
-		return this.quantite;
-	}
+  public void setPrix(BigDecimal prix) {
+    this.prix = prix;
+  }
 
-	public void setQuantite(int quantite) {
-		this.quantite = quantite;
-	}
+  @Column(name = "Quantite", nullable = false)
+  public int getQuantite() {
+    return this.quantite;
+  }
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "Date", nullable = false, length = 19)
-	public Date getDate() {
-		return this.date;
-	}
+  public void setQuantite(int quantite) {
+    this.quantite = quantite;
+  }
 
-	public void setDate(Date date) {
-		this.date = date;
-	}
+  @Temporal(TemporalType.TIMESTAMP)
+  @Column(name = "Date", nullable = false, length = 19)
+  public Date getDate() {
+    return this.date;
+  }
+
+  public void setDate(Date date) {
+    this.date = date;
+  }
 
 }

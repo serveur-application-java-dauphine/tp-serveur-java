@@ -7,23 +7,22 @@ import javax.faces.bean.ManagedBean;
 
 @ManagedBean
 @ApplicationScoped
-public class ApplicationManagedBean implements Serializable{
-	
+public class ApplicationManagedBean implements Serializable {
+
 	private static final long serialVersionUID = 1L;
-	
-	//Doit etre equivalent au code de la table role!!!!!
+
+	// Doit etre equivalent au code de la table role!!!!!
 	private final String ROLE_CODE_ADMINISTRATEUR = "Administrateur";
 	private final String ROLE_CODE_SOCIETE = "Societe";
 	private final String ROLE_CODE_INVESTISSEUR = "Investisseur";
-	
-	private final String PASSWORD_PATTERN = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})";
-	private final String EMAIL_PATTERN = "^[_A-Za-z0-9-]+(\\." +
-			"[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*" +
-			"(\\.[A-Za-z]{2,})$";
 
+	private final String PASSWORD_PATTERN = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})";
+	private final String EMAIL_PATTERN = "^[_A-Za-z0-9-]+(\\."
+			+ "[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*"
+			+ "(\\.[A-Za-z]{2,})$";
 
 	private final String DATE_PATTERN = "dd/MM/yyyy";
-	
+
 	/**
 	 * @return the eMAIL_PATTERN
 	 */

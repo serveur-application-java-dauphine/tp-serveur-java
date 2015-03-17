@@ -8,7 +8,10 @@ import fr.dauphine.etrade.model.Role;
 
 @Remote
 public interface ServicesRole {
-	List<Role> getRoles();
-	Role getRole(int id);
-	List<Role> getRolesLogin();
+  List<Role> getRoles();
+
+  Role getRole(int id);
+
+  List<Role> getRolesLogin();
+
 }

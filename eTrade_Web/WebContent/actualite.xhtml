@@ -1,31 +1,35 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-> 
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <h:head>
-	<title><h:outputText value="#{actualiteManagedBean.actualite.titre}"/></title>
-</h:head> 
-<h:body> 
-	<a href="/eTrade_Web/Logout" style="float:right">Se déconnecter</a>
-	 	<h:outputLabel value="Bonjour, #{sessionUserManagedBean.utilisateur.firstname} &nbsp; &nbsp;" style="float:right"/>
-	 	
-	   	<br/><br/>
+	<title><h:outputText
+			value="#{actualiteManagedBean.actualite.titre}" /></title>
+</h:head>
+<h:body>
+	<ui:include src="/menu.xhtml" />
+
+	<!-- Si la société est celle de l'utilisateur et que l'article a été créé par ce même utilisateur, il peut le supprimer -->
+	<h:panelGroup
+		rendered="#{sessionUserManagedBean.utilisateur.societe.idSociete eq param.s and actu.utilisateur.idUtilisateur eq sessionUserManagedBean.utilisateur.idUtilisateur}">
+		<h:link action="#{actualiteManagedBean.deleteActualite(param.a)}"
+			value="Supprimer votre actualité" outcome="societes" />
+		<!-- TODO Je suis bien conscient que c'est pas optimisé niveau parcours utlisateur mais le retour à la page précédente ne fonctionne pas... -->
+	</h:panelGroup>
 
 	<fieldset>
-       	<legend><h:outputText value="#{actualiteManagedBean.actualite.titre}"></h:outputText></legend>
-      	<legend>Date de création : </legend>
-      	<h:outputLabel value="#{actualiteManagedBean.getActualite(param.a).date_creation}" />
-      	
-      	<h:outputLabel rendered="#{not empty actualiteManagedBean.getActualite(param.a).date_modification}">
-      		<legend>Date de dernière modification : </legend>
-      		<h:outputLabel value="#{actualiteManagedBean.getActualite(param.a).date_modification}" />
-      	</h:outputLabel>
-      	
-      	<h:outputText value="#{actualiteManagedBean.getActualite(param.a).content}"></h:outputText>  
-       <br />
+		<legend>
+			<h:outputText value="#{actualiteManagedBean.actualite.titre}"></h:outputText>
+		</legend>
+		<legend>Date de création : </legend>
+		<h:outputLabel
+			value="#{actualiteManagedBean.getActualite(param.a).dateCreation}" />
+
+		<h:outputText
+			value="#{actualiteManagedBean.getActualite(param.a).content}"></h:outputText>
+		<br />
 	</fieldset>
-</h:body> 
+</h:body>
 </html>

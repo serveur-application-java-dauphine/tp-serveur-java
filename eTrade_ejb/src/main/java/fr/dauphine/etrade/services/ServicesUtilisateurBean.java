@@ -1,6 +1,5 @@
 package fr.dauphine.etrade.services;
 
-
 import java.util.List;
 
 import javax.ejb.Remote;
@@ -16,52 +15,53 @@ import fr.dauphine.etrade.persit.Connexion;
 @Remote(ServicesUtilisateur.class)
 @Stateless
 @TransactionManagement(TransactionManagementType.BEAN)
-public class ServicesUtilisateurBean implements ServicesUtilisateur{
-	
-	@Override
-	public Utilisateur addUtilisateur(Utilisateur utilisateur) {
-		Connexion.getInstance().insert(utilisateur);
-		return utilisateur;
-	}
+public class ServicesUtilisateurBean implements ServicesUtilisateur {
 
-	@Override
-	public Utilisateur delUtilisateur(Utilisateur utilisateur) {
-		Connexion.getInstance().delete(utilisateur);
-		return utilisateur;
-	}
-	
-	@Override
-	public List<Utilisateur> allUtilisateurs() {
-		return Connexion.getInstance().getAll(Utilisateur.class);
-	}
-	
-	@Override
-	public Utilisateur getUtilisateurById(long id) {
-		return  Connexion.getInstance().find(Utilisateur.class, id);
-	}
+  @Override
+  public Utilisateur addUtilisateur(Utilisateur utilisateur) {
+    Connexion.getInstance().insert(utilisateur);
+    return utilisateur;
+  }
 
-	@Override
-	public Utilisateur updateUtilisateur(Utilisateur utilisateur) {
-		Connexion.getInstance().update(utilisateur);
-		return utilisateur;
-	}
+  @Override
+  public Utilisateur delUtilisateur(Utilisateur utilisateur) {
+    Connexion.getInstance().delete(utilisateur);
+    return utilisateur;
+  }
 
-	@Override
-	public List<Utilisateur> getUnvalidatedUtilisateurs() {
-		String query = "SELECT u FROM Utilisateur u WHERE u.validRole = ?";
-		return Connexion.getInstance().queryListResult(query, Utilisateur.class, 0); 
-	}
-	
-	@Override
-	public Portefeuille createPortefolio(Portefeuille p){
-		Connexion.getInstance().insert(p);
-		return p;
-	}
+  @Override
+  public List<Utilisateur> allUtilisateurs() {
+    return Connexion.getInstance().getAll(Utilisateur.class);
+  }
 
-	@Override
-	public Utilisateur getUtilisateurByEmail(String email) {
-		String query = "SELECT u FROM Utilisateur u left join u.role left join u.societe left join u.portefeuille WHERE u.email= ?";
-		return Connexion.getInstance().querySingleResult(query, Utilisateur.class, email);
-	}
-	
+  @Override
+  public Utilisateur getUtilisateurById(long id) {
+    return Connexion.getInstance().find(Utilisateur.class, id);
+  }
+
+  @Override
+  public Utilisateur updateUtilisateur(Utilisateur utilisateur) {
+    Connexion.getInstance().update(utilisateur);
+    return utilisateur;
+  }
+
+  @Override
+  public List<Utilisateur> getUnvalidatedUtilisateurs() {
+    String query = "SELECT u FROM Utilisateur u WHERE u.validRole = ?";
+    return Connexion.getInstance().queryListResult(query, Utilisateur.class, 0);
+  }
+
+  @Override
+  public Portefeuille createPortefolio(Portefeuille p) {
+    Connexion.getInstance().insert(p);
+    return p;
+  }
+
+  @Override
+  public Utilisateur getUtilisateurByEmail(String email) {
+    String query = "SELECT u FROM Utilisateur u left join u.role left join u.societe "
+        + "left join u.portefeuille WHERE u.email= ?";
+    return Connexion.getInstance().querySingleResult(query, Utilisateur.class, email);
+  }
+
 }

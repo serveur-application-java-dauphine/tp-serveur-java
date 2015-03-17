@@ -3,15 +3,14 @@ package fr.dauphine.etrade.model;
 // default package
 // Generated 11 mars 2015 16:13:53 by Hibernate Tools 4.0.0
 
+import static javax.persistence.GenerationType.IDENTITY;
+
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-
-import static javax.persistence.GenerationType.IDENTITY;
-
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -29,281 +28,294 @@ import javax.persistence.UniqueConstraint;
 @Table(name = "Utilisateur", uniqueConstraints = @UniqueConstraint(columnNames = "Email"))
 public class Utilisateur implements java.io.Serializable {
 
-	@Override
-	public String toString() {
-		return lastname + " "+ firstname;
-	}
+  @Override
+  public String toString() {
+    return lastname + " " + firstname;
+  }
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((adress == null) ? 0 : adress.hashCode());
-		result = prime * result
-				+ ((birthdate == null) ? 0 : birthdate.hashCode());
-		result = prime * result + ((city == null) ? 0 : city.hashCode());
-		result = prime * result + ((email == null) ? 0 : email.hashCode());
-		result = prime * result
-				+ ((firstname == null) ? 0 : firstname.hashCode());
-		result = prime * result
-				+ ((idUtilisateur == null) ? 0 : idUtilisateur.hashCode());
-		result = prime * result
-				+ ((lastname == null) ? 0 : lastname.hashCode());
-		result = prime * result
-				+ ((password == null) ? 0 : password.hashCode());
-		result = prime * result + (validRole ? 1231 : 1237);
-		result = prime * result + ((zipcode == null) ? 0 : zipcode.hashCode());
-		return result;
-	}
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + ((adress == null) ? 0 : adress.hashCode());
+    result = prime * result + ((birthdate == null) ? 0 : birthdate.hashCode());
+    result = prime * result + ((city == null) ? 0 : city.hashCode());
+    result = prime * result + ((email == null) ? 0 : email.hashCode());
+    result = prime * result + ((firstname == null) ? 0 : firstname.hashCode());
+    result = prime * result + ((idUtilisateur == null) ? 0 : idUtilisateur.hashCode());
+    result = prime * result + ((lastname == null) ? 0 : lastname.hashCode());
+    result = prime * result + ((password == null) ? 0 : password.hashCode());
+    result = prime * result + (validRole ? 1231 : 1237);
+    result = prime * result + ((zipcode == null) ? 0 : zipcode.hashCode());
+    return result;
+  }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Utilisateur other = (Utilisateur) obj;
-		if (adress == null) {
-			if (other.adress != null)
-				return false;
-		} else if (!adress.equals(other.adress))
-			return false;
-		if (birthdate == null) {
-			if (other.birthdate != null)
-				return false;
-		} else if (!birthdate.equals(other.birthdate))
-			return false;
-		if (city == null) {
-			if (other.city != null)
-				return false;
-		} else if (!city.equals(other.city))
-			return false;
-		if (email == null) {
-			if (other.email != null)
-				return false;
-		} else if (!email.equals(other.email))
-			return false;
-		if (firstname == null) {
-			if (other.firstname != null)
-				return false;
-		} else if (!firstname.equals(other.firstname))
-			return false;
-		if (idUtilisateur == null) {
-			if (other.idUtilisateur != null)
-				return false;
-		} else if (!idUtilisateur.equals(other.idUtilisateur))
-			return false;
-		if (lastname == null) {
-			if (other.lastname != null)
-				return false;
-		} else if (!lastname.equals(other.lastname))
-			return false;
-		if (password == null) {
-			if (other.password != null)
-				return false;
-		} else if (!password.equals(other.password))
-			return false;
-		if (validRole != other.validRole)
-			return false;
-		if (zipcode == null) {
-			if (other.zipcode != null)
-				return false;
-		} else if (!zipcode.equals(other.zipcode))
-			return false;
-		return true;
-	}
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null) {
+      return false;
+    }
+    if (getClass() != obj.getClass()) {
+      return false;
+    }
+    Utilisateur other = (Utilisateur) obj;
+    if (adress == null) {
+      if (other.adress != null) {
+        return false;
+      }
+    } else if (!adress.equals(other.adress)) {
+      return false;
+    }
+    if (birthdate == null) {
+      if (other.birthdate != null) {
+        return false;
+      }
+    } else if (!birthdate.equals(other.birthdate)) {
+      return false;
+    }
+    if (city == null) {
+      if (other.city != null) {
+        return false;
+      }
+    } else if (!city.equals(other.city)) {
+      return false;
+    }
+    if (email == null) {
+      if (other.email != null) {
+        return false;
+      }
+    } else if (!email.equals(other.email)) {
+      return false;
+    }
+    if (firstname == null) {
+      if (other.firstname != null) {
+        return false;
+      }
+    } else if (!firstname.equals(other.firstname)) {
+      return false;
+    }
+    if (idUtilisateur == null) {
+      if (other.idUtilisateur != null) {
+        return false;
+      }
+    } else if (!idUtilisateur.equals(other.idUtilisateur)) {
+      return false;
+    }
+    if (lastname == null) {
+      if (other.lastname != null) {
+        return false;
+      }
+    } else if (!lastname.equals(other.lastname)) {
+      return false;
+    }
+    if (password == null) {
+      if (other.password != null) {
+        return false;
+      }
+    } else if (!password.equals(other.password)) {
+      return false;
+    }
+    if (validRole != other.validRole) {
+      return false;
+    }
+    if (zipcode == null) {
+      if (other.zipcode != null) {
+        return false;
+      }
+    } else if (!zipcode.equals(other.zipcode)) {
+      return false;
+    }
+    return true;
+  }
 
-	private static final long serialVersionUID = 1L;
-	private Long idUtilisateur;
-	private Societe societe;
-	private Portefeuille portefeuille;
-	private Role role;
-	private String lastname;
-	private String firstname;
-	private String email;
-	private String password;
-	private Date birthdate;
-	private String adress;
-	private String zipcode;
-	private String city;
-	private boolean validRole;
-	//private Set<Actualite> actualites = new HashSet<Actualite>(0);
+  private static final long serialVersionUID = 1L;
+  private Long idUtilisateur;
+  private Societe societe;
+  private Portefeuille portefeuille;
+  private Role role;
+  private String lastname;
+  private String firstname;
+  private String email;
+  private String password;
+  private Date birthdate;
+  private String adress;
+  private String zipcode;
+  private String city;
+  private boolean validRole;
 
-	public Utilisateur() {
-	}
+  // private Set<Actualite> actualites = new HashSet<Actualite>(0);
 
-	public Utilisateur(Role role, String lastname, String firstName,
-			String email, String password, Date birthdate, String adress,
-			String zipcode, String city, boolean validRole) {
-		this.role = role;
-		this.lastname = lastname;
-		this.firstname = firstName;
-		this.email = email;
-		this.password = password;
-		this.birthdate = birthdate;
-		this.adress = adress;
-		this.zipcode = zipcode;
-		this.city = city;
-		this.validRole = validRole;
-	}
+  public Utilisateur() {
+  }
 
-	public Utilisateur(Societe societe, Portefeuille portefeuille, Role role,
-			String lastname, String firstName, String email, String password,
-			Date birthdate, String adress, String zipcode, String city,
-			boolean validRole){//, Set<Actualite> actualites) {
-		this.societe = societe;
-		this.portefeuille = portefeuille;
-		this.role = role;
-		this.lastname = lastname;
-		this.firstname = firstName;
-		this.email = email;
-		this.password = password;
-		this.birthdate = birthdate;
-		this.adress = adress;
-		this.zipcode = zipcode;
-		this.city = city;
-		this.validRole = validRole;
-		//this.actualites = actualites;
-	}
+  public Utilisateur(Role role, String lastname, String firstName, String email, String password,
+      Date birthdate, String adress, String zipcode, String city, boolean validRole) {
+    this.role = role;
+    this.lastname = lastname;
+    this.firstname = firstName;
+    this.email = email;
+    this.password = password;
+    this.birthdate = birthdate;
+    this.adress = adress;
+    this.zipcode = zipcode;
+    this.city = city;
+    this.validRole = validRole;
+  }
 
-	@Id
-	@GeneratedValue(strategy = IDENTITY)
-	@Column(name = "IdUtilisateur", unique = true, nullable = false)
-	public Long getIdUtilisateur() {
-		return this.idUtilisateur;
-	}
+  public Utilisateur(Societe societe, Portefeuille portefeuille, Role role, String lastname,
+      String firstName, String email, String password, Date birthdate, String adress,
+      String zipcode, String city, boolean validRole) {// , Set<Actualite> actualites) {
+    this.societe = societe;
+    this.portefeuille = portefeuille;
+    this.role = role;
+    this.lastname = lastname;
+    this.firstname = firstName;
+    this.email = email;
+    this.password = password;
+    this.birthdate = birthdate;
+    this.adress = adress;
+    this.zipcode = zipcode;
+    this.city = city;
+    this.validRole = validRole;
+    // this.actualites = actualites;
+  }
 
-	public void setIdUtilisateur(Long idUtilisateur) {
-		this.idUtilisateur = idUtilisateur;
-	}
+  @Id
+  @GeneratedValue(strategy = IDENTITY)
+  @Column(name = "IdUtilisateur", unique = true, nullable = false)
+  public Long getIdUtilisateur() {
+    return this.idUtilisateur;
+  }
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "IdSociete")
-	public Societe getSociete() {
-		return this.societe;
-	}
+  public void setIdUtilisateur(Long idUtilisateur) {
+    this.idUtilisateur = idUtilisateur;
+  }
 
-	public void setSociete(Societe societe) {
-		this.societe = societe;
-	}
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "IdSociete")
+  public Societe getSociete() {
+    return this.societe;
+  }
 
-	@OneToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "IdPortefeuille")
-	public Portefeuille getPortefeuille() {
-		return this.portefeuille;
-	}
+  public void setSociete(Societe societe) {
+    this.societe = societe;
+  }
 
-	public void setPortefeuille(Portefeuille portefeuille) {
-		this.portefeuille = portefeuille;
-	}
+  @OneToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "IdPortefeuille")
+  public Portefeuille getPortefeuille() {
+    return this.portefeuille;
+  }
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "IdRole", nullable = false)
-	public Role getRole() {
-		return this.role;
-	}
+  public void setPortefeuille(Portefeuille portefeuille) {
+    this.portefeuille = portefeuille;
+  }
 
-	public void setRole(Role role) {
-		this.role = role;
-	}
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "IdRole", nullable = false)
+  public Role getRole() {
+    return this.role;
+  }
 
-	@Column(name = "Lastname", nullable = false, length = 40)
-	public String getLastname() {
-		return this.lastname;
-	}
+  public void setRole(Role role) {
+    this.role = role;
+  }
 
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
-	}
+  @Column(name = "Lastname", nullable = false, length = 40)
+  public String getLastname() {
+    return this.lastname;
+  }
 
-	@Column(name = "Firstname", nullable = false, length = 40)
-	public String getFirstname() {
-		return this.firstname;
-	}
+  public void setLastname(String lastname) {
+    this.lastname = lastname;
+  }
 
-	public void setFirstname(String firstName) {
-		this.firstname = firstName;
-	}
+  @Column(name = "Firstname", nullable = false, length = 40)
+  public String getFirstname() {
+    return this.firstname;
+  }
 
-	@Column(name = "Email", unique = true, nullable = false, length = 40)
-	public String getEmail() {
-		return this.email;
-	}
+  public void setFirstname(String firstName) {
+    this.firstname = firstName;
+  }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+  @Column(name = "Email", unique = true, nullable = false, length = 40)
+  public String getEmail() {
+    return this.email;
+  }
 
-	@Column(name = "Password", nullable = false, length = 20)
-	public String getPassword() {
-		return this.password;
-	}
+  public void setEmail(String email) {
+    this.email = email;
+  }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+  @Column(name = "Password", nullable = false, length = 20)
+  public String getPassword() {
+    return this.password;
+  }
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "Birthdate", nullable = false, length = 19)
-	public Date getBirthdate() {
-		return this.birthdate;
-	}
+  public void setPassword(String password) {
+    this.password = password;
+  }
 
-	public void setBirthdate(Date birthdate) {
-		this.birthdate = birthdate;
-	}
+  @Temporal(TemporalType.TIMESTAMP)
+  @Column(name = "Birthdate", nullable = false, length = 19)
+  public Date getBirthdate() {
+    return this.birthdate;
+  }
 
-	@Column(name = "Adress", nullable = false, length = 100)
-	public String getAdress() {
-		return this.adress;
-	}
+  public void setBirthdate(Date birthdate) {
+    this.birthdate = birthdate;
+  }
 
-	public void setAdress(String adress) {
-		this.adress = adress;
-	}
+  @Column(name = "Adress", nullable = false, length = 100)
+  public String getAdress() {
+    return this.adress;
+  }
 
-	@Column(name = "Zipcode", nullable = false, length = 10)
-	public String getZipcode() {
-		return this.zipcode;
-	}
+  public void setAdress(String adress) {
+    this.adress = adress;
+  }
 
-	public void setZipcode(String zipcode) {
-		this.zipcode = zipcode;
-	}
+  @Column(name = "Zipcode", nullable = false, length = 10)
+  public String getZipcode() {
+    return this.zipcode;
+  }
 
-	@Column(name = "City", nullable = false, length = 40)
-	public String getCity() {
-		return this.city;
-	}
+  public void setZipcode(String zipcode) {
+    this.zipcode = zipcode;
+  }
 
-	public void setCity(String city) {
-		this.city = city;
-	}
+  @Column(name = "City", nullable = false, length = 40)
+  public String getCity() {
+    return this.city;
+  }
 
-	@Column(name = "ValidRole", nullable = false)
-	public boolean isValidRole() {
-		return this.validRole;
-	}
+  public void setCity(String city) {
+    this.city = city;
+  }
 
-	public void setValidRole(boolean validRole) {
-		this.validRole = validRole;
-	}
+  @Column(name = "ValidRole", nullable = false)
+  public boolean isValidRole() {
+    return this.validRole;
+  }
 
-	/*@OneToMany(fetch = FetchType.LAZY, mappedBy = "utilisateur")
-	public Set<Actualite> getActualites() {
-		return this.actualites;
-	}
+  public void setValidRole(boolean validRole) {
+    this.validRole = validRole;
+  }
 
-	public void setActualites(Set<Actualite> actualites) {
-		this.actualites = actualites;
-	}*/
-	
-	@Transient
-	public String getFullName(){
-		return firstname+" "+lastname;
-	}
-	
+  /*
+   * @OneToMany(fetch = FetchType.LAZY, mappedBy = "utilisateur") public Set<Actualite>
+   * getActualites() { return this.actualites; }
+   * 
+   * public void setActualites(Set<Actualite> actualites) { this.actualites = actualites; }
+   */
+
+  @Transient
+  public String getFullName() {
+    return firstname + " " + lastname;
+  }
 
 }
