@@ -12,129 +12,117 @@
 <h:body>
 	<ui:include src="/menu.xhtml" />
 	<h:form>
-		<fieldset>
-			<legend>Inscription</legend>
-			<h:outputLabel for="firstname">Prénom <span
+	<h1>Inscription</h1>
+		<table>
+			<tr>
+				<td><h:outputLabel for="firstname">Prénom <span class="requis">*</span>
+					</h:outputLabel></td>
+				<td><h:inputText id="firstname"
+					value="#{utilisateurManagedBean.utilisateur.firstname}"
+					required="true" size="20" maxlength="60"  style="width: 150px;"/>
+					<h:message id="nomMessage" for="firstname" errorClass="erreur" /></td>
+			</tr>
+			<tr>
+				<td><h:outputLabel for="lastname">Nom <span
+					class="requis">*</span></h:outputLabel></td>
+				<td><h:inputText id="lastname"
+					value="#{utilisateurManagedBean.utilisateur.lastname}"
+					required="true" size="20" maxlength="60"  style="width: 150px;"/>
+					<h:message id="lastnameMessage" for="lastname" errorClass="erreur" /></td>
+			</tr>
+			<tr>
+				<td><h:outputLabel for="email">Adresse email <span
 					class="requis">*</span>
-			</h:outputLabel>
-			<h:inputText id="firstname"
-				value="#{utilisateurManagedBean.utilisateur.firstname}"
-				required="true" size="20" maxlength="60" />
-			<h:message id="nomMessage" for="firstname" errorClass="erreur" />
-			<br />
-			<br />
-
-			<h:outputLabel for="lastname">Nom <span
+					</h:outputLabel></td>
+				<td><h:inputText id="email"
+					value="#{utilisateurManagedBean.utilisateur.email}" required="true"
+					size="20" maxlength="60" style="width: 150px;">
+					<f:validateRegex pattern="#{applicationManagedBean.EMAIL_PATTERN}"></f:validateRegex>
+					</h:inputText><h:message id="emailMessage" for="email" errorClass="erreur" /></td>
+			</tr>
+			<tr>
+				<td><h:outputLabel for="motdepasse">Mot de passe <span
 					class="requis">*</span>
-			</h:outputLabel>
-			<h:inputText id="lastname"
-				value="#{utilisateurManagedBean.utilisateur.lastname}"
-				required="true" size="20" maxlength="60" />
-			<h:message id="lastnameMessage" for="lastname" errorClass="erreur" />
-			<br />
-			<br />
-
-			<h:outputLabel for="email">Adresse email <span
+					</h:outputLabel></td>
+				<td><h:inputSecret id="motdepasse"
+					value="#{utilisateurManagedBean.utilisateur.password}"
+					required="true" size="20" maxlength="20"  style="width: 150px;">
+					<!-- 
+		        	<f:validateRegex pattern="#{applicationManagedBean.PASSWORD_PATTERN}"/> 
+		        		-->
+					</h:inputSecret><h:message id="motDePasseMessage" for="motdepasse"
+					errorClass="erreur" /></td>
+			</tr>
+			<tr>
+				<td><h:outputLabel for="confirmation">Confirmation du mot de passe <span
 					class="requis">*</span>
-			</h:outputLabel>
-			<h:inputText id="email"
-				value="#{utilisateurManagedBean.utilisateur.email}" required="true"
-				size="20" maxlength="60">
-				<f:validateRegex pattern="#{applicationManagedBean.EMAIL_PATTERN}"></f:validateRegex>
-			</h:inputText>
-			<h:message id="emailMessage" for="email" errorClass="erreur" />
-			<br />
-			<br />
-
-			<h:outputLabel for="motdepasse">Mot de passe <span
+					</h:outputLabel></td>
+				<td><h:inputSecret id="confirmation"
+					value="#{utilisateurManagedBean.confirm}" required="true" size="20"
+					maxlength="20"  style="width: 150px;">	
+					<!-- 
+			        <f:validateRegex pattern="#{applicationManagedBean.PASSWORD_PATTERN}"/>
+			         -->
+					</h:inputSecret>
+					<h:message id="confirmationMessage" for="confirmation"
+					errorClass="erreur"/></td>
+			</tr>
+			<tr>
+				<td><h:outputLabel for="birthDate">Date de naissance (#{applicationManagedBean.DATE_PATTERN}) <span
 					class="requis">*</span>
-			</h:outputLabel>
-			<h:inputSecret id="motdepasse"
-				value="#{utilisateurManagedBean.utilisateur.password}"
-				required="true" size="20" maxlength="20">
-				<!-- 
-	        <f:validateRegex pattern="#{applicationManagedBean.PASSWORD_PATTERN}"/> 
-	        -->
-			</h:inputSecret>
-			<h:message id="motDePasseMessage" for="motdepasse"
-				errorClass="erreur" />
-			<br />
-			<br />
-
-			<h:outputLabel for="confirmation">Confirmation du mot de passe <span
+					</h:outputLabel></td>
+				<td><h:inputText id="birthDate"
+					value="#{utilisateurManagedBean.utilisateur.birthdate}"
+					required="true" size="10" maxlength="10"  style="width: 150px;">
+					<f:convertDateTime pattern="#{applicationManagedBean.DATE_PATTERN}" />
+					</h:inputText><h:message id="birthDateMessage" for="birthDate" errorClass="erreur" /></td>
+			</tr>
+			<tr>
+				<td><h:outputLabel for="address">Adresse <span
 					class="requis">*</span>
-			</h:outputLabel>
-			<h:inputSecret id="confirmation"
-				value="#{utilisateurManagedBean.confirm}" required="true" size="20"
-				maxlength="20">
-
-				<!-- 
-	        <f:validateRegex pattern="#{applicationManagedBean.PASSWORD_PATTERN}"/>
-	         -->
-			</h:inputSecret>
-			<h:message id="confirmationMessage" for="confirmation"
-				errorClass="erreur" />
-			<br />
-			<br />
-
-			<h:outputLabel for="birthDate">Date de naissance (#{applicationManagedBean.DATE_PATTERN}) <span
+					</h:outputLabel></td>
+					
+				<td><h:inputTextarea id="address"
+						value="#{utilisateurManagedBean.utilisateur.adress}" required="true"
+						size="25" maxlength="100"  style="width: 148px;"/>
+					<h:message id="addressMessage" for="address" errorClass="erreur" /></td>
+			</tr>
+			<tr>
+				<td><h:outputLabel for="zipCode">Code postal <span
 					class="requis">*</span>
-			</h:outputLabel>
-			<h:inputText id="birthDate"
-				value="#{utilisateurManagedBean.utilisateur.birthdate}"
-				required="true" size="10" maxlength="10">
-				<f:convertDateTime pattern="#{applicationManagedBean.DATE_PATTERN}" />
-			</h:inputText>
-			<h:message id="birthDateMessage" for="birthDate" errorClass="erreur" />
-			<br />
-			<br />
-
-			<h:outputLabel for="address">Adresse <span
+					</h:outputLabel></td>
+				<td>			<h:inputText id="zipCode"
+					value="#{utilisateurManagedBean.utilisateur.zipcode}"
+					required="true" size="5" maxlength="5"  style="width: 150px;" />
+					<h:message id="zipCodeMessage" for="zipCode" errorClass="erreur" /></td>
+			</tr>
+			<tr>
+				<td><h:outputLabel for="city">Ville <span class="requis">*</span>
+					</h:outputLabel></td>
+				<td><h:inputText id="city"
+					value="#{utilisateurManagedBean.utilisateur.city}" required="true"
+					size="20"  style="width: 150px;"/>
+					<h:message id="cityMessage" for="city" errorClass="erreur" /></td>
+			</tr>
+			<tr>
+				<td><h:outputLabel for="role">Rôle demandé (confirmé ensuite par l'administrateur) <span
 					class="requis">*</span>
-			</h:outputLabel>
-			<h:inputTextarea id="address"
-				value="#{utilisateurManagedBean.utilisateur.adress}" required="true"
-				size="25" maxlength="100" />
-			<h:message id="addressMessage" for="address" errorClass="erreur" />
-			<br />
-			<br />
+					</h:outputLabel></td>
+				<td><h:selectOneMenu id="role"
+					value="#{utilisateurManagedBean.utilisateur.role.idRole}"
+					required="true" style="width: 154px;">
+					<f:selectItems value="#{roleManagedBean.rolesLogin}" var="role"
+						itemValue="#{role.idRole}" itemLabel="#{role.libelle}" />
+					</h:selectOneMenu></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td ><h:commandButton value="Inscription"
+					action="#{utilisateurManagedBean.inscription()}"
+					 style="width: 154px;"/></td>
+			</tr>
 
-			<h:outputLabel for="zipCode">Code postal <span
-					class="requis">*</span>
-			</h:outputLabel>
-			<h:inputText id="zipCode"
-				value="#{utilisateurManagedBean.utilisateur.zipcode}"
-				required="true" size="5" maxlength="5" />
-			<h:message id="zipCodeMessage" for="zipCode" errorClass="erreur" />
-			<br />
-			<br />
-
-			<h:outputLabel for="city">Ville <span class="requis">*</span>
-			</h:outputLabel>
-			<h:inputText id="city"
-				value="#{utilisateurManagedBean.utilisateur.city}" required="true"
-				size="20" />
-			<h:message id="cityMessage" for="city" errorClass="erreur" />
-			<br />
-			<br />
-
-			<h:outputLabel for="role">Rôle demandé (confirmé ensuite par l'administrateur) <span
-					class="requis">*</span>
-			</h:outputLabel>
-			<h:selectOneMenu id="role"
-				value="#{utilisateurManagedBean.utilisateur.role.idRole}"
-				required="true">
-				<f:selectItems value="#{roleManagedBean.rolesLogin}" var="role"
-					itemValue="#{role.idRole}" itemLabel="#{role.libelle}" />
-			</h:selectOneMenu>
-			<br />
-			<br />
-
-			<h:commandButton value="inscription"
-				action="#{utilisateurManagedBean.inscription()}"
-				styleClass="sansLabel" />
-			<br />
-		</fieldset>
+		</table>
 	</h:form>
 </h:body>
 </html>

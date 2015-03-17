@@ -8,7 +8,6 @@ import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
-
 import fr.dauphine.etrade.api.ServicesOrdre;
 import fr.dauphine.etrade.model.DirectionOrdre;
 import fr.dauphine.etrade.model.Ordre;
@@ -83,11 +82,6 @@ public class ServicesOrdreBean implements ServicesOrdre {
 		return newResult;
 		
 	}
-
-	public List<Ordre> allDoneOrdres(long idPortefeuille) {
-    return Connexion.getInstance().namedQueryListResult(Ordre.QUERY_ORDRE_STATUS, Ordre.class, 1,
-        idPortefeuille);
-  }
 
 	@Override
 	public List<Ordre> ordresVenteParProduitId(long idProduit){
@@ -229,9 +223,27 @@ public class ServicesOrdreBean implements ServicesOrdre {
 		o.setQuantiteNonExecute(quantite);
 		return o;
 	}
-	
+
+  @Override
   public List<Ordre> allPendingOrdres(long idPortefeuille) {
-    return Connexion.getInstance().namedQueryListResult(Ordre.QUERY_ORDRE_STATUS, Ordre.class, 2,
+	String query = "SELECT o FROM Ordre o JOIN FETCH o.directionOrdre "
+			+ "JOIN FETCH o.statusOrdre JOIN FETCH o.typeOrdre "
+			+ "JOIN FETCH o.portefeuille JOIN FETCH o.produit p "
+			+ "JOIN FETCH p.societe JOIN FETCH p.typeProduit "
+			+ "WHERE o.statusOrdre.idStatusOrder = ?1 AND o.portefeuille.idPortefeuille=?2";
+    return Connexion.getInstance().queryListResult(query, Ordre.class, (long)2,
+        idPortefeuille);
+  }
+  
+  @Override
+  public List<Transaction> allDoneOrdres(long idPortefeuille) {
+	String query = "SELECT t FROM Transaction t JOIN FETCH t.ordreByIdOrderAchat o "
+			+ "JOIN FETCH o.directionOrdre "
+			+ "JOIN FETCH o.statusOrdre JOIN FETCH o.typeOrdre "
+			+ "JOIN FETCH o.portefeuille JOIN FETCH o.produit p "
+			+ "JOIN FETCH p.societe JOIN FETCH p.typeProduit "
+			+ "WHERE o.statusOrdre.idStatusOrder = ?1 AND o.portefeuille.idPortefeuille=?2";
+    return Connexion.getInstance().queryListResult(query, Transaction.class, (long)1,
         idPortefeuille);
   }
 
