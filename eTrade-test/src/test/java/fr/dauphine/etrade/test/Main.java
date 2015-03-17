@@ -10,23 +10,14 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
 public class Main {
-	public static void testConnectionBDD() {
-		String url = "jdbc:mysql://mysql.etrade.alwaysdata.net:3306/etrade_titres";
-		String username = "etrade";
-		String password = "azerty123";
-		Connection connection = null;
-		try {
-		    System.out.println("Connecting database...");
-		    connection = DriverManager.getConnection(url, username, password);
-		    System.out.println("Database connected!");
-		} catch (SQLException e) {
-		    throw new RuntimeException("Cannot connect the database!", e);
-		} finally {
-		    System.out.println("Closing the connection.");
-		    if (connection != null) try { connection.close(); } catch (SQLException ignore) {}
-		}
+		
+	public <T extends Object> T getServices(Class<T> classe){
+		System.out.println("getServices(): "+classe.getName());
+		return null;
+		/*InitialContext initialContext = new InitialContext();
+		ServicesCompte servicesCompte = (ServicesCompte) initialContext
+		.lookup("java:global/eTrade_ejb/ServicesUtilisateurBean!"+serviceClass.getName());*/
 	}
-	
 	
 	public static InitialContext initialiserJBOSS() throws NamingException {
 		Properties props = new Properties();
