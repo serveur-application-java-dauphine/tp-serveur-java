@@ -8,7 +8,7 @@ import javax.jms.MessageListener;
 /**
  * Message-Driven Bean implementation class for: ServiceMessageOrdre
  */
-@MessageDriven(activationConfig = { @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue") })
+//@MessageDriven(activationConfig = { @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue") })
 public class ServiceMessageOrdre implements MessageListener {
 
   /**
