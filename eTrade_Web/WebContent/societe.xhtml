@@ -28,8 +28,10 @@
 			var="actu">
 			<f:facet name="header">Actualités de #{societeManagedBean.getSociete(param.s).name} :</f:facet>
 			<!-- TODO ce rendu ne fonctionne pas. -->
-			<h:outputText
-				rendered="#{empty societeManagedBean.getSociete(param.s).actualites}">Il n'y a pas d'actualité à afficher pour cette entreprise.</h:outputText>
+			<h:panelGrid
+				rendered="#{societeManagedBean.getSociete(param.s).actualites.size() eq 0}">
+				<p>Il n'y a pas d'actualité à afficher pour cette entreprise.</p>
+			</h:panelGrid>
 			<h:column>
 				<h:link value="#{actu.titre}" outcome="actualite">
 					<f:param name="a" value="#{actu.idActualite}" />
