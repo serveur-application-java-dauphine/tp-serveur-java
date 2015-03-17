@@ -27,14 +27,6 @@
 		<h:outputLabel
 			value="#{actualiteManagedBean.getActualite(param.a).dateCreation}" />
 
-		<!-- TODO à virer car on a enlevé l'idée de faire une modification -->
-		<h:outputLabel
-			rendered="#{not empty actualiteManagedBean.getActualite(param.a).date_modification}">
-			<legend>Date de dernière modification : </legend>
-			<h:outputLabel
-				value="#{actualiteManagedBean.getActualite(param.a).dateModification}" />
-		</h:outputLabel>
-
 		<h:outputText
 			value="#{actualiteManagedBean.getActualite(param.a).content}"></h:outputText>
 		<br />

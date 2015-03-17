@@ -2,7 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:o="http://omnifaces.org/ui">
 
 <h:head>
 	<title>eTrade - <h:outputText
@@ -14,15 +15,18 @@
 	<ui:include src="/menu.xhtml" />
 
 	<h:panelGrid id="description">
+		<h2>Description de #{societeManagedBean.getSociete(param.s).name}
+			:</h2>
 		<h:outputText
 			value="#{societeManagedBean.getSociete(param.s).description}" />
 	</h:panelGrid>
+	<br />
 
 	<h:panelGrid id="actualites">
 		<h:dataTable
 			value="#{societeManagedBean.getSociete(param.s).actualites}"
 			var="actu">
-			<f:facet name="header">Actualités de la société #{societeManagedBean.getSociete(param.s).name} :</f:facet>
+			<f:facet name="header">Actualités de #{societeManagedBean.getSociete(param.s).name} :</f:facet>
 			<!-- TODO ce rendu ne fonctionne pas. -->
 			<h:outputText
 				rendered="#{empty societeManagedBean.getSociete(param.s).actualites}">Il n'y a pas d'actualité à afficher pour cette entreprise.</h:outputText>
@@ -34,7 +38,7 @@
 			<span style="font-size: 11px;"> <h:column>
 					<h:outputText value="créé le #{actu.dateCreation}" />
 				</h:column> <h:column>
-					<h:outputText rendered="#{not empty actu.date_modification}"
+					<h:outputText rendered="#{not empty actu.dateModification}"
 						value="modifié le #{actu.dateModification}" />
 				</h:column>
 			</span>
@@ -46,25 +50,28 @@
 			value="Créer une nouvelle actualité." outcome="actualite-creer"></h:link>
 	</h:panelGrid>
 
+	<!-- Section investisseur -->
 	<h:panelGrid rendered="#{sessionUserManagedBean.investisseur}"
 		id="ordres">
+		<h2>Passer des ordres</h2>
 		<h:link
 			value="Passer un ordre pour l'entreprise #{societeManagedBean.getSociete(param.s).name}"
 			outcome="passer_ordre">
 			<f:param name="s" value="#{param.s}" />
 		</h:link>
 		<p>Produit :</p>
-		<h:form>
+		<o:form includeRequestParams="true">
 			<h:selectOneMenu value="#{ordreManagedBean.ordre.produit.idProduit}"
 				style="width: 150px;" onchange="submit()">
+				<f:selectItem itemValue="0" itemLabel="Selectionez..."></f:selectItem>
 				<f:selectItems
-					value="#{produitManagedBean.getProduitsParSocieteId(ordreManagedBean.ordre.produit.societe.idSociete)}"
+					value="#{produitManagedBean.getProduitsParSocieteId(param.s)}"
 					var="produit" itemValue="#{produit.idProduit}"
 					itemLabel="#{produit.libelleProduit}" />
 			</h:selectOneMenu>
-		</h:form>
+		</o:form>
 		<h:panelGrid
-			rendered="#{ordreManagedBean.ordre.produit.idProduit not null}">
+			rendered="#{not empty ordreManagedBean.ordre.produit.idProduit and ordreManagedBean.ordre.produit.idProduit != 0}">
 			<ui:include src="/carnet_ordres.xhtml" />
 		</h:panelGrid>
 

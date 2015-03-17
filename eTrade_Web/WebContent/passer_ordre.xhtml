@@ -1,75 +1,107 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:c="http://java.sun.com/jsp/jstl/core"> 
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:o="http://omnifaces.org/ui">
 <h:head>
-<h:outputStylesheet library="css" name="table-style.css"/>
-</h:head> 
+	<h:outputStylesheet library="css" name="table-style.css" />
+</h:head>
 <h:body>
-    <ui:include src="/menu.xhtml" />
-    
-   	<h1>eTrade</h1>
-   	<h2>Passer un ordre</h2>
-	
-	<br/><br/>
+	<ui:include src="/menu.xhtml" />
 
-	<h:form>
-			
-	  	<table>
-		<tr>
-			<td>Société *:</td>
-			<td><h:panelGroup rendered="#{not empty param.s}">
-					<h:inputHidden value="#{param.s}" />
-					<h:outputText value="#{societeManagedBean.getSociete(param.s).name}" />
-				</h:panelGroup>
-				
-				<h:panelGroup rendered="#{empty param.s}">
-					<h:selectOneMenu value="#{ordreManagedBean.ordre.produit.societe.idSociete}" style="width: 150px;"
-						onchange="submit()" valueChangeListener="#{ordreManagedBean.changeSocieteListener}">
-						<f:selectItem itemValue="0" itemLabel="Selectionez..."></f:selectItem>
-			   			<f:selectItems value="#{ordreManagedBean.listSocietes}" var="societe"
-			   				itemValue="#{societe.idSociete}" itemLabel="#{societe.name}"/>
-			   		</h:selectOneMenu>
-		   		</h:panelGroup>
-		   	</td>	
-		</tr>
-		<tr>
-			<td>Produit *:</td>
-			<td>
-				<h:selectOneMenu value="#{ordreManagedBean.ordre.produit.idProduit}" style="width: 150px;">
-	   			<f:selectItems value="#{produitManagedBean.getProduitsParSocieteId(ordreManagedBean.ordre.produit.societe.idSociete)}" var="produit" 
-	   				itemValue="#{produit.idProduit}" itemLabel="#{produit.libelleProduit}"/> 
-	   			</h:selectOneMenu>
-	   		</td>
-		</tr>
-		<tr>
-			<td>Direction: *</td>
-			<td><h:selectOneRadio  value="#{ordreManagedBean.ordre.directionOrdre.idDirectionOrdre}" style="width: 150px;">
-	   			<f:selectItems value="#{ordreManagedBean.listDirectionOrdres}" var="direction"
-	   			itemValue="#{direction.idDirectionOrdre}" itemLabel="#{direction.libelle}" />
-	   		</h:selectOneRadio></td>
-		</tr>
-		<tr>
-			<td>Type de l'ordre: *</td>
-			<td><h:selectOneMenu id="typeOrdre" value="#{ordreManagedBean.ordre.typeOrdre.idTypeOrder}" style="width: 150px;"
-				onchange="submit()" valueChangeListener="#{ordreManagedBean.changeTypeOrdreListener}" >
-	   			<f:selectItems value="#{ordreManagedBean.listTypeOrdres}" var="type"
-	   				itemValue="#{type.idTypeOrder}" itemLabel="#{type.libelle}"/> 
-	   		</h:selectOneMenu></td>
-		</tr>
-		<tr>		
-			<td>Quantité: *</td>
-			<td><h:inputText id="quantite" value="#{ordreManagedBean.ordre.quantite}" required="true" size="20" maxlength="60" style="width: 146px;">
-			</h:inputText></td>
-		</tr>
-		<tr>
-			<td><h:outputLabel for="prix" rendered="#{ordreManagedBean.ordre.typeOrdre.idTypeOrder > 1 }">Prix<span class="requis">*:</span></h:outputLabel></td>
-			<td><h:inputText id="prix" rendered="#{ordreManagedBean.ordre.typeOrdre.idTypeOrder > 1 }" value="#{ordreManagedBean.ordre.prix}" default="Le prix souhaité" required="false" size="20" maxlength="60" style="width: 146px;"/></td>
-		</tr>
+	<h1>eTrade</h1>
+	<h2>Passer un ordre</h2>
+
+	<br />
+	<br />
+	<o:form includeRequestParams="true">
+
+		<table>
+			<tr>
+				<td>Société *:</td>
+				<td><h:panelGroup rendered="#{not empty param.s}">
+
+						<h:outputText
+							value="#{societeManagedBean.getSociete(param.s).name}" />
+					</h:panelGroup> <h:panelGroup rendered="#{empty param.s}">
+						<h:selectOneMenu
+							value="#{ordreManagedBean.ordre.produit.societe.idSociete}"
+							style="width: 150px;" onchange="submit()"
+							valueChangeListener="#{ordreManagedBean.changeSocieteListener}">
+							<f:selectItem itemValue="0" itemLabel="Selectionez..."></f:selectItem>
+							<f:selectItems value="#{ordreManagedBean.listSocietes}"
+								var="societe" itemValue="#{societe.idSociete}"
+								itemLabel="#{societe.name}" />
+						</h:selectOneMenu>
+					</h:panelGroup></td>
+			</tr>
+			<tr>
+				<td>Produit *:</td>
+				<td><h:panelGroup rendered="#{not empty param.s}">
+						<h:selectOneMenu
+							value="#{ordreManagedBean.ordre.produit.idProduit}"
+							style="width: 150px;">
+							<f:selectItem itemValue="0" itemLabel="Selectionez..."></f:selectItem>
+							<f:selectItems
+								value="#{produitManagedBean.getProduitsParSocieteId(param.s)}"
+								var="produit" itemValue="#{produit.idProduit}"
+								itemLabel="#{produit.libelleProduit}" />
+						</h:selectOneMenu>
+					</h:panelGroup> <h:panelGroup rendered="#{empty param.s}">
+						<h:selectOneMenu
+							value="#{ordreManagedBean.ordre.produit.idProduit}"
+							style="width: 150px;">
+							<f:selectItem itemValue="0" itemLabel="Selectionez..."></f:selectItem>
+							<f:selectItems
+								value="#{produitManagedBean.getProduitsParSocieteId(ordreManagedBean.ordre.produit.societe.idSociete)}"
+								var="produit" itemValue="#{produit.idProduit}"
+								itemLabel="#{produit.libelleProduit}" />
+						</h:selectOneMenu>
+					</h:panelGroup></td>
+			</tr>
+			<tr>
+				<td>Direction: *</td>
+				<td><h:selectOneRadio
+						value="#{ordreManagedBean.ordre.directionOrdre.idDirectionOrdre}"
+						style="width: 150px;">
+						<f:selectItems value="#{ordreManagedBean.listDirectionOrdres}"
+							var="direction" itemValue="#{direction.idDirectionOrdre}"
+							itemLabel="#{direction.libelle}" />
+					</h:selectOneRadio></td>
+			</tr>
+			<tr>
+				<td>Type de l'ordre: *</td>
+				<td><h:selectOneMenu id="typeOrdre"
+						value="#{ordreManagedBean.ordre.typeOrdre.idTypeOrder}"
+						style="width: 150px;" onchange="submit()"
+						valueChangeListener="#{ordreManagedBean.changeTypeOrdreListener}">
+						<f:selectItems value="#{ordreManagedBean.listTypeOrdres}"
+							var="type" itemValue="#{type.idTypeOrder}"
+							itemLabel="#{type.libelle}" />
+					</h:selectOneMenu></td>
+			</tr>
+			<tr>
+				<td>Quantité: *</td>
+				<td><h:inputText id="quantite"
+						value="#{ordreManagedBean.ordre.quantite}" required="true"
+						size="20" maxlength="60" style="width: 146px;">
+					</h:inputText></td>
+			</tr>
+			<tr>
+				<td><h:outputLabel for="prix"
+						rendered="#{ordreManagedBean.ordre.typeOrdre.idTypeOrder > 1 }">Prix<span
+							class="requis">*:</span>
+					</h:outputLabel></td>
+				<td><h:inputText id="prix"
+						rendered="#{ordreManagedBean.ordre.typeOrdre.idTypeOrder > 1 }"
+						value="#{ordreManagedBean.ordre.prix}" default="Le prix souhaité"
+						required="false" size="20" maxlength="60" style="width: 146px;" /></td>
+			</tr>
 		</table>
-		  <h:commandButton value="Passer l'ordre" action="#{ordreManagedBean.passerOrdre()}" styleClass="sansLabel" type="submit" />
-	</h:form>
-</h:body> 
+		<h:commandButton value="Passer l'ordre"
+			action="#{ordreManagedBean.passerOrdre()}" styleClass="sansLabel"
+			type="submit" />
+	</o:form>
+</h:body>
 </html>
