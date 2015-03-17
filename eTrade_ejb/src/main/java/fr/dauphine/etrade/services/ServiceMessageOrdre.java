@@ -8,25 +8,21 @@ import javax.jms.MessageListener;
 /**
  * Message-Driven Bean implementation class for: ServiceMessageOrdre
  */
-@MessageDriven(
-		activationConfig = { @ActivationConfigProperty(
-				propertyName = "destinationType", propertyValue = "javax.jms.Queue")
-		})
+@MessageDriven(activationConfig = { @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue") })
 public class ServiceMessageOrdre implements MessageListener {
 
-    /**
-     * Default constructor. 
-     */
-    public ServiceMessageOrdre() {
-        // TODO Auto-generated constructor stub
-    }
-	
-	/**
-     * @see MessageListener#onMessage(Message)
-     */
-    public void onMessage(Message message) {
-        // TODO Auto-generated method stub
-        
-    }
+  /**
+   * Default constructor.
+   */
+  public ServiceMessageOrdre() {
+
+  }
+
+  /**
+   * @see MessageListener#onMessage(Message)
+   */
+  public void onMessage(Message message) {
+
+  }
 
 }
