@@ -21,4 +21,6 @@ public interface ServicesOrdre {
 	TypeOrdre getTypeOrdreById(long idTypeOrdre);
 	List<Ordre> ordresAchatParProduitId(long idProduit);
 	List<Ordre> ordresVenteParProduitId(long idProduit);
+	List<Ordre> allPendingOrdresParProduitId(long idProduit);
+	void fixingAll();
 }

@@ -33,10 +33,6 @@ public class OrdreManagedBean implements Serializable {
 	private List<TypeOrdre> listTypeOrdres;
 	private List<DirectionOrdre> listDirectionOrdres;
 	
-	FacesContext fc = FacesContext.getCurrentInstance();
-	@SuppressWarnings("deprecation")
-	Utilisateur utilisateur  = (Utilisateur) fc.getApplication().createValueBinding("#{sessionUserManagedBean.utilisateur}").getValue(fc);
-	
 
 	@EJB
 	private ServicesOrdre so;
@@ -46,24 +42,14 @@ public class OrdreManagedBean implements Serializable {
 	
 	@EJB
 	private ServicesProduit sp;
-
-	/**
-	 * Liste pour le carnet d'ordres la partie achat (gauche)
-	 */
-	public List<Ordre> ordresAchatParProduit(long idProduit){
-		return so.ordresAchatParProduitId(idProduit);
-	}
-	/**
-	 * Liste pour le carnet d'ordres la partie vente (droite)
-	 */
-	public List<Ordre> ordresVenteParProduit(long idProduit){
-		return so.ordresVenteParProduitId(idProduit);
-	}
 	
 	/**
 	 * @return the list of executed orders
 	 */
 	public List<Ordre> getExecutedOrders() {
+		FacesContext fc = FacesContext.getCurrentInstance();
+		@SuppressWarnings("deprecation")
+		Utilisateur utilisateur  = (Utilisateur) fc.getApplication().createValueBinding("#{sessionUserManagedBean.utilisateur}").getValue(fc);
 		return so.allDoneOrdres(utilisateur.getPortefeuille().getIdPortefeuille());
 	}
 
@@ -71,6 +57,9 @@ public class OrdreManagedBean implements Serializable {
 	 * @return the list of pending orders
 	 */
 	public List<Ordre> getPendingOrders() {
+		FacesContext fc = FacesContext.getCurrentInstance();
+		@SuppressWarnings("deprecation")
+		Utilisateur utilisateur  = (Utilisateur) fc.getApplication().createValueBinding("#{sessionUserManagedBean.utilisateur}").getValue(fc);
 		return so.allPendingOrdres(utilisateur.getPortefeuille().getIdPortefeuille());
 	}
 	
@@ -106,9 +95,13 @@ public class OrdreManagedBean implements Serializable {
 	 * Passing the order
 	 */
 	public void passerOrdre(){
+		FacesContext fc = FacesContext.getCurrentInstance();
+		@SuppressWarnings("deprecation")
+		Utilisateur utilisateur  = (Utilisateur) fc.getApplication().createValueBinding("#{sessionUserManagedBean.utilisateur}").getValue(fc);
 		if(utilisateur.getPortefeuille()==null)
 			Utilities.redirect("no_ordre.xhtml");
 		else {
+			ordre.setQuantiteNonExecute(ordre.getQuantite());
 			ordre.setPortefeuille(utilisateur.getPortefeuille());
 			ordre.setProduit(sp.getProduitById(ordre.getProduit().getIdProduit()));
 			so.addOrdre(ordre);
@@ -171,6 +164,6 @@ public class OrdreManagedBean implements Serializable {
 	public void setListDirectionOrdres(List<DirectionOrdre> listDirectionOrdres) {
 		this.listDirectionOrdres = listDirectionOrdres;
 	}
-	
+
 
 }

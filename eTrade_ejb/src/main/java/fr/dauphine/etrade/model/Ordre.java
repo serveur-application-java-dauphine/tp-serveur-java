@@ -1,9 +1,7 @@
 package fr.dauphine.etrade.model;
-
 // default package
-// Generated 11 mars 2015 16:13:53 by Hibernate Tools 4.0.0
+// Generated 16 mars 2015 16:53:12 by Hibernate Tools 4.0.0
 
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -31,10 +29,10 @@ import javax.persistence.TemporalType;
 @Table(name = "Ordre")
 @NamedQuery(query="SELECT o FROM Ordre o JOIN FETCH o.directionOrdre JOIN FETCH o.statusOrdre JOIN FETCH o.typeOrdre JOIN FETCH o.portefeuille JOIN FETCH o.produit p JOIN FETCH p.societe JOIN FETCH p.typeProduit WHERE o.statusOrdre.idStatusOrder = ?1 AND o.portefeuille.idPortefeuille=?2", name = "QUERY_ORDRE_STATUS")
 public class Ordre implements java.io.Serializable {
-
-	public static final String QUERY_ORDRE_STATUS = "QUERY_ORDRE_STATUS";
+	
+	public static String QUERY_ORDRE_STATUS = "QUERY_ORDRE_STATUS";
 	/**
-	 * Default serialVersionUID
+	 * Default SerialVersionUID
 	 */
 	private static final long serialVersionUID = 1L;
 	private Long idOrder;
@@ -43,42 +41,48 @@ public class Ordre implements java.io.Serializable {
 	private StatusOrdre statusOrdre;
 	private Portefeuille portefeuille;
 	private TypeOrdre typeOrdre;
-	private BigDecimal prix;
-	private int quantite;
 	private Date date;
-	private Set<Transaction> transactionsForIdOrderVente = new HashSet<Transaction>(0);
-	private Set<Transaction> transactionsForIdOrderAchat = new HashSet<Transaction>(0);
+	private Integer prix;
+	private int quantite;
+	private int quantiteNonExecute;
+	private Set<Transaction> transactionsForIdOrderAchat = new HashSet<Transaction>(
+			0);
+	private Set<Transaction> transactionsForIdOrderVente = new HashSet<Transaction>(
+			0);
 
-	public Ordre() {}
-
-	public Ordre(Produit produit, DirectionOrdre directionOrdre,
-			StatusOrdre statusOrdre, Portefeuille portefeuille,
-			TypeOrdre typeOrdre, BigDecimal prix, int quantite, Date date) {
-		this.produit = produit;
-		this.directionOrdre = directionOrdre;
-		this.statusOrdre = statusOrdre;
-		this.portefeuille = portefeuille;
-		this.typeOrdre = typeOrdre;
-		this.prix = prix;
-		this.quantite = quantite;
-		this.date = date;
+	public Ordre() {
 	}
 
 	public Ordre(Produit produit, DirectionOrdre directionOrdre,
 			StatusOrdre statusOrdre, Portefeuille portefeuille,
-			TypeOrdre typeOrdre, BigDecimal prix, int quantite, Date date,
-			Set<Transaction> transactionsForIdOrderVente,
-			Set<Transaction> transactionsForIdOrderAchat) {
+			TypeOrdre typeOrdre, Date date, int quantite, int quantiteNonExecute) {
 		this.produit = produit;
 		this.directionOrdre = directionOrdre;
 		this.statusOrdre = statusOrdre;
 		this.portefeuille = portefeuille;
 		this.typeOrdre = typeOrdre;
+		this.date = date;
+		this.quantite = quantite;
+		this.quantiteNonExecute = quantiteNonExecute;
+	}
+
+	public Ordre(Produit produit, DirectionOrdre directionOrdre,
+			StatusOrdre statusOrdre, Portefeuille portefeuille,
+			TypeOrdre typeOrdre, Date date, Integer prix, int quantite,
+			int quantiteNonExecute,
+			Set<Transaction> transactionsForIdOrderAchat,
+			Set<Transaction> transactionsForIdOrderVente) {
+		this.produit = produit;
+		this.directionOrdre = directionOrdre;
+		this.statusOrdre = statusOrdre;
+		this.portefeuille = portefeuille;
+		this.typeOrdre = typeOrdre;
+		this.date = date;
 		this.prix = prix;
 		this.quantite = quantite;
-		this.date = date;
-		this.transactionsForIdOrderVente = transactionsForIdOrderVente;
+		this.quantiteNonExecute = quantiteNonExecute;
 		this.transactionsForIdOrderAchat = transactionsForIdOrderAchat;
+		this.transactionsForIdOrderVente = transactionsForIdOrderVente;
 	}
 
 	@Id
@@ -142,12 +146,22 @@ public class Ordre implements java.io.Serializable {
 		this.typeOrdre = typeOrdre;
 	}
 
-	@Column(name = "Prix", nullable = true, precision = 8)
-	public BigDecimal getPrix() {
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "Date", nullable = false, length = 19)
+	public Date getDate() {
+		return this.date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+	@Column(name = "Prix", precision = 8, scale = 0)
+	public Integer getPrix() {
 		return this.prix;
 	}
 
-	public void setPrix(BigDecimal prix) {
+	public void setPrix(Integer prix) {
 		this.prix = prix;
 	}
 
@@ -160,24 +174,13 @@ public class Ordre implements java.io.Serializable {
 		this.quantite = quantite;
 	}
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "Date", nullable = false, length = 19)
-	public Date getDate() {
-		return this.date;
+	@Column(name = "QuantiteNonExecute", nullable = false)
+	public int getQuantiteNonExecute() {
+		return this.quantiteNonExecute;
 	}
 
-	public void setDate(Date date) {
-		this.date = date;
-	}
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "ordreByIdOrderVente")
-	public Set<Transaction> getTransactionsForIdOrderVente() {
-		return this.transactionsForIdOrderVente;
-	}
-
-	public void setTransactionsForIdOrderVente(
-			Set<Transaction> transactionsForIdOrderVente) {
-		this.transactionsForIdOrderVente = transactionsForIdOrderVente;
+	public void setQuantiteNonExecute(int quantiteNonExecute) {
+		this.quantiteNonExecute = quantiteNonExecute;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "ordreByIdOrderAchat")
@@ -188,6 +191,16 @@ public class Ordre implements java.io.Serializable {
 	public void setTransactionsForIdOrderAchat(
 			Set<Transaction> transactionsForIdOrderAchat) {
 		this.transactionsForIdOrderAchat = transactionsForIdOrderAchat;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "ordreByIdOrderVente")
+	public Set<Transaction> getTransactionsForIdOrderVente() {
+		return this.transactionsForIdOrderVente;
+	}
+
+	public void setTransactionsForIdOrderVente(
+			Set<Transaction> transactionsForIdOrderVente) {
+		this.transactionsForIdOrderVente = transactionsForIdOrderVente;
 	}
 
 }
