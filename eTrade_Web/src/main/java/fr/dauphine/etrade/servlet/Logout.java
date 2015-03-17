@@ -36,7 +36,7 @@ public class Logout extends HttpServlet {
 		System.out.println("--- Before logout ---");
 		System.out.println("Session ID is "
 				+ (request.isRequestedSessionIdValid() ? "valid" : "invalid"));
-		request.getRequestDispatcher("out.html").include(request, response);
+		request.getRequestDispatcher("out.xhtml").include(request, response);
 
 		if (session != null) {
 			session.invalidate();
@@ -49,7 +49,7 @@ public class Logout extends HttpServlet {
 				+ (request.isRequestedSessionIdValid() ? "valid" : "invalid"));
 
 		out.close();
-		response.sendRedirect("/out.html");
+		response.sendRedirect("/out.xhtml");
 	}
 
 }
