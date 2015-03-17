@@ -1,8 +1,8 @@
 
     create table Actualite (
         IdActualite bigint not null auto_increment unique,
-        date_creation datetime not null,
-        date_modification datetime,
+        date_creation DEFAULT CURRENT_TIMESTAMP not null,
+        date_modification ON UPDATE CURRENT_TIMESTAMP,
         File varchar(200) not null,
         titre varchar(100) not null,
         IdSociete bigint not null,
@@ -20,8 +20,9 @@
     create table Ordre (
         IdOrder bigint not null auto_increment unique,
         Date datetime not null,
-        Prix decimal(8,0) not null,
+        Prix decimal(8,0),
         Quantite integer not null,
+        QuantiteNonExecute integer not null,
         IdDirectionOrdre bigint not null,
         IdPortefeuille bigint not null,
         IdProduit bigint not null,
@@ -38,6 +39,11 @@
 
     create table Produit (
         IdProduit bigint not null auto_increment unique,
+        Coupon decimal(10,0),
+        Maturite date,
+        Strike decimal(10,0),
+        Taux decimal(10,0),
+        Volatilite decimal(10,0),
         IdSociete bigint not null,
         IdTypeProduit bigint not null,
         primary key (IdProduit)
@@ -53,6 +59,7 @@
 
     create table Societe (
         IdSociete bigint not null auto_increment unique,
+        Description varchar(300),
         Name varchar(100) not null unique,
         primary key (IdSociete),
         unique (Name)
@@ -80,7 +87,6 @@
         Date datetime not null,
         Montant decimal(8,0) not null,
         IdPortefeuille bigint not null,
-        IdTypeTrBancaire bigint not null,
         primary key (IdTrBancaire)
     );
 
@@ -95,13 +101,6 @@
         IdTypeProduit bigint not null auto_increment unique,
         Libelle varchar(20) not null unique,
         primary key (IdTypeProduit),
-        unique (Libelle)
-    );
-
-    create table Type_Transaction_Bancaire (
-        IdTypeTrBancaire bigint not null auto_increment unique,
-        Libelle varchar(20) not null unique,
-        primary key (IdTypeTrBancaire),
         unique (Libelle)
     );
 
@@ -188,12 +187,6 @@
         add constraint FKE30A7ABE6F4233B9 
         foreign key (IdOrderVente) 
         references Ordre (IdOrder);
-
-    alter table Transaction_bancaire 
-        add index FKCCCB68F09533BB5D (IdTypeTrBancaire), 
-        add constraint FKCCCB68F09533BB5D 
-        foreign key (IdTypeTrBancaire) 
-        references Type_Transaction_Bancaire (IdTypeTrBancaire);
 
     alter table Transaction_bancaire 
         add index FKCCCB68F0D12E7FAF (IdPortefeuille), 
