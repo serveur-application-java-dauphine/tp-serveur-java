@@ -12,7 +12,6 @@
 	    <class>fr.dauphine.etrade.model.TransactionBancaire</class>
 	    <class>fr.dauphine.etrade.model.TypeOrdre</class>
 	    <class>fr.dauphine.etrade.model.TypeProduit</class>
-	    <class>fr.dauphine.etrade.model.TypeTransactionBancaire</class>
 	    <class>fr.dauphine.etrade.model.Utilisateur</class>
 	    <class>fr.dauphine.etrade.model.Produit</class>
 	    <class>fr.dauphine.etrade.model.Ordre</class>

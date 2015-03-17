@@ -38,6 +38,7 @@ Remarque sur les données :
 Cette application est livrée avec un accès distant à une base données hébergée. 
 Cependant, la durée d'accès aux données et de génération des retours à l'utilisateur peuvent être conséquents (solution gratuite avec peu de bande passante).
 Si un tel cas se produit, il est conseillé de créer une base de données locale à la machine de l'utilisateur avec nos scripts de création de base de données et d'insertion de données fournis.
+Le fichier en question se nomme etrade_titres.sql
 
 
 

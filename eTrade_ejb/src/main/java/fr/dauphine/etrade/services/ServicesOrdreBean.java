@@ -66,8 +66,8 @@ public class ServicesOrdreBean implements ServicesOrdre {
 				+ "ORDER BY o.prix DESC, t.libelle ASC, o.date ASC";
 		List<Ordre> result = Connexion.getInstance().queryListResult(query, Ordre.class, idProduit);
 		
-		List<Ordre> ordresMarche = new ArrayList<>();
-		List<Ordre> ordresNonMarche = new ArrayList<>();
+		List<Ordre> ordresMarche = new ArrayList<Ordre>();
+		List<Ordre> ordresNonMarche = new ArrayList<Ordre>();
 		for(Ordre o : result){
 			if(o.getTypeOrdre().getIdTypeOrder().equals((long)1)){
 				ordresMarche.add(o);
@@ -76,7 +76,7 @@ public class ServicesOrdreBean implements ServicesOrdre {
 			}
 		}
 			
-		List<Ordre> newResult = new ArrayList<>();
+		List<Ordre> newResult = new ArrayList<Ordre>();
 		newResult.addAll(ordresMarche);
 		newResult.addAll(ordresNonMarche);		
 		return newResult;
@@ -121,8 +121,8 @@ public class ServicesOrdreBean implements ServicesOrdre {
 		List<Produit> produits = Connexion.getInstance().getAll(Produit.class);
 		for(Produit p: produits){
 			List<Ordre> allOrdres = allPendingOrdresParProduitId(p.getIdProduit());
-			List<Transaction> transactionsAPasserList = new ArrayList<>();
-			List<Ordre> ordresModifies = new ArrayList<>();
+			List<Transaction> transactionsAPasserList = new ArrayList<Transaction>();
+			List<Ordre> ordresModifies = new ArrayList<Ordre>();
 
 			int quantiteCumuleVente[] = new int[allOrdres.size()];
 			int quantiteCumuleAchat[] = new int[allOrdres.size()];
