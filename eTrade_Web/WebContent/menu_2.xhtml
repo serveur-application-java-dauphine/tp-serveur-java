@@ -1,0 +1,64 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich">
+
+    <h:outputStylesheet>
+	    .pic {
+	        margin-bottom: -4px;
+	        margin-right: 2px;
+	    }
+	    .search .rich-menu-item-hover{
+	        background-color: transparent;
+	        border-color: transparent;
+	    }
+    </h:outputStylesheet>
+    
+     <rich:toolBar>
+
+		<rich:menuItem submitMode="none">
+                 <h:outputLink value="/eTrade_Web/my_account.xhtml">
+                     <h:outputText value="Bonjour,  #{sessionUserManagedBean.utilisateur.firstname}"></h:outputText>
+                 </h:outputLink>
+   		</rich:menuItem>         
+        <rich:toolBarGroup location="right">
+       		 <rich:menuItem submitMode="none">
+                 <h:outputLink value="/eTrade_Web/users.xhtml">
+                     <h:outputText value="Users"></h:outputText>
+                 </h:outputLink>
+             </rich:menuItem>
+        		<rich:menuItem submitMode="none">
+                 <h:outputLink value="/eTrade_Web/societes.xhtml">
+                     <h:outputText value="Societes"></h:outputText>
+                 </h:outputLink>
+             </rich:menuItem>
+             <rich:dropDownMenu>
+              <f:facet name="label">
+                  <h:panelGrid cellpadding="0" cellspacing="0" columns="2"
+                      style="vertical-align:middle">
+                     <h:outputText value="Portefeuille" />
+                 </h:panelGrid>
+             </f:facet>
+             <rich:menuItem submitMode="none">
+                 <h:outputLink value="/eTrade_Web/portefeuille.xhtml">
+                     <h:outputText value="Voir Portefeuille"></h:outputText>
+                 </h:outputLink>
+             </rich:menuItem>	
+             <rich:menuItem submitMode="none">
+                 <h:outputLink value="/eTrade_Web/passer_ordre.xhtml">
+                     <h:outputText value="Passer un ordre"></h:outputText>
+                 </h:outputLink>
+             </rich:menuItem>	
+         </rich:dropDownMenu>
+         <rich:menuItem submitMode="none">
+             <h:outputLink value="/eTrade_Web/logout">
+                    <h:outputText value="Se deconnecter"></h:outputText>
+                </h:outputLink>
+            </rich:menuItem>
+        </rich:toolBarGroup>
+    </rich:toolBar>
+
+
+</ui:composition>
