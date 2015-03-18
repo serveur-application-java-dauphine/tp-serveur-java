@@ -84,9 +84,8 @@ public class UtilisateurManagedBean implements Serializable {
 	 * account web page.
 	 */
 	public void inscription() {
-		if (confirm.equals(utilisateur.getPassword())) {
+		if (!confirm.equals(utilisateur.getPassword()))
 			return;
-		}
 		su.addUtilisateur(utilisateur);
 		Utilities.redirect("my_account.xhtml");
 	}
