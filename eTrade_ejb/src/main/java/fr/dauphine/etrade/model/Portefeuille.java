@@ -32,7 +32,7 @@ public class Portefeuille implements java.io.Serializable {
   private String description;
   private Set<Ordre> ordres = new HashSet<Ordre>(0);
   private Set<TransactionBancaire> transactionBancaires = new HashSet<TransactionBancaire>(0);
-  private Utilisateur utilisateurs;
+  private Utilisateur utilisateur;
 
   public Portefeuille() {
   }
@@ -47,7 +47,7 @@ public class Portefeuille implements java.io.Serializable {
     this.description = description;
     this.ordres = ordres;
     this.transactionBancaires = transactionBancaires;
-    this.utilisateurs = utilisateurs;
+    this.utilisateur = utilisateurs;
   }
 
   @Id
@@ -89,12 +89,12 @@ public class Portefeuille implements java.io.Serializable {
   }
 
   @OneToOne(mappedBy = "portefeuille")
-  public Utilisateur getUtilisateurs() {
-    return this.utilisateurs;
+  public Utilisateur getUtilisateur() {
+    return this.utilisateur;
   }
 
-  public void setUtilisateurs(Utilisateur utilisateurs) {
-    this.utilisateurs = utilisateurs;
+  public void setUtilisateur(Utilisateur utilisateur) {
+    this.utilisateur = utilisateur;
   }
 
 }

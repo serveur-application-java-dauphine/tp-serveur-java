@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 @Entity
@@ -91,7 +93,8 @@ public class Actualite implements java.io.Serializable {
     this.titre = titre;
   }
 
-  @Column(name = "date_creation", nullable = false, columnDefinition = "DEFAULT CURRENT_TIMESTAMP")
+  @Temporal(TemporalType.TIMESTAMP)
+  @Column(name = "date_creation", nullable = false, length = 19, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
   public Date getDateCreation() {
     return dateCreation;
   }
@@ -99,8 +102,9 @@ public class Actualite implements java.io.Serializable {
   public void setDateCreation(Date dateCreation) {
     this.dateCreation = dateCreation;
   }
-
-  @Column(name = "date_modification", columnDefinition = "ON UPDATE CURRENT_TIMESTAMP")
+  
+  @Temporal(TemporalType.TIMESTAMP)
+  @Column(name = "date_modification", length = 19)
   public Date getDateModification() {
     return dateModification;
   }

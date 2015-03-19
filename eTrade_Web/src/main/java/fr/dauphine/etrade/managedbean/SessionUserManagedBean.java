@@ -5,6 +5,7 @@ import java.security.Principal;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
@@ -21,6 +22,15 @@ public class SessionUserManagedBean implements Serializable {
 
 	@EJB
 	private ServicesUtilisateur su;
+	@ManagedProperty(value="#{applicationManagedBean}")
+	private ApplicationManagedBean amb;
+
+	/**
+	 * @param amb the amb to set
+	 */
+	public void setAmb(ApplicationManagedBean amb) {
+		this.amb = amb;
+	}
 
 	/**
 	 * @return the user with its Role, his society and his portefolio
@@ -30,8 +40,9 @@ public class SessionUserManagedBean implements Serializable {
 			Principal user = FacesContext.getCurrentInstance()
 					.getExternalContext().getUserPrincipal();
 			if (user != null) {
-				System.out.println("recup user");
 				utilisateur = su.getUtilisateurByEmail(user.getName());
+				System.out.println(utilisateur);
+				System.out.println(utilisateur.getPortefeuille());
 			}
 		}
 		return utilisateur;
@@ -60,8 +71,7 @@ public class SessionUserManagedBean implements Serializable {
 		return utilisateur
 				.getRole()
 				.getCode()
-				.equals(Utilities.getManagedBean(ApplicationManagedBean.class)
-						.getROLE_CODE_ADMINISTRATEUR());
+				.equals(amb.getROLE_CODE_ADMINISTRATEUR());
 	}
 
 	/**
@@ -75,8 +85,7 @@ public class SessionUserManagedBean implements Serializable {
 		return utilisateur
 				.getRole()
 				.getCode()
-				.equals(Utilities.getManagedBean(ApplicationManagedBean.class)
-						.getROLE_CODE_SOCIETE());
+				.equals(amb.getROLE_CODE_SOCIETE());
 	}
 
 	/**
@@ -90,8 +99,7 @@ public class SessionUserManagedBean implements Serializable {
 		return utilisateur
 				.getRole()
 				.getCode()
-				.equals(Utilities.getManagedBean(ApplicationManagedBean.class)
-						.getROLE_CODE_INVESTISSEUR());
+				.equals(amb.getROLE_CODE_INVESTISSEUR());
 	}
 
 	/**

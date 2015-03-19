@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 
 import fr.dauphine.etrade.api.Response;
@@ -24,11 +25,19 @@ public class UtilisateurManagedBean implements Serializable {
 	private Utilisateur utilisateur;
 	private List<Utilisateur> utilisateurs;
 	private String confirm;
-	private String error;
 
 	@EJB
 	private ServicesUtilisateur su;
-
+	@ManagedProperty(value="#{applicationManagedBean}")
+	private ApplicationManagedBean amb;
+	
+	/**
+	 * @param amb the amb to set
+	 */
+	public void setAmb(ApplicationManagedBean amb) {
+		this.amb = amb;
+	}
+	
 	private static Logger LOG = Logger.getLogger(UtilisateurManagedBean.class
 			.getName());
 
@@ -53,15 +62,15 @@ public class UtilisateurManagedBean implements Serializable {
 	public void valider(Utilisateur utilisateur) {
 		LOG.info("Modifying the validity of the role to true for user "
 				+ utilisateur.getIdUtilisateur());
-		ApplicationManagedBean amb = Utilities.getManagedBean(ApplicationManagedBean.class);
-		if (utilisateur.getRole().getCode() == amb.getROLE_CODE_INVESTISSEUR()) {
+		
+		if (utilisateur.getRole().getCode().equals(amb.getROLE_CODE_INVESTISSEUR())) {
 			Response response = su.createPortefolio(new Portefeuille());
 			if (Utilities.responseIsError(response))
 				return;
 			utilisateur.setPortefeuille(((ResponseObject<Portefeuille>)response).object);
 		}
 		utilisateur.setValidRole(true);
-		this.modifier(utilisateur);
+		modifier(utilisateur);
 	}
 
 	/**
@@ -139,20 +148,6 @@ public class UtilisateurManagedBean implements Serializable {
 	 */
 	public void setConfirm(String confirm) {
 		this.confirm = confirm;
-	}
-
-	/**
-	 * @return the error
-	 */
-	public String getError() {
-		return error;
-	}
-
-	/**
-	 * @param error the error to set
-	 */
-	public void setError(String error) {
-		this.error = error;
 	}
 
 }

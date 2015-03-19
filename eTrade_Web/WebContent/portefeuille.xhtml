@@ -12,7 +12,56 @@
 
 	<ui:include src="/menu.xhtml" />
 
-	<h1>Portefeuille</h1>
+	<h1>Mon Portefeuille</h1>
+	<br />
+	<br />
+
+	<h:outputLabel value="Votre Compte n'a pas encore été validé par un administrateur" rendered="#{!sessionUserManagedBean.utilisateur.validRole}" />
+	
+	<h:panelGroup rendered="#{sessionUserManagedBean.utilisateur.validRole}">
+	<h3>Liquidité</h3>
+	<br />
+	Fonds disponible : #{transactionBancaireManagedBean.total()}
+	<h:dataTable	
+						value="#{transactionBancaireManagedBean.transactionsBancaire}" var="tr"
+						styleClass="order-table" headerClass="order-table-header"
+						rowClasses="order-table-odd-row,order-table-even-row">
+						
+						<h:column>
+							<f:facet name="header">Date</f:facet>    				
+			      #{tr.date.toString()}
+			   </h:column>
+			   <h:column>
+							<f:facet name="header">Montant</f:facet>    				
+			      <h:outputLabel value="#{tr.montant}" rendered="#{tr.montant gt 0}" style="color:green"/>
+			      <h:outputLabel value="#{tr.montant}" rendered="#{tr.montant lt 0}" style="color:red"/>
+			   </h:column>
+						
+	</h:dataTable>
+	<br />
+	<h:form >
+	
+	<h:messages errorClass="errorMessage" infoClass="infoMessage" layout="table" globalOnly="true" showDetail="false" showSummary="true"/>
+		<table>
+		<tr>
+			<h:selectOneRadio value="#{transactionBancaireManagedBean.typeTransaction}">
+			<f:selectItem itemValue="1" itemLabel="Crédit"/>
+			<f:selectItem itemValue="2" itemLabel="Débit"/>
+			</h:selectOneRadio>
+		</tr>
+			<tr>
+				<td><h:outputLabel for="montant">Montant <span class="requis">*</span>
+					</h:outputLabel></td>
+				<td><h:inputText id="montant"
+					value="#{transactionBancaireManagedBean.transactionBancaire.montant}"
+					required="true" size="10" maxlength="15" />
+					<h:message id="montantMessage" for="montant" errorClass="erreur" /></td>
+			</tr>
+			<tr>
+			<h:commandButton type="submit" action="#{transactionBancaireManagedBean.add()}" value="Valider" />
+			</tr>
+	</table>
+	</h:form>
 	<br />
 	<br />
 	<h:form>
@@ -98,5 +147,6 @@
 		</table>
 		
 	</h:form>
+	</h:panelGroup>
 </h:body>
 </html>
