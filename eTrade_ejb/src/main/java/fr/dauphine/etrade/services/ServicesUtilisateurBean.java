@@ -7,10 +7,12 @@ import javax.ejb.Stateless;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 
+import fr.dauphine.etrade.api.Response;
 import fr.dauphine.etrade.api.ServicesUtilisateur;
 import fr.dauphine.etrade.model.Portefeuille;
 import fr.dauphine.etrade.model.Utilisateur;
 import fr.dauphine.etrade.persit.Connexion;
+import fr.dauphine.etrade.persit.Utilities;
 
 @Remote(ServicesUtilisateur.class)
 @Stateless
@@ -18,15 +20,13 @@ import fr.dauphine.etrade.persit.Connexion;
 public class ServicesUtilisateurBean implements ServicesUtilisateur {
 
   @Override
-  public Utilisateur addUtilisateur(Utilisateur utilisateur) {
-    Connexion.getInstance().insert(utilisateur);
-    return utilisateur;
+  public Response addUtilisateur(Utilisateur utilisateur) {
+    return Utilities.doSimple(utilisateur, Utilities.INSERT);
   }
 
   @Override
-  public Utilisateur delUtilisateur(Utilisateur utilisateur) {
-    Connexion.getInstance().delete(utilisateur);
-    return utilisateur;
+  public Response delUtilisateur(Utilisateur utilisateur) {
+	  return Utilities.doSimple(utilisateur, Utilities.DELETE);
   }
 
   @Override
@@ -40,28 +40,21 @@ public class ServicesUtilisateurBean implements ServicesUtilisateur {
   }
 
   @Override
-  public Utilisateur updateUtilisateur(Utilisateur utilisateur) {
-    Connexion.getInstance().update(utilisateur);
-    return utilisateur;
+  public Response updateUtilisateur(Utilisateur utilisateur) {
+	  return Utilities.doSimple(utilisateur, Utilities.UPDATE);
   }
 
   @Override
-  public List<Utilisateur> getUnvalidatedUtilisateurs() {
-    String query = "SELECT u FROM Utilisateur u WHERE u.validRole = ?";
-    return Connexion.getInstance().queryListResult(query, Utilisateur.class, 0);
-  }
-
-  @Override
-  public Portefeuille createPortefolio(Portefeuille p) {
-    Connexion.getInstance().insert(p);
-    return p;
-  }
-
-  @Override
-  public Utilisateur getUtilisateurByEmail(String email) {
+  public Utilisateur getUtilisateurByEmail(String email) { 
     String query = "SELECT u FROM Utilisateur u left join u.role left join u.societe "
         + "left join u.portefeuille WHERE u.email= ?";
     return Connexion.getInstance().querySingleResult(query, Utilisateur.class, email);
   }
+  
+  @Override
+  public Response createPortefolio(Portefeuille p) {
+    return Utilities.doSimple(p, Utilities.INSERT);
+  }
+  
 
 }

@@ -73,9 +73,9 @@ public class Utilisateur implements java.io.Serializable {
       if (other.birthdate != null) {
         return false;
       }
-    } else if (!birthdate.equals(other.birthdate)) {
+    } /*else if (!birthdate.equals(other.birthdate)) {
       return false;
-    }
+    }*/
     if (city == null) {
       if (other.city != null) {
         return false;

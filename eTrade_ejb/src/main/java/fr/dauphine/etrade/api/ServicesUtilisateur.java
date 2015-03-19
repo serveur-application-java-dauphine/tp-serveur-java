@@ -9,20 +9,18 @@ import fr.dauphine.etrade.model.Utilisateur;
 
 @Remote
 public interface ServicesUtilisateur {
-  Utilisateur addUtilisateur(Utilisateur utilisateur);
+	Response addUtilisateur(Utilisateur utilisateur);
 
-  Utilisateur delUtilisateur(Utilisateur utilisateur);
+	Response delUtilisateur(Utilisateur utilisateur);
 
-  List<Utilisateur> allUtilisateurs();
+	List<Utilisateur> allUtilisateurs();
 
-  Utilisateur getUtilisateurById(long id);
+	Utilisateur getUtilisateurById(long id);
 
-  Utilisateur getUtilisateurByEmail(String email);
+	Utilisateur getUtilisateurByEmail(String email);
 
-  Utilisateur updateUtilisateur(Utilisateur utilisateur);
+	Response updateUtilisateur(Utilisateur utilisateur);
 
-  List<Utilisateur> getUnvalidatedUtilisateurs();
-
-  Portefeuille createPortefolio(Portefeuille p);
+	Response createPortefolio(Portefeuille p);
 
 }

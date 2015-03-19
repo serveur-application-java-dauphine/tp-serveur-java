@@ -5,9 +5,12 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
+import fr.dauphine.etrade.api.Response;
+import fr.dauphine.etrade.api.ResponseObject;
 import fr.dauphine.etrade.api.ServicesUtilisateur;
 import fr.dauphine.etrade.model.Portefeuille;
 import fr.dauphine.etrade.model.Role;
@@ -21,6 +24,7 @@ public class UtilisateurManagedBean implements Serializable {
 	private Utilisateur utilisateur;
 	private List<Utilisateur> utilisateurs;
 	private String confirm;
+	private String error;
 
 	@EJB
 	private ServicesUtilisateur su;
@@ -49,11 +53,12 @@ public class UtilisateurManagedBean implements Serializable {
 	public void valider(Utilisateur utilisateur) {
 		LOG.info("Modifying the validity of the role to true for user "
 				+ utilisateur.getIdUtilisateur());
-		ApplicationManagedBean amb = Utilities
-				.getManagedBean(ApplicationManagedBean.class);
+		ApplicationManagedBean amb = Utilities.getManagedBean(ApplicationManagedBean.class);
 		if (utilisateur.getRole().getCode() == amb.getROLE_CODE_INVESTISSEUR()) {
-			Portefeuille p = su.createPortefolio(new Portefeuille());
-			utilisateur.setPortefeuille(p);
+			Response response = su.createPortefolio(new Portefeuille());
+			if (Utilities.responseIsError(response))
+				return;
+			utilisateur.setPortefeuille(((ResponseObject<Portefeuille>)response).object);
 		}
 		utilisateur.setValidRole(true);
 		this.modifier(utilisateur);
@@ -66,7 +71,9 @@ public class UtilisateurManagedBean implements Serializable {
 	 *            the user
 	 */
 	public void modifier(Utilisateur utilisateur) {
-		su.updateUtilisateur(utilisateur);
+		Response response = su.updateUtilisateur(utilisateur);
+		if (Utilities.responseIsError(response))
+			return;
 	}
 
 	/**
@@ -84,10 +91,13 @@ public class UtilisateurManagedBean implements Serializable {
 	 * account web page.
 	 */
 	public void inscription() {
-		if (!confirm.equals(utilisateur.getPassword()))
+		if (!confirm.equals(utilisateur.getPassword())){
+			Utilities.addError(FacesMessage.SEVERITY_FATAL, "Les 2 mots de passe sont différents!!!!!", null);
 			return;
-		su.addUtilisateur(utilisateur);
-		Utilities.redirect("my_account.xhtml");
+		}
+		Response response = su.addUtilisateur(utilisateur);
+		if (!Utilities.responseIsError(response))
+			Utilities.redirect("my_account.xhtml");
 	}
 
 	public Utilisateur getUtilisateur() {
@@ -129,6 +139,20 @@ public class UtilisateurManagedBean implements Serializable {
 	 */
 	public void setConfirm(String confirm) {
 		this.confirm = confirm;
+	}
+
+	/**
+	 * @return the error
+	 */
+	public String getError() {
+		return error;
+	}
+
+	/**
+	 * @param error the error to set
+	 */
+	public void setError(String error) {
+		this.error = error;
 	}
 
 }

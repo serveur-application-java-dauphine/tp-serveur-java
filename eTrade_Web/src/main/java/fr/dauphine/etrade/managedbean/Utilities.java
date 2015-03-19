@@ -6,7 +6,12 @@ import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.faces.application.FacesMessage;
+import javax.faces.application.FacesMessage.Severity;
 import javax.faces.context.FacesContext;
+
+import fr.dauphine.etrade.api.Response;
+import fr.dauphine.etrade.api.ResponseError;
 
 public final class Utilities {
 
@@ -77,13 +82,21 @@ public final class Utilities {
 	}
 
 	/**
-	 * Returns an error message
+	 * Returns an error message to the interface
 	 * 
 	 * @param message
 	 */
-	public static void returnError(String message) {
-		// FacesContext.getCurrentInstance().getExternalContext().responseSendError(,
-		// message);
+	public static boolean responseIsError(Response response) {
+		if (response instanceof ResponseError){
+			addError(FacesMessage.SEVERITY_FATAL, ((ResponseError)response).error, null);
+			return true;
+		}
+		return false;
+	}
+	
+	public static void addError(Severity severity, String summary, String detail){
+		FacesMessage message = new FacesMessage(severity, summary, detail);
+		FacesContext.getCurrentInstance().addMessage(null, message);
 	}
 
 }
