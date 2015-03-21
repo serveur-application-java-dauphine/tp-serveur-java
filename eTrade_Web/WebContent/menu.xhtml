@@ -14,7 +14,7 @@
 		rendered="#{sessionUserManagedBean.utilisateur!=null}" columns="8"
 		cellpadding="10" cellspacing="2" styleClass="order-table"
 		rowClasses="order-table-header-row">
-		<h:link href="my_account"
+		<h:link outcome="my_account"
 			value="Bonjour, #{sessionUserManagedBean.utilisateur.firstname}"
 			width="120px" />
 		<td style="width: 400px"></td>
