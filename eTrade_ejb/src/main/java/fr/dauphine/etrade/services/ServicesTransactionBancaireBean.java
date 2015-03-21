@@ -20,7 +20,7 @@ public class ServicesTransactionBancaireBean implements ServicesTransactionBanca
 
 	@Override
 	public List<TransactionBancaire> get(long idPortefeuille) {
-		String query = "FROM TransactionBancaire t WHERE t.portefeuille.idPortefeuille=? ORDER BY date DESC";
+		String query = "FROM TransactionBancaire t WHERE t.portefeuille.idPortefeuille=? ORDER BY Date DESC";
 		return Connexion.getInstance().queryListResult(query, TransactionBancaire.class, idPortefeuille);
 	}
 
