@@ -3,14 +3,15 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html">
 <h:head>
-<title>eTrade - Login</title>
+	<title>eTrade - Login</title>
 </h:head>
 <h:body>
 
 	<ui:include src="/menu.xhtml" />
 	<h1>Connection</h1>
 	<br />
-<h3>Votre mot de passe et/ou votre adresse email n'ont pas été reconnue</h3>
+	<h3>Votre mot de passe et/ou votre adresse email n'ont pas été
+		reconnus</h3>
 	<form name="login" id="form_login" method="post"
 		action="j_security_check">
 		<table>
@@ -25,8 +26,7 @@
 			</tr>
 			<tr>
 				<td></td>
-				<td><br />
-				<input type="submit" value="Se connecter" /></td>
+				<td><br /> <input type="submit" value="Se connecter" /></td>
 			</tr>
 			<tr>
 				<td>Pas encore inscrit ? <a href="inscription.xhtml">Cliquez
