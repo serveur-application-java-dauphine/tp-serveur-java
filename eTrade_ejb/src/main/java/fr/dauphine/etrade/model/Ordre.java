@@ -166,7 +166,7 @@ public class Ordre implements java.io.Serializable {
 	}
 
   @Temporal(TemporalType.TIMESTAMP)
-  @Column(name = "Date", nullable = false, length = 19)
+  @Column(name = "Date", nullable = false, length = 19, columnDefinition = "DEFAULT CURRENT_TIMESTAMP")
   public Date getDate() {
     return this.date;
   }

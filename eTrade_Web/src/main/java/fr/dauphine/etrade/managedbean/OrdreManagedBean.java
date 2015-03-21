@@ -140,9 +140,7 @@ public class OrdreManagedBean implements Serializable {
 			enchere.setOrdre(ordre);
 			enchere.setPrix(ordre.getPrix());
 			se.addEnchere(enchere);
-			se.ajoutEnchere(ordre);
 			Utilities.redirect("succes_ordre.xhtml");
-			se.finEnchere(ordre);
 		} else {
 			ordre.setQuantiteNonExecute(ordre.getQuantite());
 			ordre.setPortefeuille(utilisateur.getPortefeuille());

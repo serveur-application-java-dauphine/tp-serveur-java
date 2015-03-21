@@ -1,7 +1,6 @@
 package fr.dauphine.etrade.servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Date;
 
 import javax.servlet.ServletException;
@@ -31,25 +30,12 @@ public class Logout extends HttpServlet {
 
 		HttpSession session = request.getSession(false);
 
-		PrintWriter out = response.getWriter();
-		out.print("<p style='float:center'>You are successfully logged out!</p><br/>");
-		System.out.println("--- Before logout ---");
-		System.out.println("Session ID is "
-				+ (request.isRequestedSessionIdValid() ? "valid" : "invalid"));
-		request.getRequestDispatcher("out.xhtml").include(request, response);
-
 		if (session != null) {
 			session.invalidate();
-			System.out.println("Invalidate has been called");
 		}
 		request.logout();
-
-		System.out.println("--- After logout ---");
-		System.out.println("Session ID is "
-				+ (request.isRequestedSessionIdValid() ? "valid" : "invalid"));
-
-		out.close();
-		response.sendRedirect("/out.xhtml");
+		request.getRequestDispatcher("index.xhtml").forward(request, response);
+		
 	}
 
 }

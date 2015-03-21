@@ -10,10 +10,8 @@ import fr.dauphine.etrade.model.Portefeuille;
 
 @Remote
 public interface ServicesEnchere {
-  Enchere addEnchere(Enchere enchere);
+  Response addEnchere(Enchere enchere);
   List<Enchere> encheresByOrdre(Long idOrdre);
-  void ajoutEnchere(Ordre ordre);
-  void executionEnchere();
   List<Enchere> allPendingEnchere();
   List<Enchere> encheresDoneByPortefeuille(Portefeuille portefeuille);
   List<Enchere> encherePendingBySocieteName(String societeName);

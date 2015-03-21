@@ -22,6 +22,8 @@ public class ApplicationManagedBean implements Serializable {
 			+ "(\\.[A-Za-z]{2,})$";
 
 	private final String DATE_PATTERN = "dd/MM/yyyy";
+	
+	private final String MESSAGE_ERROR = "MESSAGE_ERROR";
 
 	/**
 	 * @return the eMAIL_PATTERN
@@ -63,6 +65,13 @@ public class ApplicationManagedBean implements Serializable {
 	 */
 	public String getPASSWORD_PATTERN() {
 		return PASSWORD_PATTERN;
+	}
+
+	/**
+	 * @return the mESSAGE_ERROR
+	 */
+	public String getMESSAGE_ERROR() {
+		return MESSAGE_ERROR;
 	}
 
 }

@@ -28,36 +28,36 @@ public class Portefeuille implements java.io.Serializable {
    * Default serialVersionUID
    */
   private static final long serialVersionUID = 1L;
-  private long idPortefeuille;
+  private Long idPortefeuille;
   private String description;
   private Set<Ordre> ordres = new HashSet<Ordre>(0);
   private Set<TransactionBancaire> transactionBancaires = new HashSet<TransactionBancaire>(0);
-  private Utilisateur utilisateurs;
+  private Utilisateur utilisateur;
 
   public Portefeuille() {
   }
 
-  public Portefeuille(long idPortefeuille) {
+  public Portefeuille(Long idPortefeuille) {
     this.idPortefeuille = idPortefeuille;
   }
 
-  public Portefeuille(long idPortefeuille, String description, Set<Ordre> ordres,
+  public Portefeuille(Long idPortefeuille, String description, Set<Ordre> ordres,
       Set<TransactionBancaire> transactionBancaires, Utilisateur utilisateurs) {
     this.idPortefeuille = idPortefeuille;
     this.description = description;
     this.ordres = ordres;
     this.transactionBancaires = transactionBancaires;
-    this.utilisateurs = utilisateurs;
+    this.utilisateur = utilisateurs;
   }
 
   @Id
   @GeneratedValue(strategy = IDENTITY)
   @Column(name = "IdPortefeuille", unique = true, nullable = false)
-  public long getIdPortefeuille() {
+  public Long getIdPortefeuille() {
     return this.idPortefeuille;
   }
 
-  public void setIdPortefeuille(long idPortefeuille) {
+  public void setIdPortefeuille(Long idPortefeuille) {
     this.idPortefeuille = idPortefeuille;
   }
 
@@ -89,12 +89,12 @@ public class Portefeuille implements java.io.Serializable {
   }
 
   @OneToOne(mappedBy = "portefeuille")
-  public Utilisateur getUtilisateurs() {
-    return this.utilisateurs;
+  public Utilisateur getUtilisateur() {
+    return this.utilisateur;
   }
 
-  public void setUtilisateurs(Utilisateur utilisateurs) {
-    this.utilisateurs = utilisateurs;
+  public void setUtilisateur(Utilisateur utilisateur) {
+    this.utilisateur = utilisateur;
   }
 
 }

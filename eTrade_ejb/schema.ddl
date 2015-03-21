@@ -1,8 +1,8 @@
 
     create table Actualite (
         IdActualite bigint not null auto_increment unique,
-        date_creation DEFAULT CURRENT_TIMESTAMP not null,
-        date_modification ON UPDATE CURRENT_TIMESTAMP,
+        date_creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP not null,
+        date_modification datetime,
         File varchar(200) not null,
         titre varchar(100) not null,
         IdSociete bigint not null,
@@ -74,7 +74,7 @@
 
     create table Transaction (
         IdTransaction bigint not null auto_increment unique,
-        Date datetime not null,
+        Date TIMESTAMP DEFAULT CURRENT_TIMESTAMP not null,
         Prix decimal(8,0) not null,
         Quantite integer not null,
         IdOrderAchat bigint not null,
@@ -84,7 +84,7 @@
 
     create table Transaction_bancaire (
         IdTrBancaire bigint not null auto_increment unique,
-        Date datetime not null,
+        Date TIMESTAMP DEFAULT CURRENT_TIMESTAMP not null,
         Montant decimal(8,0) not null,
         IdPortefeuille bigint not null,
         primary key (IdTrBancaire)

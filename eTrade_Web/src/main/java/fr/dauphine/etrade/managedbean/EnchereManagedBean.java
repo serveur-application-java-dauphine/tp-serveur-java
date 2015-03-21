@@ -29,7 +29,7 @@ public class EnchereManagedBean implements Serializable {
 
 	private Enchere enchere;
 	private String societeName;
-	private boolean isPrixNotSuperior = false;
+	private boolean isPrixNotMeilleur = false;
 	private BigDecimal prixEnchere = null;
 
 	@EJB
@@ -81,10 +81,11 @@ public class EnchereManagedBean implements Serializable {
 	}
 	
 	public void rencherir(){
-		if(enchere.getPrix().compareTo(prixEnchere) < 0){
-			isPrixNotSuperior = true;
+		if((enchere.getOrdre().getDirectionOrdre().getIdDirectionOrdre().equals((long)2) && enchere.getPrix().compareTo(prixEnchere) < 0)
+			|| (enchere.getOrdre().getDirectionOrdre().getIdDirectionOrdre().equals((long)1) && enchere.getPrix().compareTo(prixEnchere) > 0)){
+			isPrixNotMeilleur = true;
 		} else {
-			isPrixNotSuperior = false;
+			isPrixNotMeilleur = false;
 			enchere.setDateDebut(null);
 			enchere.setPortefeuille(smb.getUtilisateur().getPortefeuille());
 			enchere.setIdEnchere(null);
@@ -102,12 +103,12 @@ public class EnchereManagedBean implements Serializable {
 		this.societeName = societeName;
 	}
 
-	public boolean isPrixNotSuperior() {
-		return isPrixNotSuperior;
+	public boolean isPrixNotMeilleur() {
+		return isPrixNotMeilleur;
 	}
 
-	public void setPrixNotSuperior(boolean isPrixNotSuperior) {
-		this.isPrixNotSuperior = isPrixNotSuperior;
+	public void isPrixNotMeilleur(boolean isPrixNotMeilleur) {
+		this.isPrixNotMeilleur = isPrixNotMeilleur;
 	}
 
 	public BigDecimal getPrixEnchere() {

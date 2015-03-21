@@ -15,6 +15,10 @@
 	<br/><br/>
  	<h:form>
 	  	<table>
+	  	<tr align="center">
+	  	<td>Achat</td>
+	  	<td>Vente</td>
+	  	</tr>
 		<tr>
 			<td valign="top">
 			<h:dataTable rows="5" value="#{fixingManagedBean.ordresAchatParProduit(ordreManagedBean.ordre.produit.idProduit)}" var="o"
@@ -32,6 +36,7 @@
 			</h:dataTable>
 			</td>
 			<td valign="top">
+			
 			<h:dataTable rows="5" value="#{fixingManagedBean.ordresVenteParProduit(ordreManagedBean.ordre.produit.idProduit)}" var="o"
 				styleClass="order-table"
     			headerClass="order-table-header"

@@ -7,7 +7,8 @@
 
 <h:head>
 	<title>eTrade - <h:outputText
-			value="Enchere #{enchereManagedBean.getEnchere(param.s).ordre.produit.societe} #{enchereManagedBean.getEnchere(param.s).ordre.produit.libelleProduit}" />
+			value="Enchere #{enchereManagedBean.getEnchere(param.s).ordre.directionOrdre.libelle} 
+			#{enchereManagedBean.getEnchere(param.s).ordre.produit.societe} #{enchereManagedBean.getEnchere(param.s).ordre.produit.libelleProduit}" />
 	</title>
 
 </h:head>
@@ -36,7 +37,7 @@
 		</tr>
 		<tr>
 			<td></td>
-			<td><h:outputLabel rendered="#{enchereManagedBean.prixNotSuperior}" value="Pour rencherir vous devez proposer un prix supperior à celui existant"/></td>			
+			<td><h:outputLabel rendered="#{enchereManagedBean.prixNotMeilleur}" value="Pour rencherir vous devez proposer un prix meilleur à celui existant"/></td>			
 		</tr>
 	</table>
 	<h:commandButton value="Rencherir"

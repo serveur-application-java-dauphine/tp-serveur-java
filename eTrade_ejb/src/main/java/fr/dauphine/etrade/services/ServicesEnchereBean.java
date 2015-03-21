@@ -1,14 +1,14 @@
 package fr.dauphine.etrade.services;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Remote;
-import javax.ejb.Schedule;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 
+import fr.dauphine.etrade.api.Response;
+import fr.dauphine.etrade.api.ResponseError;
 import fr.dauphine.etrade.api.ServicesEnchere;
 import fr.dauphine.etrade.model.DirectionOrdre;
 import fr.dauphine.etrade.model.Enchere;
@@ -17,15 +17,13 @@ import fr.dauphine.etrade.model.Portefeuille;
 import fr.dauphine.etrade.model.StatusOrdre;
 import fr.dauphine.etrade.model.Transaction;
 import fr.dauphine.etrade.persit.Connexion;
+import fr.dauphine.etrade.persit.Utilities;
 
 @Remote(ServicesEnchere.class)
 @Stateless
 @TransactionManagement(TransactionManagementType.BEAN)
 public class ServicesEnchereBean implements ServicesEnchere {
-	
-  private static List<Ordre> ordresEnchere = new ArrayList<Ordre>();
-  private static String myHour = "20";
-  private static String myMinutes = "20";
+
 
   @Override
   public Enchere getEnchereById(Long idEnchere) {
@@ -33,17 +31,25 @@ public class ServicesEnchereBean implements ServicesEnchere {
   }
   
   @Override
-  public Enchere addEnchere(Enchere enchere) {
+  public Response addEnchere(Enchere enchere) {
     if(enchere.isMain()){
-      Connexion.getInstance().insert(enchere.getOrdre());
-	  Connexion.getInstance().insert(enchere);
+	  Response response = Utilities.doSimple(enchere.getOrdre(), Utilities.INSERT);
+	  if (response instanceof ResponseError)
+	    return response;
+	
+	  response = Utilities.doSimple(enchere, Utilities.INSERT);
+	  if (!(response instanceof ResponseError))
+	    System.out.println("todo");
+	  return response;
+    	
     } else {
-	  Connexion.getInstance().insert(enchere);
+      Response response = Utilities.doSimple(enchere.getOrdre(), Utilities.INSERT);
+      if (response instanceof ResponseError)
+    		return response;
 	  Enchere mainEnchere = encheresMainByOrdre(enchere.getOrdre().getIdOrder());
 	  mainEnchere.setPrix(enchere.getPrix());
-	  Connexion.getInstance().update(mainEnchere);
+	  return Utilities.doSimple(mainEnchere, Utilities.UPDATE);
     }
-    return enchere;
   }
   
   @Override
@@ -124,16 +130,5 @@ public class ServicesEnchereBean implements ServicesEnchere {
 	  Connexion.getInstance().update(ordreAchat);
   }
   
-  
-  @Override
-  @Schedule(hour="17", minute="11" )
-  public void executionEnchere() {
-	  System.out.println("Fin de l'enchere prevu dans ");
-	  
-  }
-  
-  @Override public void ajoutEnchere(Ordre ordre){
-	  ordresEnchere.add(ordre);
-  }
 
 }
