@@ -31,12 +31,19 @@ public class TransactionBancaireManagedBean implements Serializable {
 	@ManagedProperty(value = "#{sessionTransactionBancaireManagedBean}")
 	private SessionTransactionBancaireManagedBean stbm;
 	
+	@ManagedProperty(value = "#{sessionPortefeuilleManagedBean}")
+	private SessionPortefeuilleManagedBean spmb;
+	
 	public void setSmb(SessionUserManagedBean smb){
 		this.smb=smb;
 	}
 	
 	public void setStbm(SessionTransactionBancaireManagedBean stbm){
 		this.stbm=stbm;
+	}
+	
+	public void setSpmb(SessionPortefeuilleManagedBean spmb){
+		this.spmb=spmb;
 	}
 	
 	public void add(){
@@ -46,7 +53,7 @@ public class TransactionBancaireManagedBean implements Serializable {
 			return;
 		}
 		if (typeTransaction==2){
-			if (transactionBancaire.getMontant().compareTo(stbm.total())==1){
+			if (transactionBancaire.getMontant().compareTo(spmb.total())==1){
 				Utilities.addError("Vos fonds ne sont pas suffisant pour effectuer cette opération!", null);
 				return ;
 			}
@@ -56,7 +63,7 @@ public class TransactionBancaireManagedBean implements Serializable {
 		if (!Utilities.responseIsError(response)){
 			TransactionBancaire transaction = ((ResponseObject<TransactionBancaire>)response).object;
 			transaction.setDate(Calendar.getInstance().getTime());
-			stbm.getTransactionsBancaire().add(transaction);
+			stbm.getTransactionsBancaire().add(0,transaction);
 			transactionBancaire=new TransactionBancaire();
 		}
 	}

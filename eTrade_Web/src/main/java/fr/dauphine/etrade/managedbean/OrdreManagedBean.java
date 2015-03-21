@@ -1,12 +1,13 @@
 package fr.dauphine.etrade.managedbean;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 
 import fr.dauphine.etrade.api.ServicesOrdre;
@@ -21,7 +22,6 @@ import fr.dauphine.etrade.model.StatusOrdre;
 import fr.dauphine.etrade.model.Transaction;
 import fr.dauphine.etrade.model.TypeOrdre;
 import fr.dauphine.etrade.model.TypeProduit;
-import fr.dauphine.etrade.model.Utilisateur;
 
 @ManagedBean
 @SessionScoped
@@ -31,6 +31,14 @@ public class OrdreManagedBean implements Serializable {
 	private List<Societe> listSocietes;
 	private List<TypeOrdre> listTypeOrdres;
 	private List<DirectionOrdre> listDirectionOrdres;
+	
+	@ManagedProperty(value="#{sessionUserManagedBean}")
+	private SessionUserManagedBean sumb;
+	
+	public void setSumb(SessionUserManagedBean sumb) {
+		this.sumb = sumb;
+	}
+	
 
 	@EJB
 	private ServicesOrdre so;
@@ -59,23 +67,13 @@ public class OrdreManagedBean implements Serializable {
 	 * @return the list of pending orders
 	 */
 	public List<Ordre> getPendingOrders() {
-
-		FacesContext fc = FacesContext.getCurrentInstance();
-		@SuppressWarnings("deprecation")
-		Utilisateur utilisateur  = (Utilisateur) fc.getApplication().createValueBinding("#{sessionUserManagedBean.utilisateur}").getValue(fc);
-		return so.allPendingOrdres(utilisateur.getPortefeuille()
-				.getIdPortefeuille());
+		return so.allPendingOrdres(sumb.getUtilisateur().getPortefeuille().getIdPortefeuille());
 	}
 	/**
 	 * @return the list of done orders
 	 */
 	public List<Transaction> getDoneOrders() {
-
-		FacesContext fc = FacesContext.getCurrentInstance();
-		@SuppressWarnings("deprecation")
-		Utilisateur utilisateur  = (Utilisateur) fc.getApplication().createValueBinding("#{sessionUserManagedBean.utilisateur}").getValue(fc);
-		return so.allDoneOrdres(utilisateur.getPortefeuille()
-				.getIdPortefeuille());
+		return so.allDoneOrdres(sumb.getUtilisateur().getPortefeuille().getIdPortefeuille());
 	}
 	/**
 	 * @return the ordre attribute of the Ordre class
@@ -114,19 +112,12 @@ public class OrdreManagedBean implements Serializable {
 	 * Passing the order
 	 */
 	public void passerOrdre(){
-		FacesContext fc = FacesContext.getCurrentInstance();
-		@SuppressWarnings("deprecation")
-		Utilisateur utilisateur  = (Utilisateur) fc.getApplication().createValueBinding("#{sessionUserManagedBean.utilisateur}").getValue(fc);
-		if(utilisateur.getPortefeuille()==null)
-			Utilities.redirect("no_ordre.xhtml");
-		else {
-			ordre.setQuantiteNonExecute(ordre.getQuantite());
-			ordre.setPortefeuille(utilisateur.getPortefeuille());
-			ordre.setProduit(sp.getProduitById(ordre.getProduit()
-					.getIdProduit()));
-			so.addOrdre(ordre);
-			Utilities.redirect("succes_ordre.xhtml");
-		}
+		ordre.setQuantiteNonExecute(ordre.getQuantite());
+		ordre.setPortefeuille(sumb.getUtilisateur().getPortefeuille());
+		ordre.setProduit(sp.getProduitById(ordre.getProduit()
+				.getIdProduit()));
+		so.addOrdre(ordre);
+		Utilities.redirect("succes_ordre.xhtml");
 		ordre = null;
 	}
 
@@ -187,6 +178,17 @@ public class OrdreManagedBean implements Serializable {
 
 	public void setListDirectionOrdres(List<DirectionOrdre> listDirectionOrdres) {
 		this.listDirectionOrdres = listDirectionOrdres;
+	}
+	
+	public BigDecimal total(){
+		BigDecimal total = new BigDecimal(0);
+		List<Transaction> ordres = getDoneOrders();
+		if (ordres!=null){
+			for (Transaction t : ordres)
+				total = total.add(t.getPrix().multiply(new BigDecimal(t.getQuantite())));
+		}
+		return total;
+		
 	}
 	
 	

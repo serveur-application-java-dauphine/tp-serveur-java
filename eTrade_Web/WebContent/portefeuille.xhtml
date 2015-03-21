@@ -21,7 +21,7 @@
 	<h:panelGroup rendered="#{sessionUserManagedBean.utilisateur.validRole}">
 	<h3>Liquidité</h3>
 	<br />
-	Fonds disponible : #{sessionTransactionBancaireManagedBean.total()}
+	Fonds disponible : #{sessionPortefeuilleManagedBean.total()}
 	<h:dataTable	
 						value="#{sessionTransactionBancaireManagedBean.transactionsBancaire}" var="tr"
 						styleClass="order-table" headerClass="order-table-header"
@@ -29,7 +29,7 @@
 						
 						<h:column>
 							<f:facet name="header">Date</f:facet>    				
-			      #{tr.date.toString()}
+			      #{applicationManagedBean.getStringDateTime(tr.date)}
 			   </h:column>
 			   <h:column>
 							<f:facet name="header">Montant</f:facet>    				
@@ -74,7 +74,7 @@
 						rowClasses="order-table-odd-row,order-table-even-row">
 						<h:column>
 							<f:facet name="header">Date</f:facet>    				
-			      #{o.date.toString()}
+			      #{applicationManagedBean.getStringDateTime(o.date)}
 			   </h:column>
 						<h:column>
 							<f:facet name="header">Societe</f:facet>    				
@@ -115,7 +115,7 @@
 						rowClasses="order-table-odd-row,order-table-even-row">
 						<h:column>
 							<f:facet name="header">Date d'execution</f:facet>    				
-			      #{t.date.toString()}
+			      #{applicationManagedBean.getStringDateTime(o.date)}
 			   </h:column>
 						<h:column>
 							<f:facet name="header">Societe</f:facet>    				
