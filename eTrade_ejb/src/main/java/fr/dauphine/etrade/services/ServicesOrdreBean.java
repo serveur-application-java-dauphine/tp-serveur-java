@@ -110,15 +110,15 @@ public class ServicesOrdreBean implements ServicesOrdre {
   }
 
   /**
-   * Pour la détermination du cours d'ouverture, différentes règles s'appliquent : Le cours
-   * d'équilibre doit maximiser le nombre des échanges. Si deux ordres sont entrés dans le carnet au
-   * même cours, le premier entré dans le carnet sera le premier exécuté. A l'ouverture, les ordres
-   * au prix du marché sont exécutés entre eux au prix d'équilibre déterminé et le solde éventuel
-   * entre dans le carnet comme un ordre à cours limité. Par ailleurs, on ne tient pas compte des
-   * ordres au prix du marché pour la détermination du cours d'ouverture. Il est possible de
-   * fractionner un ordre et de ne pas le servir en totalité à l'ouverture. Le cours d'équilibre se
-   * caractérise par la confrontation de l'offre (vendeur) et de la demande (acheteur) Le cours
-   * d'ouverture est identique pour tous les ordres exécutés à l'ouverture.
+   * Pour la dï¿½termination du cours d'ouverture, diffï¿½rentes rï¿½gles s'appliquent : Le cours
+   * d'ï¿½quilibre doit maximiser le nombre des ï¿½changes. Si deux ordres sont entrï¿½s dans le carnet au
+   * mï¿½me cours, le premier entrï¿½ dans le carnet sera le premier exï¿½cutï¿½. A l'ouverture, les ordres
+   * au prix du marchï¿½ sont exï¿½cutï¿½s entre eux au prix d'ï¿½quilibre dï¿½terminï¿½ et le solde ï¿½ventuel
+   * entre dans le carnet comme un ordre ï¿½ cours limitï¿½. Par ailleurs, on ne tient pas compte des
+   * ordres au prix du marchï¿½ pour la dï¿½termination du cours d'ouverture. Il est possible de
+   * fractionner un ordre et de ne pas le servir en totalitï¿½ ï¿½ l'ouverture. Le cours d'ï¿½quilibre se
+   * caractï¿½rise par la confrontation de l'offre (vendeur) et de la demande (acheteur) Le cours
+   * d'ouverture est identique pour tous les ordres exï¿½cutï¿½s ï¿½ l'ouverture.
    */
   @Override
   // @Schedule(hour="00", minute="10")
@@ -131,7 +131,7 @@ public class ServicesOrdreBean implements ServicesOrdre {
 
       int quantiteCumuleVente[] = new int[allOrdres.size()];
       int quantiteCumuleAchat[] = new int[allOrdres.size()];
-      // Calcul des quantités cumulées par prix
+      // Calcul des quantitï¿½s cumulï¿½es par prix
       for (int i = 0; i < allOrdres.size(); i++) {
         if (i == 0) {
           quantiteCumuleAchat[i] = allOrdres.get(i).getQuantite();
@@ -151,15 +151,15 @@ public class ServicesOrdreBean implements ServicesOrdre {
       int position = -1;
       int difference = 0;
       int quantiteCumulMin[] = new int[allOrdres.size()];
-      // Calcul du minimum entre les quantités cumulées
+      // Calcul du minimum entre les quantitï¿½s cumulï¿½es
       for (int i = 0; i < allOrdres.size(); i++) {
         quantiteCumulMin[i] = Math.min(quantiteCumuleAchat[i], quantiteCumuleVente[i]);
       }
-      // Trouve la quantité maximale echangée et le prix associé
+      // Trouve la quantitï¿½ maximale echangï¿½e et le prix associï¿½
       for (int i = 0; i < allOrdres.size(); i++) {
         if (max < quantiteCumulMin[i]) {
           max = quantiteCumulMin[i];
-          // Si l'ordre est different du type au marché on attirbue le prix
+          // Si l'ordre est different du type au marchï¿½ on attirbue le prix
           if (allOrdres.get(i).getTypeOrdre().getIdTypeOrder().longValue() > 1) {
             prix = allOrdres.get(i).getPrix().doubleValue();
             position = i;
@@ -172,7 +172,7 @@ public class ServicesOrdreBean implements ServicesOrdre {
       }
       if (prix == 0) {
         System.out.println("Le prix pour le produit " + p.getIdProduit()
-            + " n'a pas pu être établie");
+            + " n'a pas pu ï¿½tre ï¿½tablie");
         continue;
       }
       System.out.println("Le fixing pour le produit " + p.getIdProduit() + " est: " + prix);
@@ -274,5 +274,10 @@ public class ServicesOrdreBean implements ServicesOrdre {
   @Override
   public List<TypeOrdre> getAllTypeOrdre() {
     return Connexion.getInstance().getAll(TypeOrdre.class);
+  }
+  
+  public List<TypeOrdre> getAllTypeOrdreSansEnchere() {
+    String query="FROM TypeOrdre tp WHERE tp.idTypeOrdre IS NOT 3"; 
+    return Connexion.getInstance().queryListResult(query, TypeOrdre.class);
   }
 }

@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+	<title>eTrade - Les encheres des titres</title>
+	<h:outputStylesheet library="css" name="table-style.css" />
+</h:head>
+<h:body>
+	<ui:include src="/menu.xhtml"/>
+
+	<p>Filtrez ci-dessous sur une société :</p>
+	<h:form>
+		<h:inputText id="filteredEnchere" onchange="submit()" value="#{enchereManagedBean.societeName}" />
+	</h:form>
+
+	<p>Pour participer à une enchère, cliquez sur l'enchère désirée :</p>
+
+	<h:dataTable value="#{enchereManagedBean.listEnchere}"
+		var="e" styleClass="order-table" headerClass="order-table-header"
+		rowClasses="order-table-odd-row,order-table-even-row">
+		<h:column>
+			<f:facet name="header">Nom de la soiete</f:facet>    				
+		      #{e.ordre.produit.societe.name}
+		</h:column>
+		<h:column>
+			<f:facet name="header">Nom du produit</f:facet>    				
+		      #{e.ordre.produit.libelleProduit}
+		</h:column>
+		<h:column>
+			<f:facet name="header">Meilleur prix</f:facet>    				
+		      #{e.prix}
+		</h:column>
+		<h:column>
+			<f:facet name="header">Date fin</f:facet>    				
+		      #{e.dateFin}
+		</h:column>
+		<h:column>
+			<f:facet name="header">Participer</f:facet>
+			<h:link value="Voir" outcome="enchere">
+				<f:param name="e" value="#{e.idEnchere}"/>
+			</h:link>
+		</h:column>
+	</h:dataTable>
+
+	<br />
+
+</h:body>
+</html>

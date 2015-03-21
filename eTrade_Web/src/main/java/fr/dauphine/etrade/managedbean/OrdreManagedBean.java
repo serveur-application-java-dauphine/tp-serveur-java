@@ -1,6 +1,7 @@
 package fr.dauphine.etrade.managedbean;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -9,10 +10,12 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 
+import fr.dauphine.etrade.api.ServicesEnchere;
 import fr.dauphine.etrade.api.ServicesOrdre;
 import fr.dauphine.etrade.api.ServicesProduit;
 import fr.dauphine.etrade.api.ServicesSociete;
 import fr.dauphine.etrade.model.DirectionOrdre;
+import fr.dauphine.etrade.model.Enchere;
 import fr.dauphine.etrade.model.Ordre;
 import fr.dauphine.etrade.model.Portefeuille;
 import fr.dauphine.etrade.model.Produit;
@@ -31,6 +34,7 @@ public class OrdreManagedBean implements Serializable {
 	private List<Societe> listSocietes;
 	private List<TypeOrdre> listTypeOrdres;
 	private List<DirectionOrdre> listDirectionOrdres;
+	private int duree = 0;
 
 	@EJB
 	private ServicesOrdre so;
@@ -40,6 +44,9 @@ public class OrdreManagedBean implements Serializable {
 
 	@EJB
 	private ServicesProduit sp;
+	
+	@EJB
+	private ServicesEnchere se;
 
 	/**
 	 * Liste pour le carnet d'ordres la partie achat (gauche)
@@ -119,7 +126,24 @@ public class OrdreManagedBean implements Serializable {
 		Utilisateur utilisateur  = (Utilisateur) fc.getApplication().createValueBinding("#{sessionUserManagedBean.utilisateur}").getValue(fc);
 		if(utilisateur.getPortefeuille()==null)
 			Utilities.redirect("no_ordre.xhtml");
-		else {
+		else if(ordre.getTypeOrdre().getIdTypeOrder()==3){
+			ordre.setQuantiteNonExecute(ordre.getQuantite());
+			ordre.setPortefeuille(utilisateur.getPortefeuille());
+			ordre.setProduit(sp.getProduitById(ordre.getProduit()
+					.getIdProduit()));
+			so.addOrdre(ordre);
+			Enchere enchere =new Enchere();
+			Timestamp dateFin = new Timestamp(System.currentTimeMillis() + duree*3600000);
+			enchere.setDateFin(dateFin);
+			enchere.setPortefeuille(utilisateur.getPortefeuille());
+			enchere.setMain(true);
+			enchere.setOrdre(ordre);
+			enchere.setPrix(ordre.getPrix());
+			se.addEnchere(enchere);
+			se.ajoutEnchere(ordre);
+			Utilities.redirect("succes_ordre.xhtml");
+			se.finEnchere(ordre);
+		} else {
 			ordre.setQuantiteNonExecute(ordre.getQuantite());
 			ordre.setPortefeuille(utilisateur.getPortefeuille());
 			ordre.setProduit(sp.getProduitById(ordre.getProduit()
@@ -189,5 +213,12 @@ public class OrdreManagedBean implements Serializable {
 		this.listDirectionOrdres = listDirectionOrdres;
 	}
 	
-	
+
+	public int getDuree() {
+		return duree;
+	}
+
+	public void setDuree(int duree) {
+		this.duree = duree;
+	}
 }

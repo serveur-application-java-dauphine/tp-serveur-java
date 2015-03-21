@@ -98,6 +98,16 @@
 						value="#{ordreManagedBean.ordre.prix}" default="Le prix souhaité"
 						required="false" size="20" maxlength="60" style="width: 146px;" /></td>
 			</tr>
+			<tr>
+				<td><h:outputLabel for="duree"
+						rendered="#{ordreManagedBean.ordre.typeOrdre.idTypeOrder == 3 }">Duree (h)<span
+							class="requis">*:</span>
+					</h:outputLabel></td>
+				<td><h:inputText id="duree"
+						rendered="#{ordreManagedBean.ordre.typeOrdre.idTypeOrder == 3 }"
+						value="#{ordreManagedBean.duree}" default="Le prix souhaité"
+						required="false" size="20" maxlength="60" style="width: 146px;" /></td>
+			</tr>
 		</table>
 		<h:commandButton value="Passer l'ordre"
 			action="#{ordreManagedBean.passerOrdre()}" styleClass="sansLabel"

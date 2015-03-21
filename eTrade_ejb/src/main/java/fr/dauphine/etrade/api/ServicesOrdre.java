@@ -18,6 +18,7 @@ public interface ServicesOrdre {
 	List<Ordre> allPendingOrdres(long idPortefeuille);
 	List<DirectionOrdre> getPossibleDirectionOrdre();
 	List<TypeOrdre> getAllTypeOrdre();
+	List<TypeOrdre> getAllTypeOrdreSansEnchere();
 	StatusOrdre getStatusOrdreByLibelle(String libelle);
 	TypeOrdre getTypeOrdreById(long idTypeOrdre);
 	List<Ordre> ordresAchatParProduitId(long idProduit);

@@ -15,6 +15,7 @@
 	    <class>fr.dauphine.etrade.model.Utilisateur</class>
 	    <class>fr.dauphine.etrade.model.Produit</class>
 	    <class>fr.dauphine.etrade.model.Ordre</class>
+	    <class>fr.dauphine.etrade.model.Enchere</class>
 	<properties>
 	<property name="javax.persistence.jdbc.url" value="jdbc:mysql://mysql.etrade.alwaysdata.net:3306/etrade_titres"/>
 	<property name="javax.persistence.jdbc.Utilisateur" value="etrade"/>
