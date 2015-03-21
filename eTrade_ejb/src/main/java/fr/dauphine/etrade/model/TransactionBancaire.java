@@ -26,7 +26,14 @@ import javax.persistence.TemporalType;
 @Table(name = "Transaction_bancaire")
 public class TransactionBancaire implements java.io.Serializable {
 
-  /**
+	@Override
+	public String toString() {
+		return "TransactionBancaire [idTrBancaire=" + idTrBancaire
+				+ ", portefeuille=" + portefeuille + ", montant=" + montant
+				+ ", date=" + date + "]";
+	}
+
+/**
    * Default serialVersionUID
    */
   private static final long serialVersionUID = 1L;

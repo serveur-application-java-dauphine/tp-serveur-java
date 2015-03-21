@@ -100,7 +100,7 @@ public class Transaction implements java.io.Serializable {
   }
 
   @Temporal(TemporalType.TIMESTAMP)
-  @Column(name = "Date", nullable = false, length = 19)
+  @Column(name = "Date", nullable = false, length = 19, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
   public Date getDate() {
     return this.date;
   }

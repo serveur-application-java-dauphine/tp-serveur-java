@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
@@ -101,7 +100,7 @@ public class UtilisateurManagedBean implements Serializable {
 	 */
 	public void inscription() {
 		if (!confirm.equals(utilisateur.getPassword())){
-			Utilities.addError(FacesMessage.SEVERITY_FATAL, "Les 2 mots de passe sont différents!!!!!", null);
+			Utilities.addError("Les 2 mots de passe sont différents!!!!!", null);
 			return;
 		}
 		Response response = su.addUtilisateur(utilisateur);

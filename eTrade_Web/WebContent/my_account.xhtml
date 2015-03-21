@@ -81,14 +81,7 @@
 			value="Societe : #{sessionUserManagedBean.utilisateur.societe.name}" />
 		</c:if></td>
 	</tr>
-	<tr>
-		<td><c:if test="#{sessionUserManagedBean.utilisateur.portefeuille!=null}">
-		<h:link
-			value="Votre portefeuille"
-			outcome="portefeuille.xhml" />
-		</c:if></td>
-		<td></td>
-	</tr>
+	
 	</table>
 	
 	<!-- Si l'utilisateur est un membre société -->

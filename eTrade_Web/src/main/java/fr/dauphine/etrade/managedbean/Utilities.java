@@ -16,42 +16,6 @@ public final class Utilities {
 	private static Logger LOG = Logger.getLogger(Utilities.class.getName());
 
 	/**
-	 * Gets and returns to the developer some informations about a ManagedBean
-	 * 
-	 * @param managedBeanClasse
-	 */
-	/*public final static <T extends Object> T getManagedBean(
-			Class<T> managedBeanClasse) {
-		FacesContext fc = FacesContext.getCurrentInstance();
-		String managedBeanNameString = "#{" + managedBeanClasse.getSimpleName()
-				+ "}";
-
-		Object obj = fc.getApplication().getELResolver()
-				.getValue(fc.getELContext(), null, managedBeanNameString);
-		if (obj == null) {
-			LOG.info(managedBeanNameString + " est null et va être créé");
-			try {
-				obj = managedBeanClasse.newInstance();
-				fc.getApplication()
-						.getELResolver()
-						.setValue(fc.getELContext(), null,
-								managedBeanNameString,
-								obj);
-				/*obj = fc.getApplication()
-						.getELResolver()
-						.getValue(fc.getELContext(), null,
-								managedBeanNameString);*/
-			/*} catch (Exception e) {
-				LOG.log(Level.WARNING, managedBeanNameString
-						+ " n'a pas pu être créé");
-			}
-
-		}
-
-		return managedBeanClasse.cast(obj);
-	}*/
-
-	/**
 	 * Usefull method to redirect the user to another web page
 	 * 
 	 * @param namePage
@@ -75,22 +39,21 @@ public final class Utilities {
 	 */
 	public static boolean responseIsError(Response response) {
 		if (response instanceof ResponseError){
-			addError(FacesMessage.SEVERITY_FATAL, ((ResponseError)response).error, null);
+			addMessage(FacesMessage.SEVERITY_FATAL, ((ResponseError)response).error, null);
 			return true;
 		}
 		return false;
 	}
 	
-	public static void addError(Severity severity, String summary, String detail){
+	public static void addError(String summary, String detail){
+		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, detail);
+		FacesContext.getCurrentInstance().addMessage(null, message);
+	}
+	
+	
+	public static void addMessage(Severity severity, String summary, String detail){
 		FacesMessage message = new FacesMessage(severity, summary, detail);
 		FacesContext.getCurrentInstance().addMessage(null, message);
 	}
-
-	/**
-	 * @return the utilisateur
-	 */
-	/*public static Utilisateur getUtilisateur() {
-		return getManagedBean(SessionUserManagedBean.class).getUtilisateur();
-	}*/
 
 }

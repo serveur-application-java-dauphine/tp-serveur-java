@@ -112,7 +112,8 @@
 					action="#{utilisateurManagedBean.valider(u)}" />
 			</h:column>
 		</h:dataTable>
+		 <h:commandButton value="Effectuer le fixing" action="#{fixingManagedBean.fixing()}" styleClass="sansLabel" />
 	  </h:form>
-	<!-- <h:commandButton rendered="#{sessionUserManagedBean.administrateur}" value="Effectuer le fixing" action="#{fixingManagedBean.fixing()}" styleClass="sansLabel" type="submit" />-->
+	
 </h:body>
 </html>

@@ -2,12 +2,12 @@ package fr.dauphine.etrade.managedbean;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.List;
+import java.util.Calendar;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.RequestScoped;
 
 import fr.dauphine.etrade.api.Response;
 import fr.dauphine.etrade.api.ResponseObject;
@@ -15,13 +15,12 @@ import fr.dauphine.etrade.api.ServicesTransactionBancaire;
 import fr.dauphine.etrade.model.TransactionBancaire;
 
 @ManagedBean
-@SessionScoped
+@RequestScoped
 public class TransactionBancaireManagedBean implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
-	private List<TransactionBancaire> transactionsBancaire;
 	private TransactionBancaire transactionBancaire;
-	private int typeTransaction;
+	private int typeTransaction = 1;
 	
 	@EJB
 	private ServicesTransactionBancaire stb;
@@ -29,45 +28,37 @@ public class TransactionBancaireManagedBean implements Serializable {
 	@ManagedProperty(value = "#{sessionUserManagedBean}")
 	private SessionUserManagedBean smb;
 	
+	@ManagedProperty(value = "#{sessionTransactionBancaireManagedBean}")
+	private SessionTransactionBancaireManagedBean stbm;
+	
 	public void setSmb(SessionUserManagedBean smb){
 		this.smb=smb;
 	}
-
-	/**
-	 * @return the transactionsBancaire
-	 */
-	public List<TransactionBancaire> getTransactionsBancaire() {
-		if (transactionsBancaire==null){
-			System.out.println(smb==null);
-			System.out.println(smb.getUtilisateur()==null);
-			System.out.println(smb.getUtilisateur().getPortefeuille()==null);
-			transactionsBancaire=stb.get(smb.getUtilisateur().getPortefeuille().getIdPortefeuille());
-		}
-		return transactionsBancaire;
-	}
-
-	/**
-	 * @param transactionsBancaire the transactionsBancaire to set
-	 */
-	public void setTransactionsBancaire(List<TransactionBancaire> transactionsBancaire) {
-		this.transactionsBancaire = transactionsBancaire;
-	}
 	
-	public BigDecimal total(){
-		BigDecimal total = new BigDecimal(0);
-		if (transactionsBancaire!=null){
-			for (TransactionBancaire t : transactionsBancaire)
-				total.add(t.getMontant());
-		}
-		return total;
+	public void setStbm(SessionTransactionBancaireManagedBean stbm){
+		this.stbm=stbm;
 	}
 	
 	public void add(){
-		if (typeTransaction==2)
+		transactionBancaire.setPortefeuille(smb.getUtilisateur().getPortefeuille());
+		if (transactionBancaire.getMontant().compareTo(new BigDecimal(0))!=1){
+			Utilities.addError("Le montant doit être supérieur à 0 !", null);
+			return;
+		}
+		if (typeTransaction==2){
+			if (transactionBancaire.getMontant().compareTo(stbm.total())==1){
+				Utilities.addError("Vos fonds ne sont pas suffisant pour effectuer cette opération!", null);
+				return ;
+			}
 			transactionBancaire.setMontant(transactionBancaire.getMontant().multiply(new BigDecimal(-1)));
+		}
 		Response response = stb.add(transactionBancaire);
-		if (!Utilities.responseIsError(response))
-			transactionsBancaire.add(((ResponseObject<TransactionBancaire>)response).object);
+		if (!Utilities.responseIsError(response)){
+			TransactionBancaire transaction = ((ResponseObject<TransactionBancaire>)response).object;
+			transaction.setDate(Calendar.getInstance().getTime());
+			stbm.getTransactionsBancaire().add(transaction);
+			transactionBancaire=new TransactionBancaire();
+		}
 	}
 
 	/**

@@ -74,7 +74,7 @@
 
     create table Transaction (
         IdTransaction bigint not null auto_increment unique,
-        Date datetime not null,
+        Date TIMESTAMP DEFAULT CURRENT_TIMESTAMP not null,
         Prix decimal(8,0) not null,
         Quantite integer not null,
         IdOrderAchat bigint not null,
