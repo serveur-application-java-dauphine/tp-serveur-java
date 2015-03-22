@@ -13,7 +13,7 @@
 
 
 	<h1>Mon compte</h1>
-
+<h:form>
 	<table>
 	<tr>
 		<td><h:outputLabel for="firstname">Prénom </h:outputLabel></td>
@@ -72,22 +72,20 @@
 	<tr>
 		<td><h:outputLabel
 			value="Rôle : #{sessionUserManagedBean.utilisateur.role.libelle}" /></td>
-		<td><c:if test="#{sessionUserManagedBean.utilisateur.validRole==false}">
-		<h:outputLabel
+		<td>
+		<h:outputLabel rendered="#{sessionUserManagedBean.utilisateur.validRole==false}"
 			value="Votre Role n'a pas encore été validé par un administrateur!"
 			style="color:red" />
-		</c:if><c:if test="#{sessionUserManagedBean.utilisateur.societe!=null}">
-		<h:outputLabel
+		<h:outputLabel rendered="#{sessionUserManagedBean.utilisateur.societe!=null}"
 			value="Societe : #{sessionUserManagedBean.utilisateur.societe.name}" />
-		</c:if></td>
+		</td>
 	</tr>
 	
 	</table>
 	
 	<!-- Si l'utilisateur est un membre société -->
 
-	<h:panelGroup
-		rendered="#{sessionUserManagedBean.utilisateur.role.code} == #{applicationManagedBean.ROLE_CODE_SOCIETE} and sessionUserManagedBean.utilisateur.societe.idSociete == null}">
+	<h:panelGroup rendered="#{sessionUserManagedBean.membreSociete and sessionUserManagedBean.utilisateur.societe == null}">
 		<p>Choisissez votre société :</p>
 		<h:selectOneMenu value="#{societeManagedBean.societe}"
 			style="width: 150px;">
@@ -121,7 +119,7 @@
 	</h:panelGroup>
 	<br />
 	<h:commandButton action="#{sessionUserManagedBean.modifier()}"
-		value="Modifier votre compte" />
-
+		value="Modifier votre compte" type="submit"/>
+	</h:form>
 </h:body>
 </html>

@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
@@ -17,7 +18,6 @@ import fr.dauphine.etrade.api.ServicesProduit;
 import fr.dauphine.etrade.model.Produit;
 import fr.dauphine.etrade.model.Societe;
 import fr.dauphine.etrade.model.TypeProduit;
-import fr.dauphine.etrade.model.Utilisateur;
 
 @ManagedBean
 @RequestScoped
@@ -25,13 +25,14 @@ public class ProduitManagedBean implements Serializable {
 
 	private Produit produit;
 	private List<Produit> produitsParSocieteId;
-	private TypeProduit typeProduit;
+	// private TypeProduit typeProduit;
 
-	FacesContext facesContext = FacesContext.getCurrentInstance();
-	@SuppressWarnings("deprecation")
-	Utilisateur utilisateur = (Utilisateur) facesContext.getApplication()
-			.createValueBinding("#{sessionUserManagedBean.utilisateur}")
-			.getValue(facesContext);
+	@ManagedProperty(value = "#{sessionUserManagedBean}")
+	private SessionUserManagedBean sumb;
+
+	public void setSumb(SessionUserManagedBean sumb) {
+		this.sumb = sumb;
+	}
 
 	/**
 	 * Default serialVersionUID
@@ -76,10 +77,10 @@ public class ProduitManagedBean implements Serializable {
 					.getParameter("nouveauProduit:dateMaturite")));
 		}
 
-		produit.setSociete(utilisateur.getSociete());
+		produit.setSociete(sumb.getUtilisateur().getSociete());
 		sp.addProduit(produit);
 		Utilities.redirect("societe.xhtml?s="
-				+ utilisateur.getSociete().getIdSociete());
+				+ sumb.getUtilisateur().getSociete().getIdSociete());
 	}
 
 	public void removeProduit(Produit p) {
@@ -89,10 +90,6 @@ public class ProduitManagedBean implements Serializable {
 
 	public void valueChangeMethod(ValueChangeEvent event) {
 		// TODO
-	}
-
-	public List<TypeProduit> getTypesProduits() {
-		return sp.getListeTypesProduit();
 	}
 
 	/**
@@ -139,13 +136,12 @@ public class ProduitManagedBean implements Serializable {
 		this.produit = produit;
 	}
 
-	public TypeProduit getTypeProduit() {
-		return typeProduit;
-	}
-
-	public void setTypeProduit(TypeProduit typeProduit) {
-		this.typeProduit = typeProduit;
-	}
+	/*
+	 * public TypeProduit getTypeProduit() { return typeProduit; }
+	 * 
+	 * public void setTypeProduit(TypeProduit typeProduit) { this.typeProduit =
+	 * typeProduit; }
+	 */
 
 	// public BigDecimal getCoupon() {
 	// return produit.getCoupon();

@@ -168,17 +168,17 @@ public class ServicesOrdreBean implements ServicesOrdre {
             prix = allOrdres.get(i).getPrix().doubleValue();
             position = i;
           }
-
         }
       }
       if (position != -1) {
         difference = Math.abs(quantiteCumuleAchat[position] - quantiteCumuleVente[position]);
       }
       if (prix == 0) {
-        LOG.info("Le prix pour le produit " + p.getIdProduit() + " n'a pas pu être établi");
+        System.out.println("Le prix pour le produit " + p.getIdProduit()
+            + " n'a pas pu ï¿½tre ï¿½tablie");
         continue;
       }
-      LOG.info("Le fixing pour le produit " + p.getIdProduit() + " est: " + prix);
+      System.out.println("Le fixing pour le produit " + p.getIdProduit() + " est: " + prix);
       // Preparer et passer les transactions, modifier les ordres
       StatusOrdre statusOrdreDone = getStatusOrdreByLibelle("Done");
       for (Ordre o : allOrdres) {
@@ -202,7 +202,7 @@ public class ServicesOrdreBean implements ServicesOrdre {
                 .getIdDirectionOrdre().equals((long) 1)) // Pour les ordres Achat
                 || (max == quantiteCumuleVente[position] && o.getDirectionOrdre()
                     .getIdDirectionOrdre().equals((long) 2)) || difference == 0) { // Pour les
-                                                                                   // ordres Vente
+              // ordres Vente
               t = creerTransaction(o, prix, o.getQuantiteNonExecute());
               o = modifierOrdre(o, 0, true, statusOrdreDone);
             } else if ((max == quantiteCumuleVente[position] && o.getDirectionOrdre()
@@ -278,9 +278,49 @@ public class ServicesOrdreBean implements ServicesOrdre {
   public List<TypeOrdre> getAllTypeOrdre() {
     return Connexion.getInstance().getAll(TypeOrdre.class);
   }
-  
+
   public List<TypeOrdre> getAllTypeOrdreSansEnchere() {
     String query = "FROM TypeOrdre tp WHERE tp.idTypeOrdre IS NOT 3";
     return Connexion.getInstance().queryListResult(query, TypeOrdre.class);
+  }
+
+  @Override
+  public List<Ordre> allPendingOrdres() {
+    String query = "SELECT o FROM Ordre o JOIN FETCH o.directionOrdre "
+        + "JOIN FETCH o.statusOrdre JOIN FETCH o.typeOrdre "
+        + "JOIN FETCH o.portefeuille JOIN FETCH o.produit p "
+        + "JOIN FETCH p.societe JOIN FETCH p.typeProduit "
+        + "WHERE o.statusOrdre.idStatusOrder = ?1";
+    return Connexion.getInstance().queryListResult(query, Ordre.class, (long) 2);
+  }
+
+  @Override
+  public List<Ordre> allDoneOrdres() {
+    String query = "SELECT t FROM Transaction t JOIN FETCH t.ordreByIdOrderAchat o "
+        + "JOIN FETCH o.directionOrdre " + "JOIN FETCH o.statusOrdre JOIN FETCH o.typeOrdre "
+        + "JOIN FETCH o.portefeuille JOIN FETCH o.produit p "
+        + "JOIN FETCH p.societe JOIN FETCH p.typeProduit "
+        + "WHERE o.statusOrdre.idStatusOrder = ?1";
+    return Connexion.getInstance().queryListResult(query, Ordre.class, (long) 1);
+  }
+
+  @Override
+  public List<Ordre> allPendingOrdresSociete(long idSociete) {
+    String query = "SELECT t FROM Transaction t JOIN FETCH t.ordreByIdOrderAchat o "
+        + "JOIN FETCH o.directionOrdre " + "JOIN FETCH o.statusOrdre JOIN FETCH o.typeOrdre "
+        + "JOIN FETCH o.portefeuille JOIN FETCH o.produit p "
+        + "JOIN FETCH p.societe JOIN FETCH p.typeProduit "
+        + "WHERE o.statusOrdre.idStatusOrder = ?1 AND o.societe.idSociete = ?1";
+    return Connexion.getInstance().queryListResult(query, Ordre.class, (long) 1, idSociete);
+  }
+
+  @Override
+  public List<Ordre> allDoneOrdresSociete(long idSociete) {
+    String query = "SELECT o FROM Ordre o JOIN FETCH o.directionOrdre "
+        + "JOIN FETCH o.statusOrdre JOIN FETCH o.typeOrdre "
+        + "JOIN FETCH o.portefeuille JOIN FETCH o.produit p "
+        + "JOIN FETCH p.societe JOIN FETCH p.typeProduit "
+        + "WHERE o.statusOrdre.idStatusOrder = ?1 AND o.societe.idSociete = ?1";
+    return Connexion.getInstance().queryListResult(query, Ordre.class, (long) 1, idSociete);
   }
 }

@@ -249,4 +249,19 @@ public final class Connexion {
 		em.close();
 		return result;
 	}
+	
+	/**
+	 * This method implements a SELECT * FROM Table query
+	 * 
+	 * @param classe
+	 *          the type of object which is returned
+	 * @return result
+	 */
+	public <T> List<T> getAll(Class<T> classe,String orderBy) {
+		EntityManager em = emf.createEntityManager();
+		TypedQuery<T> typedquery = em.createQuery("FROM " + classe.getSimpleName()+" ORDER BY "+orderBy, classe);
+		List<T> result = typedquery.getResultList();
+		em.close();
+		return result;
+	}
 }
