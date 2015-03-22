@@ -37,21 +37,12 @@ public class ServicesProduitBean implements ServicesProduit {
     return Connexion.getInstance().queryListResult(query, Produit.class, idSociete);
   }
 
-  @Override
-  public TypeProduit getTypeProduitById(long idTypeProduit) {
-    return Connexion.getInstance().find(TypeProduit.class, idTypeProduit);
-  }
-
+  
   @Override
   public Produit getProduitById(long idProduit) {
     String query = "SELECT p FROM Produit p LEFT JOIN FETCH p.typeProduit "
         + "LEFT JOIN FETCH p.societe WHERE p.idProduit=?";
     return Connexion.getInstance().querySingleResult(query, Produit.class, idProduit);
-  }
-
-  @Override
-  public List<TypeProduit> getListeTypesProduit() {
-    return (List<TypeProduit>) Connexion.getInstance().getAll(TypeProduit.class);
   }
 
 }

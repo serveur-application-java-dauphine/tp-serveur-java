@@ -12,11 +12,11 @@
 	</h:link>
 	<h:panelGrid rendered="#{sessionUserManagedBean.utilisateur!=null}" columns="8"
 		cellpadding="10" cellspacing="2" styleClass="order-table"
-		rowClasses="order-table-header-row">
-		<h:link href="my_account"
+		rowClasses="order-table-header-row" width="100%">
+		<h:link outcome="my_account"
 			value="Bonjour, #{sessionUserManagedBean.utilisateur.firstname}"
 			width="120px" />
-		<td style="width: 400px"></td>
+		<td width="30%"></td>
 		<h:link rendered="#{sessionUserManagedBean.administrateur}"
 			outcome="users" value="Users" width="120px" />
 		<h:link outcome="societes" value="Societes" width="120px" />

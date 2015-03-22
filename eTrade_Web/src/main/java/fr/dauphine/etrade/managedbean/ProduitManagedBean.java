@@ -15,6 +15,7 @@ import javax.faces.event.ValueChangeEvent;
 import javax.servlet.http.HttpServletRequest;
 
 import fr.dauphine.etrade.api.ServicesProduit;
+import fr.dauphine.etrade.api.ServicesTypeProduit;
 import fr.dauphine.etrade.model.Produit;
 import fr.dauphine.etrade.model.Societe;
 import fr.dauphine.etrade.model.TypeProduit;
@@ -40,6 +41,9 @@ public class ProduitManagedBean implements Serializable {
 
 	@EJB
 	private ServicesProduit sp;
+	
+	@EJB
+	private ServicesTypeProduit stp;
 
 	private static Logger LOG = Logger.getLogger(ProduitManagedBean.class
 			.getName());
@@ -99,7 +103,7 @@ public class ProduitManagedBean implements Serializable {
 	 *            the event following a modification of typeProduit by the user.
 	 */
 	public void changeTypeProduitListener(ValueChangeEvent event) {
-		produit.setTypeProduit(sp.getTypeProduitById(Long.parseLong(event
+		produit.setTypeProduit(stp.get(Long.parseLong(event
 				.getNewValue().toString())));
 	}
 
@@ -133,10 +137,6 @@ public class ProduitManagedBean implements Serializable {
 
 	public void setProduit(Produit produit) {
 		this.produit = produit;
-	}
-
-	public List<TypeProduit> getTypesProduits() {
-		return sp.getListeTypesProduit();
 	}
 
 }

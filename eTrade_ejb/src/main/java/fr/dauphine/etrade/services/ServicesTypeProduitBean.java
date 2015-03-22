@@ -21,5 +21,9 @@ public class ServicesTypeProduitBean implements ServicesTypeProduit {
 		return Connexion.getInstance().getAll(TypeProduit.class);
 	}
 
+	@Override
+	public TypeProduit get(long idTypeProduit) {
+		return Connexion.getInstance().find(TypeProduit.class, idTypeProduit);
+	}
 
 }
