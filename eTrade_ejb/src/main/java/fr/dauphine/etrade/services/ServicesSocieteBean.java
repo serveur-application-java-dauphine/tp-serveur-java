@@ -12,6 +12,7 @@ import fr.dauphine.etrade.api.ServicesSociete;
 import fr.dauphine.etrade.model.Actualite;
 import fr.dauphine.etrade.model.Societe;
 import fr.dauphine.etrade.persit.Connexion;
+import fr.dauphine.etrade.persit.Utilities;
 
 @Remote(ServicesSociete.class)
 @Stateless
@@ -20,7 +21,7 @@ public class ServicesSocieteBean implements ServicesSociete {
 
   @Override
   public Societe addSociete(Societe societe) {
-    return (Societe) Connexion.getInstance().insert(societe);
+    return (Societe) Utilities.doSimple(societe, Utilities.INSERT);
   }
 
   @Override
@@ -42,7 +43,7 @@ public class ServicesSocieteBean implements ServicesSociete {
 
   @Override
   public Societe updateSociete(Societe societe) {
-    return (Societe) Connexion.getInstance().update(societe);
+    return (Societe) Utilities.doSimple(societe, Utilities.UPDATE);
   }
 
   /** Actualités **/

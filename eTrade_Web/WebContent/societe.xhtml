@@ -65,8 +65,7 @@
 	<h:panelGrid id="visualiserProduits"
 		rendered="#{sessionUserManagedBean.membreSociete and sessionUserManagedBean.utilisateur.societe.idSociete eq param.s or sessionUserManagedBean.administrateur}">
 		<h2>Les produits proposés par votre société :</h2>
-		<h:dataTable
-			style="text-align:center;"
+		<h:dataTable style="text-align:center;"
 			value="#{produitManagedBean.getProduitsParSocieteId(param.s)}"
 			var="p">
 			<h:column>
@@ -74,14 +73,14 @@
 				<h:outputText value="#{p.libelleProduit}" />
 			</h:column>
 			<h:column>
-				<f:facet name="header">Coupon</f:facet>
-				<h:outputText value="#{p.coupon}" />
-			</h:column>
-			<h:column>
 				<f:facet name="header">Maturité</f:facet>
 				<h:outputText value="#{p.maturite}">
 					<f:convertDateTime pattern="#{applicationManagedBean.DATE_PATTERN}" />
 				</h:outputText>
+			</h:column>
+			<h:column>
+				<f:facet name="header">Coupon</f:facet>
+				<h:outputText value="#{p.coupon}" />
 			</h:column>
 			<h:column>
 				<f:facet name="header">Strike</f:facet>

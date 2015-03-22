@@ -11,6 +11,7 @@ import fr.dauphine.etrade.api.ServicesProduit;
 import fr.dauphine.etrade.model.Produit;
 import fr.dauphine.etrade.model.TypeProduit;
 import fr.dauphine.etrade.persit.Connexion;
+import fr.dauphine.etrade.persit.Utilities;
 
 @Remote(ServicesProduit.class)
 @Stateless
@@ -19,13 +20,13 @@ public class ServicesProduitBean implements ServicesProduit {
 
   @Override
   public Produit addProduit(Produit produit) {
-    Connexion.getInstance().insert(produit);
+    Utilities.doSimple(produit, Utilities.INSERT);
     return produit;
   }
 
   @Override
   public Produit delProduit(Produit produit) {
-    Connexion.getInstance().delete(produit);
+    Utilities.doSimple(produit, Utilities.DELETE);
     return produit;
   }
 
@@ -46,6 +47,11 @@ public class ServicesProduitBean implements ServicesProduit {
     String query = "SELECT p FROM Produit p LEFT JOIN FETCH p.typeProduit "
         + "LEFT JOIN FETCH p.societe WHERE p.idProduit=?";
     return Connexion.getInstance().querySingleResult(query, Produit.class, idProduit);
+  }
+
+  @Override
+  public List<TypeProduit> getListeTypesProduit() {
+    return (List<TypeProduit>) Connexion.getInstance().getAll(TypeProduit.class);
   }
 
 }

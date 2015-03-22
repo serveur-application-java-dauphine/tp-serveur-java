@@ -3,6 +3,7 @@ package fr.dauphine.etrade.services;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
@@ -23,6 +24,8 @@ import fr.dauphine.etrade.persit.Connexion;
 @Stateless
 @TransactionManagement(TransactionManagementType.BEAN)
 public class ServicesOrdreBean implements ServicesOrdre {
+
+  public static final Logger LOG = Logger.getLogger(ServicesOrdreBean.class.getName());
 
   public Utilisateur getUtilisateurById(int id) {
     return Connexion.getInstance().find(Utilisateur.class, id);
@@ -111,14 +114,15 @@ public class ServicesOrdreBean implements ServicesOrdre {
 
   /**
    * Pour la dï¿½termination du cours d'ouverture, diffï¿½rentes rï¿½gles s'appliquent : Le cours
-   * d'ï¿½quilibre doit maximiser le nombre des ï¿½changes. Si deux ordres sont entrï¿½s dans le carnet au
-   * mï¿½me cours, le premier entrï¿½ dans le carnet sera le premier exï¿½cutï¿½. A l'ouverture, les ordres
-   * au prix du marchï¿½ sont exï¿½cutï¿½s entre eux au prix d'ï¿½quilibre dï¿½terminï¿½ et le solde ï¿½ventuel
-   * entre dans le carnet comme un ordre ï¿½ cours limitï¿½. Par ailleurs, on ne tient pas compte des
-   * ordres au prix du marchï¿½ pour la dï¿½termination du cours d'ouverture. Il est possible de
-   * fractionner un ordre et de ne pas le servir en totalitï¿½ ï¿½ l'ouverture. Le cours d'ï¿½quilibre se
-   * caractï¿½rise par la confrontation de l'offre (vendeur) et de la demande (acheteur) Le cours
-   * d'ouverture est identique pour tous les ordres exï¿½cutï¿½s ï¿½ l'ouverture.
+   * d'ï¿½quilibre doit maximiser le nombre des ï¿½changes. Si deux ordres sont entrï¿½s dans le
+   * carnet au mï¿½me cours, le premier entrï¿½ dans le carnet sera le premier exï¿½cutï¿½. A
+   * l'ouverture, les ordres au prix du marchï¿½ sont exï¿½cutï¿½s entre eux au prix d'ï¿½quilibre
+   * dï¿½terminï¿½ et le solde ï¿½ventuel entre dans le carnet comme un ordre ï¿½ cours limitï¿½.
+   * Par ailleurs, on ne tient pas compte des ordres au prix du marchï¿½ pour la dï¿½termination du
+   * cours d'ouverture. Il est possible de fractionner un ordre et de ne pas le servir en totalitï¿½
+   * ï¿½ l'ouverture. Le cours d'ï¿½quilibre se caractï¿½rise par la confrontation de l'offre
+   * (vendeur) et de la demande (acheteur) Le cours d'ouverture est identique pour tous les ordres
+   * exï¿½cutï¿½s ï¿½ l'ouverture.
    */
   @Override
   // @Schedule(hour="00", minute="10")
@@ -171,11 +175,10 @@ public class ServicesOrdreBean implements ServicesOrdre {
         difference = Math.abs(quantiteCumuleAchat[position] - quantiteCumuleVente[position]);
       }
       if (prix == 0) {
-        System.out.println("Le prix pour le produit " + p.getIdProduit()
-            + " n'a pas pu ï¿½tre ï¿½tablie");
+        LOG.info("Le prix pour le produit " + p.getIdProduit() + " n'a pas pu être établi");
         continue;
       }
-      System.out.println("Le fixing pour le produit " + p.getIdProduit() + " est: " + prix);
+      LOG.info("Le fixing pour le produit " + p.getIdProduit() + " est: " + prix);
       // Preparer et passer les transactions, modifier les ordres
       StatusOrdre statusOrdreDone = getStatusOrdreByLibelle("Done");
       for (Ordre o : allOrdres) {
@@ -277,7 +280,7 @@ public class ServicesOrdreBean implements ServicesOrdre {
   }
   
   public List<TypeOrdre> getAllTypeOrdreSansEnchere() {
-    String query="FROM TypeOrdre tp WHERE tp.idTypeOrdre IS NOT 3"; 
+    String query = "FROM TypeOrdre tp WHERE tp.idTypeOrdre IS NOT 3";
     return Connexion.getInstance().queryListResult(query, TypeOrdre.class);
   }
 }

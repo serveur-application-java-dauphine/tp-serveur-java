@@ -19,4 +19,6 @@ public interface ServicesProduit {
 
   Produit getProduitById(long idProduit);
 
+  List<TypeProduit> getListeTypesProduit();
+
 }

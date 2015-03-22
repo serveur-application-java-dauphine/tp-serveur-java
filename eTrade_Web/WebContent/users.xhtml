@@ -22,7 +22,7 @@
 			<h:column>
 				<f:facet name="header">Nom</f:facet>
 				<h:inputText id="lastname" value="#{u.lastname}" required="true"
-					size="20" maxlength="60">
+					size="10" maxlength="60">
 					<f:ajax listener="#{utilisateurManagedBean.modifier(u)}" />
 				</h:inputText>
 				<h:message id="lastnameMessage" for="lastname" errorClass="erreur" />
@@ -30,7 +30,7 @@
 			<h:column>
 				<f:facet name="header">Prénom</f:facet>
 				<h:inputText id="firstname" value="#{u.firstname}" required="true"
-					size="20" maxlength="60">
+					size="10" maxlength="60">
 					<f:ajax listener="#{utilisateurManagedBean.modifier(u)}" />
 				</h:inputText>
 				<h:message id="nomMessage" for="firstname" errorClass="erreur" />
@@ -47,7 +47,7 @@
 			<h:column>
 				<f:facet name="header">Mot de passe</f:facet>
 				<h:inputText id="motdepasse" value="#{u.password}" required="true"
-					size="20" maxlength="20">
+					size="10" maxlength="20">
 					<f:ajax listener="#{utilisateurManagedBean.modifier(u)}" />
 				</h:inputText>
 				<h:message id="motDePasseMessage" for="motdepasse"
@@ -83,7 +83,7 @@
 
 			<h:column>
 				<f:facet name="header">Ville</f:facet>
-				<h:inputText id="city" value="#{u.city}" required="true" size="30">
+				<h:inputText id="city" value="#{u.city}" required="true" size="10">
 					<f:ajax listener="#{utilisateurManagedBean.modifier(u)}" />
 				</h:inputText>
 				<h:message id="cityMessage" for="city" errorClass="erreur" />
@@ -100,9 +100,10 @@
 			<h:column>
 				<f:facet name="header">Société affiliée</f:facet>
 				<h:selectOneMenu value="#{u.societe.idSociete}" required="true"
-					rendered="#{u.role.code}==#{applicationManagedBean.ROLE_CODE_SOCIETE}">
+					rendered="#{u.role.code == applicationManagedBean.ROLE_CODE_SOCIETE}">
 					<f:selectItems value="#{societeManagedBean.societes}" var="societe"
 						itemValue="#{societe.idSociete}" itemLabel="#{societe.name}" />
+					<f:ajax listener="#{utilisateurManagedBean.modifier(u)}" />
 				</h:selectOneMenu>
 			</h:column>
 			<h:column>
@@ -112,8 +113,9 @@
 					action="#{utilisateurManagedBean.valider(u)}" />
 			</h:column>
 		</h:dataTable>
-		 <h:commandButton value="Effectuer le fixing" action="#{fixingManagedBean.fixing()}" styleClass="sansLabel" />
-	  </h:form>
-	
+		<h:commandButton value="Effectuer le fixing"
+			action="#{fixingManagedBean.fixing()}" styleClass="sansLabel" />
+	</h:form>
+
 </h:body>
 </html>

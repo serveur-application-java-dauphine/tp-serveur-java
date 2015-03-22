@@ -1,6 +1,8 @@
 package fr.dauphine.etrade.managedbean;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -9,6 +11,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
+import javax.servlet.http.HttpServletRequest;
 
 import fr.dauphine.etrade.api.ServicesProduit;
 import fr.dauphine.etrade.model.Produit;
@@ -43,6 +46,36 @@ public class ProduitManagedBean implements Serializable {
 
 	public void createProduct() {
 		LOG.info("Ajout d'un nouveau produit en base.");
+
+		// // /!\ Ne changer les id de typeProduit que s'ils changent en base
+		// /!\
+		// if (produit.getTypeProduit().getIdTypeProduit().equals(3L)) {
+		// // Obligation
+		// produit.setCoupon(new BigDecimal(10));
+		// produit.setMaturite(new Date());
+		// } else if (produit.getTypeProduit().getIdTypeProduit().equals(2L)) {
+		// // Option
+		// produit.setStrike(new BigDecimal(10));
+		// produit.setMaturite(new Date());
+		// }
+
+		HttpServletRequest request = (HttpServletRequest) FacesContext
+				.getCurrentInstance().getExternalContext().getRequest();
+
+		if (produit.getTypeProduit().getIdTypeProduit().equals(3L)) {
+			produit.setCoupon(new BigDecimal(request
+					.getParameter("nouveauProduit:coupon")));
+			// TODO : changer la méthode appelée ici car on a des problèmes :
+			// 15-12-2015 => 11/03/2016 (rentré le 22/03/2015)
+			produit.setMaturite(new Date(request
+					.getParameter("nouveauProduit:dateMaturite")));
+		} else if (produit.getTypeProduit().getIdTypeProduit().equals(2L)) {
+			produit.setStrike(new BigDecimal(request
+					.getParameter("nouveauProduit:strike")));
+			produit.setMaturite(new Date(request
+					.getParameter("nouveauProduit:dateMaturite")));
+		}
+
 		produit.setSociete(utilisateur.getSociete());
 		sp.addProduit(produit);
 		Utilities.redirect("societe.xhtml?s="
@@ -97,9 +130,6 @@ public class ProduitManagedBean implements Serializable {
 			produit = new Produit();
 			produit.setSociete(new Societe());
 			produit.setTypeProduit(new TypeProduit());
-			// produit.setCoupon(new BigDecimal(0));
-			// produit.setMaturite(new Date());
-			// produit.setStrike(new BigDecimal(0));
 		}
 
 		return produit;
@@ -116,5 +146,29 @@ public class ProduitManagedBean implements Serializable {
 	public void setTypeProduit(TypeProduit typeProduit) {
 		this.typeProduit = typeProduit;
 	}
+
+	// public BigDecimal getCoupon() {
+	// return produit.getCoupon();
+	// }
+	//
+	// public void setCoupon(double coupon) {
+	// produit.setCoupon(new BigDecimal(coupon));
+	// }
+	//
+	// public BigDecimal getStrike() {
+	// return produit.getStrike();
+	// }
+	//
+	// public void setStrike(double strike) {
+	// produit.setStrike(new BigDecimal(strike));
+	// }
+	//
+	// public Date getMaturite() {
+	// return produit.getMaturite();
+	// }
+	//
+	// public void setMaturite(String maturite) {
+	// produit.setMaturite(new Date(maturite));
+	// }
 
 }
