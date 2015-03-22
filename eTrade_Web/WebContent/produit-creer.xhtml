@@ -11,9 +11,11 @@
 <h:body>
 	<ui:include src="/menu.xhtml" />
 
-	<p>Créer un nouveau produit</p>
+	<h1>Créer un nouveau produit</h1>
+	
+	<h:outputLabel value="Votre Compte n'a pas encore été validé par un administrateur" rendered="#{!sessionUserManagedBean.utilisateur.validRole}" />
 
-	<h:form id="nouveauProduit">
+	<h:form id="nouveauProduit" rendered="#{sessionUserManagedBean.utilisateur.validRole}">
 		<!-- TODO : Si le produit Action est déjà proposé par la société, empêcher la possibilité d'en créer un autre -->
 		<table>
 			<tr>
@@ -23,7 +25,7 @@
 						style="width: 150px;" onchange="submit()"
 						valueChangeListener="#{produitManagedBean.changeTypeProduitListener}">
 						<f:selectItem itemValue="0" itemLabel="Sélectionnez..."></f:selectItem>
-						<f:selectItems value="#{produitManagedBean.getTypesProduits()}"
+						<f:selectItems value="#{typeProduitManagedBean.typesProduit}"
 							var="typeProduit" itemValue="#{typeProduit.idTypeProduit}"
 							id="typeProduit"
 							itemLabel="#{typeProduit.libelle}" />

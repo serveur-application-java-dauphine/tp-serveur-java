@@ -25,7 +25,6 @@ public class ProduitManagedBean implements Serializable {
 
 	private Produit produit;
 	private List<Produit> produitsParSocieteId;
-	// private TypeProduit typeProduit;
 
 	@ManagedProperty(value = "#{sessionUserManagedBean}")
 	private SessionUserManagedBean sumb;
@@ -135,13 +134,6 @@ public class ProduitManagedBean implements Serializable {
 	public void setProduit(Produit produit) {
 		this.produit = produit;
 	}
-
-	/*
-	 * public TypeProduit getTypeProduit() { return typeProduit; }
-	 * 
-	 * public void setTypeProduit(TypeProduit typeProduit) { this.typeProduit =
-	 * typeProduit; }
-	 */
 
 	// public BigDecimal getCoupon() {
 	// return produit.getCoupon();

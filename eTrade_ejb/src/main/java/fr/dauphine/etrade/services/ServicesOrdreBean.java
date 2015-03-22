@@ -295,32 +295,32 @@ public class ServicesOrdreBean implements ServicesOrdre {
   }
 
   @Override
-  public List<Ordre> allDoneOrdres() {
+  public List<Transaction> allDoneOrdres() {
     String query = "SELECT t FROM Transaction t JOIN FETCH t.ordreByIdOrderAchat o "
         + "JOIN FETCH o.directionOrdre " + "JOIN FETCH o.statusOrdre JOIN FETCH o.typeOrdre "
         + "JOIN FETCH o.portefeuille JOIN FETCH o.produit p "
         + "JOIN FETCH p.societe JOIN FETCH p.typeProduit "
         + "WHERE o.statusOrdre.idStatusOrder = ?1";
-    return Connexion.getInstance().queryListResult(query, Ordre.class, (long) 1);
+    return Connexion.getInstance().queryListResult(query, Transaction.class, (long) 1);
   }
 
   @Override
   public List<Ordre> allPendingOrdresSociete(long idSociete) {
-    String query = "SELECT t FROM Transaction t JOIN FETCH t.ordreByIdOrderAchat o "
-        + "JOIN FETCH o.directionOrdre " + "JOIN FETCH o.statusOrdre JOIN FETCH o.typeOrdre "
-        + "JOIN FETCH o.portefeuille JOIN FETCH o.produit p "
-        + "JOIN FETCH p.societe JOIN FETCH p.typeProduit "
-        + "WHERE o.statusOrdre.idStatusOrder = ?1 AND o.societe.idSociete = ?1";
-    return Connexion.getInstance().queryListResult(query, Ordre.class, (long) 1, idSociete);
+	  String query = "SELECT o FROM Ordre o JOIN FETCH o.directionOrdre "
+		        + "JOIN FETCH o.statusOrdre JOIN FETCH o.typeOrdre "
+		        + "JOIN FETCH o.portefeuille JOIN FETCH o.produit p "
+		        + "JOIN FETCH p.societe JOIN FETCH p.typeProduit "
+		        + "WHERE o.statusOrdre.idStatusOrder = ?1 AND p.societe.idSociete = ?2";
+    return Connexion.getInstance().queryListResult(query, Ordre.class, (long) 2, idSociete);
   }
 
   @Override
-  public List<Ordre> allDoneOrdresSociete(long idSociete) {
-    String query = "SELECT o FROM Ordre o JOIN FETCH o.directionOrdre "
-        + "JOIN FETCH o.statusOrdre JOIN FETCH o.typeOrdre "
-        + "JOIN FETCH o.portefeuille JOIN FETCH o.produit p "
-        + "JOIN FETCH p.societe JOIN FETCH p.typeProduit "
-        + "WHERE o.statusOrdre.idStatusOrder = ?1 AND o.societe.idSociete = ?1";
-    return Connexion.getInstance().queryListResult(query, Ordre.class, (long) 1, idSociete);
+  public List<Transaction> allDoneOrdresSociete(long idSociete) {
+	  String query = "SELECT t FROM Transaction t JOIN FETCH t.ordreByIdOrderAchat o "
+		        + "JOIN FETCH o.directionOrdre " + "JOIN FETCH o.statusOrdre JOIN FETCH o.typeOrdre "
+		        + "JOIN FETCH o.portefeuille JOIN FETCH o.produit p "
+		        + "JOIN FETCH p.societe JOIN FETCH p.typeProduit "
+		        + "WHERE o.statusOrdre.idStatusOrder = ?1 AND p.societe.idSociete = ?2";
+    return Connexion.getInstance().queryListResult(query, Transaction.class, (long) 1, idSociete);
   }
 }
