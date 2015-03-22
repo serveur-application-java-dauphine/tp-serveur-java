@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.event.ValueChangeEvent;
 
@@ -20,6 +21,14 @@ public class ProduitManagedBean implements Serializable {
 
 	private Produit produit;
 	private List<Produit> produitsParSocieteId;
+	//private TypeProduit typeProduit;
+	
+	@ManagedProperty(value="#{sessionUserManagedBean}")
+	private SessionUserManagedBean sumb;
+
+	public void setSumb(SessionUserManagedBean sumb) {
+		this.sumb = sumb;
+	}
 
 	/**
 	 * Default serialVersionUID
@@ -33,9 +42,11 @@ public class ProduitManagedBean implements Serializable {
 			.getName());
 
 	public void createProduct() {
-		LOG.info("Ajout d'un nouveau produit en base : "
-				+ produit.getIdProduit());
+		LOG.info("Ajout d'un nouveau produit en base.");
+		produit.setSociete(sumb.getUtilisateur().getSociete());
 		sp.addProduit(produit);
+		Utilities.redirect("societe.xhtml?s="
+				+ sumb.getUtilisateur().getSociete().getIdSociete());
 	}
 
 	public void removeProduit(Produit p) {
@@ -45,6 +56,19 @@ public class ProduitManagedBean implements Serializable {
 
 	public void valueChangeMethod(ValueChangeEvent event) {
 		// TODO
+	}
+
+
+	/**
+	 * Changes the typeProduit in the ManagedBean after a modification of the
+	 * typeProduit by the user.
+	 * 
+	 * @param event
+	 *            the event following a modification of typeProduit by the user.
+	 */
+	public void changeTypeProduitListener(ValueChangeEvent event) {
+		produit.setTypeProduit(sp.getTypeProduitById(Long.parseLong(event
+				.getNewValue().toString())));
 	}
 
 	/**
@@ -70,6 +94,9 @@ public class ProduitManagedBean implements Serializable {
 			produit = new Produit();
 			produit.setSociete(new Societe());
 			produit.setTypeProduit(new TypeProduit());
+			// produit.setCoupon(new BigDecimal(0));
+			// produit.setMaturite(new Date());
+			// produit.setStrike(new BigDecimal(0));
 		}
 
 		return produit;
@@ -78,5 +105,13 @@ public class ProduitManagedBean implements Serializable {
 	public void setProduit(Produit produit) {
 		this.produit = produit;
 	}
+
+	/*public TypeProduit getTypeProduit() {
+		return typeProduit;
+	}
+
+	public void setTypeProduit(TypeProduit typeProduit) {
+		this.typeProduit = typeProduit;
+	}*/
 
 }

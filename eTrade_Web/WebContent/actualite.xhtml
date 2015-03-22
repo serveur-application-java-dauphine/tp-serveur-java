@@ -11,12 +11,11 @@
 <h:body>
 	<ui:include src="/menu.xhtml" />
 
-	<!-- Si la société est celle de l'utilisateur et que l'article a été créé par ce même utilisateur, il peut le supprimer -->
+	<!-- Si la société est celle de l'utilisateur, il peut le supprimer -->
 	<h:panelGroup
-		rendered="#{sessionUserManagedBean.utilisateur.societe.idSociete eq param.s and actu.utilisateur.idUtilisateur eq sessionUserManagedBean.utilisateur.idUtilisateur}">
+		rendered="#{sessionUserManagedBean.utilisateur.societe.idSociete eq actualiteManagedBean.getActualite(param.a).societe.idSociete}">
 		<h:link action="#{actualiteManagedBean.deleteActualite(param.a)}"
-			value="Supprimer votre actualité" outcome="societes" />
-		<!-- TODO Je suis bien conscient que c'est pas optimisé niveau parcours utlisateur mais le retour à la page précédente ne fonctionne pas... -->
+			value="Supprimer votre actualité" />
 	</h:panelGroup>
 
 	<fieldset>
@@ -25,7 +24,10 @@
 		</legend>
 		<legend>Date de création : </legend>
 		<h:outputLabel
-			value="#{actualiteManagedBean.getActualite(param.a).dateCreation}" />
+			value="#{actualiteManagedBean.getActualite(param.a).dateCreation}" >
+			<f:convertDateTime
+								pattern="#{applicationManagedBean.DATE_TIME_PATTERN}" />
+			</h:outputLabel>
 
 		<h:outputText
 			value="#{actualiteManagedBean.getActualite(param.a).content}"></h:outputText>

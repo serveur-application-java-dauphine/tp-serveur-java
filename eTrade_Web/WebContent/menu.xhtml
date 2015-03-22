@@ -20,6 +20,14 @@
 		<h:link rendered="#{sessionUserManagedBean.administrateur}"
 			outcome="users" value="Users" width="120px" />
 		<h:link outcome="societes" value="Societes" width="120px" />
+		<h:link rendered="#{sessionUserManagedBean.membreSociete}"
+			outcome="societe" value="Votre société" width="120px">
+			<f:param name="s"
+				value="#{sessionUserManagedBean.utilisateur.societe.idSociete}" />
+		</h:link>
+		<h:link rendered="#{sessionUserManagedBean.membreSociete}"
+			outcome="produit-creer" value="Créer un nouveau produit"
+			width="120px" />
 		<h:link
 			rendered="#{sessionUserManagedBean.investisseur and sessionUserManagedBean.utilisateur.validRole}"
 			outcome="portefeuille" value="Mon Portefeuille" width="120px" />
