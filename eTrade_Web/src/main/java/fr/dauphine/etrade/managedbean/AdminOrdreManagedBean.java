@@ -9,6 +9,7 @@ import javax.faces.bean.RequestScoped;
 
 import fr.dauphine.etrade.api.ServicesOrdre;
 import fr.dauphine.etrade.model.Ordre;
+import fr.dauphine.etrade.model.Transaction;
 
 
 @ManagedBean
@@ -17,7 +18,7 @@ public class AdminOrdreManagedBean implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 
-	private List<Ordre> ordresDone;
+	private List<Transaction> ordresDone;
 	private List<Ordre> ordresPending;	
 	
 	@EJB
@@ -26,7 +27,7 @@ public class AdminOrdreManagedBean implements Serializable{
 	/**
 	 * @return the ordresDone
 	 */
-	public List<Ordre> getOrdresDone() {
+	public List<Transaction> getOrdresDone() {
 		if (ordresDone==null)
 			ordresDone= so.allDoneOrdres();
 		return ordresDone;
@@ -35,7 +36,7 @@ public class AdminOrdreManagedBean implements Serializable{
 	/**
 	 * @param ordresDone the ordresDone to set
 	 */
-	public void setOrdresDone(List<Ordre> ordresDone) {
+	public void setOrdresDone(List<Transaction> ordresDone) {
 		this.ordresDone = ordresDone;
 	}
 

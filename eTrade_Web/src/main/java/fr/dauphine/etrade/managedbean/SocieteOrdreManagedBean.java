@@ -10,6 +10,7 @@ import javax.faces.bean.RequestScoped;
 
 import fr.dauphine.etrade.api.ServicesOrdre;
 import fr.dauphine.etrade.model.Ordre;
+import fr.dauphine.etrade.model.Transaction;
 
 
 @ManagedBean
@@ -18,7 +19,7 @@ public class SocieteOrdreManagedBean implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 
-	private List<Ordre> ordresDone;
+	private List<Transaction> ordresDone;
 	private List<Ordre> ordresPending;
 	
 	@ManagedProperty(value="#{sessionUserManagedBean}")
@@ -34,7 +35,7 @@ public class SocieteOrdreManagedBean implements Serializable{
 	/**
 	 * @return the ordres
 	 */
-	public List<Ordre> getOrdresDone() {
+	public List<Transaction> getOrdresDone() {
 		if (ordresDone==null)
 			ordresDone = so.allDoneOrdresSociete(sumb.getUtilisateur().getSociete().getIdSociete());
 		return ordresDone;
@@ -43,7 +44,7 @@ public class SocieteOrdreManagedBean implements Serializable{
 	/**
 	 * @param ordres the ordres to set
 	 */
-	public void setOrdresDone(List<Ordre> ordresDone) {
+	public void setOrdresDone(List<Transaction> ordresDone) {
 		this.ordresDone = ordresDone;
 	}
 

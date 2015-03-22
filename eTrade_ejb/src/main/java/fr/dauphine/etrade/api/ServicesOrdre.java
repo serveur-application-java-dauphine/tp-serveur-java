@@ -25,8 +25,8 @@ public interface ServicesOrdre {
 	List<Ordre> ordresVenteParProduitId(long idProduit);
 	List<Ordre> allPendingOrdresParProduitId(long idProduit);
 	void fixingAll();
-	List<Ordre> allDoneOrdres();
+	List<Transaction> allDoneOrdres();
 	List<Ordre> allPendingOrdres();
 	List<Ordre> allPendingOrdresSociete(long idSociete);
-	List<Ordre> allDoneOrdresSociete(long idSociete);
+	List<Transaction> allDoneOrdresSociete(long idSociete);
 }

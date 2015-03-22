@@ -25,7 +25,6 @@ public class ProduitManagedBean implements Serializable {
 
 	private Produit produit;
 	private List<Produit> produitsParSocieteId;
-	// private TypeProduit typeProduit;
 
 	@ManagedProperty(value = "#{sessionUserManagedBean}")
 	private SessionUserManagedBean sumb;
@@ -139,36 +138,5 @@ public class ProduitManagedBean implements Serializable {
 	public List<TypeProduit> getTypesProduits() {
 		return sp.getListeTypesProduit();
 	}
-
-	/*
-	 * public TypeProduit getTypeProduit() { return typeProduit; }
-	 * 
-	 * public void setTypeProduit(TypeProduit typeProduit) { this.typeProduit =
-	 * typeProduit; }
-	 */
-
-	// public BigDecimal getCoupon() {
-	// return produit.getCoupon();
-	// }
-	//
-	// public void setCoupon(double coupon) {
-	// produit.setCoupon(new BigDecimal(coupon));
-	// }
-	//
-	// public BigDecimal getStrike() {
-	// return produit.getStrike();
-	// }
-	//
-	// public void setStrike(double strike) {
-	// produit.setStrike(new BigDecimal(strike));
-	// }
-	//
-	// public Date getMaturite() {
-	// return produit.getMaturite();
-	// }
-	//
-	// public void setMaturite(String maturite) {
-	// produit.setMaturite(new Date(maturite));
-	// }
 
 }
