@@ -136,6 +136,10 @@ public class ProduitManagedBean implements Serializable {
 		this.produit = produit;
 	}
 
+	public List<TypeProduit> getTypesProduits() {
+		return sp.getListeTypesProduit();
+	}
+
 	/*
 	 * public TypeProduit getTypeProduit() { return typeProduit; }
 	 * 
