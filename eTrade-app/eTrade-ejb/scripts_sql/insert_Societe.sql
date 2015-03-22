@@ -1,0 +1,17 @@
+INSERT INTO `Societe` (`IdSociete`, `Description`, `Name`) VALUES
+(1, 'Daccor est le 1er groupe hôtelier européen. ', 'DACCOR'),
+(2, 'Hair Liquide figure parmi les leaders mondiaux de la production de gaz industriels et médicaux.', 'HAIR LIQUIDE'),
+(3, 'Flairbus Group (ex EADS) est le n° 1 européen et le n° 2 mondial de l''industrie aéronautique, spatiale et de la défense.', 'FLAIRBUS GROUP'),
+(4, 'Flalcatel-Lucent propose des solutions qui permettent aux fournisseurs de services, aux entreprises et aux administrations du monde entier d''offrir des services voix, données et vidéo à leurs propres clients.', 'FLALCATEL LUCENT'),
+(5, 'Talstom figure parmi les principaux fabricants mondiaux d''infrastructures destinées aux secteurs de l''énergie et du transport.', 'TALSTOM'),
+(9, 'TArcelorMittal est le n° 1 mondial de la sidérurgie', 'TARCELLORMITTAL'),
+(10, 'Taxa est le 1er groupe d''assurance européen.', 'XAXA'),
+(11, 'BNPS Paribas est le 1er groupe bancaire français. ', 'BNPS PARIBAS'),
+(12, 'Daccor est le 1er groupe hôtelier européen.', 'DACCORD'),
+(13, 'Bouyguesou est un groupe industriel diversifié organisé autour de 2 pôles d''activités.', 'BOUYGUESOU'),
+(14, 'Cap horn gemini figure parmi les principaux prestataires mondiaux de services informatiques.', 'CAP HORN GEMINI'),
+(15, 'Au Carrefour est le n° 1 européen et le n° 2 mondial de la grande distribution. ', 'AU CARREFOUR'),
+(16, 'Crédit & Agricole figure parmi les 1ers groupes bancaires européens.', 'CREDIT & AGRICOLE'),
+(17, 'Danone figure parmi les 1ers groupes agroalimentaires mondiaux.', 'DANONOU'),
+(18, 'Electricité de France (FEDF) est le n° 1 français de la production, de la commercialisation et de la distribution d''électricité.', 'FEDF'),
+(19, 'C''est une entreprise superbe !!\r\nVenez chez nous !', 'Test 42');

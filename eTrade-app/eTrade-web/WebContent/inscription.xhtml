@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+<meta charset="utf-8" />
+<title>eTrade - Inscription</title>
+<h:outputStylesheet library="default" name="css/form.css" />
+</h:head>
+
+<h:body>
+	<ui:include src="/menu.xhtml" />
+	<h:form>
+	<h1>Inscription</h1>
+	<h:messages errorClass="errorMessage" infoClass="infoMessage" layout="table" globalOnly="true" showDetail="false" showSummary="true"/>
+		<table>
+			<tr>
+				<td><h:outputLabel for="firstname">Prénom <span class="requis">*</span>
+					</h:outputLabel></td>
+				<td><h:inputText id="firstname"
+					value="#{utilisateurManagedBean.utilisateur.firstname}"
+					required="true" size="20" maxlength="60"  style="width: 150px;"/>
+					<h:message id="nomMessage" for="firstname" errorClass="erreur" /></td>
+			</tr>
+			<tr>
+				<td><h:outputLabel for="lastname">Nom <span
+					class="requis">*</span></h:outputLabel></td>
+				<td><h:inputText id="lastname"
+					value="#{utilisateurManagedBean.utilisateur.lastname}"
+					required="true" size="20" maxlength="60"  style="width: 150px;"/>
+					<h:message id="lastnameMessage" for="lastname" errorClass="erreur" /></td>
+			</tr>
+			<tr>
+				<td><h:outputLabel for="email">Adresse email <span
+					class="requis">*</span>
+					</h:outputLabel></td>
+				<td><h:inputText id="email"
+					value="#{utilisateurManagedBean.utilisateur.email}" required="true"
+					size="20" maxlength="60" style="width: 150px;">
+					<f:validateRegex pattern="#{applicationManagedBean.EMAIL_PATTERN}"></f:validateRegex>
+					</h:inputText><h:message id="emailMessage" for="email" errorClass="erreur" /></td>
+			</tr>
+			<tr>
+				<td><h:outputLabel for="motdepasse">Mot de passe <span
+					class="requis">*</span>
+					</h:outputLabel></td>
+				<td><h:inputSecret id="motdepasse"
+					value="#{utilisateurManagedBean.utilisateur.password}"
+					required="true" size="20" maxlength="20"  style="width: 150px;">
+					<!-- 
+		        	<f:validateRegex pattern="#{applicationManagedBean.PASSWORD_PATTERN}"/> 
+		        		-->
+					</h:inputSecret><h:message id="motDePasseMessage" for="motdepasse"
+					errorClass="erreur" /></td>
+			</tr>
+			<tr>
+				<td><h:outputLabel for="confirmation">Confirmation du mot de passe <span
+					class="requis">*</span>
+					</h:outputLabel></td>
+				<td><h:inputSecret id="confirmation"
+					value="#{utilisateurManagedBean.confirm}" required="true" size="20"
+					maxlength="20"  style="width: 150px;">	
+					<!-- 
+			        <f:validateRegex pattern="#{applicationManagedBean.PASSWORD_PATTERN}"/>
+			         -->
+					</h:inputSecret>
+					<h:message id="confirmationMessage" for="confirmation"
+					errorClass="erreur"/></td>
+			</tr>
+			<tr>
+				<td><h:outputLabel for="birthDate">Date de naissance (#{applicationManagedBean.DATE_PATTERN}) <span
+					class="requis">*</span>
+					</h:outputLabel></td>
+				<td><h:inputText id="birthDate"
+					value="#{utilisateurManagedBean.utilisateur.birthdate}"
+					required="true" size="10" maxlength="10"  style="width: 150px;">
+					<f:convertDateTime pattern="#{applicationManagedBean.DATE_PATTERN}" />
+					</h:inputText><h:message id="birthDateMessage" for="birthDate" errorClass="erreur" /></td>
+			</tr>
+			<tr>
+				<td><h:outputLabel for="address">Adresse <span
+					class="requis">*</span>
+					</h:outputLabel></td>
+					
+				<td><h:inputTextarea id="address"
+						value="#{utilisateurManagedBean.utilisateur.adress}" required="true"
+						size="25" maxlength="100"  style="width: 148px;"/>
+					<h:message id="addressMessage" for="address" errorClass="erreur" /></td>
+			</tr>
+			<tr>
+				<td><h:outputLabel for="zipCode">Code postal <span
+					class="requis">*</span>
+					</h:outputLabel></td>
+				<td>			<h:inputText id="zipCode"
+					value="#{utilisateurManagedBean.utilisateur.zipcode}"
+					required="true" size="5" maxlength="5"  style="width: 150px;" />
+					<h:message id="zipCodeMessage" for="zipCode" errorClass="erreur" /></td>
+			</tr>
+			<tr>
+				<td><h:outputLabel for="city">Ville <span class="requis">*</span>
+					</h:outputLabel></td>
+				<td><h:inputText id="city"
+					value="#{utilisateurManagedBean.utilisateur.city}" required="true"
+					size="20"  style="width: 150px;"/>
+					<h:message id="cityMessage" for="city" errorClass="erreur" /></td>
+			</tr>
+			<tr>
+				<td><h:outputLabel for="role">Rôle demandé (confirmé ensuite par l'administrateur) <span
+					class="requis">*</span>
+					</h:outputLabel></td>
+				<td><h:selectOneMenu id="role"
+					value="#{utilisateurManagedBean.utilisateur.role.idRole}"
+					required="true" style="width: 154px;">
+					<f:selectItems value="#{roleManagedBean.rolesLogin}" var="role"
+						itemValue="#{role.idRole}" itemLabel="#{role.libelle}" />
+					</h:selectOneMenu></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td ><h:commandButton value="Inscription"
+					action="#{utilisateurManagedBean.inscription()}"
+					 style="width: 154px;"/></td>
+			</tr>
+
+		</table>
+	</h:form>
+</h:body>
+</html>

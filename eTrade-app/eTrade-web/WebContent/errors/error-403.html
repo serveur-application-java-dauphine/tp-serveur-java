@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>eTrade - Accès non autorisé</title>
+<link rel="stylesheet" type="text/css"
+	href="resources/css/table-style.css">
+</head>
+<body>
+	<a href="/eTrade_Web/logout" style="float: right">Se déconnecter</a>
+	<br />
+	<br />
+	<p>Vous n'avez pas accès à cette ressource !</p>
+	<p>
+		Vous serez redirigé sur la page <a href="javascript:history.go(-1)">précédente</a>
+		au bout de 3 secondes.
+	</p>
+
+	<img alt="get-out" src="img/get-out.png" class="resize" />
+
+	<script type="text/javascript">
+			setTimeout(" window.location.href='javascript:history.go(-1)' ", 3000);
+		</script>
+
+</body>
+</html>

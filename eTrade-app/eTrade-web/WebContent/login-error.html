@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<script type="text/javascript" src="js/verificationInscription.js"></script>
+</head>
+<body>
+	<h1>Connection</h1>
+	<form name="login" id="form_login" method="POST"
+		action="j_security_check">
+		<table>
+			<tr>
+				<td>Email</td>
+				<td><input type="text" id="email" name="j_username"
+					onblur="verifMail(this)" /></td>
+			</tr>
+			<tr>
+				<td>Passsword</td>
+				<td><input type="password" id="password" name="j_password"
+					onblur="verifPassword(this)" /></td>
+			</tr>
+			<tr>
+				<td><input type="submit" value="Se connecter" /></td>
+				<td></td>
+			</tr>
+		</table>
+
+	</form>
+	L'authentification à échouée, veuilllez réessayer à nouveau! Pas encore
+	inscrit ?
+	<a href="inscription.xhtml">Cliquez ici</a>
+</body>
+</html>

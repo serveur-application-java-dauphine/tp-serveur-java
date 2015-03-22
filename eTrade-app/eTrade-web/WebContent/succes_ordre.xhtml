@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:body>
+	<ui:include src="/menu.xhtml" />
+
+	<h1>eTrade</h1>
+	<h:outputLabel value="Votre ordre a été passé" />
+	<form action="/eTrade_Web/portefeuille.xhtml">
+		<input type="submit" value="Voir portefeuille" style="width: 150px"/>
+	</form>
+	<form action="/eTrade_Web/passer_ordre.xhtml">
+		<input type="submit" value="Passer un autre ordre" style="width: 150px"/>
+	</form>
+</h:body>
+</html>
