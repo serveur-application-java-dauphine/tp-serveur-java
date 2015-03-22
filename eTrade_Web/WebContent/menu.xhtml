@@ -7,30 +7,47 @@
 	<h:outputStylesheet library="css" name="table-style.css" />
 </h:head>
 <h:body>
-<h:link outcome="index.xhtml">
-	<h:graphicImage value="/img/Logo.png" alt="home" />
-</h:link>
-<h:panelGrid id="panel_1" rendered="#{sessionUserManagedBean.utilisateur!=null}" columns="8"
-  cellpadding="10" cellspacing="2" styleClass="order-table"
-  rowClasses="order-table-header-row">
-      <h:link href="my_account" value="Bonjour, #{sessionUserManagedBean.utilisateur.firstname}" width="120px" />
-      <td style="width: 400px"></td>
-      <h:link rendered="#{sessionUserManagedBean.administrateur}" outcome="users" value="Users" width="120px" />
-      <h:link outcome="societes" value="Societes" width="120px" />
-      <h:link rendered="#{sessionUserManagedBean.investisseur and sessionUserManagedBean.utilisateur.validRole}"
-				outcome="portefeuille" value="Mon Portefeuille" width="120px" />
-	  <h:link rendered="#{sessionUserManagedBean.investisseur and sessionUserManagedBean.utilisateur.validRole}"
-				outcome="passer_ordre" value="Passer Ordre" width="120px"/>
+	<h:link outcome="index.xhtml">
+		<h:graphicImage value="/img/Logo.png" alt="home" />
+	</h:link>
+	<h:panelGrid rendered="#{sessionUserManagedBean.utilisateur!=null}" columns="8"
+		cellpadding="10" cellspacing="2" styleClass="order-table"
+		rowClasses="order-table-header-row">
+		<h:link href="my_account"
+			value="Bonjour, #{sessionUserManagedBean.utilisateur.firstname}"
+			width="120px" />
+		<td style="width: 400px"></td>
+		<h:link rendered="#{sessionUserManagedBean.administrateur}"
+			outcome="users" value="Users" width="120px" />
+		<h:link outcome="societes" value="Societes" width="120px" />
+		<h:link
+			rendered="#{sessionUserManagedBean.investisseur and sessionUserManagedBean.utilisateur.validRole}"
+			outcome="portefeuille" value="Mon Portefeuille" width="120px" />
+		<h:link
+			rendered="#{sessionUserManagedBean.investisseur and sessionUserManagedBean.utilisateur.validRole}"
+			outcome="ordres_investisseur" value="Mes Ordres" width="120px" />
+		<h:link
+			rendered="#{sessionUserManagedBean.administrateur and sessionUserManagedBean.utilisateur.validRole}"
+			outcome="ordres_administrateur" value="Ordres" width="120px" />
+		<h:link
+			rendered="#{sessionUserManagedBean.membreSociete and sessionUserManagedBean.utilisateur.validRole}"
+			outcome="ordres_societe" value="Ordres" width="120px" />
+			
+		<h:link
+			rendered="#{sessionUserManagedBean.investisseur and sessionUserManagedBean.utilisateur.validRole}"
+			outcome="passer_ordre" value="Passer Ordre" width="120px" />
 
-	  <a href="/eTrade_Web/logout">Se déconnecter</a>
-</h:panelGrid>
+		<a href="/eTrade_Web/logout">Se déconnecter</a>
+	</h:panelGrid>
 
-<br/><br/>
+	<br />
+	<br />
 
-<h:panelGrid id="panel_2" rendered="#{sessionUserManagedBean.utilisateur==null}" columns="2"
-  cellpadding="10" cellspacing="2" styleClass="order-table" style="float:right">
-      <h:link outcome="my_account.xhtml" value="Se connecter"/>
-      <h:link outcome="inscription.xhtml" value="S'inscrire"/>
-</h:panelGrid>
+	<h:panelGrid rendered="#{sessionUserManagedBean.utilisateur==null}" columns="2"
+		cellpadding="10" cellspacing="2" styleClass="order-table"
+		style="float:right">
+		<h:link outcome="my_account.xhtml" value="Se connecter" />
+		<h:link outcome="inscription.xhtml" value="S'inscrire" />
+	</h:panelGrid>
 </h:body>
 </html>

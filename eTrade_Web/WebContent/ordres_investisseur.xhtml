@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<h:outputStylesheet library="css" name="table-style.css" />
+</h:head>
+<h:body>
+<ui:include src="/menu.xhtml" />
+
+	<h1>Mes Ordres</h1>
+	<br />
+	<br />
+
+	<h:outputLabel value="Votre Compte n'a pas encore été validé par un administrateur" rendered="#{!sessionUserManagedBean.utilisateur.validRole}" />
+	
+	<h:panelGroup rendered="#{sessionUserManagedBean.utilisateur.validRole}">
+	
+	<h:form>
+		<table>
+			<tr>
+				<td valign="top">
+					<h3>Mes ordres en attente</h3> <h:dataTable
+						value="#{ordreManagedBean.pendingOrders}" var="o"
+						styleClass="order-table" headerClass="order-table-header"
+						rowClasses="order-table-odd-row,order-table-even-row">
+						<h:column>
+							<f:facet name="header">Date</f:facet>    				
+			      #{applicationManagedBean.getStringDateTime(o.date)}
+			   </h:column>
+						<h:column>
+							<f:facet name="header">Societe</f:facet>    				
+			      #{o.produit.societe.name}
+			   </h:column>
+						<h:column>
+							<f:facet name="header">Produit</f:facet>
+			      #{o.produit.typeProduit.libelle}
+			   </h:column>
+						<h:column>
+							<f:facet name="header">Direction</f:facet>
+			      #{o.directionOrdre.libelle}
+			   </h:column>
+						<h:column>
+							<f:facet name="header">Type de l'ordre</f:facet>
+			      #{o.typeOrdre.libelle}
+			   </h:column>
+						<h:column>
+							<f:facet name="header">Quantité</f:facet>
+			      #{o.quantite}
+			   </h:column>
+						<h:column>
+							<f:facet name="header">Prix</f:facet>
+			      #{o.prix}
+			   </h:column>
+						<h:column>
+							<f:facet name="header">Annuler</f:facet>
+							<h:commandButton id="annuler" value="Annuler"
+								action="#{ordreManagedBean.annulerOrdre(o)}" />
+						</h:column>
+
+					</h:dataTable>
+				</td >
+				<td valign="top">
+					<h3>Mes ordres executés</h3> 
+					<h:dataTable value="#{ordreManagedBean.doneOrders}" var="t"
+						styleClass="order-table" headerClass="order-table-header"
+						rowClasses="order-table-odd-row,order-table-even-row">
+						<h:column>
+							<f:facet name="header">Date d'execution</f:facet>    				
+			      #{applicationManagedBean.getStringDateTime(o.date)}
+			   </h:column>
+						<h:column>
+							<f:facet name="header">Societe</f:facet>    				
+			      #{t.ordreByIdOrderAchat.produit.societe.name}
+			   </h:column>
+						<h:column>
+							<f:facet name="header">Produit</f:facet>
+			      #{t.ordreByIdOrderAchat.produit.libelleProduit}
+			   </h:column>
+						<h:column>
+							<f:facet name="header">Direction</f:facet>
+			      #{t.ordreByIdOrderAchat.directionOrdre.libelle}
+			   </h:column>
+						<h:column>
+							<f:facet name="header">Prix d'execution</f:facet>
+			      #{t.prix}
+			   </h:column>
+						<h:column>
+							<f:facet name="header">Prix demandé</f:facet>
+			      #{t.ordreByIdOrderAchat.prix}
+			   </h:column>
+						<h:column>
+							<f:facet name="header">Quantité</f:facet>
+			      #{t.quantite}
+			   </h:column>
+					</h:dataTable>
+				</td>
+			</tr>
+		</table>
+		
+	</h:form>
+	
+	</h:panelGroup>
+</h:body>
+</html>
