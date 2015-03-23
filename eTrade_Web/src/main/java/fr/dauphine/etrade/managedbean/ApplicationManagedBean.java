@@ -1,6 +1,7 @@
 package fr.dauphine.etrade.managedbean;
 
 import java.io.Serializable;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -24,11 +25,15 @@ public class ApplicationManagedBean implements Serializable {
 			+ "(\\.[A-Za-z]{2,})$";
 
 	private final String DATE_PATTERN = "dd/MM/yyyy";
-	
+
 	private final String DATE_TIME_PATTERN = "dd/MM/yyyy HH:mm:ss";
-	
-	private final SimpleDateFormat formatDateTime = new SimpleDateFormat(DATE_TIME_PATTERN);
-	
+
+	private final SimpleDateFormat formatDateTime = new SimpleDateFormat(
+			DATE_TIME_PATTERN);
+
+	private final SimpleDateFormat formatDate = new SimpleDateFormat(
+			DATE_PATTERN);
+
 	private final String MESSAGE_ERROR = "MESSAGE_ERROR";
 
 	/**
@@ -86,9 +91,19 @@ public class ApplicationManagedBean implements Serializable {
 	public String getDATE_TIME_PATTERN() {
 		return DATE_TIME_PATTERN;
 	}
-	
-	public String getStringDateTime(Date date){
+
+	public String getStringDateTime(Date date) {
 		return formatDateTime.format(date);
+	}
+
+	public Date getDateString(String date) {
+		Date result = null;
+		try {
+			result = formatDate.parse(date);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 }
