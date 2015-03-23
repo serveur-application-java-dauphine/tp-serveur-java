@@ -45,11 +45,8 @@ public class ServicesProduitBean implements ServicesProduit {
 
   @Override
   public List<Produit> getActifs(long idPortefeuille) {
-    String query = "SELECT SUM(CASE WHEN idDirection = 2 THEN -quantite ELSE quantite END), o FROM Ordre o "
-        + " WHERE idStatutOrdre = 2 "
-        + " AND IdOrderVente = o.idOrder "
-        + " AND o.idPortefeuille =? " + " GROUP BY o.idProduit ";
-    return Connexion.getInstance().createNativeQueryAndGetResult(query, idPortefeuille);
+    // return Connexion.getInstance().find(Produit.class, idPortefeuille);
+    return null;
   }
 
 }

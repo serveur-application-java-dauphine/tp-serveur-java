@@ -87,10 +87,7 @@
 				</tr>
 				<tr>
 					<td>Direction: *</td>
-					<td><h:outputLabel value="Achat"
-							rendered="#{ordreManagedBean.containsActif(ordreManagedBean.ordre.produit.idProduit) == false}" />
-						<h:selectOneRadio
-							rendered="#{ordreManagedBean.containsActif(ordreManagedBean.ordre.produit.idProduit)==true}"
+					<td><h:selectOneRadio
 							value="#{ordreManagedBean.ordre.directionOrdre.idDirectionOrdre}"
 							style="width: 150px;">
 							<f:selectItems
