@@ -18,4 +18,5 @@ public interface ServicesEnchere {
   Enchere getEnchereById(Long idEnchere);
   Enchere encheresMainByOrdre(Long idOrdre);
   void finEnchere(Ordre ordre);
+  List<Enchere> encheresNotMainByOrdre(Long idOrdre);
 }

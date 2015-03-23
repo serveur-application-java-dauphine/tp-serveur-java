@@ -30,10 +30,10 @@ public class ServicesOrdreBean implements ServicesOrdre {
 
   @Override
   public Ordre addOrdre(Ordre ordre) {
-    if (ordre.getStatusOrdre().getIdStatusOrder() == null) {
-      ordre.setStatusOrdre(getStatusOrdreByLibelle("Pending"));
+    if(ordre.getStatusOrdre().getIdStatusOrder()==null){
+    	ordre.setStatusOrdre(getStatusOrdreByLibelle("Pending"));
     }
-    Connexion.getInstance().insert(ordre);
+	Connexion.getInstance().insert(ordre);
     return ordre;
   }
 

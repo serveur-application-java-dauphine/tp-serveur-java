@@ -27,7 +27,13 @@ public class ServicesEnchereBean implements ServicesEnchere {
 
   @Override
   public Enchere getEnchereById(Long idEnchere) {
-    return Connexion.getInstance().find(Enchere.class, idEnchere);
+    String query = "SELECT e FROM Enchere e LEFT JOIN FETCH e.portefeuille "
+    		+ "LEFT JOIN FETCH e.ordre o "
+	        + "LEFT JOIN FETCH o.typeOrdre LEFT JOIN FETCH o.directionOrdre "
+	        + "LEFT JOIN FETCH o.statusOrdre LEFT JOIN FETCH o.portefeuille "
+	        + "LEFT JOIN FETCH o.produit p LEFT JOIN FETCH p.societe LEFT JOIN FETCH p.typeProduit "
+	        + "WHERE e.idEnchere=?";
+    return Connexion.getInstance().querySingleResult(query, Enchere.class, idEnchere);
   }
   
   @Override
@@ -43,61 +49,74 @@ public class ServicesEnchereBean implements ServicesEnchere {
 	  return response;
     	
     } else {
-      Response response = Utilities.doSimple(enchere.getOrdre(), Utilities.INSERT);
+      Response response = Utilities.doSimple(enchere, Utilities.INSERT);
       if (response instanceof ResponseError)
     		return response;
 	  Enchere mainEnchere = encheresMainByOrdre(enchere.getOrdre().getIdOrder());
 	  mainEnchere.setPrix(enchere.getPrix());
-	  return Utilities.doSimple(mainEnchere, Utilities.UPDATE);
+	  response = Utilities.doSimple(mainEnchere, Utilities.UPDATE);
+	  // finEnchere(enchere.getOrdre()); - Pour tester
+	  return response;
     }
   }
   
   @Override
   public List<Enchere> encheresByOrdre(Long idOrdre){
-    String query = "SELECT e FROM Enchere e LEFT JOIN Ordre o "
+    String query = "SELECT e FROM Enchere e LEFT JOIN FETCH e.ordre o "
       + "LEFT JOIN FETCH o.typeOrdre LEFT JOIN FETCH o.directionOrdre "
-      + "LEFT JOIN FETCH o.statusOrdre LEFT JOIN FETCH o.portefeuille "
-      + "LEFT JOIN FETCH o.produit LEFT JOIN p.societe LEFT JOIN p.typeProduit "
-      + "WHERE o.idOrdre = ? ORDER BY o.prix DESC ";
+      + "LEFT JOIN FETCH o.statusOrdre so LEFT JOIN FETCH o.portefeuille "
+      + "LEFT JOIN FETCH o.produit p LEFT JOIN FETCH p.societe LEFT JOIN FETCH p.typeProduit "
+      + "WHERE o.idOrder = ? AND so.idStatusOrder=2 ORDER BY e.prix DESC ";
+    return Connexion.getInstance().queryListResult(query, Enchere.class, idOrdre);
+  }
+  
+  @Override
+  public List<Enchere> encheresNotMainByOrdre(Long idOrdre){
+    String query = "SELECT e FROM Enchere e LEFT JOIN FETCH e.ordre o "
+      + "LEFT JOIN FETCH o.typeOrdre LEFT JOIN FETCH o.directionOrdre diro"
+      + "LEFT JOIN FETCH o.statusOrdre so LEFT JOIN FETCH o.portefeuille "
+      + "LEFT JOIN FETCH o.produit p LEFT JOIN FETCH p.societe LEFT JOIN FETCH p.typeProduit "
+      + "WHERE o.idOrder = ? AND so.idStatusOrder=2 AND e.main = 0 "
+      + "ORDER BY e.dateDebut DESC ";
     return Connexion.getInstance().queryListResult(query, Enchere.class, idOrdre);
   }
   
   @Override
   public Enchere encheresMainByOrdre(Long idOrdre){
-    String query = "SELECT e FROM Enchere e LEFT JOIN Ordre o "
+    String query = "SELECT e FROM Enchere e LEFT JOIN FETCH e.ordre o "
       + "LEFT JOIN FETCH o.typeOrdre LEFT JOIN FETCH o.directionOrdre "
-      + "LEFT JOIN FETCH o.statusOrdre LEFT JOIN FETCH o.portefeuille "
-      + "LEFT JOIN FETCH o.produit LEFT JOIN p.societe LEFT JOIN p.typeProduit "
-      + "WHERE o.idOrdre = ? AND e.Main=1 ORDER BY o.prix DESC ";
+      + "LEFT JOIN FETCH o.statusOrdre so LEFT JOIN FETCH o.portefeuille "
+      + "LEFT JOIN FETCH o.produit p LEFT JOIN FETCH p.societe LEFT JOIN FETCH p.typeProduit "
+      + "WHERE o.idOrder = ? AND so.idStatusOrder=2 AND e.main=1 ORDER BY o.prix DESC ";
     return Connexion.getInstance().querySingleResult(query, Enchere.class, idOrdre);
   }
   
   @Override
   public List<Enchere> encheresDoneByPortefeuille(Portefeuille portefeuille){
-    String query = "SELECT e FROM Enchere e LEFT JOIN Ordre o "
+    String query = "SELECT e FROM Enchere e LEFT JOIN FETCH e.ordre o "
       + "LEFT JOIN FETCH o.typeOrdre LEFT JOIN FETCH o.directionOrdre "
       + "LEFT JOIN FETCH o.statusOrdre so LEFT JOIN FETCH o.portefeuille po"
-      + "LEFT JOIN FETCH o.produit p LEFT JOIN p.societe s LEFT JOIN p.typeProduit tp "
+      + "LEFT JOIN FETCH o.produit p LEFT JOIN FETCH p.societe s LEFT JOIN FETCH p.typeProduit tp "
       + "WHERE po.idPortefeuille = ? AND so.idStatusOrder = 1 ORDER BY s.name, tp.libelle ";
     return Connexion.getInstance().queryListResult(query, Enchere.class, portefeuille.getIdPortefeuille());
   }
   
   @Override
   public List<Enchere> allPendingEnchere(){
-    String query = "SELECT e FROM Enchere e LEFT JOIN Ordre o "
+    String query = "SELECT e FROM Enchere e LEFT JOIN FETCH e.ordre o "
       + "LEFT JOIN FETCH o.typeOrdre LEFT JOIN FETCH o.directionOrdre "
       + "LEFT JOIN FETCH o.statusOrdre so LEFT JOIN FETCH o.portefeuille po"
-      + "LEFT JOIN FETCH o.produit p LEFT JOIN p.societe s LEFT JOIN p.typeProduit tp "
+      + "LEFT JOIN FETCH o.produit p LEFT JOIN FETCH p.societe s LEFT JOIN FETCH p.typeProduit tp "
       + "WHERE so.idStatusOrder = 2 AND e.main = 1 ORDER BY s.name, tp.libelle ";
     return Connexion.getInstance().queryListResult(query, Enchere.class);
   }
   
   @Override
   public List<Enchere> encherePendingBySocieteName(String societeName){
-    String query = "SELECT e FROM Enchere e LEFT JOIN Ordre o "
+    String query = "SELECT e FROM Enchere e LEFT JOIN FETCH e.ordre o "
       + "LEFT JOIN FETCH o.typeOrdre LEFT JOIN FETCH o.directionOrdre "
       + "LEFT JOIN FETCH o.statusOrdre so LEFT JOIN FETCH o.portefeuille po"
-      + "LEFT JOIN FETCH o.produit p LEFT JOIN p.societe s LEFT JOIN p.typeProduit tp "
+      + "LEFT JOIN FETCH o.produit p LEFT JOIN FETCH p.societe s LEFT JOIN FETCH p.typeProduit tp "
       + "WHERE so.idStatusOrder = 2 AND e.main = 1 AND lower(s.name) LIKE lower(?) "
       + "ORDER BY s.name, tp.libelle ";
     return Connexion.getInstance().queryListResult(query, Enchere.class, "%" + societeName + "%");
@@ -105,29 +124,27 @@ public class ServicesEnchereBean implements ServicesEnchere {
 
   @Override
   public void finEnchere(Ordre ordre){
-	  List<Enchere> encheres = encheresByOrdre(ordre.getIdOrder());
-	  StatusOrdre statusOrdreDone = Connexion.getInstance().find(StatusOrdre.class, 1);
+	  List<Enchere> encheres = encheresNotMainByOrdre(ordre.getIdOrder());
+	  Enchere enchere = encheres.get(0);
+	  StatusOrdre statusOrdreDone = Connexion.getInstance().find(StatusOrdre.class, (long)1);
 	  Transaction transaction=new Transaction();
-	  Ordre ordreAchat = encheres.get(0).getOrdre();
-	  Ordre ordreVente = encheres.get(1).getOrdre();
-	  ordreAchat.setQuantiteNonExecute(0);
-	  ordreAchat.setStatusOrdre(statusOrdreDone);
-	  ordreVente.setQuantiteNonExecute(0);
-	  ordreVente.setStatusOrdre(statusOrdreDone);
-	  ordreVente.setPortefeuille(encheres.get(1).getPortefeuille());
-	  if(ordreAchat.getDirectionOrdre().getIdDirectionOrdre().equals((long)1)){
-		  ordreVente.setDirectionOrdre(Connexion.getInstance().find(DirectionOrdre.class, 2));
+	  Ordre ordreMain = enchere.getOrdre();
+	  ordreMain.setQuantiteNonExecute(0);
+	  ordreMain.setStatusOrdre(statusOrdreDone);
+	  Ordre ordreEnchere = Connexion.getInstance().update(ordreMain);
+	  transaction.setOrdreByIdOrderAchat(ordreMain);
+	  ordreEnchere.setPortefeuille(enchere.getPortefeuille());
+	  if(ordreMain.getDirectionOrdre().getIdDirectionOrdre().equals((long)1)){
+		  ordreEnchere.setDirectionOrdre(Connexion.getInstance().find(DirectionOrdre.class, (long)2));
 	  } else {
-		  ordreVente.setDirectionOrdre(Connexion.getInstance().find(DirectionOrdre.class, 1));
+		  ordreEnchere.setDirectionOrdre(Connexion.getInstance().find(DirectionOrdre.class, (long)1));
 	  }
-	  ordreVente.setIdOrder(null);
-	  transaction.setOrdreByIdOrderAchat(encheres.get(0).getOrdre());
-	  transaction.setOrdreByIdOrderVente(encheres.get(1).getOrdre());
-	  transaction.setPrix(encheres.get(0).getPrix());
-	  transaction.setQuantite(encheres.get(0).getOrdre().getQuantite());
+	  ordreEnchere.setIdOrder(null);
+	  ordreEnchere = Connexion.getInstance().insert(ordreEnchere);	  
+	  transaction.setOrdreByIdOrderVente(ordreEnchere);
+	  transaction.setPrix(enchere.getPrix());
+	  transaction.setQuantite(enchere.getOrdre().getQuantite());
 	  Connexion.getInstance().insert(transaction);
-	  Connexion.getInstance().insert(ordreVente);
-	  Connexion.getInstance().update(ordreAchat);
   }
   
 

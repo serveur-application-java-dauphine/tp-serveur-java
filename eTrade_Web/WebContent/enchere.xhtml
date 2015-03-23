@@ -6,16 +6,24 @@
 	xmlns:o="http://omnifaces.org/ui">
 
 <h:head>
-	<title>eTrade - <h:outputText
-			value="Enchere #{enchereManagedBean.getEnchere(param.s).ordre.directionOrdre.libelle} 
-			#{enchereManagedBean.getEnchere(param.s).ordre.produit.societe} #{enchereManagedBean.getEnchere(param.s).ordre.produit.libelleProduit}" />
-	</title>
+	<title>eTrade - Enchère</title>
 
 </h:head>
 <body>
+	
 	<ui:include src="/menu.xhtml" />
-	<p>Dernières enchères</p>
-	<h:dataTable value="#{enchereManagedBean.encheresByOrdre(enchereManagedBean.enchere.idEnchere)}"
+	
+	<h1>Enchere</h1>
+	<h:outputLabel value="Cette enchère est finie" rendered="#{enchereManagedBean.getEnchere(param.e).ordre.statusOrdre.idStatusOrder.equals(1)}" />
+	<h:panelGroup rendered="#{!enchereManagedBean.getEnchere(param.e).ordre.statusOrdre.idStatusOrder.equals(1)}">
+	<h:outputText value="#{enchereManagedBean.getEnchere(param.e).ordre.directionOrdre.libelle} &#160;"/>
+	<h:outputText value="#{enchereManagedBean.enchere.ordre.quantite} &#160;"/>
+	<h:outputText value="#{enchereManagedBean.enchere.ordre.produit.societe.name} &#160;"/>
+	<h:outputText value="#{enchereManagedBean.enchere.ordre.produit.libelleProduit} &#160;"/>
+	
+	<br/><br/>
+	
+	<h:dataTable value="#{enchereManagedBean.encheresByOrdre(enchereManagedBean.getEnchere(param.e).ordre.idOrder)}"
 		var="e" styleClass="order-table" headerClass="order-table-header"
 		rowClasses="order-table-odd-row,order-table-even-row">
 		<h:column>
@@ -27,22 +35,28 @@
 		      #{e.prix}
 		</h:column>
 	</h:dataTable>
-	<table>
-		<tr>
-			<td><h:outputLabel>Prix<span
-						class="requis">*:</span>
-				</h:outputLabel></td>
-			<td><h:inputText id="prix" value="#{enchereManagedBean.prixEnchere}" default="Le prix souhaité"
-					required="false" size="20" maxlength="60" style="width: 146px;" /></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td><h:outputLabel rendered="#{enchereManagedBean.prixNotMeilleur}" value="Pour rencherir vous devez proposer un prix meilleur à celui existant"/></td>			
-		</tr>
-	</table>
-	<h:commandButton value="Rencherir"
-			action="#{enchereManagedBean.rencherir()}" styleClass="sansLabel"
-			type="submit" />
+	<o:form includeRequestParams="true">
+		<table>
+			<tr>
+				<td><br/><br/></td>
+			</tr>
+			<tr>
+				<td><h:outputLabel>Prix<span
+							class="requis">*:</span>
+					</h:outputLabel></td>
+				<td><h:inputText id="prix" value="#{enchereManagedBean.prixEnchere}" default="Le prix souhaité"
+						required="false" size="20" maxlength="60" style="width: 146px;" /></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><h:outputLabel rendered="#{enchereManagedBean.prixNotMeilleur}" value="Pour rencherir vous devez proposer un prix meilleur à celui existant"/></td>			
+			</tr>
+		</table>
+		<h:commandButton value="Rencherir"
+				action="#{enchereManagedBean.rencherir(param.e)}" styleClass="sansLabel"
+				type="submit" />
+	</o:form>
+	</h:panelGroup>
 
 </body>
 </html>
