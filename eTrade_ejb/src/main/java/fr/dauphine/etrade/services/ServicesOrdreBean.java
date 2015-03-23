@@ -32,9 +32,9 @@ public class ServicesOrdreBean implements ServicesOrdre {
     	ordre.setStatusOrdre(getStatusOrdreByLibelle("Pending"));
     }
 	ordre = Connexion.getInstance().insert(ordre);
-	/* Execution en continue
+	/* Execution en continue*/
 	ordre = getOrdreById(ordre.getIdOrder());
-	executerOrdre(ordre);*/
+	executerOrdre(ordre);
     return ordre;
   }
 
@@ -89,6 +89,15 @@ public class ServicesOrdreBean implements ServicesOrdre {
         + "WHERE o.idOrder=?";
     Ordre result = Connexion.getInstance().querySingleResult(query, Ordre.class, idOrdre);
     return result;
+  }
+  
+  @Override
+  public double getLastPrixByProduct(long idProduit) {
+    String query = "SELECT t FROM Transaction t LEFT JOIN FETCH t.ordreByIdOrdreAchat o "
+        + "LEFT JOIN FETCH o.produit p "
+        + "WHERE p.idProduit = ? ORDER BY t.date DESC";
+    List<Transaction> result = Connexion.getInstance().queryListResult(query, Transaction.class, idProduit);
+    return result.get(0).getPrix().doubleValue();
   }
   @Override
   public List<Ordre> ordresVenteParProduitId(long idProduit) {
@@ -268,10 +277,13 @@ public class ServicesOrdreBean implements ServicesOrdre {
 	  } else if(direction ==2){
 		  contreparties = ordresAchatParProduitId(o.getProduit().getIdProduit());
 	  }
-	  for(Ordre contrepartie: contreparties){
-		  
-		  if(contrepartie.getTypeOrdre().getIdTypeOrder().equals((long)1)) contrepartie.setPrix(BigDecimal.valueOf(0.0));
+	  if(contreparties.get(0).getTypeOrdre().getIdTypeOrder().equals((long)1)){
+		  double prix = getLastPrixByProduct(contreparties.get(0).getProduit().getIdProduit().longValue());
+		  for(Ordre contrepartie: contreparties){			  
+			  if(contrepartie.getTypeOrdre().getIdTypeOrder().equals((long)1)) contrepartie.setPrix(BigDecimal.valueOf(prix));
+		  }
 	  }
+	  
 	  int i = 0;
 	  double prix;
 	  if(o.getPrix()==null){

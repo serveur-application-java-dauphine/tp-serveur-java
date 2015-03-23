@@ -72,7 +72,8 @@
 
 					<td><h:outputText
 							value="#{ordreManagedBean.ordre.produit.libelleProduit}"
-							rendered="#{not empty param.p}" /> <h:selectOneMenu
+							rendered="#{not empty param.p}" /> 
+							<h:selectOneMenu
 							rendered="#{empty param.p}"
 							value="#{ordreManagedBean.ordre.produit.idProduit}"
 							style="width: 150px;">
