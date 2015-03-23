@@ -72,9 +72,10 @@
 
 					<td><h:outputText
 							value="#{ordreManagedBean.ordre.produit.libelleProduit}"
-							rendered="#{not empty param.p}" /> <h:selectOneMenu
+							rendered="#{not empty param.p}" /> 
+							<h:selectOneMenu
 							rendered="#{empty param.p}"
-							value="#{ordreManagedBean.ordre.produit.idProduit}"
+							value="#{ordreManagedBean.ordre.produit.idProduit}" onchange="submit()"
 							valueChangeListener="#{ordreManagedBean.changeProduitListener}"
 							style="width: 150px;">
 							<f:selectItem itemValue="0" itemLabel="Selectionez..." />
