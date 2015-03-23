@@ -175,7 +175,7 @@ public class OrdreManagedBean implements Serializable {
 	 */
 	public void passerOrdre(){
 		if (ordre.getProduit().getIdProduit()==0){
-			Utilities.addError("Vous devez sélectionner un produit", null);
+			Utilities.addError("Vous devez sï¿½lectionner un produit", null);
 			return;
 		}
 		if(ordre.getTypeOrdre().getIdTypeOrder()==3){

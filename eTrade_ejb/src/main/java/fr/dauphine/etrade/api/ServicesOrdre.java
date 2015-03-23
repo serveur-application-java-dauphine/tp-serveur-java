@@ -24,4 +24,5 @@ public interface ServicesOrdre {
 	List<Ordre> allPendingOrdresSociete(long idSociete);
 	List<Transaction> allDoneOrdresSociete(long idSociete);
 	Ordre getOrdreById(long idOrdre);
+	double getLastPrixByProduct(long idProduit);
 }
