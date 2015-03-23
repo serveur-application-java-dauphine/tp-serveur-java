@@ -34,12 +34,12 @@ public class EnchereManagedBean implements Serializable {
 
 	@EJB
 	private ServicesEnchere se;
-	
-	@ManagedProperty("#{SessionUserManagedBean}")
-	SessionUserManagedBean smb;
-	
-	public void setSmb(SessionUserManagedBean smb){
-		this.smb = smb;
+		
+	@ManagedProperty(value="#{sessionUserManagedBean}")
+	private SessionUserManagedBean sumb;
+
+	public void setSumb(SessionUserManagedBean sumb) {
+		this.sumb = sumb;
 	}
 	
 	public Enchere getEnchere() {
@@ -76,18 +76,28 @@ public class EnchereManagedBean implements Serializable {
 		this.enchere = enchere;
 	}
 	
+	/**
+	 * 
+	 * @param idOrdre
+	 * @return soit la liste de tous les rencherissements soit l'enchere Main (initiale), s'il personne n'a encore rencheri.
+	 */
 	public List<Enchere> encheresByOrdre(Long idOrdre){
-		return se.encheresByOrdre(idOrdre);
+		List<Enchere> result = se.encheresNotMainByOrdre(idOrdre);
+		if(result.size()==0){
+			result.add(se.encheresMainByOrdre(idOrdre));
+		} 				
+		return result;
 	}
 	
-	public void rencherir(){
-		if((enchere.getOrdre().getDirectionOrdre().getIdDirectionOrdre().equals((long)2) && enchere.getPrix().compareTo(prixEnchere) < 0)
-			|| (enchere.getOrdre().getDirectionOrdre().getIdDirectionOrdre().equals((long)1) && enchere.getPrix().compareTo(prixEnchere) > 0)){
+	public void rencherir(String idEnchere){
+		enchere = se.getEnchereById(Long.parseLong(idEnchere));
+		if((enchere.getOrdre().getDirectionOrdre().getIdDirectionOrdre().equals((long)2) && enchere.getPrix().compareTo(prixEnchere) >= 0)
+			|| (enchere.getOrdre().getDirectionOrdre().getIdDirectionOrdre().equals((long)1) && enchere.getPrix().compareTo(prixEnchere) <= 0)){
 			isPrixNotMeilleur = true;
 		} else {
 			isPrixNotMeilleur = false;
 			enchere.setDateDebut(null);
-			enchere.setPortefeuille(smb.getUtilisateur().getPortefeuille());
+			enchere.setPortefeuille(sumb.getUtilisateur().getPortefeuille());
 			enchere.setIdEnchere(null);
 			enchere.setMain(false);
 			enchere.setPrix(prixEnchere);

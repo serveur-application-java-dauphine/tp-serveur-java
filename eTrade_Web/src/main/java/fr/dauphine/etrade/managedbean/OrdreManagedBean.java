@@ -182,8 +182,9 @@ public class OrdreManagedBean implements Serializable {
 			ordre.setQuantiteNonExecute(ordre.getQuantite());
 			ordre.setPortefeuille(sumb.getUtilisateur().getPortefeuille());
 			ordre.setProduit(sp.getProduitById(ordre.getProduit()
-					.getIdProduit()));
-			so.addOrdre(ordre);
+					.getIdProduit()));			
+		    ordre.setStatusOrdre(so.getStatusOrdreByLibelle("Pending"));
+		    so.addOrdre(ordre);
 			Enchere enchere =new Enchere();
 			Timestamp dateFin = new Timestamp(System.currentTimeMillis() + duree*3600000);
 			enchere.setDateFin(dateFin);
