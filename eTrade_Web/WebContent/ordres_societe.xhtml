@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<h:outputStylesheet library="css" name="table-style.css" />
+</h:head>
+<h:body>
+	<ui:include src="/menu.xhtml" />
+	<br />
+	<br />
+	<h1>Les ordres pour ma société
+		(#{sessionUserManagedBean.utilisateur.societe.name})</h1>
+	<br />
+	<br />
+
+	<h:outputLabel
+		value="Votre Compte n'a pas encore été validé par un administrateur"
+		rendered="#{!sessionUserManagedBean.utilisateur.validRole}" />
+
+	<h:panelGroup
+		rendered="#{sessionUserManagedBean.utilisateur.validRole}">
+
+		<table>
+			<tr>
+				<td valign="top">
+					<h3>Les ordres en attente</h3> <h:dataTable
+						value="#{societeOrdreManagedBean.ordresPending}" var="o"
+						styleClass="order-table" headerClass="order-table-header"
+						rowClasses="order-table-odd-row,order-table-even-row">
+						<h:column>
+							<f:facet name="header">Date</f:facet>    				
+			      #{applicationManagedBean.getStringDateTime(o.date)}
+			   </h:column>
+			   <h:column>
+							<f:facet name="header">Produit</f:facet>
+			      #{o.produit.libelleProduit}
+			   </h:column>
+						<h:column>
+							<f:facet name="header">Type Produit</f:facet>
+			      #{o.produit.typeProduit.libelle}
+			   </h:column>
+						<h:column>
+							<f:facet name="header">Direction</f:facet>
+			      #{o.directionOrdre.libelle}
+			   </h:column>
+						<h:column>
+							<f:facet name="header">Type de l'ordre</f:facet>
+			      #{o.typeOrdre.libelle}
+			   </h:column>
+						<h:column>
+							<f:facet name="header">Quantité</f:facet>
+			      #{o.quantite}
+			   </h:column>
+						<h:column>
+							<f:facet name="header">Prix</f:facet>
+			      #{o.prix}
+			   </h:column>
+
+
+					</h:dataTable>
+				</td>
+				<td valign="top">
+					<h3>Les transactions executés</h3> <h:dataTable
+						value="#{societeOrdreManagedBean.ordresDone}" var="t"
+						styleClass="order-table" headerClass="order-table-header"
+						rowClasses="order-table-odd-row,order-table-even-row" >
+						<h:column>
+							<f:facet name="header">Date d'execution</f:facet>    				
+			      #{applicationManagedBean.getStringDateTime(t.date)}
+			   </h:column>
+						<h:column>
+							<f:facet name="header">Produit</f:facet>
+			      #{t.ordreByIdOrderAchat.produit.libelleProduit}
+			   </h:column>
+			   <h:column>
+							<f:facet name="header">Type Produit</f:facet>
+			      #{t.ordreByIdOrderAchat.produit.typeProduit.libelle}
+			   </h:column>
+						<h:column>
+							<f:facet name="header">Prix</f:facet>
+			      #{t.prix}
+			   </h:column>
+						<h:column>
+							<f:facet name="header">Quantité</f:facet>
+			      #{t.quantite}
+			   </h:column>
+					</h:dataTable>
+				</td>
+			</tr>
+		</table>
+
+	</h:panelGroup>
+
+</h:body>
+</html>

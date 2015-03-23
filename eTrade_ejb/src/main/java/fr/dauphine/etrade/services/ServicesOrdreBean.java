@@ -3,6 +3,7 @@ package fr.dauphine.etrade.services;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
@@ -23,6 +24,8 @@ import fr.dauphine.etrade.persit.Connexion;
 @Stateless
 @TransactionManagement(TransactionManagementType.BEAN)
 public class ServicesOrdreBean implements ServicesOrdre {
+
+  public static final Logger LOG = Logger.getLogger(ServicesOrdreBean.class.getName());
 
   public Utilisateur getUtilisateurById(int id) {
     return Connexion.getInstance().find(Utilisateur.class, id);
@@ -111,14 +114,15 @@ public class ServicesOrdreBean implements ServicesOrdre {
 
   /**
    * Pour la d�termination du cours d'ouverture, diff�rentes r�gles s'appliquent : Le cours
-   * d'�quilibre doit maximiser le nombre des �changes. Si deux ordres sont entr�s dans le carnet au
-   * m�me cours, le premier entr� dans le carnet sera le premier ex�cut�. A l'ouverture, les ordres
-   * au prix du march� sont ex�cut�s entre eux au prix d'�quilibre d�termin� et le solde �ventuel
-   * entre dans le carnet comme un ordre � cours limit�. Par ailleurs, on ne tient pas compte des
-   * ordres au prix du march� pour la d�termination du cours d'ouverture. Il est possible de
-   * fractionner un ordre et de ne pas le servir en totalit� � l'ouverture. Le cours d'�quilibre se
-   * caract�rise par la confrontation de l'offre (vendeur) et de la demande (acheteur) Le cours
-   * d'ouverture est identique pour tous les ordres ex�cut�s � l'ouverture.
+   * d'�quilibre doit maximiser le nombre des �changes. Si deux ordres sont entr�s dans le
+   * carnet au m�me cours, le premier entr� dans le carnet sera le premier ex�cut�. A
+   * l'ouverture, les ordres au prix du march� sont ex�cut�s entre eux au prix d'�quilibre
+   * d�termin� et le solde �ventuel entre dans le carnet comme un ordre � cours limit�.
+   * Par ailleurs, on ne tient pas compte des ordres au prix du march� pour la d�termination du
+   * cours d'ouverture. Il est possible de fractionner un ordre et de ne pas le servir en totalit�
+   * � l'ouverture. Le cours d'�quilibre se caract�rise par la confrontation de l'offre
+   * (vendeur) et de la demande (acheteur) Le cours d'ouverture est identique pour tous les ordres
+   * ex�cut�s � l'ouverture.
    */
   @Override
   // @Schedule(hour="00", minute="10")
@@ -164,7 +168,6 @@ public class ServicesOrdreBean implements ServicesOrdre {
             prix = allOrdres.get(i).getPrix().doubleValue();
             position = i;
           }
-
         }
       }
       if (position != -1) {
@@ -199,7 +202,7 @@ public class ServicesOrdreBean implements ServicesOrdre {
                 .getIdDirectionOrdre().equals((long) 1)) // Pour les ordres Achat
                 || (max == quantiteCumuleVente[position] && o.getDirectionOrdre()
                     .getIdDirectionOrdre().equals((long) 2)) || difference == 0) { // Pour les
-                                                                                   // ordres Vente
+              // ordres Vente
               t = creerTransaction(o, prix, o.getQuantiteNonExecute());
               o = modifierOrdre(o, 0, true, statusOrdreDone);
             } else if ((max == quantiteCumuleVente[position] && o.getDirectionOrdre()
@@ -275,9 +278,49 @@ public class ServicesOrdreBean implements ServicesOrdre {
   public List<TypeOrdre> getAllTypeOrdre() {
     return Connexion.getInstance().getAll(TypeOrdre.class);
   }
-  
+
   public List<TypeOrdre> getAllTypeOrdreSansEnchere() {
-    String query="FROM TypeOrdre tp WHERE tp.idTypeOrdre IS NOT 3"; 
+    String query = "FROM TypeOrdre tp WHERE tp.idTypeOrdre IS NOT 3";
     return Connexion.getInstance().queryListResult(query, TypeOrdre.class);
+  }
+
+  @Override
+  public List<Ordre> allPendingOrdres() {
+    String query = "SELECT o FROM Ordre o JOIN FETCH o.directionOrdre "
+        + "JOIN FETCH o.statusOrdre JOIN FETCH o.typeOrdre "
+        + "JOIN FETCH o.portefeuille JOIN FETCH o.produit p "
+        + "JOIN FETCH p.societe JOIN FETCH p.typeProduit "
+        + "WHERE o.statusOrdre.idStatusOrder = ?1";
+    return Connexion.getInstance().queryListResult(query, Ordre.class, (long) 2);
+  }
+
+  @Override
+  public List<Transaction> allDoneOrdres() {
+    String query = "SELECT t FROM Transaction t JOIN FETCH t.ordreByIdOrderAchat o "
+        + "JOIN FETCH o.directionOrdre " + "JOIN FETCH o.statusOrdre JOIN FETCH o.typeOrdre "
+        + "JOIN FETCH o.portefeuille JOIN FETCH o.produit p "
+        + "JOIN FETCH p.societe JOIN FETCH p.typeProduit "
+        + "WHERE o.statusOrdre.idStatusOrder = ?1";
+    return Connexion.getInstance().queryListResult(query, Transaction.class, (long) 1);
+  }
+
+  @Override
+  public List<Ordre> allPendingOrdresSociete(long idSociete) {
+	  String query = "SELECT o FROM Ordre o JOIN FETCH o.directionOrdre "
+		        + "JOIN FETCH o.statusOrdre JOIN FETCH o.typeOrdre "
+		        + "JOIN FETCH o.portefeuille JOIN FETCH o.produit p "
+		        + "JOIN FETCH p.societe JOIN FETCH p.typeProduit "
+		        + "WHERE o.statusOrdre.idStatusOrder = ?1 AND p.societe.idSociete = ?2";
+    return Connexion.getInstance().queryListResult(query, Ordre.class, (long) 2, idSociete);
+  }
+
+  @Override
+  public List<Transaction> allDoneOrdresSociete(long idSociete) {
+	  String query = "SELECT t FROM Transaction t JOIN FETCH t.ordreByIdOrderAchat o "
+		        + "JOIN FETCH o.directionOrdre " + "JOIN FETCH o.statusOrdre JOIN FETCH o.typeOrdre "
+		        + "JOIN FETCH o.portefeuille JOIN FETCH o.produit p "
+		        + "JOIN FETCH p.societe JOIN FETCH p.typeProduit "
+		        + "WHERE o.statusOrdre.idStatusOrder = ?1 AND p.societe.idSociete = ?2";
+    return Connexion.getInstance().queryListResult(query, Transaction.class, (long) 1, idSociete);
   }
 }

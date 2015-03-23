@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<meta charset="utf-8" />
+	<title>eTrade - Créer un produit</title>
+	<h:outputStylesheet library="default" name="css/form.css" />
+</h:head>
+<h:body>
+	<ui:include src="/menu.xhtml" />
+
+	<h1>Créer un nouveau produit</h1>
+	
+	<h:outputLabel value="Votre Compte n'a pas encore été validé par un administrateur" rendered="#{!sessionUserManagedBean.utilisateur.validRole}" />
+
+	<h:form id="nouveauProduit" rendered="#{sessionUserManagedBean.utilisateur.validRole}">
+		<!-- TODO : Si le produit Action est déjà proposé par la société, empêcher la possibilité d'en créer un autre -->
+		<table>
+			<tr>
+				<td>Type du produit</td>
+				<td><h:selectOneMenu
+						value="#{produitManagedBean.produit.typeProduit.idTypeProduit}"
+						style="width: 150px;" onchange="submit()"
+						valueChangeListener="#{produitManagedBean.changeTypeProduitListener}">
+						<f:selectItem itemValue="0" itemLabel="Sélectionnez..."></f:selectItem>
+						<f:selectItems value="#{typeProduitManagedBean.typesProduit}"
+							var="typeProduit" itemValue="#{typeProduit.idTypeProduit}"
+							id="typeProduit"
+							itemLabel="#{typeProduit.libelle}" />
+					</h:selectOneMenu></td>
+			</tr>
+			<h:panelGrid
+				rendered="#{produitManagedBean.produit.typeProduit.idTypeProduit == 3}">
+				<tr>
+					<td>Montant du coupon (en % du nominal)</td>
+					<td><h:inputText id="coupon"
+							value="#{produitManagedBean.produit.coupon}" /></td>
+				</tr>
+			</h:panelGrid>
+
+			<h:panelGrid
+				rendered="#{produitManagedBean.produit.typeProduit.idTypeProduit == 2}">
+				<tr>
+					<td>Montant du strike</td>
+					<td><h:inputText id="strike"
+							value="#{produitManagedBean.produit.strike}" /></td>
+				</tr>
+			</h:panelGrid>
+			<h:panelGrid
+				rendered="#{produitManagedBean.produit.typeProduit.idTypeProduit == 2 or produitManagedBean.produit.typeProduit.idTypeProduit == 3}">
+				<tr>
+					<td>Date de maturité (#{applicationManagedBean.DATE_PATTERN})</td>
+					<td><h:inputText id="dateMaturite"
+							value="#{produitManagedBean.produit.maturite}">
+							<f:convertDateTime
+								pattern="#{applicationManagedBean.DATE_PATTERN}" />
+						</h:inputText>
+					</td>
+				</tr>
+			</h:panelGrid>
+		</table>
+
+		<h:messages globalOnly="true" infoClass="info" />
+
+		<!-- TODO : empêcher la validation alors qu'aucun type de produit n'a été sélectionné -->
+		<!-- TODO : évincer l'erreur 500 qui se produit lorsqu'on repasse d'un type de produit vers "Sélectionnez" -->
+		<h:commandButton
+			value="Créer votre produit"
+			action="#{produitManagedBean.createProduct()}" styleClass="sansLabel" />
+	</h:form>
+</h:body>
+</html>

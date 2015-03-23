@@ -44,10 +44,14 @@ public class ActualiteManagedBean implements Serializable {
 		actualite.setUtilisateur(utilisateur);
 		actualite.setSociete(utilisateur.getSociete());
 		sa.addActualite(actualite);
+		Long idSociete = utilisateur.getSociete().getIdSociete();
+		Utilities.redirect("societe.xhtml?s=" + idSociete);
 	}
 
 	public void deleteActualite() {
 		sa.deleteActualite(actualite);
+		Long idSociete = utilisateur.getSociete().getIdSociete();
+		Utilities.redirect("societe.xhtml?s=" + idSociete);
 	}
 
 	/**

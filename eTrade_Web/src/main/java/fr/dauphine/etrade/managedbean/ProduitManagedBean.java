@@ -1,15 +1,21 @@
 package fr.dauphine.etrade.managedbean;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
+import javax.servlet.http.HttpServletRequest;
 
 import fr.dauphine.etrade.api.ServicesProduit;
+import fr.dauphine.etrade.api.ServicesTypeProduit;
 import fr.dauphine.etrade.model.Produit;
 import fr.dauphine.etrade.model.Societe;
 import fr.dauphine.etrade.model.TypeProduit;
@@ -21,6 +27,13 @@ public class ProduitManagedBean implements Serializable {
 	private Produit produit;
 	private List<Produit> produitsParSocieteId;
 
+	@ManagedProperty(value = "#{sessionUserManagedBean}")
+	private SessionUserManagedBean sumb;
+
+	public void setSumb(SessionUserManagedBean sumb) {
+		this.sumb = sumb;
+	}
+
 	/**
 	 * Default serialVersionUID
 	 */
@@ -28,14 +41,49 @@ public class ProduitManagedBean implements Serializable {
 
 	@EJB
 	private ServicesProduit sp;
+	
+	@EJB
+	private ServicesTypeProduit stp;
 
 	private static Logger LOG = Logger.getLogger(ProduitManagedBean.class
 			.getName());
 
 	public void createProduct() {
-		LOG.info("Ajout d'un nouveau produit en base : "
-				+ produit.getIdProduit());
+		LOG.info("Ajout d'un nouveau produit en base.");
+
+		// // /!\ Ne changer les id de typeProduit que s'ils changent en base
+		// /!\
+		// if (produit.getTypeProduit().getIdTypeProduit().equals(3L)) {
+		// // Obligation
+		// produit.setCoupon(new BigDecimal(10));
+		// produit.setMaturite(new Date());
+		// } else if (produit.getTypeProduit().getIdTypeProduit().equals(2L)) {
+		// // Option
+		// produit.setStrike(new BigDecimal(10));
+		// produit.setMaturite(new Date());
+		// }
+
+		HttpServletRequest request = (HttpServletRequest) FacesContext
+				.getCurrentInstance().getExternalContext().getRequest();
+
+		if (produit.getTypeProduit().getIdTypeProduit().equals(3L)) {
+			produit.setCoupon(new BigDecimal(request
+					.getParameter("nouveauProduit:coupon")));
+			// TODO : changer la méthode appelée ici car on a des problèmes :
+			// 15-12-2015 => 11/03/2016 (rentré le 22/03/2015)
+			produit.setMaturite(new Date(request
+					.getParameter("nouveauProduit:dateMaturite")));
+		} else if (produit.getTypeProduit().getIdTypeProduit().equals(2L)) {
+			produit.setStrike(new BigDecimal(request
+					.getParameter("nouveauProduit:strike")));
+			produit.setMaturite(new Date(request
+					.getParameter("nouveauProduit:dateMaturite")));
+		}
+
+		produit.setSociete(sumb.getUtilisateur().getSociete());
 		sp.addProduit(produit);
+		Utilities.redirect("societe.xhtml?s="
+				+ sumb.getUtilisateur().getSociete().getIdSociete());
 	}
 
 	public void removeProduit(Produit p) {
@@ -45,6 +93,18 @@ public class ProduitManagedBean implements Serializable {
 
 	public void valueChangeMethod(ValueChangeEvent event) {
 		// TODO
+	}
+
+	/**
+	 * Changes the typeProduit in the ManagedBean after a modification of the
+	 * typeProduit by the user.
+	 * 
+	 * @param event
+	 *            the event following a modification of typeProduit by the user.
+	 */
+	public void changeTypeProduitListener(ValueChangeEvent event) {
+		produit.setTypeProduit(stp.get(Long.parseLong(event
+				.getNewValue().toString())));
 	}
 
 	/**

@@ -38,10 +38,17 @@
 				</h:link>
 			</h:column>
 			<span style="font-size: 11px;"> <h:column>
-					<h:outputText value="créé le #{actu.dateCreation}" />
+					<h:outputText value="créé le #{actu.dateCreation}">
+						<f:convertDateTime
+							pattern="#{applicationManagedBean.DATE_TIME_PATTERN}" />
+					</h:outputText>
+
 				</h:column> <h:column>
 					<h:outputText rendered="#{not empty actu.dateModification}"
-						value="modifié le #{actu.dateModification}" />
+						value="modifié le #{actu.dateModification}">
+						<f:convertDateTime
+							pattern="#{applicationManagedBean.DATE_TIME_PATTERN}" />
+					</h:outputText>
 				</h:column>
 			</span>
 		</h:dataTable>
@@ -50,6 +57,45 @@
 		<h:link
 			rendered="#{sessionUserManagedBean.membreSociete and sessionUserManagedBean.utilisateur.societe.idSociete eq param.s}"
 			value="Créer une nouvelle actualité." outcome="actualite-creer"></h:link>
+	</h:panelGrid>
+
+	<br />
+
+	<!-- Section visualisation des produits proposés par la société -->
+	<h:panelGrid id="visualiserProduits"
+		rendered="#{sessionUserManagedBean.membreSociete and sessionUserManagedBean.utilisateur.societe.idSociete eq param.s or sessionUserManagedBean.administrateur}">
+		<h2>Les produits proposés par votre société :</h2>
+		<h:dataTable style="text-align:center;"
+			value="#{produitManagedBean.getProduitsParSocieteId(param.s)}"
+			var="p">
+			<h:column>
+				<f:facet name="header">Produit</f:facet>
+				<h:outputText value="#{p.libelleProduit}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Maturité</f:facet>
+				<h:outputText value="#{p.maturite}">
+					<f:convertDateTime pattern="#{applicationManagedBean.DATE_PATTERN}" />
+				</h:outputText>
+			</h:column>
+			<h:column>
+				<f:facet name="header">Coupon</f:facet>
+				<h:outputText value="#{p.coupon}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Strike</f:facet>
+				<h:outputText value="#{p.strike}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Taux</f:facet>
+				<h:outputText value="#{p.taux}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Volatilité</f:facet>
+				<h:outputText value="#{p.volatilite}" />
+			</h:column>
+		</h:dataTable>
+		<h:link value="Ajouter un produit" outcome="produit-creer"/>
 	</h:panelGrid>
 
 	<!-- Section investisseur -->

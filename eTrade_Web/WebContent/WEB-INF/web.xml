@@ -137,6 +137,21 @@
 		</web-resource-collection>
 		<auth-constraint>
 			<role-name>Societe</role-name>
+			<role-name>Administrateur</role-name>
+			<role-name>Investisseur</role-name>
+		</auth-constraint>
+		<user-data-constraint>
+			<transport-guarantee>NONE</transport-guarantee>                                    
+		</user-data-constraint>
+	</security-constraint>
+	<security-constraint>
+		<display-name>Administration-Constraint</display-name>
+		<web-resource-collection>
+			<web-resource-name>produit-creer</web-resource-name>
+			<url-pattern>/produit-creer.xhtml</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>Societe</role-name>
 		</auth-constraint>
 		<user-data-constraint>
 			<transport-guarantee>NONE</transport-guarantee>
@@ -170,8 +185,47 @@
 			<transport-guarantee>NONE</transport-guarantee>
 		</user-data-constraint>
 	</security-constraint>
-
-
+	<security-constraint>
+		<display-name>Administration-Constraint</display-name>
+		<web-resource-collection>
+			<web-resource-name>ordres_investisseur</web-resource-name>
+			<url-pattern>/ordres_investisseur.xhtml</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>Investisseur</role-name>
+		</auth-constraint>
+		<user-data-constraint>
+			<transport-guarantee>NONE</transport-guarantee>
+		</user-data-constraint>
+	</security-constraint>
+	
+	<security-constraint>
+		<display-name>Administration-Constraint</display-name>
+		<web-resource-collection>
+			<web-resource-name>ordres_administrateur</web-resource-name>
+			<url-pattern>/ordres_administrateur.xhtml</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>Administrateur</role-name>
+		</auth-constraint>
+		<user-data-constraint>
+			<transport-guarantee>NONE</transport-guarantee>
+		</user-data-constraint>
+	</security-constraint>
+	
+	<security-constraint>
+		<display-name>Administration-Constraint</display-name>
+		<web-resource-collection>
+			<web-resource-name>ordres_societe</web-resource-name>
+			<url-pattern>/ordres_societe.xhtml</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>Societe</role-name>
+		</auth-constraint>
+		<user-data-constraint>
+			<transport-guarantee>NONE</transport-guarantee>
+		</user-data-constraint>
+	</security-constraint>
 	<!-- END Constraint sur les pages -->
 
 	<login-config>
@@ -206,13 +260,11 @@
 	<error-page>
 		<exception-type>com.sun.faces.context.FacesFileNotFoundException</exception-type>
 		<location>/errors/error-404.html</location>
-	</error-page>
-
+	</error-page> 
 	<error-page>
 		<error-code>500</error-code>
 		<location>/errors/error-500.html</location>
 	</error-page>
-
 	<listener>
 		<listener-class>com.sun.faces.config.ConfigureListener</listener-class>
 	</listener>

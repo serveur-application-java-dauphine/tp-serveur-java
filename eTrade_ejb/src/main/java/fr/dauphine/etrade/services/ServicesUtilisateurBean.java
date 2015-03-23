@@ -26,7 +26,7 @@ public class ServicesUtilisateurBean implements ServicesUtilisateur {
 
   @Override
   public Response delUtilisateur(Utilisateur utilisateur) {
-	  return Utilities.doSimple(utilisateur, Utilities.DELETE);
+    return Utilities.doSimple(utilisateur, Utilities.DELETE);
   }
 
   @Override
@@ -41,7 +41,7 @@ public class ServicesUtilisateurBean implements ServicesUtilisateur {
 
   @Override
   public Response updateUtilisateur(Utilisateur utilisateur) {
-	  return Utilities.doSimple(utilisateur, Utilities.UPDATE);
+    return Utilities.doSimple(utilisateur, Utilities.UPDATE);
   }
 
   @Override
