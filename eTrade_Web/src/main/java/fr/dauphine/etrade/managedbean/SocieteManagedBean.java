@@ -20,7 +20,6 @@ import fr.dauphine.etrade.model.Societe;
 public class SocieteManagedBean implements Serializable {
 
 	private Societe societe;
-	//private List<Actualite> actualites;
 	private List<Societe> societes;
 
 	/**
@@ -136,14 +135,6 @@ public class SocieteManagedBean implements Serializable {
 	public Actualite getActualite(int id) {
 		return ss.getActualite(id);
 	}
-
-	/*public List<Actualite> getActualites() {
-		return actualites;
-	}
-
-	public void setActualites(List<Actualite> actualites) {
-		this.actualites = actualites;
-	}*/
 
 	public Societe getSociete() {
 		if (societe == null)
