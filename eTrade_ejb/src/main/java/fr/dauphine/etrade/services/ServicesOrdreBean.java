@@ -33,8 +33,10 @@ public class ServicesOrdreBean implements ServicesOrdre {
     }
 	ordre = Connexion.getInstance().insert(ordre);
 	/* Execution en continue*/
-	ordre = getOrdreById(ordre.getIdOrder());
-	executerOrdre(ordre);
+	if(!ordre.getTypeOrdre().getIdTypeOrder().equals((long)3)){
+		ordre = getOrdreById(ordre.getIdOrder());
+		executerOrdre(ordre);
+	}	
     return ordre;
   }
 
@@ -95,9 +97,9 @@ public class ServicesOrdreBean implements ServicesOrdre {
   public double getLastPrixByProduct(long idProduit) {
     String query = "SELECT t FROM Transaction t LEFT JOIN FETCH t.ordreByIdOrdreAchat o "
         + "LEFT JOIN FETCH o.produit p "
-        + "WHERE p.idProduit = ? ORDER BY t.date DESC";
-    List<Transaction> result = Connexion.getInstance().queryListResult(query, Transaction.class, idProduit);
-    return result.get(0).getPrix().doubleValue();
+        + "WHERE p.idProduit = ? ORDER BY t.date DESC LIMIT 1";
+    Transaction result = Connexion.getInstance().querySingleResult(query, Transaction.class, idProduit);
+    return result.getPrix().doubleValue();
   }
   @Override
   public List<Ordre> ordresVenteParProduitId(long idProduit) {
@@ -277,47 +279,59 @@ public class ServicesOrdreBean implements ServicesOrdre {
 	  } else if(direction ==2){
 		  contreparties = ordresAchatParProduitId(o.getProduit().getIdProduit());
 	  }
-	  if(contreparties.get(0).getTypeOrdre().getIdTypeOrder().equals((long)1)){
-		  double prix = getLastPrixByProduct(contreparties.get(0).getProduit().getIdProduit().longValue());
-		  for(Ordre contrepartie: contreparties){			  
-			  if(contrepartie.getTypeOrdre().getIdTypeOrder().equals((long)1)) contrepartie.setPrix(BigDecimal.valueOf(prix));
-		  }
-	  }
 	  
-	  int i = 0;
-	  double prix;
-	  if(o.getPrix()==null){
-		  prix=0;
-	  } else {
-		  prix = o.getPrix().doubleValue();
-	  }
-	  while (i<contreparties.size() && quantite>0 && (
-			  (direction==1 && contreparties.get(i).getPrix().compareTo(BigDecimal.valueOf(prix)) < 0)
-			  || (direction==2 && contreparties.get(i).getPrix().compareTo(BigDecimal.valueOf(prix)) > 0) 
-			  || o.getTypeOrdre().getIdTypeOrder().equals((long)1))){
-		  if(o.getTypeOrdre().getIdTypeOrder().equals((long)1) 
-				  || (direction==1 && contreparties.get(i).getPrix().compareTo(BigDecimal.valueOf(prix)) > 0) 
-				  || direction==2 && contreparties.get(i).getPrix().compareTo(BigDecimal.valueOf(prix)) < 0){
-			  o.setQuantiteNonExecute(quantite - Math.min(quantite, contreparties.get(i).getQuantiteNonExecute()));
-			  Transaction t = creerTransaction(o, contreparties.get(i), contreparties.get(i).getPrix().doubleValue(), 
-					  Math.min(quantite, contreparties.get(i).getQuantiteNonExecute()));
-			  transactions.add(t);			  
-			  contreparties.get(i).setQuantiteNonExecute(contreparties.get(i).getQuantiteNonExecute() - Math.min(quantite, contreparties.get(i).getQuantiteNonExecute()));
-			  quantite = o.getQuantiteNonExecute();
-			  if(contreparties.get(i).getQuantiteNonExecute()==0){
-				  contreparties.get(i).setStatusOrdre(statusOrdreDone);
+	  if(contreparties.size()!=0){
+		  if(contreparties.get(0).getTypeOrdre().getIdTypeOrder().equals((long)1)){
+			  double prix =0;
+			  try{
+				  prix = getLastPrixByProduct(contreparties.get(0).getProduit().getIdProduit().longValue());
+			  } catch(Exception e) {
+				  prix = 0;
 			  }
-			  ordresAModifier.add(contreparties.get(i));
+			  
+			  for(Ordre contrepartie: contreparties){			  
+				  if(contrepartie.getTypeOrdre().getIdTypeOrder().equals((long)1)) contrepartie.setPrix(BigDecimal.valueOf(prix));
+			  }
 		  }
-		  i++;
+	  
+	  
+		  
+		  int i = 0;
+		  double prix;
+		  if(o.getPrix()==null){
+			  prix=0;
+		  } else {
+			  prix = o.getPrix().doubleValue();
+		  }
+		  while (i<contreparties.size() && quantite>0 && (
+				  (direction==1 && contreparties.get(i).getPrix().compareTo(BigDecimal.valueOf(prix)) < 0)
+				  || (direction==2 && contreparties.get(i).getPrix().compareTo(BigDecimal.valueOf(prix)) > 0) 
+				  || o.getTypeOrdre().getIdTypeOrder().equals((long)1))){
+			  if(o.getTypeOrdre().getIdTypeOrder().equals((long)1) 
+					  || (direction==1 && contreparties.get(i).getPrix().compareTo(BigDecimal.valueOf(prix)) < 0) 
+					  || direction==2 && contreparties.get(i).getPrix().compareTo(BigDecimal.valueOf(prix)) > 0){
+				  o.setQuantiteNonExecute(quantite - Math.min(quantite, contreparties.get(i).getQuantiteNonExecute()));
+				  Transaction t = creerTransaction(o, contreparties.get(i), contreparties.get(i).getPrix().doubleValue(), 
+						  Math.min(quantite, contreparties.get(i).getQuantiteNonExecute()));
+				  transactions.add(t);			  
+				  contreparties.get(i).setQuantiteNonExecute(contreparties.get(i).getQuantiteNonExecute() - Math.min(quantite, contreparties.get(i).getQuantiteNonExecute()));
+				  quantite = o.getQuantiteNonExecute();
+				  if(contreparties.get(i).getQuantiteNonExecute()==0){
+					  contreparties.get(i).setStatusOrdre(statusOrdreDone);
+				  }
+				  ordresAModifier.add(contreparties.get(i));
+			  }
+			  i++;
+		  }
+		  if(o.getQuantiteNonExecute()==0){
+			  o.setStatusOrdre(statusOrdreDone);
+		  }
+		  Connexion.getInstance().update(o);
+		  for(Ordre ordre: ordresAModifier) Connexion.getInstance().update(ordre);
+		  for(Transaction transaction: transactions) Connexion.getInstance().insert(transaction);
+		  return transactions;
 	  }
-	  if(o.getQuantiteNonExecute()==0){
-		  o.setStatusOrdre(statusOrdreDone);
-	  }
-	  Connexion.getInstance().update(o);
-	  for(Ordre ordre: ordresAModifier) Connexion.getInstance().update(ordre);
-	  for(Transaction transaction: transactions) Connexion.getInstance().insert(transaction);
-	  return transactions;
+	  return null;
   }
 
   @Override

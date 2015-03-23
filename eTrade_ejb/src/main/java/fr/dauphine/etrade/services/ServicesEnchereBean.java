@@ -138,26 +138,30 @@ public class ServicesEnchereBean implements ServicesEnchere {
 		Enchere enchere = (Enchere) timer.getInfo();
 		
 		List<Enchere> encheres = encheresNotMainByOrdre(enchere.getOrdre().getIdOrder());
-		enchere = encheres.get(0);
-		StatusOrdre statusOrdreDone = Connexion.getInstance().find(StatusOrdre.class, (long)1);
-		Transaction transaction=new Transaction();
-		Ordre ordreMain = enchere.getOrdre();
-		ordreMain.setQuantiteNonExecute(0);
-		ordreMain.setStatusOrdre(statusOrdreDone);
-		Ordre ordreEnchere = Connexion.getInstance().update(ordreMain);
-		transaction.setOrdreByIdOrderAchat(ordreMain);
-		ordreEnchere.setPortefeuille(enchere.getPortefeuille());
-		if(ordreMain.getDirectionOrdre().getIdDirectionOrdre().equals((long)1)){
-			ordreEnchere.setDirectionOrdre(Connexion.getInstance().find(DirectionOrdre.class, (long)2));
+		if(encheres.size()!=0){
+			enchere = encheres.get(0);
+			StatusOrdre statusOrdreDone = Connexion.getInstance().find(StatusOrdre.class, (long)1);
+			Transaction transaction=new Transaction();
+			Ordre ordreMain = enchere.getOrdre();
+			ordreMain.setQuantiteNonExecute(0);
+			ordreMain.setStatusOrdre(statusOrdreDone);
+			Ordre ordreEnchere = Connexion.getInstance().update(ordreMain);
+			transaction.setOrdreByIdOrderAchat(ordreMain);
+			ordreEnchere.setPortefeuille(enchere.getPortefeuille());
+			if(ordreMain.getDirectionOrdre().getIdDirectionOrdre().equals((long)1)){
+				ordreEnchere.setDirectionOrdre(Connexion.getInstance().find(DirectionOrdre.class, (long)2));
+			} else {
+				ordreEnchere.setDirectionOrdre(Connexion.getInstance().find(DirectionOrdre.class, (long)1));
+			}
+			ordreEnchere.setIdOrder(null);
+			ordreEnchere = Connexion.getInstance().insert(ordreEnchere);	  
+			transaction.setOrdreByIdOrderVente(ordreEnchere);
+			transaction.setPrix(enchere.getPrix());
+			transaction.setQuantite(enchere.getOrdre().getQuantite());
+			Connexion.getInstance().insert(transaction);
 		} else {
-			ordreEnchere.setDirectionOrdre(Connexion.getInstance().find(DirectionOrdre.class, (long)1));
+			Connexion.getInstance().delete(enchere);
 		}
-		ordreEnchere.setIdOrder(null);
-		ordreEnchere = Connexion.getInstance().insert(ordreEnchere);	  
-		transaction.setOrdreByIdOrderVente(ordreEnchere);
-		transaction.setPrix(enchere.getPrix());
-		transaction.setQuantite(enchere.getOrdre().getQuantite());
-		Connexion.getInstance().insert(transaction);
 	}
 
 

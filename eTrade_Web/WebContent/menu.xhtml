@@ -44,6 +44,9 @@
 		<h:link
 			rendered="#{sessionUserManagedBean.investisseur and sessionUserManagedBean.utilisateur.validRole}"
 			outcome="passer_ordre" value="Passer Ordre" width="120px" />
+		<h:link
+			rendered="#{sessionUserManagedBean.investisseur and sessionUserManagedBean.utilisateur.validRole}"
+			outcome="encheres" value="Encheres" width="120px" />
 
 		<a href="/eTrade_Web/logout">Se déconnecter</a>
 	</h:panelGrid>
