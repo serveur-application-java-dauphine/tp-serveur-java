@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import javax.ejb.Remote;
+import javax.ejb.Schedule;
+import javax.ejb.Schedules;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
@@ -125,7 +127,7 @@ public class ServicesOrdreBean implements ServicesOrdre {
    * ex�cut�s � l'ouverture.
    */
   @Override
-  // @Schedule(hour="00", minute="10")
+  @Schedules( value = { @Schedule(hour="17", minute="30"),@Schedule(hour="9", minute="00") })
   public void fixingAll() {
     List<Produit> produits = Connexion.getInstance().getAll(Produit.class);
     for (Produit p : produits) {
