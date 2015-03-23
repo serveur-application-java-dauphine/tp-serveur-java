@@ -29,4 +29,5 @@ public interface ServicesOrdre {
 	List<Ordre> allPendingOrdres();
 	List<Ordre> allPendingOrdresSociete(long idSociete);
 	List<Transaction> allDoneOrdresSociete(long idSociete);
+	Ordre getOrdreById(long idOrdre);
 }

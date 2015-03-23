@@ -36,7 +36,10 @@ public class ServicesOrdreBean implements ServicesOrdre {
     if(ordre.getStatusOrdre().getIdStatusOrder()==null){
     	ordre.setStatusOrdre(getStatusOrdreByLibelle("Pending"));
     }
-	Connexion.getInstance().insert(ordre);
+	ordre = Connexion.getInstance().insert(ordre);
+	/* Execution en continue
+	ordre = getOrdreById(ordre.getIdOrder());
+	executerOrdre(ordre);*/
     return ordre;
   }
 
@@ -87,7 +90,16 @@ public class ServicesOrdreBean implements ServicesOrdre {
     return newResult;
 
   }
-
+  @Override
+  public Ordre getOrdreById(long idOrdre) {
+    String query = "SELECT o FROM Ordre o "
+        + "LEFT JOIN FETCH o.typeOrdre t LEFT JOIN FETCH o.directionOrdre do "
+        + "LEFT JOIN FETCH o.statusOrdre so LEFT JOIN FETCH o.portefeuille "
+        + "LEFT JOIN FETCH o.produit p LEFT JOIN FETCH p.societe LEFT JOIN FETCH p.typeProduit "
+        + "WHERE o.idOrder=?";
+    Ordre result = Connexion.getInstance().querySingleResult(query, Ordre.class, idOrdre);
+    return result;
+  }
   @Override
   public List<Ordre> ordresVenteParProduitId(long idProduit) {
     String query = "SELECT o FROM Ordre o "
@@ -184,7 +196,7 @@ public class ServicesOrdreBean implements ServicesOrdre {
       for (Ordre o : allOrdres) {
         Transaction t = new Transaction();
         if (o.getTypeOrdre().getIdTypeOrder().longValue() == 1) {
-          t = creerTransaction(o, prix, o.getQuantiteNonExecute());
+          t = creerTransaction(o, o, prix, o.getQuantiteNonExecute());
           o = modifierOrdre(o, 0, true, statusOrdreDone);
           transactionsAPasserList.add(t);
           ordresModifies.add(o);
@@ -193,7 +205,7 @@ public class ServicesOrdreBean implements ServicesOrdre {
               .equals((long) 1)) // Pour les ordres Achat
               || (o.getPrix().doubleValue() < prix && o.getDirectionOrdre().getIdDirectionOrdre()
                   .equals((long) 2))) { // Pour les ordres Vente
-            t = creerTransaction(o, prix, o.getQuantiteNonExecute());
+            t = creerTransaction(o,o, prix, o.getQuantiteNonExecute());
             o = modifierOrdre(o, 0, true, statusOrdreDone);
             transactionsAPasserList.add(t);
             ordresModifies.add(o);
@@ -203,13 +215,13 @@ public class ServicesOrdreBean implements ServicesOrdre {
                 || (max == quantiteCumuleVente[position] && o.getDirectionOrdre()
                     .getIdDirectionOrdre().equals((long) 2)) || difference == 0) { // Pour les
               // ordres Vente
-              t = creerTransaction(o, prix, o.getQuantiteNonExecute());
+              t = creerTransaction(o,o, prix, o.getQuantiteNonExecute());
               o = modifierOrdre(o, 0, true, statusOrdreDone);
             } else if ((max == quantiteCumuleVente[position] && o.getDirectionOrdre()
                 .getIdDirectionOrdre().equals((long) 1))
                 || (max == quantiteCumuleAchat[position] && o.getDirectionOrdre()
                     .getIdDirectionOrdre().equals((long) 2))) { // Pour les ordres Achat
-              t = creerTransaction(o, prix,
+              t = creerTransaction(o,o, prix,
                   o.getQuantiteNonExecute() - Math.min(o.getQuantiteNonExecute(), difference));
               o.setQuantiteNonExecute(Math.min(o.getQuantiteNonExecute(), difference));
               difference = Math.max(0, difference - o.getQuantiteNonExecute());
@@ -230,11 +242,17 @@ public class ServicesOrdreBean implements ServicesOrdre {
     }
   }
 
-  private Transaction creerTransaction(Ordre o, double prix, int quantite) {
+  private Transaction creerTransaction(Ordre ordreMain, Ordre ordreContrepart, double prix, int quantite) {
     Transaction t = new Transaction();
     t.setQuantite(quantite);
-    t.setOrdreByIdOrderAchat(o);
-    t.setOrdreByIdOrderVente(o);
+    if(ordreMain.getDirectionOrdre().getIdDirectionOrdre().equals((long)1)){
+    	t.setOrdreByIdOrderAchat(ordreMain);
+        t.setOrdreByIdOrderVente(ordreContrepart);
+    } else {
+    	t.setOrdreByIdOrderAchat(ordreContrepart);
+        t.setOrdreByIdOrderVente(ordreMain);
+    }
+    
     t.setPrix(BigDecimal.valueOf(prix));
     return t;
   }
@@ -246,6 +264,58 @@ public class ServicesOrdreBean implements ServicesOrdre {
     }
     o.setQuantiteNonExecute(quantite);
     return o;
+  }
+  
+  private List<Transaction> executerOrdre(Ordre o){
+	  List<Ordre> contreparties = new ArrayList<Ordre>();
+	  List<Transaction> transactions = new ArrayList<Transaction>();
+	  List<Ordre> ordresAModifier = new ArrayList<Ordre>();
+	  StatusOrdre statusOrdreDone = Connexion.getInstance().find(StatusOrdre.class, (long)1);
+	  int quantite = o.getQuantiteNonExecute();
+	  int direction = o.getDirectionOrdre().getIdDirectionOrdre().intValue();
+	  if(direction == 1){
+		  contreparties = ordresVenteParProduitId(o.getProduit().getIdProduit());
+	  } else if(direction ==2){
+		  contreparties = ordresAchatParProduitId(o.getProduit().getIdProduit());
+	  }
+	  for(Ordre contrepartie: contreparties){
+		  
+		  if(contrepartie.getTypeOrdre().getIdTypeOrder().equals((long)1)) contrepartie.setPrix(BigDecimal.valueOf(0.0));
+	  }
+	  int i = 0;
+	  double prix;
+	  if(o.getPrix()==null){
+		  prix=0;
+	  } else {
+		  prix = o.getPrix().doubleValue();
+	  }
+	  while (i<contreparties.size() && quantite>0 && (
+			  (direction==1 && contreparties.get(i).getPrix().compareTo(BigDecimal.valueOf(prix)) < 0)
+			  || (direction==2 && contreparties.get(i).getPrix().compareTo(BigDecimal.valueOf(prix)) > 0) 
+			  || o.getTypeOrdre().getIdTypeOrder().equals((long)1))){
+		  if(o.getTypeOrdre().getIdTypeOrder().equals((long)1) 
+				  || (direction==1 && contreparties.get(i).getPrix().compareTo(BigDecimal.valueOf(prix)) > 0) 
+				  || direction==2 && contreparties.get(i).getPrix().compareTo(BigDecimal.valueOf(prix)) < 0){
+			  o.setQuantiteNonExecute(quantite - Math.min(quantite, contreparties.get(i).getQuantiteNonExecute()));
+			  Transaction t = creerTransaction(o, contreparties.get(i), contreparties.get(i).getPrix().doubleValue(), 
+					  Math.min(quantite, contreparties.get(i).getQuantiteNonExecute()));
+			  transactions.add(t);			  
+			  contreparties.get(i).setQuantiteNonExecute(contreparties.get(i).getQuantiteNonExecute() - Math.min(quantite, contreparties.get(i).getQuantiteNonExecute()));
+			  quantite = o.getQuantiteNonExecute();
+			  if(contreparties.get(i).getQuantiteNonExecute()==0){
+				  contreparties.get(i).setStatusOrdre(statusOrdreDone);
+			  }
+			  ordresAModifier.add(contreparties.get(i));
+		  }
+		  i++;
+	  }
+	  if(o.getQuantiteNonExecute()==0){
+		  o.setStatusOrdre(statusOrdreDone);
+	  }
+	  Connexion.getInstance().update(o);
+	  for(Ordre ordre: ordresAModifier) Connexion.getInstance().update(ordre);
+	  for(Transaction transaction: transactions) Connexion.getInstance().insert(transaction);
+	  return transactions;
   }
 
   @Override
