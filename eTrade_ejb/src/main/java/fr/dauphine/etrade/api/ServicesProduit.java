@@ -15,5 +15,7 @@ public interface ServicesProduit {
   Produit delProduit(Produit produit);
 
   Produit getProduitById(long idProduit);
+  
+  List<Produit> getActifs(long idPortefeuille);
 
 }

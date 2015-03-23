@@ -16,19 +16,22 @@
 <h:form>
 	<table>
 	<tr>
-		<td><h:outputLabel for="firstname">Prénom </h:outputLabel></td>
+		<td><h:outputLabel for="firstname">Prénom <span
+			class="requis">*</span></h:outputLabel></td>
 		<td><h:inputText id="firstname"
 		value="#{sessionUserManagedBean.utilisateur.firstname}" style="width: 150px;" 
 		required="true" size="20" maxlength="60" /></td>
 	</tr>
 	<tr>
-		<td><h:outputLabel for="lastname">Nom </h:outputLabel></td>
+		<td><h:outputLabel for="lastname">Nom <span
+			class="requis">*</span></h:outputLabel></td>
 		<td><h:inputText id="lastname" style="width: 150px;" 
 		value="#{sessionUserManagedBean.utilisateur.lastname}" required="true"
 		size="20" maxlength="60" /></td>
 	</tr>
 	<tr>
-		<td><h:outputLabel for="mail">Adresse mail </h:outputLabel></td>
+		<td><h:outputLabel for="mail">Adresse mail <span
+			class="requis">*</span></h:outputLabel></td>
 		<td><h:inputText id="mail"
 		value="#{sessionUserManagedBean.utilisateur.email}" required="true" style="width: 150px;" 
 		size="20" maxlength="60" /></td>

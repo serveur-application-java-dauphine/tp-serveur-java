@@ -23,10 +23,10 @@ public class SessionTransactionBancaireManagedBean implements Serializable {
 	private ServicesTransactionBancaire stb;
 
 	@ManagedProperty(value = "#{sessionUserManagedBean}")
-	private SessionUserManagedBean smb;
+	private SessionUserManagedBean sumb;
 	
-	public void setSmb(SessionUserManagedBean smb){
-		this.smb=smb;
+	public void setSumb(SessionUserManagedBean sumb){
+		this.sumb=sumb;
 	}
 
 	/**
@@ -34,7 +34,7 @@ public class SessionTransactionBancaireManagedBean implements Serializable {
 	 */
 	public List<TransactionBancaire> getTransactionsBancaire() {
 		if (transactionsBancaire==null)
-			transactionsBancaire=stb.get(smb.getUtilisateur().getPortefeuille().getIdPortefeuille());
+			transactionsBancaire=stb.get(sumb.getUtilisateur().getPortefeuille().getIdPortefeuille());
 		return transactionsBancaire;
 	}
 

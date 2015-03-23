@@ -95,7 +95,7 @@
 				<h:outputText value="#{p.volatilite}" />
 			</h:column>
 		</h:dataTable>
-		<h:link value="Ajouter un produit" outcome="produit-creer"/>
+		<h:link value="Ajouter un produit" outcome="produit-creer" rendered="#{sessionUserManagedBean.membreSociete and sessionUserManagedBean.utilisateur.societe.idSociete eq param.s}"/>
 	</h:panelGrid>
 
 	<!-- Section investisseur -->

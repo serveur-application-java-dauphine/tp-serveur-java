@@ -11,13 +11,10 @@ import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 
 import fr.dauphine.etrade.api.ServicesOrdre;
-import fr.dauphine.etrade.model.DirectionOrdre;
 import fr.dauphine.etrade.model.Ordre;
 import fr.dauphine.etrade.model.Produit;
 import fr.dauphine.etrade.model.StatusOrdre;
 import fr.dauphine.etrade.model.Transaction;
-import fr.dauphine.etrade.model.TypeOrdre;
-import fr.dauphine.etrade.model.Utilisateur;
 import fr.dauphine.etrade.persit.Connexion;
 
 @Remote(ServicesOrdre.class)
@@ -26,10 +23,6 @@ import fr.dauphine.etrade.persit.Connexion;
 public class ServicesOrdreBean implements ServicesOrdre {
 
   public static final Logger LOG = Logger.getLogger(ServicesOrdreBean.class.getName());
-
-  public Utilisateur getUtilisateurById(int id) {
-    return Connexion.getInstance().find(Utilisateur.class, id);
-  }
 
   @Override
   public Ordre addOrdre(Ordre ordre) {
@@ -50,11 +43,6 @@ public class ServicesOrdreBean implements ServicesOrdre {
   public StatusOrdre getStatusOrdreByLibelle(String libelle) {
     String query = "FROM StatusOrdre so WHERE libelle=?";
     return Connexion.getInstance().querySingleResult(query, StatusOrdre.class, libelle);
-  }
-
-  @Override
-  public TypeOrdre getTypeOrdreById(long idTypeOrdre) {
-    return Connexion.getInstance().find(TypeOrdre.class, idTypeOrdre);
   }
 
   /**
@@ -267,21 +255,6 @@ public class ServicesOrdreBean implements ServicesOrdre {
         + "WHERE o.statusOrdre.idStatusOrder = ?1 AND o.portefeuille.idPortefeuille=?2";
     return Connexion.getInstance().queryListResult(query, Transaction.class, (long) 1,
         idPortefeuille);
-  }
-
-  @Override
-  public List<DirectionOrdre> getPossibleDirectionOrdre() {
-    return Connexion.getInstance().getAll(DirectionOrdre.class);
-  }
-
-  @Override
-  public List<TypeOrdre> getAllTypeOrdre() {
-    return Connexion.getInstance().getAll(TypeOrdre.class);
-  }
-
-  public List<TypeOrdre> getAllTypeOrdreSansEnchere() {
-    String query = "FROM TypeOrdre tp WHERE tp.idTypeOrdre IS NOT 3";
-    return Connexion.getInstance().queryListResult(query, TypeOrdre.class);
   }
 
   @Override
