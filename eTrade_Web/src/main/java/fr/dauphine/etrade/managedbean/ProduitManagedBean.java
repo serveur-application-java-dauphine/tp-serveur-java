@@ -2,8 +2,6 @@ package fr.dauphine.etrade.managedbean;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Date;
-import java.util.List;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -23,7 +21,7 @@ import fr.dauphine.etrade.model.TypeProduit;
 
 @ManagedBean
 @RequestScoped
-public class ProduitManagedBean implements Serializable{
+public class ProduitManagedBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -32,14 +30,20 @@ public class ProduitManagedBean implements Serializable{
 	@ManagedProperty(value = "#{sessionUserManagedBean}")
 	private SessionUserManagedBean sumb;
 
+	@ManagedProperty(value = "#{applicationManagedBean}")
+	private ApplicationManagedBean amb;
+
 	public void setSumb(SessionUserManagedBean sumb) {
 		this.sumb = sumb;
 	}
 
+	public void setAmb(ApplicationManagedBean amb) {
+		this.amb = amb;
+	}
 
 	@EJB
 	private ServicesProduit sp;
-	
+
 	@EJB
 	private ServicesTypeProduit stp;
 
@@ -67,14 +71,12 @@ public class ProduitManagedBean implements Serializable{
 		if (produit.getTypeProduit().getIdTypeProduit().equals(3L)) {
 			produit.setCoupon(new BigDecimal(request
 					.getParameter("nouveauProduit:coupon")));
-			// TODO : changer la méthode appelée ici car on a des problèmes :
-			// 15-12-2015 => 11/03/2016 (rentré le 22/03/2015)
-			produit.setMaturite(new Date(request
+			produit.setMaturite(amb.getDateString(request
 					.getParameter("nouveauProduit:dateMaturite")));
 		} else if (produit.getTypeProduit().getIdTypeProduit().equals(2L)) {
 			produit.setStrike(new BigDecimal(request
 					.getParameter("nouveauProduit:strike")));
-			produit.setMaturite(new Date(request
+			produit.setMaturite(amb.getDateString(request
 					.getParameter("nouveauProduit:dateMaturite")));
 		}
 
@@ -89,13 +91,13 @@ public class ProduitManagedBean implements Serializable{
 		sp.delProduit(p);
 	}
 
-	public Produit get(long idProduit){
+	public Produit get(long idProduit) {
 		return sp.getProduitById(idProduit);
 	}
 
 	public void changeTypeProduitListener(ValueChangeEvent event) {
-		produit.setTypeProduit(stp.get(Long.parseLong(event
-				.getNewValue().toString())));
+		produit.setTypeProduit(stp.get(Long.parseLong(event.getNewValue()
+				.toString())));
 	}
 
 	public Produit getProduit() {
