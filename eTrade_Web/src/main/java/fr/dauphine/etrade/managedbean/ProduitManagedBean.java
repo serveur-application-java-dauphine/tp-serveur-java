@@ -2,6 +2,7 @@ package fr.dauphine.etrade.managedbean;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -53,17 +54,7 @@ public class ProduitManagedBean implements Serializable {
 	public void createProduct() {
 		LOG.info("Ajout d'un nouveau produit en base.");
 
-		// // /!\ Ne changer les id de typeProduit que s'ils changent en base
-		// /!\
-		// if (produit.getTypeProduit().getIdTypeProduit().equals(3L)) {
-		// // Obligation
-		// produit.setCoupon(new BigDecimal(10));
-		// produit.setMaturite(new Date());
-		// } else if (produit.getTypeProduit().getIdTypeProduit().equals(2L)) {
-		// // Option
-		// produit.setStrike(new BigDecimal(10));
-		// produit.setMaturite(new Date());
-		// }
+		// /!\ Ne changer les id de typeProduit que s'ils changent en base
 
 		HttpServletRequest request = (HttpServletRequest) FacesContext
 				.getCurrentInstance().getExternalContext().getRequest();
@@ -91,13 +82,18 @@ public class ProduitManagedBean implements Serializable {
 		sp.delProduit(p);
 	}
 
-	public Produit get(long idProduit) {
-		return sp.getProduitById(idProduit);
+	public List<Produit> get(long idSociete) {
+		return sp.getListProductBySocieteId(idSociete);
 	}
 
 	public void changeTypeProduitListener(ValueChangeEvent event) {
-		produit.setTypeProduit(stp.get(Long.parseLong(event.getNewValue()
-				.toString())));
+		// On ne sélectionne rien.
+		if ((Long) event.getNewValue() == 0) {
+			produit.getTypeProduit().setIdTypeProduit(0L);
+		} else {
+			produit.setTypeProduit(stp.get(Long.parseLong(event.getNewValue()
+					.toString())));
+		}
 	}
 
 	public Produit getProduit() {
