@@ -75,12 +75,11 @@
 							rendered="#{not empty param.p}" /> 
 							<h:selectOneMenu
 							rendered="#{empty param.p}"
-							value="#{ordreManagedBean.ordre.produit.idProduit}" onchange="submit()"
-							valueChangeListener="#{ordreManagedBean.changeProduitListener}"
+							value="#{ordreManagedBean.ordre.produit.idProduit}"
 							style="width: 150px;">
 							<f:selectItem itemValue="0" itemLabel="Selectionez..." />
 							<f:selectItems
-								value="#{produitManagedBean.getProduitsParSocieteId(ordreManagedBean.ordre.produit.societe.idSociete)}"
+								value="#{sessionProduitManagedBean.produits}"
 								var="p" itemValue="#{p.idProduit}"
 								itemLabel="#{p.libelleProduit}" />
 						</h:selectOneMenu></td>

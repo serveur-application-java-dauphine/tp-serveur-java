@@ -98,13 +98,6 @@ public class ProduitManagedBean implements Serializable{
 				.getNewValue().toString())));
 	}
 
-	public List<Produit> getProduitsParSocieteId(long idSociete) {
-		if (idSociete == 0) {
-			return null;
-		} 
-		return sp.getListProductBySocieteId(idSociete);
-	}
-
 	public Produit getProduit() {
 		if (produit == null) {
 			produit = new Produit();

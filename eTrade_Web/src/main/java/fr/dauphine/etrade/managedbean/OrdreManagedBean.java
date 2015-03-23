@@ -34,8 +34,15 @@ public class OrdreManagedBean implements Serializable {
 	private Ordre ordre;
 	private int duree = 0;
 	private List<Produit> actifs;
+	
 
+	@ManagedProperty(value="#{sessionProduitManagedBean}")
+	private SessionProduitManagedBean spmb;
 
+	public void setSpmb(SessionProduitManagedBean spmb) {
+		this.spmb = spmb;
+	}
+	
 	@ManagedProperty(value="#{sessionUserManagedBean}")
 	private SessionUserManagedBean sumb;
 
@@ -157,17 +164,15 @@ public class OrdreManagedBean implements Serializable {
 	public void changeSocieteListener(ValueChangeEvent event) {
 		if ((Long)event.getNewValue()==0){
 			ordre.getProduit().setSociete(new Societe());
+			spmb.setProduits(null);
 			return;
 		}
 		ordre.getProduit().getSociete().setIdSociete((Long)event.getNewValue());
+		spmb.setProduits(sp.getListProductBySocieteId((Long)event.getNewValue()));
 	}
 	
 	public void changeProduitListener(ValueChangeEvent event) {
 		ordre.getProduit().setIdProduit((Long) event.getNewValue());
-	}
-
-	public void changeTypeOrdreListener(ValueChangeEvent event) {
-		ordre.getTypeOrdre().setIdTypeOrder((Long)event.getNewValue());
 	}
 
 	/**
