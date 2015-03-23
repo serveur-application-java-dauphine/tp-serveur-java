@@ -7,21 +7,19 @@ import java.util.logging.Logger;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
-import javax.faces.context.FacesContext;
 
 import fr.dauphine.etrade.api.ServicesSociete;
 import fr.dauphine.etrade.api.ServicesUtilisateur;
 import fr.dauphine.etrade.model.Actualite;
 import fr.dauphine.etrade.model.Societe;
-import fr.dauphine.etrade.model.Utilisateur;
 
 @ManagedBean
 @RequestScoped
 public class SocieteManagedBean implements Serializable {
 
 	private Societe societe;
-	private List<Actualite> actualites;
 	private List<Societe> societes;
 
 	/**
@@ -29,9 +27,6 @@ public class SocieteManagedBean implements Serializable {
 	 */
 	private String name;
 
-	/**
-	 * Default serialVersionUID
-	 */
 	private static final long serialVersionUID = 1L;
 
 	@EJB
@@ -40,11 +35,12 @@ public class SocieteManagedBean implements Serializable {
 	@EJB
 	private ServicesUtilisateur su;
 
-	FacesContext facesContext = FacesContext.getCurrentInstance();
-	@SuppressWarnings("deprecation")
-	Utilisateur utilisateur = (Utilisateur) facesContext.getApplication()
-			.createValueBinding("#{sessionUserManagedBean.utilisateur}")
-			.getValue(facesContext);
+	@ManagedProperty(value = "#{sessionUserManagedBean}")
+	private SessionUserManagedBean sumb;
+	
+	public void setSumb(SessionUserManagedBean sumb){
+		this.sumb=sumb;
+	}
 
 	private static Logger LOG = Logger.getLogger(SocieteManagedBean.class
 			.getName());
@@ -57,8 +53,8 @@ public class SocieteManagedBean implements Serializable {
 		LOG.info("Ajout d'une nouvelle société en base : " + societe.getName());
 		Societe s = ss.addSociete(societe);
 
-		utilisateur.setSociete(s);
-		su.updateUtilisateur(utilisateur);
+		sumb.getUtilisateur().setSociete(s);
+		su.updateUtilisateur(sumb.getUtilisateur());
 	}
 
 	// public void removeSociete(Societe s){
@@ -114,10 +110,10 @@ public class SocieteManagedBean implements Serializable {
 	 * 
 	 *         Can be called by "Administrateur" profile.
 	 */
-	public List<Actualite> getAllActualites() {
+	/*public List<Actualite> getAllActualites() {
 		actualites = ss.getAllActualites();
 		return actualites;
-	}
+	}*/
 
 	/**
 	 * 
@@ -138,14 +134,6 @@ public class SocieteManagedBean implements Serializable {
 	 */
 	public Actualite getActualite(int id) {
 		return ss.getActualite(id);
-	}
-
-	public List<Actualite> getActualites() {
-		return actualites;
-	}
-
-	public void setActualites(List<Actualite> actualites) {
-		this.actualites = actualites;
 	}
 
 	public Societe getSociete() {

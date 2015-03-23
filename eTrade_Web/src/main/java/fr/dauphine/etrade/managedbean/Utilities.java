@@ -39,15 +39,14 @@ public final class Utilities {
 	 */
 	public static boolean responseIsError(Response response) {
 		if (response instanceof ResponseError){
-			addMessage(FacesMessage.SEVERITY_FATAL, ((ResponseError)response).error, null);
+			addError(((ResponseError)response).error, null);
 			return true;
 		}
 		return false;
 	}
 	
 	public static void addError(String summary, String detail){
-		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, detail);
-		FacesContext.getCurrentInstance().addMessage(null, message);
+		addMessage(FacesMessage.SEVERITY_ERROR, summary, detail);
 	}
 	
 	

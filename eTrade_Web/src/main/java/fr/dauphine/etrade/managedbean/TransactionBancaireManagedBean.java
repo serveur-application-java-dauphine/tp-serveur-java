@@ -32,7 +32,7 @@ public class TransactionBancaireManagedBean implements Serializable {
 	private SessionTransactionBancaireManagedBean stbm;
 
 	@ManagedProperty(value = "#{sessionPortefeuilleManagedBean}")
-	private SessionPortefeuilleManagedBean spmb;
+	private OrdreManagedBean omb;
 
 	public void setSmb(SessionUserManagedBean smb) {
 		this.smb = smb;
@@ -42,8 +42,8 @@ public class TransactionBancaireManagedBean implements Serializable {
 		this.stbm = stbm;
 	}
 
-	public void setSpmb(SessionPortefeuilleManagedBean spmb) {
-		this.spmb = spmb;
+	public void setOmb(OrdreManagedBean omb) {
+		this.omb = omb;
 	}
 
 	public void add() {
@@ -54,7 +54,7 @@ public class TransactionBancaireManagedBean implements Serializable {
 			return;
 		}
 		if (typeTransaction == 2) {
-			if (transactionBancaire.getMontant().compareTo(spmb.total()) == 1) {
+			if (transactionBancaire.getMontant().compareTo(omb.totalPortefeuille()) == 1) {
 				Utilities
 						.addError(
 								"Vos fonds ne sont pas suffisants pour effectuer cette opération!",

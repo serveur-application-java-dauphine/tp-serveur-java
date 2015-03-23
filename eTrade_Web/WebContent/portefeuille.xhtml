@@ -14,53 +14,93 @@
 
 	<h1>Mon Portefeuille</h1>
 
-	<h:outputLabel value="Votre Compte n'a pas encore été validé par un administrateur" rendered="#{!sessionUserManagedBean.utilisateur.validRole}" />
-	
-	<h:panelGroup rendered="#{sessionUserManagedBean.utilisateur.validRole}">
-	<h3>Liquidité</h3>
-	<br />
-	Fonds disponible : #{sessionPortefeuilleManagedBean.total()}
-	<h:dataTable	
-						value="#{sessionTransactionBancaireManagedBean.transactionsBancaire}" var="tr"
-						styleClass="order-table" headerClass="order-table-header"
+	<h:outputLabel
+		value="Votre Compte n'a pas encore été validé par un administrateur"
+		rendered="#{sessionUserManagedBean.utilisateur.validRole==false}" />
+
+	<h:panelGroup
+		rendered="#{sessionUserManagedBean.utilisateur.validRole}">
+		<table width="100%">
+			<tr>
+				<td>
+					<h3>Liquidité</h3> Fonds disponible :
+					#{ordreManagedBean.totalPortefeuille()} <h:dataTable
+						value="#{sessionTransactionBancaireManagedBean.transactionsBancaire}"
+						var="tr" styleClass="order-table" headerClass="order-table-header"
 						rowClasses="order-table-odd-row,order-table-even-row">
-						
+
 						<h:column>
 							<f:facet name="header">Date</f:facet>    				
 			      #{applicationManagedBean.getStringDateTime(tr.date)}
 			   </h:column>
-			   <h:column>
-							<f:facet name="header">Montant</f:facet>    				
-			      <h:outputLabel value="#{tr.montant}" rendered="#{tr.montant gt 0}" style="color:green"/>
-			      <h:outputLabel value="#{tr.montant}" rendered="#{tr.montant lt 0}" style="color:red"/>
+						<h:column>
+							<f:facet name="header">Montant</f:facet>
+							<h:outputLabel value="#{tr.montant}"
+								rendered="#{tr.montant gt 0}" style="color:green" />
+							<h:outputLabel value="#{tr.montant}"
+								rendered="#{tr.montant lt 0}" style="color:red" />
+						</h:column>
+
+					</h:dataTable> <br /> <h:form>
+
+						<h:messages errorClass="errorMessage" infoClass="infoMessage"
+							layout="table" globalOnly="true" showDetail="false"
+							showSummary="true" />
+
+						<h:selectOneRadio
+							value="#{transactionBancaireManagedBean.typeTransaction}">
+							<f:selectItem itemValue="1" itemLabel="Crédit" />
+							<f:selectItem itemValue="2" itemLabel="Débit" />
+						</h:selectOneRadio>
+
+						<h:outputLabel for="montant">Montant <span
+								class="requis">*</span>
+						</h:outputLabel>
+						<h:inputText id="montant"
+							value="#{transactionBancaireManagedBean.transactionBancaire.montant}"
+							required="true" size="10" maxlength="15" />
+						<h:message id="montantMessage" for="montant" errorClass="erreur" />
+							&nbsp;
+						<h:commandButton type="submit"
+							action="#{transactionBancaireManagedBean.add()}" value="Valider" />
+
+					</h:form>
+				</td>
+				<td>
+					<h3>Actifs</h3> <h:dataTable
+						value="#{portefeuilleManagedBean.actifs}" var="ac"
+						styleClass="order-table" headerClass="order-table-header"
+						rowClasses="order-table-odd-row,order-table-even-row">
+
+						<h:column>
+							<f:facet name="header">Produit</f:facet>    				
+			      #{ac.libelleProduit}
 			   </h:column>
-						
-	</h:dataTable>
-	<br />
-	<h:form >
-	
-	<h:messages errorClass="errorMessage" infoClass="infoMessage" layout="table" globalOnly="true" showDetail="false" showSummary="true"/>
-		<table>
-		<tr>
-			<h:selectOneRadio  value="#{transactionBancaireManagedBean.typeTransaction}">
-			<f:selectItem  itemValue="1" itemLabel="Crédit"/>
-			<f:selectItem itemValue="2" itemLabel="Débit"/>
-			</h:selectOneRadio>
-		</tr>
-			<tr>
-				<td><h:outputLabel for="montant">Montant <span class="requis">*</span>
-					</h:outputLabel></td>
-				<td><h:inputText id="montant"
-					value="#{transactionBancaireManagedBean.transactionBancaire.montant}"
-					required="true" size="10" maxlength="15" />
-					<h:message id="montantMessage" for="montant" errorClass="erreur" /></td>
+						<h:column>
+							<f:facet name="header">Type Produit</f:facet>    				
+			      #{ac.typeProduit.libelle}
+			   </h:column>
+						<h:column>
+							<f:facet name="header">Société</f:facet>    				
+			      #{ac.societe.name}
+			   </h:column>
+						<h:column>
+							<f:facet name="header">Quantité</f:facet>    				
+			      #{ac.quantite}
+			   </h:column>
+						<h:column>
+							<f:facet name="header">Vendre</f:facet>
+							<h:commandButton action="passer_ordre.xhtml" value="Vendre">
+								<f:param name="s" value="#{ac.societe.idSociete}" />
+								<f:param name="p" value="#{ac.idProduit}" />
+								<f:param name="d" value="2" />
+							</h:commandButton>
+						</h:column>
+					</h:dataTable>
+				</td>
+
 			</tr>
-			<tr>
-			<h:commandButton type="submit" action="#{transactionBancaireManagedBean.add()}" value="Valider" />
-			</tr>
-	</table>
-	</h:form>
-	<h:link value="Voir le détail de mes ordres" outcome="ordres_investisseur"/>
+		</table>
 	</h:panelGroup>
 </h:body>
 </html>

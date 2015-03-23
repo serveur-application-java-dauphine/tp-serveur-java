@@ -9,7 +9,6 @@ import javax.ejb.TransactionManagementType;
 
 import fr.dauphine.etrade.api.ServicesProduit;
 import fr.dauphine.etrade.model.Produit;
-import fr.dauphine.etrade.model.TypeProduit;
 import fr.dauphine.etrade.persit.Connexion;
 import fr.dauphine.etrade.persit.Utilities;
 
@@ -44,5 +43,10 @@ public class ServicesProduitBean implements ServicesProduit {
         + "LEFT JOIN FETCH p.societe WHERE p.idProduit=?";
     return Connexion.getInstance().querySingleResult(query, Produit.class, idProduit);
   }
+
+@Override
+public List<Produit> getActifs(long idPortefeuille) {
+	return Connexion.getInstance().getAll(Produit.class);
+}
 
 }

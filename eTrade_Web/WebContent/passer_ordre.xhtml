@@ -6,8 +6,34 @@
 	xmlns:o="http://omnifaces.org/ui">
 <h:head>
 	<h:outputStylesheet library="css" name="table-style.css" />
+	<script>
+	function changeTypeOrdre(){
+		var typeOrdre = parseInt(document.getElementById("frm_ordre:typeOrdre").value);
+		switch (typeOrdre){
+		case 1:
+			document.getElementById("frm_ordre:duree").style.display="none";
+			document.getElementById("lbl_duree").style.display="none";
+			document.getElementById("lbl_prix").style.display="none";
+			document.getElementById("frm_ordre:prix").style.display="none";
+			break;
+		case 2:
+			document.getElementById("frm_ordre:duree").style.display="none";
+			document.getElementById("lbl_duree").style.display="none";
+			document.getElementById("lbl_prix").style.display="block";
+			document.getElementById("frm_ordre:prix").style.display="block";
+			break;
+		case 3:
+			document.getElementById("frm_ordre:duree").style.display="block";
+			document.getElementById("lbl_duree").style.display="block";
+			document.getElementById("lbl_prix").style.display="block";
+			document.getElementById("frm_ordre:prix").style.display="block";
+			break;
+
+		}
+	}
+	</script>
 </h:head>
-<h:body>
+<h:body onload="changeTypeOrdre()">
 	<ui:include src="/menu.xhtml" />
 
 	<h1>eTrade</h1>
@@ -15,106 +41,99 @@
 
 	<br />
 
-	<h:outputLabel value="Votre Compte n'a pas encore été validé par un administrateur" rendered="#{!sessionUserManagedBean.utilisateur.validRole}" />
-	<h:panelGroup rendered="#{sessionUserManagedBean.utilisateur.validRole}">
-	<o:form includeRequestParams="true">
+	<h:outputLabel
+		value="Votre Compte n'a pas encore été validé par un administrateur"
+		rendered="#{!sessionUserManagedBean.utilisateur.validRole}" />
+	<h:panelGroup
+		rendered="#{sessionUserManagedBean.utilisateur.validRole}">
 
-		<table>
-			<tr>
-				<td>Société *:</td>
-				<td><h:panelGroup rendered="#{not empty param.s}">
-
-						<h:outputText
-							value="#{societeManagedBean.getSociete(param.s).name}" />
-					</h:panelGroup> <h:panelGroup rendered="#{empty param.s}">
-						<h:selectOneMenu
+		<h:form id="frm_ordre">
+			<h:messages errorClass="errorMessage" infoClass="infoMessage"
+				layout="table" globalOnly="true" showDetail="false"
+				showSummary="true" />
+			<table>
+				<tr>
+					<td>Société *:</td>
+					<td><h:outputText
+							value="#{ordreManagedBean.ordre.produit.societe.name}"
+							rendered="#{not empty param.s}" /> <h:selectOneMenu
+							rendered="#{empty param.s}"
 							value="#{ordreManagedBean.ordre.produit.societe.idSociete}"
 							style="width: 150px;" onchange="submit()"
 							valueChangeListener="#{ordreManagedBean.changeSocieteListener}">
 							<f:selectItem itemValue="0" itemLabel="Selectionez..."></f:selectItem>
-							<f:selectItems value="#{ordreManagedBean.listSocietes}"
+							<f:selectItems value="#{societeManagedBean.listSocietes}"
 								var="societe" itemValue="#{societe.idSociete}"
 								itemLabel="#{societe.name}" />
-						</h:selectOneMenu>
-					</h:panelGroup></td>
-			</tr>
-			<tr>
-				<td>Produit *:</td>
-				<td><h:panelGroup rendered="#{not empty param.s}">
-						<h:selectOneMenu
+						</h:selectOneMenu></td>
+				</tr>
+				<tr>
+					<td>Produit *:</td>
+
+					<td><h:outputText
+							value="#{ordreManagedBean.ordre.produit.libelleProduit}"
+							rendered="#{not empty param.p}" /> <h:selectOneMenu
+							rendered="#{empty param.p}"
 							value="#{ordreManagedBean.ordre.produit.idProduit}"
+							valueChangeListener="#{ordreManagedBean.changeProduitListener}"
 							style="width: 150px;">
-							<f:selectItem itemValue="0" itemLabel="Selectionez..."></f:selectItem>
-							<f:selectItems
-								value="#{produitManagedBean.getProduitsParSocieteId(param.s)}"
-								var="produit" itemValue="#{produit.idProduit}"
-								itemLabel="#{produit.libelleProduit}" />
-						</h:selectOneMenu>
-					</h:panelGroup> <h:panelGroup rendered="#{empty param.s}">
-						<h:selectOneMenu
-							value="#{ordreManagedBean.ordre.produit.idProduit}"
-							style="width: 150px;">
-							<f:selectItem itemValue="0" itemLabel="Selectionez..."></f:selectItem>
+							<f:selectItem itemValue="0" itemLabel="Selectionez..." />
 							<f:selectItems
 								value="#{produitManagedBean.getProduitsParSocieteId(ordreManagedBean.ordre.produit.societe.idSociete)}"
-								var="produit" itemValue="#{produit.idProduit}"
-								itemLabel="#{produit.libelleProduit}" />
-						</h:selectOneMenu>
-					</h:panelGroup></td>
-			</tr>
-			<tr>
-				<td>Direction: *</td>
-				<td><h:selectOneRadio
-						value="#{ordreManagedBean.ordre.directionOrdre.idDirectionOrdre}"
-						style="width: 150px;">
-						<f:selectItems value="#{ordreManagedBean.listDirectionOrdres}"
-							var="direction" itemValue="#{direction.idDirectionOrdre}"
-							itemLabel="#{direction.libelle}" />
-					</h:selectOneRadio></td>
-			</tr>
-			<tr>
-				<td>Type de l'ordre: *</td>
-				<td><h:selectOneMenu id="typeOrdre"
-						value="#{ordreManagedBean.ordre.typeOrdre.idTypeOrder}"
-						style="width: 150px;" onchange="submit()"
-						valueChangeListener="#{ordreManagedBean.changeTypeOrdreListener}">
-						<f:selectItems value="#{ordreManagedBean.listTypeOrdres}"
-							var="type" itemValue="#{type.idTypeOrder}"
-							itemLabel="#{type.libelle}" />
-					</h:selectOneMenu></td>
-			</tr>
-			<tr>
-				<td>Quantité: *</td>
-				<td><h:inputText id="quantite"
-						value="#{ordreManagedBean.ordre.quantite}" required="true"
-						size="20" maxlength="60" style="width: 146px;">
-					</h:inputText></td>
-			</tr>
-			<tr>
-				<td><h:outputLabel for="prix"
-						rendered="#{ordreManagedBean.ordre.typeOrdre.idTypeOrder > 1 }">Prix<span
-							class="requis">*:</span>
-					</h:outputLabel></td>
-				<td><h:inputText id="prix"
-						rendered="#{ordreManagedBean.ordre.typeOrdre.idTypeOrder > 1 }"
-						value="#{ordreManagedBean.ordre.prix}" default="Le prix souhaité"
-						required="false" size="20" maxlength="60" style="width: 146px;" /></td>
-			</tr>
-			<tr>
-				<td><h:outputLabel for="duree"
-						rendered="#{ordreManagedBean.ordre.typeOrdre.idTypeOrder == 3 }">Duree (h)<span
-							class="requis">*:</span>
-					</h:outputLabel></td>
-				<td><h:inputText id="duree"
-						rendered="#{ordreManagedBean.ordre.typeOrdre.idTypeOrder == 3 }"
-						value="#{ordreManagedBean.duree}" default="Le prix souhaité"
-						required="false" size="20" maxlength="60" style="width: 146px;" /></td>
-			</tr>
-		</table>
-		<h:commandButton value="Passer l'ordre"
-			action="#{ordreManagedBean.passerOrdre()}" styleClass="sansLabel"
-			type="submit" />
-	</o:form>
+								var="p" itemValue="#{p.idProduit}"
+								itemLabel="#{p.libelleProduit}" />
+						</h:selectOneMenu></td>
+				</tr>
+				<tr>
+					<td>Direction: *</td>
+					<td><h:outputLabel value="Achat"
+							rendered="#{ordreManagedBean.containsActif(ordreManagedBean.ordre.produit.idProduit) == false}" />
+						<h:selectOneRadio
+							rendered="#{ordreManagedBean.containsActif(ordreManagedBean.ordre.produit.idProduit)==true}"
+							value="#{ordreManagedBean.ordre.directionOrdre.idDirectionOrdre}"
+							style="width: 150px;">
+							<f:selectItems
+								value="#{directionOrdreManagedBean.typesDirectionOrdre}"
+								var="direction" itemValue="#{direction.idDirectionOrdre}"
+								itemLabel="#{direction.libelle}" />
+						</h:selectOneRadio></td>
+				</tr>
+				<tr>
+					<td>Type de l'ordre: *</td>
+					<td><h:selectOneMenu id="typeOrdre"
+							value="#{ordreManagedBean.ordre.typeOrdre.idTypeOrder}"
+							style="width: 150px;" onchange="changeTypeOrdre()">
+							<f:selectItems value="#{typeOrdreManagedBean.typesOrdre}"
+								var="type" itemValue="#{type.idTypeOrder}"
+								itemLabel="#{type.libelle}" />
+						</h:selectOneMenu></td>
+				</tr>
+				<tr>
+					<td>Quantité: *</td>
+					<td><h:inputText id="quantite"
+							value="#{ordreManagedBean.ordre.quantite}" required="true"
+							size="20" maxlength="60" style="width: 146px;">
+						</h:inputText></td>
+				</tr>
+				<tr>
+					<td><span id="lbl_prix"
+								class="requis">Prix *:</span></td>
+					<td><h:inputText id="prix"
+							value="#{ordreManagedBean.ordre.prix}" default="Le prix souhaité"
+							required="false" size="20" maxlength="60" style="width: 146px;" /></td>
+				</tr>
+				<tr>
+					<td><span id="lbl_duree"
+								class="requis">Durée (h) *:</span></td>
+					<td><h:inputText id="duree"
+							value="#{ordreManagedBean.duree}" default="Le prix souhaité"
+							required="false" size="20" maxlength="60" style="width: 146px;" /></td>
+				</tr>
+			</table>
+			<h:commandButton value="Passer l'ordre"
+				action="#{ordreManagedBean.passerOrdre()}" styleClass="sansLabel"
+				type="submit" />
+		</h:form>
 	</h:panelGroup>
 </h:body>
 </html>

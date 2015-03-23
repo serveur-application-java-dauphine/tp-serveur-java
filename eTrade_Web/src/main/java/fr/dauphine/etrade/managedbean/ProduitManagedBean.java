@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Logger;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -14,6 +13,8 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.servlet.http.HttpServletRequest;
 
+import org.jboss.logging.Logger;
+
 import fr.dauphine.etrade.api.ServicesProduit;
 import fr.dauphine.etrade.api.ServicesTypeProduit;
 import fr.dauphine.etrade.model.Produit;
@@ -22,10 +23,11 @@ import fr.dauphine.etrade.model.TypeProduit;
 
 @ManagedBean
 @RequestScoped
-public class ProduitManagedBean implements Serializable {
+public class ProduitManagedBean implements Serializable{
+
+	private static final long serialVersionUID = 1L;
 
 	private Produit produit;
-	private List<Produit> produitsParSocieteId;
 
 	@ManagedProperty(value = "#{sessionUserManagedBean}")
 	private SessionUserManagedBean sumb;
@@ -34,10 +36,6 @@ public class ProduitManagedBean implements Serializable {
 		this.sumb = sumb;
 	}
 
-	/**
-	 * Default serialVersionUID
-	 */
-	private static final long serialVersionUID = 1L;
 
 	@EJB
 	private ServicesProduit sp;
@@ -91,38 +89,20 @@ public class ProduitManagedBean implements Serializable {
 		sp.delProduit(p);
 	}
 
-	public void valueChangeMethod(ValueChangeEvent event) {
-		// TODO
+	public Produit get(long idProduit){
+		return sp.getProduitById(idProduit);
 	}
 
-	/**
-	 * Changes the typeProduit in the ManagedBean after a modification of the
-	 * typeProduit by the user.
-	 * 
-	 * @param event
-	 *            the event following a modification of typeProduit by the user.
-	 */
 	public void changeTypeProduitListener(ValueChangeEvent event) {
 		produit.setTypeProduit(stp.get(Long.parseLong(event
 				.getNewValue().toString())));
 	}
 
-	/**
-	 * @return The list of the available products for societies
-	 * 
-	 *         Can be called by an administrator and an investor profile.
-	 */
 	public List<Produit> getProduitsParSocieteId(long idSociete) {
 		if (idSociete == 0) {
 			return null;
-		} else if (produitsParSocieteId == null) {
-			return sp.getListProductBySocieteId(idSociete);
-		}
-		return produitsParSocieteId;
-	}
-
-	public void setProduitsParSocieteId(List<Produit> produitsParSocieteId) {
-		this.produitsParSocieteId = produitsParSocieteId;
+		} 
+		return sp.getListProductBySocieteId(idSociete);
 	}
 
 	public Produit getProduit() {
