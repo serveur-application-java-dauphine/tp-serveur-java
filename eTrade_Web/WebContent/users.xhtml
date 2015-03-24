@@ -100,7 +100,7 @@
 			<h:column>
 				<f:facet name="header">Société affiliée</f:facet>
 				<h:selectOneMenu value="#{u.societe.idSociete}" required="true"
-					rendered="#{u.role.code == applicationManagedBean.ROLE_CODE_SOCIETE}">
+					rendered="#{u.role.code == applicationManagedBean.ROLE_CODE_SOCIETE and u.societe!=null}">
 					<f:selectItems value="#{societeManagedBean.societes}" var="societe"
 						itemValue="#{societe.idSociete}" itemLabel="#{societe.name}" />
 					<f:ajax listener="#{utilisateurManagedBean.modifier(u)}" />
