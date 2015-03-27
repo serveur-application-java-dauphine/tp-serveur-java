@@ -1,14 +1,23 @@
 package fr.hibernate.metier;
 
-import java.sql.Connection;
+import static javax.persistence.GenerationType.IDENTITY;
+
 import java.sql.Date;
 import java.util.ArrayList;
 
-import fr.hibernate.dao.DAOEnfant;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
+@Entity
 public class Enfant {
 	
-	private long id;
+	private long idEnfant;
 	private String nom;
 	private String prenom;
 	private Date ddn;
@@ -18,37 +27,27 @@ public class Enfant {
 	private String tel;
 	private String email;
 	private ArrayList<Commande> commandes = new ArrayList<Commande>();
-	private boolean created;
-	private static DAOEnfant dao;
-	/**
-	 * @return the created
-	 */
-	public boolean isCreated() {
-		return created;
-	}
-	/**
-	 * @param created the created to set
-	 */
-	public void setCreated(boolean created) {
-		this.created = created;
-	}
-	private boolean persist;
-	
+	//TODO: A voir pour private static DAOEnfant dao;
+
 	/**
 	 * @return the id
 	 */
-	public long getId() {
-		return id;
+	@Id
+	@GeneratedValue(strategy = IDENTITY)
+	@Column(name = "IdEnfant", unique = true, nullable = false)
+	public long getIdEnfant() {
+		return idEnfant;
 	}
 	/**
 	 * @param id the id to set
 	 */
-	public void setId(long id) {
-		this.id = id;
+	public void setIdEnfant(long idEnfant) {
+		this.idEnfant = idEnfant;
 	}
 	/**
 	 * @return the nom
 	 */
+	@Column(name = "Nom", unique = false, nullable = false)
 	public String getNom() {
 		return nom;
 	}
@@ -56,11 +55,12 @@ public class Enfant {
 	 * @param nom the nom to set
 	 */
 	public void setNom(String nom) {
-		this.nom = nom;persist=false;
+		this.nom = nom;
 	}
 	/**
 	 * @return the prenom
 	 */
+	@Column(name = "Prenom", unique = false, nullable = false)
 	public String getPrenom() {
 		return prenom;
 	}
@@ -68,11 +68,13 @@ public class Enfant {
 	 * @param prenom the prenom to set
 	 */
 	public void setPrenom(String prenom) {
-		this.prenom = prenom;persist=false;
+		this.prenom = prenom;
 	}
 	/**
 	 * @return the ddn
 	 */
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "Date_Naissance", nullable = false, length = 19)
 	public Date getDdn() {
 		return ddn;
 	}
@@ -80,11 +82,12 @@ public class Enfant {
 	 * @param ddn the ddn to set
 	 */
 	public void setDdn(Date ddn) {
-		this.ddn = ddn;persist=false;
+		this.ddn = ddn;
 	}
 	/**
 	 * @return the adresse
 	 */
+	@Column(name = "Adresse", unique = false, nullable = false)
 	public String getAdresse() {
 		return adresse;
 	}
@@ -92,11 +95,12 @@ public class Enfant {
 	 * @param adresse the adresse to set
 	 */
 	public void setAdresse(String adresse) {
-		this.adresse = adresse;persist=false;
+		this.adresse = adresse;
 	}
 	/**
 	 * @return the ville
 	 */
+	@Column(name = "Ville", unique = false, nullable = false)
 	public String getVille() {
 		return ville;
 	}
@@ -104,11 +108,12 @@ public class Enfant {
 	 * @param ville the ville to set
 	 */
 	public void setVille(String ville) {
-		this.ville = ville;persist=false;
+		this.ville = ville;
 	}
 	/**
 	 * @return the code_postal
 	 */
+	@Column(name = "Code_Postal", unique = false, nullable = false)
 	public String getCode_postal() {
 		return code_postal;
 	}
@@ -116,11 +121,12 @@ public class Enfant {
 	 * @param code_postal the code_postal to set
 	 */
 	public void setCode_postal(String code_postal) {
-		this.code_postal = code_postal;persist=false;
+		this.code_postal = code_postal;
 	}
 	/**
 	 * @return the tel
 	 */
+	@Column(name = "Telephone", unique = false, nullable = false)
 	public String getTel() {
 		return tel;
 	}
@@ -128,11 +134,12 @@ public class Enfant {
 	 * @param tel the tel to set
 	 */
 	public void setTel(String tel) {
-		this.tel = tel;persist=false;
+		this.tel = tel;
 	}
 	/**
 	 * @return the email
 	 */
+	@Column(name = "Email", unique = false, nullable = false)
 	public String getEmail() {
 		return email;
 	}
@@ -140,40 +147,25 @@ public class Enfant {
 	 * @param email the email to set
 	 */
 	public void setEmail(String email) {
-		this.email = email;persist=false;
+		this.email = email;
 	}
 	/**
 	 * @return the commandes
 	 */
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "Enfant")
 	public ArrayList<Commande> getCommandes() {
 		return commandes;
 	}
 
-	@Override
-	public String toString() {
-		return "id : "+id+", nom : "+nom+", prenom : "+prenom+", adresse : "+adresse+", code postal : "+code_postal
-				+", ville :"+ville+", date de naissance : "+ddn+", tel : "+tel+", email : "+email +", created : "+created+", persitant : "+persist;
-	}
 	/**
 	 * @param commandes the commandes to set
 	 */
 	public void setCommandes(ArrayList<Commande> commandes) {
 		this.commandes = commandes;
 	}
-	
-	/**
-	 * @return the persit
-	 */
-	public boolean isPersit() {
-		return persist;
-	}
-	/**
-	 * @param persit the persit to set
-	 */
-	public void setPersist(boolean persist) {
-		this.persist = persist;
-	}
-	public void persister(Connection c){
+
+	//TODO: Voir pour persister, synchroall, addcommande etc...
+	/*public void persister(Connection c){
 		if (persist)
 			return;
 		if (!created)
@@ -190,24 +182,29 @@ public class Enfant {
 		if(dao==null)
 			dao = new DAOEnfant();
 		return dao;
-	}
+	}*/
 	
 	@Override
 	public boolean equals(Object other) { 
     	if (this == other) return true; 
     	if ( !(other instanceof Enfant) ) return false;  
     	final Enfant obj = (Enfant) other; 
-    	   if ( obj.getId()!=getId() ) 
+    	   if ( obj.getIdEnfant()!=getIdEnfant() ) 
     	     return false;           
     	return true; 
     }
+	@Override
+	public String toString() {
+		return "id : "+idEnfant+", nom : "+nom+", prenom : "+prenom+", adresse : "+adresse+", code postal : "+code_postal
+				+", ville :"+ville+", date de naissance : "+ddn+", tel : "+tel+", email : "+email;
+	}
 	
-	public void synchroAll(Connection c){
+	/*public void synchroAll(Connection c){
 		getDao().retrieveById(this, c);
 	}
 	
 	public void addCommande(Commande c){
 		commandes.add(c);
-	}
+	}*/
 
 }

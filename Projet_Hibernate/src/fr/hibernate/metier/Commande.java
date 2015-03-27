@@ -1,9 +1,13 @@
 package fr.hibernate.metier;
 
+import static javax.persistence.GenerationType.IDENTITY;
+
 import java.sql.Connection;
 import java.sql.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 import fr.hibernate.dao.DAOCommande;
@@ -12,11 +16,7 @@ import fr.hibernate.dao.DAOCommande;
 public class Commande {
 	
 	
-	@Override
-	public String toString() {
-		return "[Enfant]= "+enfant+" [Jouet]= "+jouet+" // date début : "+date_debut+", date fin : "+date_fin;
-	}
-	private int id;
+	private int idCommande;
 	private Enfant enfant;
 	private Jouet jouet;
 	private Date date_debut;
@@ -35,6 +35,10 @@ public class Commande {
 	 */
 	public void setCreated(boolean created) {
 		this.created = created;
+	}
+	@Override
+	public String toString() {
+		return "[Enfant]= "+enfant+" [Jouet]= "+jouet+" // date dï¿½but : "+date_debut+", date fin : "+date_fin;
 	}
 	private boolean persist;
 	
@@ -138,14 +142,17 @@ public class Commande {
 	 * @return the id
 	 */
 	@Id
-	public int getId() {
-		return id;
+	@GeneratedValue(strategy = IDENTITY)
+	@Column(name = "IdCommande", unique = true, nullable = false)
+	public int getIdCommande() {
+		return idCommande;
 	}
 	/**
 	 * @param id the id to set
 	 */
-	public void setId(int id) {
-		this.id = id;
+	
+	public void setIdCommanded(int idCommande) {
+		this.idCommande = idCommande;
 	}
 	
 }

@@ -3,15 +3,15 @@ package fr.hibernate.metier;
 import java.sql.Connection;
 import java.util.ArrayList;
 
+import javax.persistence.Entity;
+
 import fr.hibernate.dao.DAOJouet;
 
+@Entity
 public class Jouet {
 
-	@Override
-	public String toString() {
-		return " id : "+id+", nom : "+nom+", description : "+description+", created : "+created+", persit : "+persist;
-	}
-	private long id;
+	
+	private long idJouet;
 	private String nom;
 	private String description;
 	private boolean created;
@@ -33,14 +33,14 @@ public class Jouet {
 	/**
 	 * @return the id
 	 */
-	public long getId() {
-		return id;
+	public long getIdJouet() {
+		return idJouet;
 	}
 	/**
 	 * @param id the id to set
 	 */
-	public void setId(long id) {
-		this.id = id;
+	public void setIdJouet(long idJouet) {
+		this.idJouet = idJouet;
 	}
 	/**
 	 * @return the nom
@@ -106,11 +106,14 @@ public class Jouet {
     	if (this == other) return true; 
     	if ( !(other instanceof Jouet) ) return false;  
     	final Jouet obj = (Jouet) other; 
-    	   if ( obj.getId()!=getId() ) 
+    	   if ( obj.getIdJouet()!=getIdJouet() ) 
     	     return false;           
     	return true; 
     }
-	
+	@Override
+	public String toString() {
+		return " id : "+idJouet+", nom : "+nom+", description : "+description+", created : "+created+", persit : "+persist;
+	}
 	public void addCommande(Commande c){
 		commandes.add(c);
 	}
