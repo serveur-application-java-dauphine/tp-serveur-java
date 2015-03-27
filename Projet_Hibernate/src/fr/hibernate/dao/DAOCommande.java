@@ -1,4 +1,4 @@
-package fr.tppostgres.dao;
+package fr.hibernate.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -6,9 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import fr.tppostgres.metier.Commande;
-import fr.tppostgres.metier.Enfant;
-import fr.tppostgres.metier.Jouet;
+import fr.hibernate.metier.Commande;
+import fr.hibernate.metier.Enfant;
+import fr.hibernate.metier.Jouet;
 
 public class DAOCommande {
 	
