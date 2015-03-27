@@ -5,7 +5,7 @@ import java.util.List;
 import fr.hibernate.api.Connexion;
 
 public final class DAOGenerique {
-	
+
 	public final static int insert (Object object){
 		try {
 			Connexion.getInstance().insert(object);

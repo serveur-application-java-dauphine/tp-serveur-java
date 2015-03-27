@@ -32,29 +32,29 @@ public class Main {
             e.setDdn(new Date(cal.getTime().getTime()));
             e.setTel("0645956235");
             e.setEmail("florian.lestic@lol.fr");
-            e.persister(cx);
+            e.persister();
             
             //Update du code postal de l'enfant
             e.setCode_postal("56420");
-            e.persister(cx);
+            e.persister();
             
             //Affichage des enfants
             showEnfants();
             
             // Suppression de l'élève
-            e.delete(cx);
+            e.delete();
             
          // Insertion d'un nouveau jouet
             Jouet j = new Jouet();
             j.setNom("toys");
             j.setDescription("description du toy");
-            j.persister(cx);
+            j.persister();
             
             
             
          //Modification du jouet
             j.setDescription("test");
-            j.persister(cx);
+            j.persister();
             
             //Affichage des jouets
             showJouets();
@@ -67,11 +67,11 @@ public class Main {
             c.setDate_debut(new Date(cal.getTime().getTime()));
             cal.set(2014, 12, 16, 15, 22);
             c.setDate_fin(new Date(cal.getTime().getTime()));
-            c.persister(cx);
+            c.persister();
             
             cal.set(2014, 12, 19, 05, 30);
             c.setDate_fin(new Date(cal.getTime().getTime()));
-            c.persister(cx);
+            c.persister();
             
             //Chargement au plus tôt des enfants ==== tout le graphe est chargé!!!!!
             List<Enfant> enfants = DAOEnfant.findAll();
@@ -81,7 +81,7 @@ public class Main {
           //Simulation chargement au plus tard des enfants >>>> problèmes N+1 select (Beaucoup de requêtes)
             for (Enfant enfant : enfants2){
             	for (Commande co : enfant.getCommandes())
-            		co.synchroAll(cx);
+            		co.persister();
             }
             
             //Chargement au plus tôt des commandes ====== tout le graphe est mit en mémoire
@@ -91,16 +91,13 @@ public class Main {
             List<Commande> commandes2 = DAOCommande.findAll();
           //Simulation chargement au plus tard des commandes >>>> problèmes N+1 select (Beaucoup de requêtes)
             for (Commande co : commandes2){
-            	co.getEnfant().synchroAll(cx);
-            	co.getJouet().synchroAll(cx);
+            	co.getEnfant().persister();
+            	co.getJouet().persister();
             }
 
             //Affichage des commandes
             showCommandes();
-            
-            //Deco de la bdd
-            cx.close();
-            
+              
         } 
     
     

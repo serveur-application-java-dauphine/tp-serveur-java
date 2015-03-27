@@ -13,17 +13,17 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import fr.hibernate.dao.DAOGenerique;
+
 @Entity
 public class Commande {
-	
-	
+
 	private int idCommande;
 	private Enfant enfant;
 	private Jouet jouet;
 	private Date date_debut;
 	private Date date_fin;
 
-	//TODO: private static DAOCommande dao;
 	/**
 	 * @return the id
 	 */
@@ -36,7 +36,7 @@ public class Commande {
 	/**
 	 * @param id the id to set
 	 */
-	
+
 	public void setIdCommanded(int idCommande) {
 		this.idCommande = idCommande;
 	}
@@ -96,46 +96,30 @@ public class Commande {
 	public void setDate_fin(Date date_fin) {
 		this.date_fin = date_fin;
 	}
-	
-	//TODO: voir pour persister, synchroall, dao, etc...
-	/*
-	public void persister(Connection c){
-		if (persist)
-			return;
-		if (!created)
-			getDao().insert(this, c);
-		else
-			getDao().update(this, c);	
+
+	public boolean persister(){
+		return DAOGenerique.insert(this)==1;
 	}
-	public boolean delete (Connection c){
-		return getDao().delete(this, c)==1;
+	public boolean delete (){
+		return DAOGenerique.delete(this)==1;
 	}
-	
-	public void synchro(Connection c){
-		getDao().retrieveById(this, c, DAOCommande.mode_rapide);
+	public boolean update (){
+		return DAOGenerique.update(this)==1;
 	}
-	public void synchroAll(Connection c){
-		getDao().retrieveById(this, c, DAOCommande.mode_lent);
-	}
-	private static DAOCommande getDao(){
-		if(dao==null)
-			dao = new DAOCommande();
-		return dao;
-	}
-	*/
+
 	@Override
 	public boolean equals(Object other) { 
-    	if (this == other) return true; 
-    	if ( !(other instanceof Enfant) ) return false;  
-    	final Commande obj = (Commande) other; 
-    	   if ( obj.getEnfant().getIdEnfant()!=getEnfant().getIdEnfant()||obj.getJouet().getIdJouet()!=getJouet().getIdJouet() ) 
-    	     return false;           
-    	return true; 
-    }
+		if (this == other) return true; 
+		if ( !(other instanceof Enfant) ) return false;  
+		final Commande obj = (Commande) other; 
+		if ( obj.getEnfant().getIdEnfant()!=getEnfant().getIdEnfant()||obj.getJouet().getIdJouet()!=getJouet().getIdJouet() ) 
+			return false;           
+		return true; 
+	}
 	@Override
 	public String toString() {
 		return "[Enfant]= "+enfant+" [Jouet]= "+jouet+" // date d�but : "+date_debut+", date fin : "+date_fin;
 	}
 
-	
+
 }

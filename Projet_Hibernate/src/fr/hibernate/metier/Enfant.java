@@ -29,7 +29,6 @@ public class Enfant {
 	private String tel;
 	private String email;
 	private ArrayList<Commande> commandes = new ArrayList<Commande>();
-	//TODO: A voir pour private static DAOEnfant dao;
 
 	/**
 	 * @return the id
@@ -166,7 +165,6 @@ public class Enfant {
 		this.commandes = commandes;
 	}
 
-	//TODO: Voir pour persister, synchroall, addcommande etc...
 	public boolean persister(){
 		return DAOGenerique.insert(this)==1;
 	}
@@ -176,26 +174,26 @@ public class Enfant {
 	public boolean update (){
 		return DAOGenerique.update(this)==1;
 	}
-	
+
 	@Override
 	public boolean equals(Object other) { 
-    	if (this == other) return true; 
-    	if ( !(other instanceof Enfant) ) return false;  
-    	final Enfant obj = (Enfant) other; 
-    	   if ( obj.getIdEnfant()!=getIdEnfant() ) 
-    	     return false;           
-    	return true; 
-    }
+		if (this == other) return true; 
+		if ( !(other instanceof Enfant) ) return false;  
+		final Enfant obj = (Enfant) other; 
+		if ( obj.getIdEnfant()!=getIdEnfant() ) 
+			return false;           
+		return true; 
+	}
 	@Override
 	public String toString() {
 		return "id : "+idEnfant+", nom : "+nom+", prenom : "+prenom+", adresse : "+adresse+", code postal : "+code_postal
 				+", ville :"+ville+", date de naissance : "+ddn+", tel : "+tel+", email : "+email;
 	}
-	
+
 	/*public void synchroAll(Connection c){
 		getDao().retrieveById(this, c);
 	}
-	
+
 	public void addCommande(Commande c){
 		commandes.add(c);
 	}*/
