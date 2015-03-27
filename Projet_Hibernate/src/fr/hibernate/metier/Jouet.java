@@ -1,11 +1,16 @@
 package fr.hibernate.metier;
 
-import java.sql.Connection;
+import static javax.persistence.GenerationType.IDENTITY;
+
 import java.util.ArrayList;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
-import fr.hibernate.dao.DAOJouet;
 
 @Entity
 public class Jouet {
@@ -14,25 +19,16 @@ public class Jouet {
 	private long idJouet;
 	private String nom;
 	private String description;
-	private boolean created;
-	private static DAOJouet dao;
+	//TODO: private static DAOJouet dao;
 	private ArrayList<Commande> commandes = new ArrayList<Commande>();
-	/**
-	 * @return the created
-	 */
-	public boolean isCreated() {
-		return created;
-	}
-	/**
-	 * @param created the created to set
-	 */
-	public void setCreated(boolean created) {
-		this.created = created;
-	}
-	private boolean persist;
+
+
 	/**
 	 * @return the id
 	 */
+	@Id
+	@GeneratedValue(strategy = IDENTITY)
+	@Column(name = "IdJouet", unique = true, nullable = false)
 	public long getIdJouet() {
 		return idJouet;
 	}
@@ -45,6 +41,7 @@ public class Jouet {
 	/**
 	 * @return the nom
 	 */
+	@Column(name = "Nom", unique = true, nullable = false)
 	public String getNom() {
 		return nom;
 	}
@@ -52,11 +49,12 @@ public class Jouet {
 	 * @param nom the nom to set
 	 */
 	public void setNom(String nom) {
-		this.nom = nom;persist=false;
+		this.nom = nom;
 	}
 	/**
 	 * @return the description
 	 */
+	@Column(name = "Description", unique = true, nullable = false)
 	public String getDescription() {
 		return description;
 	}
@@ -64,21 +62,22 @@ public class Jouet {
 	 * @param description the description to set
 	 */
 	public void setDescription(String description) {
-		this.description = description;persist=false;
-	}
-	/**
-	 * @return the persist
-	 */
-	public boolean isPersist() {
-		return persist;
-	}
-	/**
-	 * @param persist the persist to set
-	 */
-	public void setPersist(boolean persist) {
-		this.persist = persist;
+		this.description = description;
 	}
 	
+	/**
+	 * 
+	 * @return the commandes
+	 */
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "Jouet")
+	public ArrayList<Commande> getCommandes() {
+		return commandes;
+	}
+	public void setCommandes(ArrayList<Commande> commandes) {
+		this.commandes = commandes;
+	}
+	//TODO: voir pour persister, synchroall, etc...
+	/*
 	public void persister(Connection c){
 		if (persist)
 			return;
@@ -100,7 +99,10 @@ public class Jouet {
 	public void synchroAll(Connection c){
 		getDao().retrieveById(this, c);
 	}
-	
+	public void addCommande(Commande c){
+		commandes.add(c);
+	}
+	*/
 	@Override
 	public boolean equals(Object other) { 
     	if (this == other) return true; 
@@ -112,10 +114,8 @@ public class Jouet {
     }
 	@Override
 	public String toString() {
-		return " id : "+idJouet+", nom : "+nom+", description : "+description+", created : "+created+", persit : "+persist;
+		return " id : "+idJouet+", nom : "+nom+", description : "+description;
 	}
-	public void addCommande(Commande c){
-		commandes.add(c);
-	}
+
 	
 }
