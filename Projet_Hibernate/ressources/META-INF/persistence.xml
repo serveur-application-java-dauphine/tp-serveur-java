@@ -6,7 +6,7 @@
 	<persistence-unit name="mysql_tp">
 		<properties>
 			<property name="hibernate.archive.autodetection" value="class" />
-			<!-- <property name="hibernate.show_sql" value="true" /> -->
+			 <property name="hibernate.show_sql" value="true" /> 
 			<property name="hibernate.format_sql" value="true" />
 
 			<!-- Configuration de la BDD -->
