@@ -273,8 +273,8 @@ public final class Connexion {
    *          the list of parameters
    * @return result
    */
-  @SuppressWarnings("unchecked")
-  public <T> List<T> createNativeQueryAndGetResult(String query, Long... params) {
+
+  public <T> List<T> createNativeQueryAndGetResult(String query,Class<T> classe, Long... params) {
     EntityManager em = emf.createEntityManager();
     Query q = em.createNativeQuery(query);
     int i = 0;
@@ -282,6 +282,6 @@ public final class Connexion {
       i++;
       q.setParameter(i, param);
     }
-    return (List<T>) q.getResultList();
+    return q.getResultList();
   }
 }
