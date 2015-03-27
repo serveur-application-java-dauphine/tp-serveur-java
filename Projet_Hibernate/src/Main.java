@@ -1,7 +1,3 @@
-// Repris de http://www.lamsade.dauphine.fr/rigaux/mysql/
-// et adapté pour créer et manipuler un objet Departement 
-// à partir d'un nuplet de la relation Departement
-
 
 import java.sql.*;
 import java.sql.Date;
@@ -78,10 +74,10 @@ public class Main {
             c.persister(cx);
             
             //Chargement au plus tôt des enfants ==== tout le graphe est chargé!!!!!
-            ArrayList<Enfant> enfants = DAOEnfant.findAll(cx, DAOEnfant.mode_lent);
+            List<Enfant> enfants = DAOEnfant.findAll();
             
             //Chargement au plus tard des enfants ==== objet fils vide unique avec l'id
-            ArrayList<Enfant> enfants2 = DAOEnfant.findAll(cx, DAOEnfant.mode_rapide);
+            List<Enfant> enfants2 = DAOEnfant.findAll();
           //Simulation chargement au plus tard des enfants >>>> problèmes N+1 select (Beaucoup de requêtes)
             for (Enfant enfant : enfants2){
             	for (Commande co : enfant.getCommandes())
@@ -89,10 +85,10 @@ public class Main {
             }
             
             //Chargement au plus tôt des commandes ====== tout le graphe est mit en mémoire
-            ArrayList<Commande> commandes = DAOCommande.findAll(cx, DAOCommande.mode_lent);
+            List<Commande> commandes = DAOCommande.findAll();
             
           //Chargement au plus tard des enfants ==== objet fils vide unique avec l'id
-            ArrayList<Commande> commandes2 = DAOCommande.findAll(cx, DAOCommande.mode_rapide);
+            List<Commande> commandes2 = DAOCommande.findAll();
           //Simulation chargement au plus tard des commandes >>>> problèmes N+1 select (Beaucoup de requêtes)
             for (Commande co : commandes2){
             	co.getEnfant().synchroAll(cx);
@@ -109,19 +105,19 @@ public class Main {
     
     
     private static void showJouets(){
-    	ArrayList<Jouet> jouets = DAOJouet.findAll(cx);
+    	List<Jouet> jouets = DAOJouet.findAll();
         for (Jouet jou : jouets)
         	System.out.println(jou);
     }
     
     private static void showEnfants(){
-        ArrayList<Enfant> enfants = DAOEnfant.findAll(cx,DAOEnfant.mode_lent);
+        List<Enfant> enfants = DAOEnfant.findAll();
         for (Enfant etu : enfants)
         	System.out.println(etu);
     }
     
     private static void showCommandes(){
-    	ArrayList<Commande> commandes = DAOCommande.findAll(cx,DAOCommande.mode_lent);
+    	List<Commande> commandes = DAOCommande.findAll();
         for (Commande co : commandes)
         	System.out.println(co);
     }
