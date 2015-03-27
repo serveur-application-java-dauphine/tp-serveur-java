@@ -279,6 +279,7 @@ public final class Connexion {
     Query q = em.createNativeQuery(query);
     int i = 0;
     for (Long param : params) {
+      i++;
       q.setParameter(i, param);
     }
     return (List<T>) q.getResultList();

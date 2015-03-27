@@ -1,7 +1,7 @@
 package fr.dauphine.etrade.services;
 
-import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.logging.Logger;
@@ -20,60 +20,99 @@ import fr.dauphine.etrade.persit.Connexion;
 @TransactionManagement(TransactionManagementType.BEAN)
 public class ServicesActualiteBean implements ServicesActualite {
 
-  private static final Logger LOG = Logger.getLogger(ServicesActualiteBean.class.getName());
+	private static final Logger LOG = Logger.getLogger(ServicesActualiteBean.class.getName());
 
-  @Override
-  public Actualite getActualite(Long id) {
-    return Connexion.getInstance().find(Actualite.class, id);
-  }
+	@Override
+	public Actualite getActualite(Long id) {
+		Actualite act = Connexion.getInstance().find(Actualite.class, id);
+		readContent(act);
+		return act;
+	}
 
-  @Override
-  public Actualite addActualite(Actualite a) {
+	@Override
+	public Actualite addActualite(Actualite a) {
 
-    // Le nom du fichier est composé de la date de création
-    // + l'id de l'utilisateur l'ayant créé
-    // + l'id de la société à laquelle est affilié l'utilisateur.
-    long creationDate = System.currentTimeMillis();
-    String fileName = creationDate + "-" + a.getUtilisateur().getIdUtilisateur() + "-"
-        + a.getSociete().getIdSociete() + ".txt";
-    a.setFile(fileName);
-    a.setDateCreation(new java.sql.Date(creationDate));
+		// Le nom du fichier est composé de la date de création
+		// + l'id de l'utilisateur l'ayant créé
+		// + l'id de la société à laquelle est affilié l'utilisateur.
+		writeContent(a);
 
-    LOG.info("Registering actualité : " + fileName);
+		Connexion.getInstance().insert(a);
 
-    BufferedOutputStream bos = null;
-    try {
-      bos = new BufferedOutputStream(new FileOutputStream(new File("/actualites/" + fileName)));
-      bos.write(a.getContent().getBytes());
-      bos.flush();
-    } catch (IOException e) {
-      e.printStackTrace();
-    } finally {
-      try {
-        if (bos != null) {
-          bos.close();
-        }
-      } catch (IOException e) {
-        e.printStackTrace();
-      }
-    }
+		return a;
+	}
 
-    Connexion.getInstance().insert(a);
+	@Override
+	public Actualite deleteActualite(Actualite a) {
+		LOG.info("Deleting actualité : " + a.getFile());
+		deleteContent(a);
 
-    return a;
-  }
+		// Puis suppression de la localisation du xml en base
+		Connexion.getInstance().delete(a);
+		return a;
+	}
+	
+	private void writeContent(Actualite act){
+		FileOutputStream bos = null;
+		try {
+			bos = new FileOutputStream(getFile(act));
+			bos.write(act.getContent().getBytes());
+			bos.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (bos != null) {
+					bos.close();
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	private void readContent(Actualite act){
+		FileInputStream bos = null;
+		try {
+			bos = new FileInputStream(getFile(act));
+			int i;
+			while ((i =bos.available())>0){
+				byte[] temp = new byte[i];
+				bos.read(temp);
+				act.setContent(act.getContent()!=null?act.getContent():"" + new String(temp) );
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (bos != null) {
+					bos.close();
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	private void deleteContent(Actualite act){
+		getFile(act).delete();
+	}
+	
+	private File getFile(Actualite a){
+		String file = System.getProperty("user.home")+File.separatorChar/*+"eTrade"+File.separatorChar*/;
+		if (a.getFile()!=null)
+			file+=a.getFile();
+		else{
+			long creationDate = System.currentTimeMillis();
+			String fileName = creationDate + "-" + a.getUtilisateur().getIdUtilisateur() + "-"
+					+ a.getSociete().getIdSociete() + ".txt";
+			a.setFile(fileName);
+			a.setDateCreation(new java.sql.Date(creationDate));
+			file+=fileName;
+		}
 
-  @Override
-  public Actualite deleteActualite(Actualite a) {
-    LOG.info("Deleting actualité : " + a.getFile());
-
-    // Suppression du fichier
-    File f = new File("/actualites/" + a.getFile());
-    f.delete();
-
-    // Puis suppression de la localisation du xml en base
-    Connexion.getInstance().delete(a);
-    return a;
-  }
+		return new File(file);
+			
+	}
 
 }

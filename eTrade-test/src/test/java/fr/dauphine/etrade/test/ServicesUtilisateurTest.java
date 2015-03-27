@@ -3,7 +3,6 @@ package fr.dauphine.etrade.test;
 import static org.junit.Assert.*;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import org.junit.Before;

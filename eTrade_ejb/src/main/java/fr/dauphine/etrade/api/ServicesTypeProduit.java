@@ -9,5 +9,7 @@ import fr.dauphine.etrade.model.TypeProduit;
 @Remote
 public interface ServicesTypeProduit {
   List<TypeProduit> all();
-  TypeProduit get (long idTypeProduit);
+
+  TypeProduit get(long idTypeProduit);
+
 }

@@ -66,7 +66,7 @@
 		rendered="#{sessionUserManagedBean.membreSociete and sessionUserManagedBean.utilisateur.societe.idSociete eq param.s or sessionUserManagedBean.administrateur}">
 		<h2>Les produits proposés par votre société :</h2>
 		<h:dataTable style="text-align:center;"
-			value="#{produitManagedBean.getProduitsParSocieteId(param.s)}"
+			value="#{produitManagedBean.get(param.s)}"
 			var="p">
 			<h:column>
 				<f:facet name="header">Produit</f:facet>

@@ -56,7 +56,8 @@
 					<td>Société *:</td>
 					<td><h:outputText
 							value="#{ordreManagedBean.ordre.produit.societe.name}"
-							rendered="#{not empty param.s}" /> <h:selectOneMenu
+							rendered="#{not empty param.s}" /> 
+							<h:selectOneMenu
 							rendered="#{empty param.s}"
 							value="#{ordreManagedBean.ordre.produit.societe.idSociete}"
 							style="width: 150px;" onchange="submit()"

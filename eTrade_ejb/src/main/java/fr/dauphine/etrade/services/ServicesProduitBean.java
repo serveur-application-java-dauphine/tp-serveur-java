@@ -45,12 +45,8 @@ public class ServicesProduitBean implements ServicesProduit {
 
   @Override
   public List<Produit> getActifs(long idPortefeuille) {
-    String query = "SELECT p FROM Transaction t, Ordre o1, Ordre o2, Produit p "
-        + " WHERE idOrderAchat = o1.idOrder " + " AND IdOrderVente = o2.idOrder "
-        + " AND o1.idProduit = p.idProduit " + " AND ( " + " o1.idPortefeuille =? "
-        + " OR o2.idPortefeuille =?)";
-
-    return Connexion.getInstance().createNativeQueryAndGetResult(query, idPortefeuille);
+    // return Connexion.getInstance().find(Produit.class, idPortefeuille);
+    return null;
   }
 
 }
