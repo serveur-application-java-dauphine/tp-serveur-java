@@ -3,6 +3,7 @@ package fr.hibernate.metier;
 import static javax.persistence.GenerationType.IDENTITY;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +11,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 import fr.hibernate.dao.DAOGenerique;
 
@@ -21,7 +23,7 @@ public class Jouet {
 	private long idJouet;
 	private String nom;
 	private String description;
-	private ArrayList<Commande> commandes = new ArrayList<Commande>();
+	private List<Commande> commandes = new ArrayList<Commande>();
 
 
 	/**
@@ -70,20 +72,23 @@ public class Jouet {
 	 * 
 	 * @return the commandes
 	 */
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "Jouet")
-	public ArrayList<Commande> getCommandes() {
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "jouet")
+	public List<Commande> getCommandes() {
 		return commandes;
 	}
-	public void setCommandes(ArrayList<Commande> commandes) {
+	public void setCommandes(List<Commande> commandes) {
 		this.commandes = commandes;
 	}
 
+	@Transient
 	public boolean persister(){
 		return DAOGenerique.insert(this)==1;
 	}
+	@Transient
 	public boolean delete (){
 		return DAOGenerique.delete(this)==1;
 	}
+	@Transient
 	public boolean update (){
 		return DAOGenerique.update(this)==1;
 	}

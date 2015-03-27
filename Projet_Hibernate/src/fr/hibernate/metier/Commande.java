@@ -2,7 +2,7 @@ package fr.hibernate.metier;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
-import java.sql.Date;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import fr.hibernate.dao.DAOGenerique;
 
@@ -37,7 +38,7 @@ public class Commande {
 	 * @param id the id to set
 	 */
 
-	public void setIdCommanded(int idCommande) {
+	public void setIdCommande(int idCommande) {
 		this.idCommande = idCommande;
 	}
 	/**
@@ -97,12 +98,15 @@ public class Commande {
 		this.date_fin = date_fin;
 	}
 
+	@Transient
 	public boolean persister(){
 		return DAOGenerique.insert(this)==1;
 	}
+	@Transient
 	public boolean delete (){
 		return DAOGenerique.delete(this)==1;
 	}
+	@Transient
 	public boolean update (){
 		return DAOGenerique.update(this)==1;
 	}

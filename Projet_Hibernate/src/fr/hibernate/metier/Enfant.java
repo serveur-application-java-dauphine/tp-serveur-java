@@ -2,8 +2,9 @@ package fr.hibernate.metier;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
-import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import fr.hibernate.dao.DAOGenerique;
 
@@ -28,7 +30,7 @@ public class Enfant {
 	private String code_postal;
 	private String tel;
 	private String email;
-	private ArrayList<Commande> commandes = new ArrayList<Commande>();
+	private List<Commande> commandes = new ArrayList<Commande>();
 
 	/**
 	 * @return the id
@@ -153,24 +155,27 @@ public class Enfant {
 	/**
 	 * @return the commandes
 	 */
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "Enfant")
-	public ArrayList<Commande> getCommandes() {
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "enfant")
+	public List<Commande> getCommandes() {
 		return commandes;
 	}
 
 	/**
 	 * @param commandes the commandes to set
 	 */
-	public void setCommandes(ArrayList<Commande> commandes) {
+	public void setCommandes(List<Commande> commandes) {
 		this.commandes = commandes;
 	}
 
+	@Transient
 	public boolean persister(){
 		return DAOGenerique.insert(this)==1;
 	}
+	@Transient
 	public boolean delete (){
 		return DAOGenerique.delete(this)==1;
 	}
+	@Transient
 	public boolean update (){
 		return DAOGenerique.update(this)==1;
 	}
@@ -189,13 +194,5 @@ public class Enfant {
 		return "id : "+idEnfant+", nom : "+nom+", prenom : "+prenom+", adresse : "+adresse+", code postal : "+code_postal
 				+", ville :"+ville+", date de naissance : "+ddn+", tel : "+tel+", email : "+email;
 	}
-
-	/*public void synchroAll(Connection c){
-		getDao().retrieveById(this, c);
-	}
-
-	public void addCommande(Commande c){
-		commandes.add(c);
-	}*/
 
 }

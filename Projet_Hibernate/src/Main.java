@@ -17,7 +17,6 @@ public class Main {
 	
     static public void main (String[] argv) {
     	
-        	Connexion.getInstance();
     		//Date
     		Calendar cal = Calendar.getInstance();
         
@@ -36,7 +35,7 @@ public class Main {
             
             //Update du code postal de l'enfant
             e.setCode_postal("56420");
-            e.persister();
+            e.update();
             
             //Affichage des enfants
             showEnfants();
