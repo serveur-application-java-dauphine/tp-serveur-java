@@ -1,9 +1,9 @@
-package fr.tppostgres.metier;
+package fr.hibernate.metier;
 
 import java.sql.Connection;
 import java.util.ArrayList;
 
-import fr.tppostgres.dao.DAOJouet;
+import fr.hibernate.dao.DAOJouet;
 
 public class Jouet {
 

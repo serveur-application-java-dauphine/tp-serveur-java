@@ -7,12 +7,12 @@ import java.sql.*;
 import java.sql.Date;
 import java.util.*;
 
-import fr.tppostgres.dao.DAOCommande;
-import fr.tppostgres.dao.DAOEnfant;
-import fr.tppostgres.dao.DAOJouet;
-import fr.tppostgres.metier.Commande;
-import fr.tppostgres.metier.Enfant;
-import fr.tppostgres.metier.Jouet;
+import fr.hibernate.dao.DAOCommande;
+import fr.hibernate.dao.DAOEnfant;
+import fr.hibernate.dao.DAOJouet;
+import fr.hibernate.metier.Commande;
+import fr.hibernate.metier.Enfant;
+import fr.hibernate.metier.Jouet;
 
 public class Main {
 

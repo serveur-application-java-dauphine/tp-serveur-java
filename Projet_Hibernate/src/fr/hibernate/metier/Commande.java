@@ -1,9 +1,9 @@
-package fr.tppostgres.metier;
+package fr.hibernate.metier;
 
 import java.sql.Connection;
 import java.sql.Date;
 
-import fr.tppostgres.dao.DAOCommande;
+import fr.hibernate.dao.DAOCommande;
 
 public class Commande {
 	

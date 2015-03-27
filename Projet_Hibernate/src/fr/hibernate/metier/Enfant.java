@@ -1,10 +1,10 @@
-package fr.tppostgres.metier;
+package fr.hibernate.metier;
 
 import java.sql.Connection;
 import java.sql.Date;
 import java.util.ArrayList;
 
-import fr.tppostgres.dao.DAOEnfant;
+import fr.hibernate.dao.DAOEnfant;
 
 public class Enfant {
 	
