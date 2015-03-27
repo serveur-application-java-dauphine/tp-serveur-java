@@ -15,7 +15,7 @@ public class Main {
 
 	private static Connection cx;
 	
-    static public void main (String[] argv) throws ClassNotFoundException, SQLException, java.io.IOException {
+    static public void main (String[] argv) {
     	
         	Connexion.getInstance();
     		//Date

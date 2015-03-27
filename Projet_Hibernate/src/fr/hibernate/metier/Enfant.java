@@ -14,9 +14,11 @@ import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import fr.hibernate.dao.DAOGenerique;
+
 @Entity
 public class Enfant {
-	
+
 	private long idEnfant;
 	private String nom;
 	private String prenom;
@@ -165,24 +167,15 @@ public class Enfant {
 	}
 
 	//TODO: Voir pour persister, synchroall, addcommande etc...
-	/*public void persister(Connection c){
-		if (persist)
-			return;
-		if (!created)
-			getDao().insert(this, c);
-		else
-			getDao().update(this, c);	
+	public boolean persister(){
+		return DAOGenerique.insert(this)==1;
 	}
-	public boolean delete (Connection c){
-		
-		return getDao().delete(this, c)==1;
+	public boolean delete (){
+		return DAOGenerique.delete(this)==1;
 	}
-	
-	private static DAOEnfant getDao(){
-		if(dao==null)
-			dao = new DAOEnfant();
-		return dao;
-	}*/
+	public boolean update (){
+		return DAOGenerique.update(this)==1;
+	}
 	
 	@Override
 	public boolean equals(Object other) { 
