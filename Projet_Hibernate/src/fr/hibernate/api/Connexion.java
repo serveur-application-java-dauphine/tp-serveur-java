@@ -65,6 +65,38 @@ public final class Connexion {
 		LOG.info("persist : " + object);
 		return object;
 	}
+	/**
+	 * This method implements a generic querySingleResult for our class
+	 * 
+	 * @param classe
+	 *          the type of object which is returned
+	 * @param key
+	 *          the database id of the object to return
+	 * 
+	 * @return result
+	 */
+	public <T> T find(Class<T> classe, Object key) {
+		EntityManager em = emf.createEntityManager();
+		T result = em.find(classe, key);
+		em.close();
+		return result;
+	}
+	/**
+	 * Implements the update in database
+	 * 
+	 * @param object
+	 *          object to be updated
+	 * @return object the object updated
+	 */
+	public <T> T update(T object) {
+		EntityManager em = emf.createEntityManager();
+		em.getTransaction().begin();
+		object = em.merge(object);
+		em.getTransaction().commit();
+		em.close();
+		LOG.info("merge : " + object);
+		return object;
+	}
 
 	/**
 	 * Implements the update in database
@@ -87,22 +119,7 @@ public final class Connexion {
 		return objects;
 	}
 
-	/**
-	 * Implements the update in database
-	 * 
-	 * @param object
-	 *          object to be updated
-	 * @return object the object updated
-	 */
-	public <T> T update(T object) {
-		EntityManager em = emf.createEntityManager();
-		em.getTransaction().begin();
-		object = em.merge(object);
-		em.getTransaction().commit();
-		em.close();
-		LOG.info("merge : " + object);
-		return object;
-	}
+	
 
 	/**
 	 * Implements the delete in database
@@ -192,22 +209,7 @@ public final class Connexion {
 		return results;
 	}
 
-	/**
-	 * This method implements a generic querySingleResult for our class
-	 * 
-	 * @param classe
-	 *          the type of object which is returned
-	 * @param key
-	 *          the database id of the object to return
-	 * 
-	 * @return result
-	 */
-	public <T> T find(Class<T> classe, Object key) {
-		EntityManager em = emf.createEntityManager();
-		T result = em.find(classe, key);
-		em.close();
-		return result;
-	}
+	
 
 	/**
 	 * This method implements a generic namedQueryListResult

@@ -7,36 +7,36 @@ import fr.hibernate.metier.Jouet;
 
 public class DAOJouet {
 
-	public int insert (Jouet jouet){
+	public boolean insert (Jouet jouet){
 		try {
 			Connexion.getInstance().insert(jouet);
-			return 1;
+			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
-			return 0;
+			return false;
 		}
 
 	}
 
-	public int delete (Jouet jouet){
+	public boolean delete (Jouet jouet){
 		try{
 			Connexion.getInstance().delete(jouet);
-			return 1;
+			return true;
 		}
 		catch (Exception e){
 			e.printStackTrace();
-			return 0;
+			return false;
 		}
 	}
 
-	public int update (Jouet jouet){
+	public boolean update (Jouet jouet){
 		try{
 			Connexion.getInstance().update(jouet);
-			return 1;
+			return true;
 		}
 		catch (Exception e){
 			e.printStackTrace();
-			return 0;
+			return false;
 		}
 
 	}

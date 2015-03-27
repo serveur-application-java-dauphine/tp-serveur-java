@@ -6,6 +6,7 @@
 	<persistence-unit name="mysql_tp">
 		<properties>
 			<property name="hibernate.archive.autodetection" value="class" />
+			<!-- Affichage des requêtes dans la console-->
 			 <property name="hibernate.show_sql" value="true" /> 
 			<property name="hibernate.format_sql" value="true" />
 
@@ -19,7 +20,7 @@
 			<!-- Spécifie le 'dialecte' SQL utilisé pour communiquer avec la BDD -->
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
 
-			<!-- Indique a Hibernate de (re-)créer la BDD au lancement de l'application -->
+			<!-- Indique à Hibernate de (re-)créer la BDD au lancement de l'application -->
 			<property name="hibernate.hbm2ddl.auto" value="create" />
 		</properties>
 

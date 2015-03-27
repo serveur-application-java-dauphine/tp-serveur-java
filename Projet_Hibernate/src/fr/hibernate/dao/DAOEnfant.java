@@ -7,36 +7,36 @@ import fr.hibernate.metier.Enfant;
 
 public class DAOEnfant {
 
-	public int insert (Enfant enfant){
+	public boolean insert (Enfant enfant){
 		try {
 			Connexion.getInstance().insert(enfant);
-			return 1;
+			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
-			return 0;
+			return false;
 		}
 
 	}
 
-	public int delete (Enfant enfant){
+	public boolean delete (Enfant enfant){
 		try{
 			Connexion.getInstance().delete(enfant);
-			return 1;
+			return true;
 		}
 		catch (Exception e){
 			e.printStackTrace();
-			return 0;
+			return false;
 		}
 	}
 
-	public int update (Enfant enfant){
+	public boolean update (Enfant enfant){
 		try{
 			Connexion.getInstance().update(enfant);
-			return 1;
+			return true;
 		}
 		catch (Exception e){
 			e.printStackTrace();
-			return 0;
+			return false;
 		}
 
 	}

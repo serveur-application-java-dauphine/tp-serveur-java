@@ -82,15 +82,15 @@ public class Jouet {
 
 	@Transient
 	public boolean persister(){
-		return DAOGenerique.insert(this)==1;
+		return DAOGenerique.insert(this);
 	}
 	@Transient
 	public boolean delete (){
-		return DAOGenerique.delete(this)==1;
+		return DAOGenerique.delete(this);
 	}
 	@Transient
 	public boolean update (){
-		return DAOGenerique.update(this)==1;
+		return DAOGenerique.update(this);
 	}
 
 	@Override
