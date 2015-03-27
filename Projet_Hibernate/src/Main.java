@@ -7,6 +7,7 @@ import java.sql.*;
 import java.sql.Date;
 import java.util.*;
 
+import fr.hibernate.api.Connexion;
 import fr.hibernate.dao.DAOCommande;
 import fr.hibernate.dao.DAOEnfant;
 import fr.hibernate.dao.DAOJouet;
@@ -20,24 +21,7 @@ public class Main {
 	
     static public void main (String[] argv) throws ClassNotFoundException, SQLException, java.io.IOException {
     	
-        DatabaseMetaData dbmd;
-        
-    	// Code using the ConfigConnection class
-		String username = argv[0];
-		String password = argv[1];
-		String fichierProp = argv[2];
-
-            // obtention de la connexion
-            cx = ConfigConnection.getConnection(fichierProp,username,password);
-            cx.setAutoCommit(false);
-
-            dbmd = cx.getMetaData(); //get MetaData to confirm connection
-            
-    		System.out.println("Connection to SGBD "+ dbmd.getDatabaseProductName()+ " version "+
-                           dbmd.getDatabaseProductVersion()+ " database " + 
-                           dbmd.getURL()+ " \nusing " + dbmd.getDriverName() + " version "+
-                           dbmd.getDriverVersion()+ " " + "successful.\n");
-    		
+        	Connexion.getInstance();
     		//Date
     		Calendar cal = Calendar.getInstance();
         

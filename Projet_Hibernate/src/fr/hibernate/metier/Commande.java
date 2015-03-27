@@ -3,8 +3,11 @@ package fr.hibernate.metier;
 import java.sql.Connection;
 import java.sql.Date;
 
+import javax.persistence.Entity;
+
 import fr.hibernate.dao.DAOCommande;
 
+@Entity
 public class Commande {
 	
 	
