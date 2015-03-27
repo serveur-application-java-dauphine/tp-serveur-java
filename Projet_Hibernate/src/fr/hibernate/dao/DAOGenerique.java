@@ -24,14 +24,13 @@ public final class DAOGenerique {
 			return false;
 		}
 	}
-	public final static boolean update (Object object){
+	public final static <T> T update (T object){
 		try{
-			Connexion.getInstance().update(object);
-			return true;
+			return Connexion.getInstance().update(object);
 		}
 		catch (Exception e){
 			e.printStackTrace();
-			return false;
+			return null;
 		}
 	}
 	public final static <T> List<T> findAll (Class<T> classe){

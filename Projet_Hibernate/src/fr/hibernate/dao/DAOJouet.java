@@ -29,14 +29,13 @@ public class DAOJouet {
 		}
 	}
 
-	public boolean update (Jouet jouet){
+	public Jouet update (Jouet jouet){
 		try{
-			Connexion.getInstance().update(jouet);
-			return true;
+			return Connexion.getInstance().update(jouet);
 		}
 		catch (Exception e){
 			e.printStackTrace();
-			return false;
+			return null;
 		}
 
 	}

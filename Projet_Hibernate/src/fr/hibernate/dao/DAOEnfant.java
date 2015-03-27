@@ -29,14 +29,13 @@ public class DAOEnfant {
 		}
 	}
 
-	public boolean update (Enfant enfant){
+	public Enfant update (Enfant enfant){
 		try{
-			Connexion.getInstance().update(enfant);
-			return true;
+			return Connexion.getInstance().update(enfant);
 		}
 		catch (Exception e){
 			e.printStackTrace();
-			return false;
+			return null;
 		}
 
 	}

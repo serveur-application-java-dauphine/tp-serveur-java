@@ -25,6 +25,13 @@ public class Commande {
 	private Date date_debut;
 	private Date date_fin;
 
+	public Commande(){}
+	
+	public Commande(Enfant enfant, Jouet jouet) {
+		this.enfant = enfant;
+		this.jouet = jouet;
+	}
+	
 	/**
 	 * @return the id
 	 */
@@ -87,7 +94,7 @@ public class Commande {
 	 * @return the date_fin
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "Date_Fin", nullable = false, length = 19)
+	@Column(name = "Date_Fin", nullable = true, length = 19)
 	public Date getDate_fin() {
 		return date_fin;
 	}
@@ -107,7 +114,7 @@ public class Commande {
 		return DAOGenerique.delete(this);
 	}
 	@Transient
-	public boolean update (){
+	public Commande update (){
 		return DAOGenerique.update(this);
 	}
 

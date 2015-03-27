@@ -25,14 +25,13 @@ public class DAOCommande {
 			return false;
 		}
 	}
-	public boolean update (Commande commande){
+	public Commande update (Commande commande){
 		try{
-			Connexion.getInstance().update(commande);
-			return true;
+			return Connexion.getInstance().update(commande);
 		}
 		catch (Exception e){
 			e.printStackTrace();
-			return false;
+			return null;
 		}
 	}
 	public static List<Commande> findAll (){

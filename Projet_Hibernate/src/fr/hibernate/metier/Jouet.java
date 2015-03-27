@@ -19,12 +19,17 @@ import fr.hibernate.dao.DAOGenerique;
 @Entity
 public class Jouet {
 
-
 	private long idJouet;
 	private String nom;
 	private String description;
 	private List<Commande> commandes = new ArrayList<Commande>();
 
+	public Jouet(){}
+	
+	public Jouet(String nom, String description) {
+		this.nom = nom;
+		this.description = description;
+	}
 
 	/**
 	 * @return the id
@@ -89,7 +94,7 @@ public class Jouet {
 		return DAOGenerique.delete(this);
 	}
 	@Transient
-	public boolean update (){
+	public Jouet update (){
 		return DAOGenerique.update(this);
 	}
 

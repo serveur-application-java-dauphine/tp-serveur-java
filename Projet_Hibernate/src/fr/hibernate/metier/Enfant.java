@@ -32,6 +32,20 @@ public class Enfant {
 	private String email;
 	private List<Commande> commandes = new ArrayList<Commande>();
 
+	public Enfant(){}
+	
+	public Enfant(String nom, String prenom, Date ddn, String adresse,
+			String ville, String code_postal, String tel, String email) {
+		this.nom = nom;
+		this.prenom = prenom;
+		this.ddn = ddn;
+		this.adresse = adresse;
+		this.ville = ville;
+		this.code_postal = code_postal;
+		this.tel = tel;
+		this.email = email;
+	}
+
 	/**
 	 * @return the id
 	 */
@@ -176,7 +190,7 @@ public class Enfant {
 		return DAOGenerique.delete(this);
 	}
 	@Transient
-	public boolean update (){
+	public Enfant update (){
 		return DAOGenerique.update(this);
 	}
 
