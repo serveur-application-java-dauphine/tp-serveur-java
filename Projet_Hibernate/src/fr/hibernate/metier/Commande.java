@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 
 import fr.hibernate.dao.DAOCommande;
 
@@ -15,6 +16,7 @@ public class Commande {
 	public String toString() {
 		return "[Enfant]= "+enfant+" [Jouet]= "+jouet+" // date début : "+date_debut+", date fin : "+date_fin;
 	}
+	private int id;
 	private Enfant enfant;
 	private Jouet jouet;
 	private Date date_debut;
@@ -132,5 +134,18 @@ public class Commande {
     	     return false;           
     	return true; 
     }
+	/**
+	 * @return the id
+	 */
+	@Id
+	public int getId() {
+		return id;
+	}
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(int id) {
+		this.id = id;
+	}
 	
 }
