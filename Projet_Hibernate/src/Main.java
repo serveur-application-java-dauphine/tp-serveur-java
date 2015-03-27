@@ -1,9 +1,7 @@
 
-import java.sql.*;
 import java.sql.Date;
 import java.util.*;
 
-import fr.hibernate.api.Connexion;
 import fr.hibernate.dao.DAOCommande;
 import fr.hibernate.dao.DAOEnfant;
 import fr.hibernate.dao.DAOJouet;
@@ -12,8 +10,6 @@ import fr.hibernate.metier.Enfant;
 import fr.hibernate.metier.Jouet;
 
 public class Main {
-
-	private static Connection cx;
 	
     static public void main (String[] argv) {
     	
