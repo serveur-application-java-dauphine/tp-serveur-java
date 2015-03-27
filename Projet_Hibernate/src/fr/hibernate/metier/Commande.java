@@ -2,15 +2,16 @@ package fr.hibernate.metier;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
-import java.sql.Connection;
 import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-
-import fr.hibernate.dao.DAOCommande;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 public class Commande {
@@ -21,44 +22,29 @@ public class Commande {
 	private Jouet jouet;
 	private Date date_debut;
 	private Date date_fin;
-	
-	private boolean created;
-	private static DAOCommande dao;
+
+	//TODO: private static DAOCommande dao;
 	/**
-	 * @return the created
+	 * @return the id
 	 */
-	public boolean isCreated() {
-		return created;
-	}
-	/**
-	 * @param created the created to set
-	 */
-	public void setCreated(boolean created) {
-		this.created = created;
-	}
-	@Override
-	public String toString() {
-		return "[Enfant]= "+enfant+" [Jouet]= "+jouet+" // date d�but : "+date_debut+", date fin : "+date_fin;
-	}
-	private boolean persist;
-	
-	/**
-	 * @return the persit
-	 */
-	public boolean isPersit() {
-		return persist;
+	@Id
+	@GeneratedValue(strategy = IDENTITY)
+	@Column(name = "IdCommande", unique = true, nullable = false)
+	public int getIdCommande() {
+		return idCommande;
 	}
 	/**
-	 * @param persit the persit to set
+	 * @param id the id to set
 	 */
-	public void setPersist(boolean persist) {
-		this.persist = persist;
+	
+	public void setIdCommanded(int idCommande) {
+		this.idCommande = idCommande;
 	}
-	
-	
 	/**
 	 * @return the enfant
 	 */
+	@ManyToOne
+	@JoinColumn(name = "IdEnfant", nullable = false)
 	public Enfant getEnfant() {
 		return enfant;
 	}
@@ -71,6 +57,8 @@ public class Commande {
 	/**
 	 * @return the jouet
 	 */
+	@ManyToOne
+	@JoinColumn(name = "IdJouet", nullable = false)
 	public Jouet getJouet() {
 		return jouet;
 	}
@@ -83,6 +71,8 @@ public class Commande {
 	/**
 	 * @return the date_debut
 	 */
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "Date_Debut", nullable = false, length = 19, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
 	public Date getDate_debut() {
 		return date_debut;
 	}
@@ -95,6 +85,8 @@ public class Commande {
 	/**
 	 * @return the date_fin
 	 */
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "Date_Fin", nullable = false, length = 19)
 	public Date getDate_fin() {
 		return date_fin;
 	}
@@ -105,6 +97,8 @@ public class Commande {
 		this.date_fin = date_fin;
 	}
 	
+	//TODO: voir pour persister, synchroall, dao, etc...
+	/*
 	public void persister(Connection c){
 		if (persist)
 			return;
@@ -128,31 +122,20 @@ public class Commande {
 			dao = new DAOCommande();
 		return dao;
 	}
-	
+	*/
 	@Override
 	public boolean equals(Object other) { 
     	if (this == other) return true; 
     	if ( !(other instanceof Enfant) ) return false;  
     	final Commande obj = (Commande) other; 
-    	   if ( obj.getEnfant().getId()!=getEnfant().getId()||obj.getJouet().getId()!=getJouet().getId() ) 
+    	   if ( obj.getEnfant().getIdEnfant()!=getEnfant().getIdEnfant()||obj.getJouet().getIdJouet()!=getJouet().getIdJouet() ) 
     	     return false;           
     	return true; 
     }
-	/**
-	 * @return the id
-	 */
-	@Id
-	@GeneratedValue(strategy = IDENTITY)
-	@Column(name = "IdCommande", unique = true, nullable = false)
-	public int getIdCommande() {
-		return idCommande;
+	@Override
+	public String toString() {
+		return "[Enfant]= "+enfant+" [Jouet]= "+jouet+" // date d�but : "+date_debut+", date fin : "+date_fin;
 	}
-	/**
-	 * @param id the id to set
-	 */
-	
-	public void setIdCommanded(int idCommande) {
-		this.idCommande = idCommande;
-	}
+
 	
 }
