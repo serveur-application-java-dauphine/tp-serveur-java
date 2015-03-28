@@ -179,8 +179,8 @@ public class Enfant {
 	/**
 	 * @return the commandes
 	 */
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "enfant")
-	@Fetch(FetchMode.JOIN)
+	@OneToMany(fetch = FetchType.EAGER/*LAZY*/, mappedBy = "enfant")
+	@Fetch(FetchMode.JOIN/*SUBSELECT*/)
 	public List<Commande> getCommandes() {
 		return commandes;
 	}

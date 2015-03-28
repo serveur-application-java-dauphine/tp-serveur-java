@@ -36,7 +36,7 @@ public final class DAOGenerique {
 	public final static <T> List<T> findAll (Class<T> classe){
 		return Connexion.getInstance().getAll(classe);
 	}
-	public final static <T> Object find (Class<T> classe, int idObject){
+	public final static <T> Object find (Class<T> classe, Object idObject){
 		return Connexion.getInstance().find(classe, idObject);
 	}
 

@@ -14,6 +14,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import fr.hibernate.dao.DAOGenerique;
 
 
@@ -79,7 +82,8 @@ public class Jouet {
 	 * 
 	 * @return the commandes
 	 */
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "jouet")
+	@OneToMany(fetch = FetchType.EAGER/*LAZY*/, mappedBy = "jouet")
+	@Fetch(FetchMode.JOIN/*SUBSELECT*/)
 	public List<Commande> getCommandes() {
 		return commandes;
 	}

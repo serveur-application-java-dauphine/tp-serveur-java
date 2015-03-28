@@ -16,17 +16,17 @@ import fr.hibernate.metier.Jouet;
 public class Main {
 
 	static public void main (String[] argv) {
-
 		//exemple1();
 		//exemple2();
-		exemple3();
+		//exemple3();
 		//exemple4();
-
+		exemple5();
 	}
 
 	/**
 	 * List<Commande> en LAZY dans Enfant et Jouet
 	 * Enfant et Jouet en EAGER dans Commande
+	 * Insert, Delete, Update
 	 */
 	private static void exemple1(){
 		Calendar cal = Calendar.getInstance();
@@ -69,9 +69,7 @@ public class Main {
 	 * 
 	 */
 	private static void exemple2(){
-		//Date
-		Calendar cal = Calendar.getInstance();
-		cal.set(1991, 11, 11,0,0,0);
+		Calendar cal = Calendar.getInstance();cal.set(1991, 11, 11,0,0,0);
 		//1 appel de méthode = 1 entity manager => fermeture de l'entity à la fin de la méthode
 		Enfant e = new Enfant("nom","prenom",cal.getTime(),"adresse","ville","26000","0295824102","test@test.fr");
 		Enfant e2 = new Enfant("nom","prenom",cal.getTime(),"adresse","ville","26000","0295824102","test@test.fr");
@@ -126,7 +124,7 @@ public class Main {
 		EntityManager em = Connexion.getInstance().getEmf().createEntityManager();
 		TypedQuery<Enfant> typedquery = em.createQuery("FROM " + Enfant.class.getSimpleName(),Enfant.class);
 		List<Enfant> enfants = typedquery.getResultList();//Génère 1 requête select (List<Commande> et  en mode LAZY)
-		
+
 		for (Enfant etu : enfants){
 			System.out.println(etu);
 			System.out.println(etu.getCommandes().size());//1 requete select (commandes)
@@ -141,7 +139,7 @@ public class Main {
 			System.out.println(jou);
 			System.out.println(jou.getCommandes().size());//1 requete select (commandes)
 			for (Commande co : jou.getCommandes())
-				System.out.println(co.getJouet());//Pas de requête hibernate a le jouet dans son cache
+				System.out.println(co.getJouet());//Pas de requête: hibernate a le jouet dans son cache
 		}
 		em.close();
 		em = Connexion.getInstance().getEmf().createEntityManager();
@@ -157,25 +155,24 @@ public class Main {
 				System.out.println(co1.getJouet());//deja chargé
 			for (Commande co2 : co.getJouet().getCommandes())
 				System.out.println(co2.getEnfant());//deja chargé
-			
+
 		}
 	}
 
 	/**
-	 * List<Commande> en EAGER (join) dans Enfant et Jouet
-	 * Enfant et Jouet en EAGER dans Commande
+	 * List<Commande> en EAGER (mode sous-select) dans Enfant et Jouet
+	 * Enfant et Jouet en EAGER (mode select) dans Commande
 	 * 
 	 */
 	private static void exemple4(){
-		//Date
-		Calendar cal = Calendar.getInstance();
-		cal.set(1991, 11, 11,0,0,0);
+		Calendar cal = Calendar.getInstance();cal.set(1991, 11, 11,0,0,0);
 		//1 appel de méthode = 1 entity manager => fermeture de l'entity à la fin de la méthode
 		Enfant e = new Enfant("nom","prenom",cal.getTime(),"adresse","ville","26000","0295824102","test@test.fr");
 		Enfant e2 = new Enfant("nom","prenom",cal.getTime(),"adresse","ville","26000","0295824102","test@test.fr");
 		e.persister();// Génère 1 requête Insert (objet transient)
 		e2.persister();// Génère 1 requête Insert (objet transient)
-		DAOGenerique.findAll(Enfant.class);//Génère 1 requête select (List<Commande> en mode EAGER)
+		DAOGenerique.findAll(Enfant.class);//Génère 1 requêtes select(from enfant) + 1 requête select avec sous-select
+		//(commandes des 2 enfants grâce à un IN)
 
 		// Insertion d'un nouveau jouet
 		Jouet j = new Jouet("nom","description");
@@ -184,32 +181,57 @@ public class Main {
 		j2.persister();//Génère 1 requête Insert
 
 		//Affichage des jouets
-		DAOGenerique.findAll(Jouet.class);//Génère 1 requête select (List<Commande> en mode Lazy)
+		DAOGenerique.findAll(Jouet.class);//Génère 1 requête select (from jouet) + 1 requête select avec sous select 
+		//(commandes des 2 jouets grace à un IN)
 
 		Commande c = new Commande(e,j2);
 		Commande c2 = new Commande(e2,j);
 		c.persister();//Génère 1 requête Insert (objet Transient)
 		c2.persister();//Génère 1 requête Insert (objet Transient)
 
-		DAOGenerique.findAll(Commande.class);//Génère 3 requête select (Commande et Jouet en mode EAGER)
+		DAOGenerique.findAll(Commande.class);//Génère 1 requête select (from commande) + 1 requête select (enfant de la commande 1) 
+		//+ 1 requête select (jouet de la commande 1) +1 requête select (enfant de la commande 2) + 1 requête select (jouet de la commande 2)
+		//+ 1 requête select (commandes du jouet de la commande 1) + 1 requête select (commandes de l'enfant de la commande 1) 
+		//+ 1 requête select (commandes du jouet de la commande 1) + 1 requête select (commandes de l'enfant de la commande 2)
 	}
 
-	private static void showJouets(){
-		List<Jouet> jouets = DAOJouet.findAll();
-		for (Jouet jou : jouets)
-			System.out.println(jou);
-	}
+	/**
+	 * List<Commande> en EAGER (mode join) dans Enfant et Jouet
+	 * Enfant et Jouet en EAGER (mode join) dans Commande
+	 * Bug sous hibernate => join mode + HQL 
+	 */
+	private static void exemple5(){
+		Calendar cal = Calendar.getInstance();cal.set(1991, 11, 11,0,0,0);
+		//1 appel de méthode = 1 entity manager => fermeture de l'entity à la fin de la méthode
+		Enfant e = new Enfant("nom","prenom",cal.getTime(),"adresse","ville","26000","0295824102","test@test.fr");
+		Enfant e2 = new Enfant("nom","prenom",cal.getTime(),"adresse","ville","26000","0295824102","test@test.fr");
+		e.persister();// Génère 1 requête Insert (objet transient)
+		e2.persister();// Génère 1 requête Insert (objet transient)
+		DAOGenerique.find(Jouet.class, e.getIdEnfant()); // 1 requête select avec jointure entre l'enfant, les commandes et les jouets
+		DAOGenerique.find(Jouet.class, e2.getIdEnfant()); // 1 requête select avec jointure entre l'enfant, les commandes et les jouets
 
-	private static void showEnfants(){
-		List<Enfant> enfants = DAOEnfant.findAll();
-		for (Enfant etu : enfants)
-			System.out.println(etu);
-	}
+		// Insertion d'un nouveau jouet
+		Jouet j = new Jouet("nom","description");
+		Jouet j2 = new Jouet("nom2","description");
+		j.persister();//Génère 1 requête Insert
+		j2.persister();//Génère 1 requête Insert
 
-	private static void showCommandes(){
-		List<Commande> commandes = DAOCommande.findAll();
-		for (Commande co : commandes)
-			System.out.println(co);
+		//Affichage des jouets
+		DAOGenerique.find(Jouet.class, j.getIdJouet());// 1 requête select avec jointure entre le jouet, les commandes et l'enfant
+		DAOGenerique.find(Jouet.class, j2.getIdJouet());// 1 requête select avec jointure entre le jouet, les commandes et l'enfant
+		//Génère 1 requête select (from jouet) + 1 requête select avec sous select (commandes des 2 jouets grace à un IN)
+		//(List<Commande> en mode sous select EAGER)
+
+		Commande c = new Commande(e,j2);
+		Commande c2 = new Commande(e2,j);
+		c.persister();//Génère 1 requête Insert (objet Transient)
+		c2.persister();//Génère 1 requête Insert (objet Transient)
+		DAOGenerique.find(Commande.class, c.getIdCommande());// 1 requête select de la commande 1 avec recup du jouet et enfant par jointure
+		//+ 1 requête pour les commandes du jouet avec pour chaque commande l'enfant par jointure
+		//+ 1 requête pour les commandes de l'enfant avec pour chaque commande le jouet
+		DAOGenerique.find(Commande.class, c2.getIdCommande());// 1 requête select de la commande 2 avec recup du jouet et enfant par jointure
+		//+ 1 requête pour les commandes du jouet avec pour chaque commande l'enfant par jointure
+		//+ 1 requête pour les commandes de l'enfant avec pour chaque commande le jouet
 	}
 
 

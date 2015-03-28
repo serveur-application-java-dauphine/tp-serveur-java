@@ -16,6 +16,9 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import fr.hibernate.dao.DAOGenerique;
 
 @Entity
@@ -55,6 +58,7 @@ public class Commande {
 	 * @return the enfant
 	 */
 	@ManyToOne/*(fetch=FetchType.LAZY)*/
+	@Fetch(FetchMode./*SELECT*/JOIN)
 	@JoinColumn(name = "IdEnfant", nullable = false)
 	public Enfant getEnfant() {
 		return enfant;
@@ -69,6 +73,7 @@ public class Commande {
 	 * @return the jouet
 	 */
 	@ManyToOne/*(fetch=FetchType.LAZY)*/
+	@Fetch(FetchMode./*SELECT*/JOIN)
 	@JoinColumn(name = "IdJouet", nullable = false)
 	public Jouet getJouet() {
 		return jouet;
