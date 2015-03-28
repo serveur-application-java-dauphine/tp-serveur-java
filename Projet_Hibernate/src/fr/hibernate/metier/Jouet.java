@@ -18,6 +18,7 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import fr.hibernate.dao.DAOGenerique;
+import fr.hibernate.dao.DAOJouet;
 
 
 @Entity
@@ -30,7 +31,7 @@ public class Jouet {
 	private List<Commande> commandes = new ArrayList<Commande>();
 
 	public Jouet(){}
-	
+
 	public Jouet(String nom, String description) {
 		this.nom = nom;
 		this.description = description;
@@ -116,6 +117,19 @@ public class Jouet {
 	@Override
 	public String toString() {
 		return " id : "+idJouet+", nom : "+nom+", description : "+description;
+	}
+
+	@Transient
+	public int getNbEnfantsParJouetJava() {
+		return DAOJouet.getNbEnfantsParJouetJava(this.idJouet);
+	}
+	@Transient
+	public long getNbEnfantsParJouetHQL() {
+		return DAOJouet.getNbEnfantsParJouetHQL(this.idJouet);
+	}
+	@Transient
+	public long getNbEnfantsParJouetSQL() {
+		return DAOJouet.getNbEnfantsParJouetSQL(this.idJouet);
 	}
 
 

@@ -5,10 +5,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
 import fr.hibernate.api.Connexion;
-import fr.hibernate.dao.DAOCommande;
-import fr.hibernate.dao.DAOEnfant;
 import fr.hibernate.dao.DAOGenerique;
-import fr.hibernate.dao.DAOJouet;
 import fr.hibernate.metier.Commande;
 import fr.hibernate.metier.Enfant;
 import fr.hibernate.metier.Jouet;
@@ -21,6 +18,8 @@ public class Main {
 		//exemple3();
 		//exemple4();
 		exemple5();
+		//exempleNbCommandes();
+		exempleNbEnfantsParJouet();
 	}
 
 	/**
@@ -232,6 +231,70 @@ public class Main {
 		DAOGenerique.find(Commande.class, c2.getIdCommande());// 1 requête select de la commande 2 avec recup du jouet et enfant par jointure
 		//+ 1 requête pour les commandes du jouet avec pour chaque commande l'enfant par jointure
 		//+ 1 requête pour les commandes de l'enfant avec pour chaque commande le jouet
+	}
+
+	private static void exempleNbEnfantsParJouet(){
+		Calendar cal = Calendar.getInstance();
+		cal.set(1991, 11, 11,0,0,0);
+		//1 appel de méthode = 1 entity manager => fermeture de l'entity à la fin de la méthode
+		Enfant e = new Enfant("nom","prenom",cal.getTime(),"adresse","ville","26000","0295824102","test@test.fr");
+		Enfant e2 = new Enfant("nom2","prenom2",cal.getTime(),"adresse","ville","26000","0295824102","test@test.fr");
+		e.persister();// Génère 1 requête Insert (objet transient)
+		e2.persister();// Génère 1 requête Insert (objet transient)
+
+		// Insertion d'un nouveau jouet
+		Jouet j = new Jouet("nom","description");
+		Jouet j2 = new Jouet("nom2","description2");
+		j.persister();//Génère 1 requête Insert
+		j2.persister();//Génère 1 requête Insert
+
+		//Creation des commandes
+		Commande c = new Commande(e,j2);
+		Commande c2 = new Commande(e,j);
+		Commande c3 = new Commande(e2,j);
+		c.persister();//Génère 1 requête Insert (objet Transient)
+		c2.persister();//Génère 1 requête Insert (objet Transient)
+		c3.persister();//Génère 1 requête Insert (objet Transient)
+
+		System.out.println("Methode Java: Le nombre d'enfants a avoir commandÃ© le jouet " + 
+				j.getIdJouet() + " est " + j.getNbEnfantsParJouetJava());
+		System.out.println("Methode HQL: Le nombre d'enfants a avoir commandÃ© le jouet " + 
+				j.getIdJouet() + " est " + j.getNbEnfantsParJouetHQL());
+		System.out.println("Methode SQL: Le nombre d'enfants a avoir commandÃ© le jouet " + 
+				j.getIdJouet() + " est " + j.getNbEnfantsParJouetSQL());
+
+	}
+
+	private static void exempleNbCommandes(){
+		Calendar cal = Calendar.getInstance();
+		cal.set(1991, 11, 11,0,0,0);
+		//1 appel de méthode = 1 entity manager => fermeture de l'entity à la fin de la méthode
+		Enfant e = new Enfant("nom","prenom",cal.getTime(),"adresse","ville","26000","0295824102","test@test.fr");
+		Enfant e2 = new Enfant("nom2","prenom2",cal.getTime(),"adresse","ville","26000","0295824102","test@test.fr");
+		e.persister();// Génère 1 requête Insert (objet transient)
+		e2.persister();// Génère 1 requête Insert (objet transient)
+
+		// Insertion d'un nouveau jouet
+		Jouet j = new Jouet("nom","description");
+		Jouet j2 = new Jouet("nom2","description2");
+		j.persister();//Génère 1 requête Insert
+		j2.persister();//Génère 1 requête Insert
+
+		//Creation des commandes
+		Commande c = new Commande(e,j2);
+		Commande c2 = new Commande(e,j);
+		Commande c3 = new Commande(e2,j);
+		c.persister();//Génère 1 requête Insert (objet Transient)
+		c2.persister();//Génère 1 requête Insert (objet Transient)
+		c3.persister();//Génère 1 requête Insert (objet Transient)
+
+		System.out.println("Methode Java: Le nombre de commandes faites par l'enfant " + 
+				e.getIdEnfant() + " est " + e.getNbCommandeJava());
+		System.out.println("Methode HQL: Le nombre de commandes faites par l'enfant " + 
+				e.getIdEnfant() + " est " + e.getNbCommandeHQL());
+		System.out.println("Methode SQL: Le nombre de commandes faites par l'enfant " + 
+				e.getIdEnfant() + " est " + e.getNbCommandeSQL());
+
 	}
 
 
