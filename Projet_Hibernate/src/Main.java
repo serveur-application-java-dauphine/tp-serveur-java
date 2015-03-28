@@ -15,8 +15,10 @@ public class Main {
 
 		//exemple1();
 		//exemple2();
-		exemple3();
+		//exemple3();
 		//exemple4();
+		exempleNbCommandes();
+		
 
 	}
 
