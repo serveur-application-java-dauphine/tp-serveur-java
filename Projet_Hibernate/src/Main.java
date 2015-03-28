@@ -13,9 +13,9 @@ public class Main {
 
 	static public void main (String[] argv) {
 
-		exemple1();
-		exemple2();
-		//exemple3();
+		//exemple1();
+		//exemple2();
+		exemple3();
 		//exemple4();
 
 	}
@@ -110,7 +110,7 @@ public class Main {
 
 		// Insertion d'un nouveau jouet
 		Jouet j = new Jouet("nom","description");
-		Jouet j2 = new Jouet("nom","description");
+		Jouet j2 = new Jouet("nom2","description");
 		j.persister();//Génère 1 requête Insert
 		j2.persister();//Génère 1 requête Insert
 
@@ -119,7 +119,7 @@ public class Main {
 		c.persister();//Génère 1 requête Insert (objet Transient)
 		c2.persister();//Génère 1 requête Insert (objet Transient)
 
-		List<Enfant> enfants = DAOGenerique.findAll(Enfant.class);//Génère 1 requête select (List<Commande> en mode LAZY)
+		List<Enfant> enfants = DAOGenerique.findAll(Enfant.class);//Génère 1 requête select (List<Commande> et  en mode LAZY)
 		for (Enfant etu : enfants){
 			System.out.println(etu);
 			System.out.println(etu.getCommandes().size());
@@ -130,8 +130,11 @@ public class Main {
 			System.out.println(jou.getCommandes().size());
 		}
 		List<Commande> commandes = DAOGenerique.findAll(Commande.class);//Génère 3 requête select (Commande et Jouet en mode LAZY)
-		for (Commande co : commandes)
+		for (Commande co : commandes){
 			System.out.println(co);
+			System.out.println(co.getEnfant());
+			System.out.println(co.getJouet());
+		}
 	}
 
 	/**
