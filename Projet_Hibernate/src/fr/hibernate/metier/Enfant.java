@@ -8,10 +8,13 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Persistence;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -19,6 +22,8 @@ import javax.persistence.Transient;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+
+import fr.hibernate.api.Connexion;
 
 import fr.hibernate.dao.DAOGenerique;
 
@@ -213,6 +218,21 @@ public class Enfant {
 	public String toString() {
 		return "id : "+idEnfant+", nom : "+nom+", prenom : "+prenom+", adresse : "+adresse+", code postal : "+code_postal
 				+", ville :"+ville+", date de naissance : "+ddn+", tel : "+tel+", email : "+email;
+	}
+	@Transient
+	public int getNbCommandeJava() {
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory(Connexion.ENTITY_MANAGER_FACTORY);
+		EntityManager em = emf.createEntityManager();
+		Enfant enfant = em.find(Enfant.class, this.idEnfant);
+		int result = enfant.getCommandes().size();
+		em.close();
+		return result;
+	}
+	@Transient
+	public long getNbCommandeHQL() {
+		String query = "SELECT DISTINCT (COUNT(c)) FROM Commande c INNER JOIN Enfant e WHERE e.idEnfant =? GROUP BY c";
+		long result = Connexion.getInstance().querySingleResult(query, Long.class, this.idEnfant);
+		return result;
 	}
 
 }
