@@ -14,7 +14,7 @@ public final class Connexion {
 	private static volatile Connexion cnx;
 	private static final Logger LOG = Logger.getLogger(Connexion.class.getName());
 	// == persistence-unit name du fichier persitence.xml
-	private static final String ENTITY_MANAGER_FACTORY = "mysql_tp";
+	public static final String ENTITY_MANAGER_FACTORY = "mysql_tp";
 
 	private EntityManagerFactory emf;
 
