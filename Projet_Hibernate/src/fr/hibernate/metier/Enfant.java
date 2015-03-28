@@ -20,7 +20,11 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import fr.hibernate.api.Connexion;
+
 import fr.hibernate.dao.DAOGenerique;
 
 @Entity
@@ -175,7 +179,8 @@ public class Enfant {
 	/**
 	 * @return the commandes
 	 */
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "enfant")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "enfant")
+	@Fetch(FetchMode.JOIN)
 	public List<Commande> getCommandes() {
 		return commandes;
 	}

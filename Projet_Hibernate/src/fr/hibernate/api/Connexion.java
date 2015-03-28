@@ -16,7 +16,14 @@ public final class Connexion {
 	// == persistence-unit name du fichier persitence.xml
 	public static final String ENTITY_MANAGER_FACTORY = "mysql_tp";
 
-	private EntityManagerFactory emf;
+	private final EntityManagerFactory emf;
+
+	/**
+	 * @return the emf
+	 */
+	public EntityManagerFactory getEmf() {
+		return emf;
+	}
 
 	private Connexion() {
 		emf = Persistence.createEntityManagerFactory(ENTITY_MANAGER_FACTORY);
