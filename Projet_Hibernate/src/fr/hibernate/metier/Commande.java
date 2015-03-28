@@ -54,7 +54,7 @@ public class Commande {
 	/**
 	 * @return the enfant
 	 */
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne/*(fetch=FetchType.LAZY)*/
 	@JoinColumn(name = "IdEnfant", nullable = false)
 	public Enfant getEnfant() {
 		return enfant;
@@ -68,7 +68,7 @@ public class Commande {
 	/**
 	 * @return the jouet
 	 */
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne/*(fetch=FetchType.LAZY)*/
 	@JoinColumn(name = "IdJouet", nullable = false)
 	public Jouet getJouet() {
 		return jouet;

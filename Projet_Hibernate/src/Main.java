@@ -1,6 +1,10 @@
 
 import java.util.*;
 
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+
+import fr.hibernate.api.Connexion;
 import fr.hibernate.dao.DAOCommande;
 import fr.hibernate.dao.DAOEnfant;
 import fr.hibernate.dao.DAOGenerique;
@@ -119,27 +123,47 @@ public class Main {
 		c.persister();//Génère 1 requête Insert (objet Transient)
 		c2.persister();//Génère 1 requête Insert (objet Transient)
 
-		List<Enfant> enfants = DAOGenerique.findAll(Enfant.class);//Génère 1 requête select (List<Commande> et  en mode LAZY)
+		EntityManager em = Connexion.getInstance().getEmf().createEntityManager();
+		TypedQuery<Enfant> typedquery = em.createQuery("FROM " + Enfant.class.getSimpleName(),Enfant.class);
+		List<Enfant> enfants = typedquery.getResultList();//Génère 1 requête select (List<Commande> et  en mode LAZY)
+		
 		for (Enfant etu : enfants){
 			System.out.println(etu);
-			System.out.println(etu.getCommandes().size());
+			System.out.println(etu.getCommandes().size());//1 requete select (commandes)
+			for (Commande co : etu.getCommandes())
+				System.out.println(co.getJouet());//1 requête select (jouet)
 		}
-		List<Jouet> jouets = DAOGenerique.findAll(Jouet.class);//Génère 1 requête select (List<Commande> en mode LAZY)
+		em.close();
+		em = Connexion.getInstance().getEmf().createEntityManager();
+		TypedQuery<Jouet> typedquery2 = em.createQuery("FROM " + Jouet.class.getSimpleName(),Jouet.class);
+		List<Jouet> jouets = typedquery2.getResultList();//Génère 1 requête select (List<Commande> et en mode LAZY)
 		for (Jouet jou : jouets){
 			System.out.println(jou);
-			System.out.println(jou.getCommandes().size());
+			System.out.println(jou.getCommandes().size());//1 requete select (commandes)
+			for (Commande co : jou.getCommandes())
+				System.out.println(co.getJouet());//Pas de requête hibernate a le jouet dans son cache
 		}
-		List<Commande> commandes = DAOGenerique.findAll(Commande.class);//Génère 3 requête select (Commande et Jouet en mode LAZY)
+		em.close();
+		em = Connexion.getInstance().getEmf().createEntityManager();
+		TypedQuery<Commande> typedquery3 = em.createQuery("FROM " + Commande.class.getSimpleName(),Commande.class);
+		List<Commande> commandes = typedquery3.getResultList();//Génère 1 requête select (List<Commande> et  en mode LAZY)
 		for (Commande co : commandes){
-			System.out.println(co);
-			System.out.println(co.getEnfant());
-			System.out.println(co.getJouet());
+			System.out.println(co);//2 requetes (jouet et enfant) car la methode toString affiche l'enfant et le jouet de la commande
+			System.out.println(co.getEnfant());// deja chargé => rien
+			System.out.println(co.getJouet());// deja chargé => rien
+			System.out.println(co.getEnfant().getCommandes().size());//1 select (commandes dans Enfant)
+			System.out.println(co.getJouet().getCommandes().size());//1 select (commandes dans Jouet)
+			for (Commande co1 : co.getEnfant().getCommandes())
+				System.out.println(co1.getJouet());//deja chargé
+			for (Commande co2 : co.getJouet().getCommandes())
+				System.out.println(co2.getEnfant());//deja chargé
+			
 		}
 	}
 
 	/**
-	 * List<Commande> en EAGER (sous-select) dans Enfant et Jouet
-	 * Enfant et Jouet en LAZY dans Commande
+	 * List<Commande> en EAGER (join) dans Enfant et Jouet
+	 * Enfant et Jouet en EAGER dans Commande
 	 * 
 	 */
 	private static void exemple4(){
@@ -155,7 +179,7 @@ public class Main {
 
 		// Insertion d'un nouveau jouet
 		Jouet j = new Jouet("nom","description");
-		Jouet j2 = new Jouet("nom","description");
+		Jouet j2 = new Jouet("nom2","description");
 		j.persister();//Génère 1 requête Insert
 		j2.persister();//Génère 1 requête Insert
 
