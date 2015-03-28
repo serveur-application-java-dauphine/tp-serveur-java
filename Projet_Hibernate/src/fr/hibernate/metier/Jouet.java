@@ -14,7 +14,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import fr.hibernate.dao.DAOEnfant;
 import fr.hibernate.dao.DAOGenerique;
+import fr.hibernate.dao.DAOJouet;
 
 
 @Entity
@@ -112,6 +114,19 @@ public class Jouet {
 	@Override
 	public String toString() {
 		return " id : "+idJouet+", nom : "+nom+", description : "+description;
+	}
+	
+	@Transient
+	public int getNbEnfantsParJouetJava() {
+		return DAOJouet.getNbEnfantsParJouetJava(this.idJouet);
+	}
+	@Transient
+	public long getNbEnfantsParJouetHQL() {
+		return DAOJouet.getNbEnfantsParJouetHQL(this.idJouet);
+	}
+	@Transient
+	public long getNbEnfantsParJouetSQL() {
+		return DAOJouet.getNbEnfantsParJouetSQL(this.idJouet);
 	}
 
 

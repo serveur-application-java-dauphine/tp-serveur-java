@@ -24,7 +24,7 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import fr.hibernate.api.Connexion;
-
+import fr.hibernate.dao.DAOEnfant;
 import fr.hibernate.dao.DAOGenerique;
 
 @Entity
@@ -221,18 +221,15 @@ public class Enfant {
 	}
 	@Transient
 	public int getNbCommandeJava() {
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory(Connexion.ENTITY_MANAGER_FACTORY);
-		EntityManager em = emf.createEntityManager();
-		Enfant enfant = em.find(Enfant.class, this.idEnfant);
-		int result = enfant.getCommandes().size();
-		em.close();
-		return result;
+		return DAOEnfant.getNbCommandeJava(this.idEnfant);
 	}
 	@Transient
 	public long getNbCommandeHQL() {
-		String query = "SELECT DISTINCT (COUNT(c)) FROM Commande c INNER JOIN Enfant e WHERE e.idEnfant =? GROUP BY c";
-		long result = Connexion.getInstance().querySingleResult(query, Long.class, this.idEnfant);
-		return result;
+		return DAOEnfant.getNbCommandeHQL(this.idEnfant);
+	}
+	@Transient
+	public long getNbCommandeSQL() {
+		return DAOEnfant.getNbCommandeSQL(this.idEnfant);
 	}
 
 }
