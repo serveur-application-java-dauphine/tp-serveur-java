@@ -64,7 +64,7 @@ public class Jouet {
 	/**
 	 * @return the description
 	 */
-	@Column(name = "Description", unique = true, nullable = false)
+	@Column(name = "Description", nullable = false)
 	public String getDescription() {
 		return description;
 	}
@@ -79,7 +79,7 @@ public class Jouet {
 	 * 
 	 * @return the commandes
 	 */
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "jouet")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "jouet")
 	public List<Commande> getCommandes() {
 		return commandes;
 	}

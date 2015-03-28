@@ -171,7 +171,7 @@ public class Enfant {
 	/**
 	 * @return the commandes
 	 */
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "enfant")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "enfant")
 	public List<Commande> getCommandes() {
 		return commandes;
 	}

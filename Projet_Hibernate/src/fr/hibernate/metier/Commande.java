@@ -6,6 +6,7 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -53,7 +54,7 @@ public class Commande {
 	/**
 	 * @return the enfant
 	 */
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name = "IdEnfant", nullable = false)
 	public Enfant getEnfant() {
 		return enfant;
@@ -67,7 +68,7 @@ public class Commande {
 	/**
 	 * @return the jouet
 	 */
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name = "IdJouet", nullable = false)
 	public Jouet getJouet() {
 		return jouet;
@@ -82,7 +83,7 @@ public class Commande {
 	 * @return the date_debut
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "Date_Debut", nullable = false, length = 19, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+	@Column(name = "Date_Debut", nullable = true, length = 19, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
 	public Date getDate_debut() {
 		return date_debut;
 	}
